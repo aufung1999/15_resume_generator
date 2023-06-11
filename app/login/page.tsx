@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+// import axios from "axios";
 import { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";

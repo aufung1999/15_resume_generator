@@ -1,22 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+// import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
+  // --- Check if the user is logged In ---
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("./");
+    }
+  }, [session]);
+  // --- *** ---
+
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const registerUser = async (e:any) => {
+  const registerUser = async (e: any) => {
     e.preventDefault();
-    axios
-      .post("/api/register", data)
+
+    fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
       .then(() => toast.error("User has been registered!"))
       .catch(() => toast.error("Something went wrong!"));
+
+    // axios
+    //   .post("/api/register", data)
+    //   .then(() => toast.error("User has been registered!"))
+    //   .catch(() => toast.error("Something went wrong!"));
   };
 
   return (
