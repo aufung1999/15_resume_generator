@@ -3,14 +3,13 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-// import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
-  // --- Check if the user is logged In ---
   const session = useSession();
   const router = useRouter();
 
+  // --- Check if the user is logged In ---
   useEffect(() => {
     if (session?.status === "authenticated") {
       router.push("./");
@@ -37,10 +36,6 @@ export default function Register() {
       .then(() => toast.error("User has been registered!"))
       .catch(() => toast.error("Something went wrong!"));
 
-    // axios
-    //   .post("/api/register", data)
-    //   .then(() => toast.error("User has been registered!"))
-    //   .catch(() => toast.error("Something went wrong!"));
   };
 
   return (

@@ -10,16 +10,18 @@ export default function Login() {
   const session = useSession();
   const router = useRouter();
 
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-
+  // --- Check if the user is logged In ---
   useEffect(() => {
     if (session?.status === "authenticated") {
       router.push("./");
     }
   }, [session]);
+  // --- *** ---
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -33,11 +35,6 @@ export default function Login() {
         toast.success("Logged in successfully!");
       }
     });
-
-    // axios
-    //   .post("/api/login", data)
-    //   .then(() => toast.error("User has been registered!"))
-    //   .catch((err) => toast.error(err.response.data));
   };
 
   return (

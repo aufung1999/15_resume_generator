@@ -1,6 +1,7 @@
 import Provider from "@/context/AuthContext";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import Header from "@/components/RootLayout/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,16 +17,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " relative"}>
-        {/* Header */}
-        <div className=" absolute border-4 w-full flex justify-between">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-        </div>
-        {/* Body */}
-        <Provider>{children}</Provider>
-      </body>
+      <Provider>
+        <body className={inter.className + " relative"}>
+          {/* Header */}
+          <div className=" absolute border-4 w-full ">
+            <Header />
+          </div>
+          {/* Body */}
+
+          {children}
+        </body>
+      </Provider>
     </html>
   );
 }
