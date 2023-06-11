@@ -1,3 +1,4 @@
+import Provider from "@/context/AuthContext";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -23,7 +24,7 @@ export default function RootLayout({
           <div>3</div>
         </div>
         {/* Body */}
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
