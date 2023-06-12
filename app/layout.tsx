@@ -24,7 +24,7 @@ export default function RootLayout({
       <Provider>
         <body className={inter.className + " relative"}>
           {/* Header */}
-          <div className=" absolute border-4 w-full ">
+          <div className=" border-4 w-full ">
             <Header />
           </div>
           {/* Body */}
