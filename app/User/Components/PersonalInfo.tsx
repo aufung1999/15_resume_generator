@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -11,9 +11,12 @@ import Contact from "./Contact";
 import Sidebar from "./Sidebar";
 
 export default function PersonalInfo() {
+  const [tab, setTab] = useState<string>("");
+
   return (
     <div className=" border-4 flex flex-col">
-      <Sidebar />
+      <Sidebar setTab={setTab} />
+      <div>{tab}</div>
       <Contact />
     </div>
   );

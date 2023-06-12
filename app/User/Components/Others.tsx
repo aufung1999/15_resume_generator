@@ -8,10 +8,10 @@ import {
   InputGroup,
 } from "@blueprintjs/core";
 
-export default function Contact() {
+export default function Others() {
   return (
     <Card className="border border-blue-600 flex-1" interactive={true} elevation={Elevation.TWO}>
-      
+
       <h1>Book Info Form</h1>
       <FormGroup
         label="Book Title"
