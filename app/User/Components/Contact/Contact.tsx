@@ -1,5 +1,9 @@
 "use client";
 import React from "react";
+
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -27,6 +31,14 @@ import {
 } from "@/slices/contactSlice";
 
 export default function Contact() {
+  const router = useRouter();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, handle it here.
+      router.push("./login");
+    },
+  });
   const dispatch = useDispatch();
   return (
     <Card
@@ -68,7 +80,11 @@ export default function Contact() {
         {/* ................................................ */}
         <div className=" w-8/12">
           <FormGroup label="Phone" labelFor="text-input" labelInfo="(required)">
-            <InputGroup id="text-input" placeholder=""  onChange={(e) => dispatch(editPhoneNumber(e.target.value))}/>
+            <InputGroup
+              id="text-input"
+              placeholder=""
+              onChange={(e) => dispatch(editPhoneNumber(e.target.value))}
+            />
           </FormGroup>
         </div>
         {/* ..................Country/City.............................. */}
@@ -121,7 +137,11 @@ export default function Contact() {
         {/* ................................................ */}
         <div className=" w-8/12">
           <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
-            <InputGroup id="text-input" placeholder="abc123@gmail.com" onChange={(e) => dispatch(editEmail(e.target.value))}/>
+            <InputGroup
+              id="text-input"
+              placeholder="abc123@gmail.com"
+              onChange={(e) => dispatch(editEmail(e.target.value))}
+            />
           </FormGroup>
         </div>
         {/* ................................................ */}
@@ -131,7 +151,10 @@ export default function Contact() {
             labelFor="Portfolio"
             labelInfo="(required)"
           >
-            <InputGroup id="text-input" onChange={(e) => dispatch(editPortfolio(e.target.value))} />
+            <InputGroup
+              id="text-input"
+              onChange={(e) => dispatch(editPortfolio(e.target.value))}
+            />
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}
