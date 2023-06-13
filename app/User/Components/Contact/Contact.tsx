@@ -12,7 +12,18 @@ import InsertLink from "./Components/InsertLink";
 import SocialMedia from "./Components/SocialMedia";
 
 import { useSelector, useDispatch } from "react-redux";
-import { editFirstName } from "@/slices/contactSlice";
+import {
+  editFirstName,
+  editLastName,
+  editPhoneNumber,
+  editCountry,
+  editCity,
+  editState,
+  editZipCode,
+  editEmail,
+  editPortfolio,
+  editLinkedIn,
+} from "@/slices/contactSlice";
 
 export default function Contact() {
   const dispatch = useDispatch();
@@ -48,6 +59,7 @@ export default function Contact() {
               id="text-input"
               placeholder=""
               autoComplete="family-name"
+              onChange={(e) => dispatch(editLastName(e.target.value))}
             />
           </FormGroup>
         </div>
@@ -55,7 +67,7 @@ export default function Contact() {
         {/* ................................................ */}
         <div className=" w-8/12">
           <FormGroup label="Phone" labelFor="text-input" labelInfo="(required)">
-            <InputGroup id="text-input" placeholder="" />
+            <InputGroup id="text-input" placeholder=""  onChange={(e) => dispatch(editPhoneNumber(e.target.value))}/>
           </FormGroup>
         </div>
         {/* ..................Country/City.............................. */}
@@ -68,7 +80,8 @@ export default function Contact() {
             <InputGroup
               id="text-input"
               placeholder=""
-              autoComplete="given-name"
+              autoComplete="country"
+              onChange={(e) => dispatch(editCountry(e.target.value))}
             />
           </FormGroup>
 
@@ -76,7 +89,8 @@ export default function Contact() {
             <InputGroup
               id="text-input"
               placeholder=""
-              autoComplete="family-name"
+              autoComplete="shipping locality"
+              onChange={(e) => dispatch(editCity(e.target.value))}
             />
           </FormGroup>
         </div>
@@ -86,7 +100,7 @@ export default function Contact() {
             <InputGroup
               id="text-input"
               placeholder=""
-              autoComplete="given-name"
+              onChange={(e) => dispatch(editState(e.target.value))}
             />
           </FormGroup>
 
@@ -98,14 +112,15 @@ export default function Contact() {
             <InputGroup
               id="text-input"
               placeholder=""
-              autoComplete="family-name"
+              autoComplete="shipping postal-code"
+              onChange={(e) => dispatch(editZipCode(e.target.value))}
             />
           </FormGroup>
         </div>
         {/* ................................................ */}
         <div className=" w-8/12">
           <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
-            <InputGroup id="text-input" placeholder="abc123@gmail.com" />
+            <InputGroup id="text-input" placeholder="abc123@gmail.com" onChange={(e) => dispatch(editEmail(e.target.value))}/>
           </FormGroup>
         </div>
         {/* ................................................ */}
@@ -115,7 +130,7 @@ export default function Contact() {
             labelFor="Portfolio"
             labelInfo="(required)"
           >
-            <InputGroup id="text-input" />
+            <InputGroup id="text-input" onChange={(e) => dispatch(editPortfolio(e.target.value))} />
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}

@@ -34,17 +34,46 @@ const contactSlice = createSlice({
     editFirstName: (state, action: PayloadAction<string>) => {
       state.FirstName = action.payload;
     },
-    // decrement: (state) => {
-    //   state.value--;
-    // },
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload;
-    // },
-    // decrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value -= action.payload;
-    // },
+    editLastName: (state, action: PayloadAction<string>) => {
+      state.LastName = action.payload;
+    },
+    editPhoneNumber: (state, action: PayloadAction<string>) => {
+      state.PhoneNumber = action.payload;
+    },
+    editCountry: (state, action: PayloadAction<string>) => {
+      state.Country = action.payload;
+    },
+    editCity: (state, action: PayloadAction<string>) => {
+      state.City = action.payload;
+    },
+    editState: (state, action: PayloadAction<string>) => {
+      state.State = action.payload;
+    },
+    editZipCode: (state, action: PayloadAction<string>) => {
+      state.ZipCode = action.payload;
+    },
+    editEmail: (state, action: PayloadAction<string>) => {
+      state.Email = action.payload;
+    },
+    editPortfolio: (state, action: PayloadAction<string>) => {
+      state.Portfolio = action.payload;
+    },
+    editLinkedIn: (state, action: PayloadAction<string>) => {
+      state.LinkedIn = action.payload;
+    },
   },
 });
 
-export const { editFirstName } = contactSlice.actions;
+export const {
+  editFirstName,
+  editLastName,
+  editPhoneNumber,
+  editCountry,
+  editCity,
+  editState,
+  editZipCode,
+  editEmail,
+  editPortfolio,
+  editLinkedIn,
+} = contactSlice.actions;
 export default contactSlice.reducer;
