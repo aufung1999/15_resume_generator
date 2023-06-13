@@ -12,7 +12,7 @@ export default function Skills() {
   return (
     <Card className="border border-blue-600 flex-1" interactive={true} elevation={Elevation.TWO}>
 
-      <h1>Book Info Form</h1>
+      <h1>Skills</h1>
       <FormGroup
         label="Book Title"
         labelFor="text-input"
