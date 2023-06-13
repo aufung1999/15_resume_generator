@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 
-
 import {
   Button,
   Card,
@@ -27,15 +26,35 @@ import {
   editLinkedIn,
   editGitHub,
 } from "@/slices/contactSlice";
+import type { RootState } from "@/store/store";
+
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Contact() {
+  const contact = useSelector((state: RootState) => state.contact);
   const dispatch = useDispatch();
+
+  // Save to server
+  const SubmitHandler = () => {
+    // console.log(contact);
+
+    fetch("/api/user/contact", {
+      method: "POST",
+      body: JSON.stringify(contact),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("User Contact Info Updated!"))
+      .catch(() => toast.error("Cannot Update!"));
+  };
   return (
     <Card
       className="border border-blue-600 flex-1"
       interactive={true}
       elevation={Elevation.TWO}
     >
+      <Toaster />
       <h1>Contact</h1>
       {/* ....................First Name/ Family Name............................ */}
       <div className=" border-4 flex flex-col items-center justify-center">
@@ -168,7 +187,9 @@ export default function Contact() {
         {/* ...................(Add more links?)............................. */}
         <InsertLink />
       </div>
-      <Button className="bp3-intent-primary">Submit</Button>
+      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
+        Submit
+      </Button>
     </Card>
   );
 }
