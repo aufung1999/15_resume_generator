@@ -9,6 +9,8 @@ import {
 } from "@blueprintjs/core";
 
 import InsertLink from "./Components/InsertLink";
+import { SocialIcon } from "react-social-icons";
+import SocialMedia from "./Components/SocialMedia";
 
 export default function Contact() {
   return (
@@ -98,9 +100,27 @@ export default function Contact() {
         </div>
         {/* ................................................ */}
         <div className=" w-8/12">
-          <FormGroup label="Email" labelFor="text-input" labelInfo="(required)">
+          <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
             <InputGroup id="text-input" placeholder="abc123@gmail.com" />
           </FormGroup>
+        </div>
+        {/* ................................................ */}
+        <div className=" w-8/12">
+          <FormGroup
+            label="Portfolio"
+            labelFor="Portfolio"
+            labelInfo="(required)"
+          >
+            <InputGroup id="text-input" placeholder="abc123@gmail.com" />
+          </FormGroup>
+        </div>
+        {/* ............*LinkedIn*.................................... */}
+        <div className=" w-8/12">
+          <SocialMedia
+            urlParam="linkedin"
+            DisplayName="LinkedIn"
+            labelFor="LinkedIn"
+          />
         </div>
         {/* ...................(Add more links?)............................. */}
         <InsertLink />

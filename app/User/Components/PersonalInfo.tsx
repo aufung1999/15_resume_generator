@@ -18,7 +18,7 @@ import Objective from "./Objective";
 import Others from "./Others";
 
 export default function PersonalInfo() {
-  const [tab, setTab] = useState<string>("");
+  const [tab, setTab] = useState<string>("Contact");
 
   return (
     <div className=" border-4 flex flex-col">
