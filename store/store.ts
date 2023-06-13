@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "../slices/counterSlice";
 import contactReducer from "../slices/contactSlice";
+import workReducer from "../slices/workSlice";
 
 export const store = configureStore({
   reducer: {
@@ -9,6 +10,7 @@ export const store = configureStore({
 
     //-----real implementation-----
     contact: contactReducer,
+    work: workReducer,
   },
   devTools: true,
 });
