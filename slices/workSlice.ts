@@ -21,34 +21,38 @@ const workSlice = createSlice({
     },
     editCompanyName: (state, action) => {
       const { index, CompanyName } = action.payload;
-      let WorkExp = state.find((each) => each.index === index);
+      const WorkExp = state.find((each) => each.index === index);
       if (WorkExp) {
-        WorkExp.CompanyName = CompanyName
+        WorkExp.CompanyName = CompanyName;
       }
     },
     editPosition: (state, action) => {
       const { index, Position } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
-      const merge = { ...WorkExp, Position: Position };
-      return [...state, merge];
+      if (WorkExp) {
+        WorkExp.Position = Position;
+      }
     },
     editStartDate: (state, action) => {
       const { index, StartDate } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
-      const merge = { ...WorkExp, StartDate: StartDate };
-      return [...state, merge];
+      if (WorkExp) {
+        WorkExp.StartDate = StartDate;
+      }
     },
     editEndDate: (state, action) => {
       const { index, EndDate } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
-      const merge = { ...WorkExp, EndDate: EndDate };
-      return [...state, merge];
+      if (WorkExp) {
+        WorkExp.EndDate = EndDate;
+      }
     },
     editJobDescription: (state, action) => {
       const { index, JobDescription } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
-      const merge = { ...WorkExp, JobDescription: JobDescription };
-      return [...state, merge];
+      if (WorkExp) {
+        WorkExp.JobDescription = JobDescription;
+      }
     },
   },
 });

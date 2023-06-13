@@ -17,12 +17,12 @@ export default function Work() {
       elevation={Elevation.TWO}
     >
       <h1>Work</h1>
-      <Button className="bp3-intent-primary">Submit</Button>
       <div className=" border-4 flex flex-col items-center justify-center">
         <div className=" w-8/12">
           <InsertWorkExp />
         </div>
       </div>
+      <Button className="bp3-intent-primary">Submit</Button>
     </Card>
   );
 }

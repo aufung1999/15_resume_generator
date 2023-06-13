@@ -7,6 +7,7 @@ import {
   FormGroup,
   InputGroup,
   Switch,
+  TextArea,
 } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -53,16 +54,22 @@ const InputComp = ({ index }) => {
           }
         />
         Job Description:{" "}
-        <InputGroup
-          onChange={(e) =>
-            dispatch(
-              editJobDescription({
-                index: index,
-                JobDescription: e.target.value,
-              })
-            )
-          }
-        />
+        <div className="w-full">
+          <TextArea
+            large={true}
+            style={{ width: "100%", height: 200 }}
+            fill={true}
+            onChange={(e) =>
+              dispatch(
+                editJobDescription({
+                  index: index,
+                  JobDescription: e.target.value,
+                })
+              )
+            }
+            //   value={textContent}
+          />
+        </div>
       </FormGroup>
     </Card>
   );
