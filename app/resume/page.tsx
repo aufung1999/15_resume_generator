@@ -12,7 +12,7 @@ import { useState } from "react";
 function page() {
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
-  const [amount, setAmount] = useState("10");
+  const [amount, setAmount] = useState<string>("10");
 
   return (
     <>

@@ -8,7 +8,7 @@ export const store = configureStore({
     counter: counterReducer,
 
     //-----real implementation-----
-    Contact: contactReducer,
+    contact: contactReducer,
   },
   devTools: true,
 });

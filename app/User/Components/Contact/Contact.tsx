@@ -9,10 +9,13 @@ import {
 } from "@blueprintjs/core";
 
 import InsertLink from "./Components/InsertLink";
-import { SocialIcon } from "react-social-icons";
 import SocialMedia from "./Components/SocialMedia";
 
+import { useSelector, useDispatch } from "react-redux";
+import { editFirstName } from "@/slices/contactSlice";
+
 export default function Contact() {
+  const dispatch = useDispatch();
   return (
     <Card
       className="border border-blue-600 flex-1"
@@ -32,6 +35,7 @@ export default function Contact() {
               id="text-input"
               placeholder=""
               autoComplete="given-name"
+              onChange={(e) => dispatch(editFirstName(e.target.value))}
             />
           </FormGroup>
 
@@ -111,7 +115,7 @@ export default function Contact() {
             labelFor="Portfolio"
             labelInfo="(required)"
           >
-            <InputGroup id="text-input" placeholder="abc123@gmail.com" />
+            <InputGroup id="text-input" />
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}

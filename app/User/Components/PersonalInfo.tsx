@@ -23,7 +23,6 @@ export default function PersonalInfo() {
   return (
     <div className=" border-4 flex flex-col">
       <Sidebar setTab={setTab} />
-      <div>{tab}</div>
       {tab === "Contact" && <Contact />}
       {tab === "Work" && <Work />}
       {tab === "Education" && <Education />}
