@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import {
   Button,
@@ -31,14 +29,6 @@ import {
 } from "@/slices/contactSlice";
 
 export default function Contact() {
-  const router = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      // The user is not authenticated, handle it here.
-      router.push("./login");
-    },
-  });
   const dispatch = useDispatch();
   return (
     <Card

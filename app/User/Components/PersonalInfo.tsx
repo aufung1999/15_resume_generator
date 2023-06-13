@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+
 import {
   Button,
   Card,
@@ -10,7 +11,7 @@ import {
 import Sidebar from "./Sidebar";
 
 import Contact from "./Contact/Contact";
-import Work from "./Work";
+import Work from "./Work/Work";
 import Education from "./Education";
 import Achievement from "./Achievement";
 import Skills from "./Skills";
@@ -18,6 +19,8 @@ import Objective from "./Objective";
 import Others from "./Others";
 
 export default function PersonalInfo() {
+
+
   const [tab, setTab] = useState<string>("Contact");
 
   return (
