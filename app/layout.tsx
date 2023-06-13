@@ -3,9 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/RootLayout/Header";
 
-import { configureStore } from "@reduxjs/toolkit";
-import { Provider as Reduxprovider} from "react-redux";
-
+import { Providers } from "./provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +26,7 @@ export default function RootLayout({
             <Header />
           </div>
           {/* Body */}
-
-          {children}
+          <Providers>{children}</Providers>
         </body>
       </Provider>
     </html>
