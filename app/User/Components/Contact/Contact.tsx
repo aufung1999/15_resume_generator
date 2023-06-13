@@ -23,6 +23,7 @@ import {
   editEmail,
   editPortfolio,
   editLinkedIn,
+  editGitHub,
 } from "@/slices/contactSlice";
 
 export default function Contact() {
@@ -139,6 +140,16 @@ export default function Contact() {
             urlParam="linkedin"
             DisplayName="LinkedIn"
             labelFor="LinkedIn"
+            edit={editLinkedIn}
+          />
+        </div>
+        {/* ............*GitHub*.................................... */}
+        <div className=" w-8/12">
+          <SocialMedia
+            urlParam="github"
+            DisplayName="GitHub"
+            labelFor="GitHub"
+            edit={editGitHub}
           />
         </div>
         {/* ...................(Add more links?)............................. */}

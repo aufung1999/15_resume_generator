@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import { SocialIcon } from "react-social-icons";
+import { useSelector, useDispatch } from "react-redux";
 import {
     Button,
     Card,
@@ -8,7 +10,8 @@ import {
     InputGroup,
   } from "@blueprintjs/core";
 
-export default function SocialMedia({urlParam, DisplayName, labelFor}) {
+export default function SocialMedia({urlParam, DisplayName, labelFor, edit}) {
+  const dispatch = useDispatch();
   return (
     <>
       <div className="flex flex-row">
@@ -20,7 +23,7 @@ export default function SocialMedia({urlParam, DisplayName, labelFor}) {
         <div>{DisplayName}</div>
       </div>
       <FormGroup labelFor={labelFor} labelInfo="(required)">
-        <InputGroup id="text-input" />
+        <InputGroup id="text-input" onChange={(e) => dispatch(edit(e.target.value))} />
       </FormGroup>
     </>
   );
