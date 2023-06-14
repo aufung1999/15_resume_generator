@@ -13,6 +13,7 @@ const contactSchema = new mongoose.Schema(
     Email: { type: String, required: false },
     Portfolio: { type: String, required: false },
     LinkedIn: { type: String, required: false },
+    GitHub: { type: String, required: false },
   },
   {
     timestamps: true,

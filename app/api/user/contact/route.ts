@@ -53,6 +53,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       Email,
       Portfolio,
       LinkedIn,
+      GitHub,
     } = body;
 
     await db.connect();
@@ -77,6 +78,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         Email: Email,
         Portfolio: Portfolio,
         LinkedIn: LinkedIn,
+        GitHub: GitHub,
       };
 
       // `doc` is the document _after_ `update` was applied because of
@@ -100,6 +102,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       Email: Email,
       Portfolio: Portfolio,
       LinkedIn: LinkedIn,
+      GitHub: GitHub,
     });
 
     await contact.save();

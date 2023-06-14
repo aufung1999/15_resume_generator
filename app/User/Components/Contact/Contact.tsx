@@ -209,6 +209,7 @@ export default function Contact() {
         {/* ............*LinkedIn*.................................... */}
         <div className=" w-8/12">
           <SocialMedia
+            key="LinkedIn"
             urlParam="linkedin"
             DisplayName="LinkedIn"
             labelFor="LinkedIn"
@@ -219,11 +220,12 @@ export default function Contact() {
         {/* ............*GitHub*.................................... */}
         <div className=" w-8/12">
           <SocialMedia
+            key="GitHub"
             urlParam="github"
             DisplayName="GitHub"
             labelFor="GitHub"
             edit={editGitHub}
-            SocialMedia={contact.GitHub}
+            SocialMedia={contact?.GitHub}
           />
         </div>
         {/* ...................(Add more links?)............................. */}

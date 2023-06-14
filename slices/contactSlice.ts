@@ -12,6 +12,7 @@ export interface ContactState {
   Email: string;
   Portfolio: string;
   LinkedIn: string;
+  GitHub: string;
 }
 
 const initialState: ContactState = {
@@ -25,6 +26,7 @@ const initialState: ContactState = {
   Email: "",
   Portfolio: "",
   LinkedIn: "",
+  GitHub: "",
 };
 
 const contactSlice = createSlice({
@@ -62,7 +64,7 @@ const contactSlice = createSlice({
       state.LinkedIn = action.payload;
     },
     editGitHub: (state, action: PayloadAction<string>) => {
-      state.LinkedIn = action.payload;
+      state.GitHub = action.payload;
     },
   },
 });
@@ -78,6 +80,6 @@ export const {
   editEmail,
   editPortfolio,
   editLinkedIn,
-  editGitHub
+  editGitHub,
 } = contactSlice.actions;
 export default contactSlice.reducer;

@@ -14,7 +14,7 @@ type Props = {
   urlParam: string;
   DisplayName: string;
   labelFor: string;
-  edit: string;
+  edit: Function;
   SocialMedia: string;
 };
 
