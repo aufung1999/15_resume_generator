@@ -3,6 +3,7 @@ import counterReducer from "../slices/counterSlice";
 import contactReducer from "../slices/contactSlice";
 import workReducer from "../slices/workSlice";
 import educationReducer from "../slices/educationSlice";
+import awardReducer from "../slices/awardSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     contact: contactReducer,
     work: workReducer,
     education: educationReducer,
+    award: awardReducer,
   },
   devTools: true,
 });
