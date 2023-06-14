@@ -12,6 +12,28 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
 
+export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    // Signed in
+    console.log("Get");
+
+    await db.connect();
+    const exist = await Contact.findOne({
+      email: session?.user?.email,
+    });
+    await db.disconnect();
+
+    if (exist) {
+      return NextResponse.json(exist);
+    }
+  } else {
+    // Not Signed in
+    res.status(401);
+  }
+  res.end();
+}
+
 export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
 
@@ -40,8 +62,8 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     await db.disconnect();
 
     if (exist) {
-    //   console.log("exist");
-    //   console.log(exist.Email);
+      //   console.log("exist");
+      //   console.log(exist.Email);
 
       const filter = { email: session?.user?.email };
       const update = {
@@ -88,30 +110,4 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     res.status(401);
   }
   res.end();
-
-  //   const { name, email, password } = body;
-
-  //   if (!name || !email || !password) {
-  //     return new NextResponse("Missing Fields", { status: 400 });
-  //   }
-
-  //   await db.connect();
-  //   const exist = await User.findOne({
-  //     email: email,
-  //   });
-  //   await db.disconnect();
-
-  //   if (exist) {
-  //     throw new Error("Email already exists");
-  //   }
-
-  //   const hashedPassword = await bcrypt.hash(password, 10);
-
-  //   const user = await new User({
-  //     name: name,
-  //     email: email,
-  //     password: hashedPassword,
-  //   });
-
-  //   await user.save();
 }

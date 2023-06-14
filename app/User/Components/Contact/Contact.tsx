@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Button,
@@ -33,6 +33,37 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Contact() {
   const contact = useSelector((state: RootState) => state.contact);
   const dispatch = useDispatch();
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch("/api/user/contact", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      console.log(res);
+      const receivedata = await res.json();
+      console.log("data: " + JSON.stringify(data, null, 1));
+
+      //---After receive data from MongoDB, dispatch to Redux
+      dispatch(editEmail(receivedata.Email));
+      dispatch(editFirstName(receivedata.FirstName));
+      dispatch(editLastName(receivedata.LastName));
+      dispatch(editPhoneNumber(receivedata.PhoneNumber));
+      dispatch(editCountry(receivedata.Country));
+      dispatch(editCity(receivedata.City));
+      dispatch(editState(receivedata.State));
+      dispatch(editZipCode(receivedata.ZipCode));
+      dispatch(editPortfolio(receivedata.Portfolio));
+      dispatch(editLinkedIn(receivedata.LinkedIn));
+      dispatch(editGitHub(receivedata.GitHub));
+    };
+    getData();
+  }, []);
 
   // Save to server
   const SubmitHandler = () => {
@@ -69,6 +100,7 @@ export default function Contact() {
               placeholder=""
               autoComplete="given-name"
               onChange={(e) => dispatch(editFirstName(e.target.value))}
+              value={contact.FirstName}
             />
           </FormGroup>
 
@@ -82,6 +114,7 @@ export default function Contact() {
               placeholder=""
               autoComplete="family-name"
               onChange={(e) => dispatch(editLastName(e.target.value))}
+              value={contact.LastName}
             />
           </FormGroup>
         </div>
@@ -93,6 +126,7 @@ export default function Contact() {
               id="text-input"
               placeholder=""
               onChange={(e) => dispatch(editPhoneNumber(e.target.value))}
+              value={contact.PhoneNumber}
             />
           </FormGroup>
         </div>
@@ -108,6 +142,7 @@ export default function Contact() {
               placeholder=""
               autoComplete="country"
               onChange={(e) => dispatch(editCountry(e.target.value))}
+              value={contact.Country}
             />
           </FormGroup>
 
@@ -117,6 +152,7 @@ export default function Contact() {
               placeholder=""
               autoComplete="shipping locality"
               onChange={(e) => dispatch(editCity(e.target.value))}
+              value={contact.City}
             />
           </FormGroup>
         </div>
@@ -127,6 +163,7 @@ export default function Contact() {
               id="text-input"
               placeholder=""
               onChange={(e) => dispatch(editState(e.target.value))}
+              value={contact.State}
             />
           </FormGroup>
 
@@ -140,6 +177,7 @@ export default function Contact() {
               placeholder=""
               autoComplete="shipping postal-code"
               onChange={(e) => dispatch(editZipCode(e.target.value))}
+              value={contact.ZipCode}
             />
           </FormGroup>
         </div>
@@ -150,6 +188,7 @@ export default function Contact() {
               id="text-input"
               placeholder="abc123@gmail.com"
               onChange={(e) => dispatch(editEmail(e.target.value))}
+              value={contact.Email}
             />
           </FormGroup>
         </div>
@@ -163,6 +202,7 @@ export default function Contact() {
             <InputGroup
               id="text-input"
               onChange={(e) => dispatch(editPortfolio(e.target.value))}
+              value={contact.Portfolio}
             />
           </FormGroup>
         </div>
@@ -173,6 +213,7 @@ export default function Contact() {
             DisplayName="LinkedIn"
             labelFor="LinkedIn"
             edit={editLinkedIn}
+            SocialMedia={contact.LinkedIn}
           />
         </div>
         {/* ............*GitHub*.................................... */}
@@ -182,6 +223,7 @@ export default function Contact() {
             DisplayName="GitHub"
             labelFor="GitHub"
             edit={editGitHub}
+            SocialMedia={contact.GitHub}
           />
         </div>
         {/* ...................(Add more links?)............................. */}
