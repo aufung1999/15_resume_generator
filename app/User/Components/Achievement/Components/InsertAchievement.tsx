@@ -30,7 +30,7 @@ const InputComp = ({ index }: Props) => {
   const award = useSelector((state: RootState) => state.award);
   return (
     <Card interactive style={{ background: "gray", color: "white" }}>
-      <h3>Company {index}</h3>
+      <h3>Achievement {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Award Name:
