@@ -22,14 +22,28 @@ import {
 import DatePicker from "react-date-picker";
 import { RootState } from "@/store/store";
 
+import { v4 as uuidv4 } from "uuid";
+
 type Props = {
-  index: number;
+  index: string;
 };
+
+interface workType {
+  index: string;
+  CompanyName: string;
+  Position: string;
+  current: boolean;
+  StartDate: string;
+  EndDate: string;
+  JobDescription: string;
+}
 
 const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
-  const work = useSelector((state: RootState) => state.work);
+  const works: workType[] = useSelector((state: RootState) => state.work);
+
+  const work = works.find(each=>each.index === index)
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -53,11 +67,11 @@ const InputComp = ({ index }: Props) => {
         {/* ---------------------------Time Related-------------------------- */}
         <Switch
           onChange={(value) =>
-            work[index].current
+            work?.current
               ? dispatch(
                   currentWorking({
                     index: index,
-                    current: !work[index].current,
+                    current: !work.current,
                   })
                 )
               : dispatch(currentWorking({ index: index, current: true }))
@@ -71,7 +85,7 @@ const InputComp = ({ index }: Props) => {
               onChange={(value) =>
                 dispatch(editStartDate({ index: index, StartDate: value }))
               }
-              value={work[index].StartDate || null}
+              value={work?.StartDate ? work.StartDate : null}
             />
           </div>
           End Date:
@@ -80,8 +94,8 @@ const InputComp = ({ index }: Props) => {
               onChange={(value) =>
                 dispatch(editEndDate({ index: index, EndDate: value }))
               }
-              value={work[index].EndDate || null}
-              disabled={work[index].current}
+              value={work?.EndDate ? work.EndDate : null}
+              disabled={work?.current ? work.current : false}
             />
           </div>
         </div>
@@ -112,17 +126,19 @@ export default function InsertWorkExp() {
   const dispatch = useDispatch();
   const [links, insertLinks] = useState<any>([]);
 
+  const uuid = uuidv4();
+
   const addLink = () => {
-    dispatch(addWorkExp({ index: links.length }));
-    insertLinks(
-      links.concat(<InputComp key={links.length} index={links.length} />)
-    );
+    dispatch(addWorkExp({ index: uuid }));
+    insertLinks(links.concat(<InputComp key={links.length} index={uuid} />));
   };
   return (
     <div>
       <Button icon="insert" onClick={addLink} />
-      {links?.map((each: any, index: number) => (
-        <div key={index} className="w-full">{each}</div>
+      {links?.map((each: any, i: number) => (
+        <div key={i} className="w-full">
+          {each}
+        </div>
       ))}
     </div>
   );

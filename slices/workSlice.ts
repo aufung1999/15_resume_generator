@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface WorkExpState {
-  index: number;
+  index: string;
   CompanyName: string;
   Position: string;
   current:boolean,
