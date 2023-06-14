@@ -18,7 +18,7 @@ export default function Education() {
     >
       <h1>Education</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
-        <div className=" w-8/12">
+        <div className=" w-9/12">
          <InsertEducation />
         </div>
       </div>

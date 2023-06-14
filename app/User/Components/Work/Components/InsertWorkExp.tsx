@@ -122,7 +122,7 @@ export default function InsertWorkExp() {
     <div>
       <Button icon="insert" onClick={addLink} />
       {links?.map((each: any, index: number) => (
-        <div key={index}>{each}</div>
+        <div key={index} className="w-full">{each}</div>
       ))}
     </div>
   );
