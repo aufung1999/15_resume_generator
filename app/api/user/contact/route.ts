@@ -40,8 +40,8 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     await db.disconnect();
 
     if (exist) {
-      console.log("exist");
-      console.log(exist.Email);
+    //   console.log("exist");
+    //   console.log(exist.Email);
 
       const filter = { email: session?.user?.email };
       const update = {

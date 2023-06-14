@@ -12,11 +12,11 @@ import Sidebar from "./Sidebar";
 
 import Contact from "./Contact/Contact";
 import Work from "./Work/Work";
-import Education from "./Education";
-import Achievement from "./Achievement";
-import Skills from "./Skills";
-import Objective from "./Objective";
-import Others from "./Others";
+import Education from "./Education/Education";
+import Achievement from "./Achievement/Achievement";
+import Skills from "./Skills/Skills";
+import Objective from "./Objective/Objective";
+import Others from "./Others/Others";
 
 export default function PersonalInfo() {
 
