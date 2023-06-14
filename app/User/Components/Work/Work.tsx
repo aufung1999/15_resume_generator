@@ -13,7 +13,7 @@ export default function Work() {
   return (
     <Card
       className="border border-blue-600 flex-1"
-      interactive={true}
+      interactive={false}
       elevation={Elevation.TWO}
     >
       <h1>Work</h1>

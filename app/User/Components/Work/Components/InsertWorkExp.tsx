@@ -17,12 +17,22 @@ import {
   editStartDate,
   editEndDate,
   editJobDescription,
+  currentWorking,
 } from "@/slices/workSlice";
+import DatePicker from "react-date-picker";
+import { RootState } from "@/store/store";
 
-const InputComp = ({ index }) => {
+type Props = {
+  index: number;
+};
+
+const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
+
+  const work = useSelector((state: RootState) => state.work);
+
   return (
-    <Card interactive style={{ background: "gray", color: "white" }}>
+    <Card interactive={false} style={{ background: "gray", color: "white" }}>
       <h3>Company {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -40,19 +50,42 @@ const InputComp = ({ index }) => {
             dispatch(editPosition({ index: index, Position: e.target.value }))
           }
         />
-        Start Date:{" "}
-        <InputGroup
-          onChange={(e) =>
-            dispatch(editStartDate({ index: index, StartDate: e.target.value }))
+        {/* ---------------------------Time Related-------------------------- */}
+        <Switch
+          onChange={(value) =>
+            work[index].current
+              ? dispatch(
+                  currentWorking({
+                    index: index,
+                    current: !work[index].current,
+                  })
+                )
+              : dispatch(currentWorking({ index: index, current: true }))
           }
+          label=" Currently Working"
         />
-        End Date:
-        <InputGroup
-          placeholder="if working, type 'Now'"
-          onChange={(e) =>
-            dispatch(editEndDate({ index: index, EndDate: e.target.value }))
-          }
-        />
+        <div className=" flex">
+          Start Date:{" "}
+          <div className=" text-black">
+            <DatePicker
+              onChange={(value) =>
+                dispatch(editStartDate({ index: index, StartDate: value }))
+              }
+              value={work[index].StartDate || null}
+            />
+          </div>
+          End Date:
+          <div className=" text-black">
+            <DatePicker
+              onChange={(value) =>
+                dispatch(editEndDate({ index: index, EndDate: value }))
+              }
+              value={work[index].EndDate || null}
+              disabled={work[index].current}
+            />
+          </div>
+        </div>
+        {/* ---------------------------Time Related-------------------------- */}
         Job Description:{" "}
         <div className="w-full">
           <TextArea
@@ -77,20 +110,18 @@ const InputComp = ({ index }) => {
 
 export default function InsertWorkExp() {
   const dispatch = useDispatch();
-  const [links, insertLinks] = useState([]);
+  const [links, insertLinks] = useState<any>([]);
 
-  const addLink = (event) => {
+  const addLink = () => {
     dispatch(addWorkExp({ index: links.length }));
     insertLinks(
-      (links as []).concat(
-        <InputComp key={links.length} index={links.length} />
-      )
+      links.concat(<InputComp key={links.length} index={links.length} />)
     );
   };
   return (
     <div>
       <Button icon="insert" onClick={addLink} />
-      {links?.map((each, index) => (
+      {links?.map((each: any, index: number) => (
         <div key={index}>{each}</div>
       ))}
     </div>

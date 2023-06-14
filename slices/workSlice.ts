@@ -5,6 +5,7 @@ export interface WorkExpState {
   index: number;
   CompanyName: string;
   Position: string;
+  current:boolean,
   StartDate: string;
   EndDate: string;
   JobDescription: string;
@@ -31,6 +32,13 @@ const workSlice = createSlice({
       let WorkExp = state.find((each) => each.index === index);
       if (WorkExp) {
         WorkExp.Position = Position;
+      }
+    },
+    currentWorking: (state, action) => {
+      const { index, current } = action.payload;
+      let WorkExp = state.find((each) => each.index === index);
+      if (WorkExp) {
+        WorkExp.current = current;
       }
     },
     editStartDate: (state, action) => {
@@ -61,6 +69,7 @@ export const {
   addWorkExp,
   editCompanyName,
   editPosition,
+  currentWorking,
   editStartDate,
   editEndDate,
   editJobDescription,

@@ -26,7 +26,11 @@ import {
 } from "@/slices/educationSlice";
 import { RootState } from "@/store/store";
 
-const InputComp = ({ index }) => {
+type Props = {
+  index: number;
+};
+
+const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
   const education = useSelector((state: RootState) => state.education);
@@ -36,10 +40,6 @@ const InputComp = ({ index }) => {
     console.log(education);
     console.log(education[index].StartDate);
   }
-
-  const [current, setCurrent] = useState(false);
-  const [startDate, changeStartDate] = useState(new Date());
-  const [endDate, changeEndDate] = useState();
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -66,6 +66,7 @@ const InputComp = ({ index }) => {
             dispatch(editSubject({ index: index, Subject: e.target.value }))
           }
         />
+        {/* ---------------------------Time Related-------------------------- */}
         <Switch
           onChange={(value) =>
             education[index].current
@@ -100,6 +101,7 @@ const InputComp = ({ index }) => {
             />
           </div>
         </div>
+        {/* ---------------------------Time Related-------------------------- */}
       </FormGroup>
     </Card>
   );
@@ -107,20 +109,20 @@ const InputComp = ({ index }) => {
 
 export default function InsertEducation() {
   const dispatch = useDispatch();
-  const [links, insertLinks] = useState([]);
 
-  const addLink = (event) => {
+  const [links, insertLinks] = useState<any>([]);
+
+  const addLink = () => {
     dispatch(addEducation({ index: links.length }));
+
     insertLinks(
-      (links as []).concat(
-        <InputComp key={links.length} index={links.length} />
-      )
+      links.concat(<InputComp key={links.length} index={links.length} />)
     );
   };
   return (
     <div>
       <Button icon="insert" onClick={addLink} />
-      {links?.map((each, index) => (
+      {links?.map((each: any, index: number) => (
         <div key={index}>{each}</div>
       ))}
     </div>
