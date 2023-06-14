@@ -23,6 +23,7 @@ type Props = {
   term?: string;
 };
 
+//*****************Child Component
 const TermComp = ({ index, term }: Props) => {
   const dispatch = useDispatch();
 
@@ -73,6 +74,7 @@ const TermComp = ({ index, term }: Props) => {
   );
 };
 
+//*****************Parent Component
 export default function InsertSkills() {
   const dispatch = useDispatch();
 

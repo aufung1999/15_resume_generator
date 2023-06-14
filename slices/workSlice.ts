@@ -5,10 +5,10 @@ export interface WorkExpState {
   index: string;
   CompanyName: string;
   Position: string;
-  current:boolean,
+  current: boolean;
   StartDate: string;
   EndDate: string;
-  JobDescription: string;
+  JobDescription: { rowIndex: string; Row: string }[];
 }
 
 const initialState: WorkExpState[] = [];
@@ -55,11 +55,24 @@ const workSlice = createSlice({
         WorkExp.EndDate = EndDate;
       }
     },
-    editJobDescription: (state, action) => {
-      const { index, JobDescription } = action.payload;
+    addrow: (state, action) => {
+      const { index, rowIndex } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
       if (WorkExp) {
-        WorkExp.JobDescription = JobDescription;
+        if (WorkExp.JobDescription === undefined) {
+          WorkExp.JobDescription = [];
+        }
+        WorkExp.JobDescription.push({ rowIndex: rowIndex });
+      }
+    },
+    editJobDescription: (state, action) => {
+      const { index, rowIndex, Row } = action.payload;
+      let WorkExp = state.find((each) => each.index === index);
+      if (WorkExp) {
+        if (WorkExp.JobDescription === undefined) {
+          WorkExp.JobDescription = [];
+        }
+        WorkExp.JobDescription.push({ rowIndex: rowIndex, Row: Row });
       }
     },
   },
@@ -72,6 +85,7 @@ export const {
   currentWorking,
   editStartDate,
   editEndDate,
+  addrow,
   editJobDescription,
 } = workSlice.actions;
 export default workSlice.reducer;

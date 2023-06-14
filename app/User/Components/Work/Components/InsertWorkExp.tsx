@@ -16,6 +16,7 @@ import {
   editPosition,
   editStartDate,
   editEndDate,
+  addrow,
   editJobDescription,
   currentWorking,
 } from "@/slices/workSlice";
@@ -23,9 +24,13 @@ import DatePicker from "react-date-picker";
 import { RootState } from "@/store/store";
 
 import { v4 as uuidv4 } from "uuid";
+import shortenUUID from "@/utils/shortenUUID";
 
 type Props = {
   index: string;
+};
+type rowProps = {
+  rowIndex: string;
 };
 
 interface workType {
@@ -35,15 +40,27 @@ interface workType {
   current: boolean;
   StartDate: string;
   EndDate: string;
-  JobDescription: string;
+  JobDescription: { rowIndex: string; Row: string }[];
 }
+
+const RowComp = ({ rowIndex }: rowProps) => {
+  return <div>hi</div>;
+};
 
 const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
   const works: workType[] = useSelector((state: RootState) => state.work);
 
-  const work = works.find(each=>each.index === index)
+  const work = works.find((each) => each.index === index);
+
+  const [row, insertRow] = useState<any>([]);
+
+  const addRow = () => {
+    const rowIndex = shortenUUID(uuidv4());
+    dispatch(addrow({ index: index, rowIndex: rowIndex }));
+    insertRow(row.concat(<RowComp key={rowIndex} rowIndex={rowIndex} />));
+  };
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -99,9 +116,10 @@ const InputComp = ({ index }: Props) => {
             />
           </div>
         </div>
-        {/* ---------------------------Time Related-------------------------- */}
+        {/* ---------------------------Dynamic-------------------------- */}
         Job Description:{" "}
         <div className="w-full">
+          <Button icon="insert" onClick={addRow} />
           <TextArea
             large={true}
             style={{ width: "100%", height: 200 }}
