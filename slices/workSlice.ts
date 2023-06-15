@@ -7,8 +7,8 @@ export interface WorkExpState {
   Position: string;
   current: boolean;
   StartDate: string;
-  EndDate: string;
-  JobDescription: { rowIndex: string; Row: string }[];
+  EndDate?: string;
+  JobDescription: { rowIndex: string; Row?: string }[];
 }
 
 const initialState: WorkExpState[] = [];
@@ -19,6 +19,11 @@ const workSlice = createSlice({
   reducers: {
     addWorkExp: (state, action) => {
       state.push(action.payload);
+    },
+    deleteWorkExp: (state, action) => {
+
+      state.splice(state.findIndex((arrow) => arrow.index === action.payload), 1);
+
     },
     editCompanyName: (state, action) => {
       const { index, CompanyName } = action.payload;
@@ -65,6 +70,23 @@ const workSlice = createSlice({
         WorkExp.JobDescription.push({ rowIndex: rowIndex });
       }
     },
+    deleterow: (state, action) => {
+      const { index, rowIndex } = action.payload;
+      let WorkExp = state.find((each) => each.index === index);
+      if (WorkExp) {
+        if (WorkExp.JobDescription === undefined) {
+          // intialize the state of JobDescription
+          WorkExp.JobDescription = [];
+        }
+        // WorkExp.JobDescription.push({ rowIndex: rowIndex });
+        WorkExp.JobDescription.splice(
+          WorkExp.JobDescription.findIndex(
+            (arrow) => arrow.rowIndex === rowIndex
+          ),
+          1
+        );
+      }
+    },
     editJobDescription: (state, action) => {
       const { index, rowIndex, Row } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
@@ -72,7 +94,13 @@ const workSlice = createSlice({
         if (WorkExp.JobDescription === undefined) {
           WorkExp.JobDescription = [];
         }
-        WorkExp.JobDescription.push({ rowIndex: rowIndex, Row: Row });
+
+        const target_row = WorkExp.JobDescription.find(
+          (each) => each.rowIndex === rowIndex
+        );
+        if (target_row) {
+          target_row.Row = Row;
+        }
       }
     },
   },
@@ -80,12 +108,14 @@ const workSlice = createSlice({
 
 export const {
   addWorkExp,
+  deleteWorkExp,
   editCompanyName,
   editPosition,
   currentWorking,
   editStartDate,
   editEndDate,
   addrow,
+  deleterow,
   editJobDescription,
 } = workSlice.actions;
 export default workSlice.reducer;

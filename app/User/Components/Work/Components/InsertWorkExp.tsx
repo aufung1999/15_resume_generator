@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -19,6 +19,9 @@ import {
   addrow,
   editJobDescription,
   currentWorking,
+  deleterow,
+  WorkExpState,
+  deleteWorkExp,
 } from "@/slices/workSlice";
 import DatePicker from "react-date-picker";
 import { RootState } from "@/store/store";
@@ -28,44 +31,99 @@ import shortenUUID from "@/utils/shortenUUID";
 
 type Props = {
   index: string;
+  workExps: ReactElement[];
+  editWorkExps: Function;
 };
 type rowProps = {
-  rowIndex: string;
-};
-
-interface workType {
   index: string;
-  CompanyName: string;
-  Position: string;
-  current: boolean;
-  StartDate: string;
-  EndDate: string;
-  JobDescription: { rowIndex: string; Row: string }[];
-}
-
-const RowComp = ({ rowIndex }: rowProps) => {
-  return <div>hi</div>;
+  rowIndex: string;
+  row: ReactElement[];
+  editRow: Function; // pass from the parent component
 };
 
-const InputComp = ({ index }: Props) => {
+//*         Important Info.       */
+// Child Component: X
+//Parent Component: InputComp
+const RowComp = ({ index, rowIndex, row, editRow }: rowProps) => {
   const dispatch = useDispatch();
 
-  const works: workType[] = useSelector((state: RootState) => state.work);
+  const deleteRow = () => {
+    // update the Redux Store
+    dispatch(deleterow({ index: index, rowIndex: rowIndex }));
+    //update the useState of "row"
+    const after_remove = row.filter((each: any) => each.key === rowIndex);
+    editRow(after_remove);
+  };
 
+  return (
+    <div>
+      <div>{rowIndex}</div>
+      <Button icon="delete" onClick={deleteRow} />
+      <TextArea
+        large={true}
+        style={{ width: "100%", height: 50 }}
+        fill={true}
+        onChange={(e) =>
+          dispatch(
+            editJobDescription({
+              index: index,
+              rowIndex: rowIndex,
+              Row: e.target.value,
+            })
+          )
+        }
+        //   value={textContent}
+      />
+    </div>
+  );
+};
+
+//*         Important Info.       */
+// Child Component: RowComp
+//Parent Component: InsertWorkExp
+const InputComp = ({ workExps, editWorkExps, index }: Props) => {
+  const dispatch = useDispatch();
+
+  const works: WorkExpState[] = useSelector((state: RootState) => state.work);
   const work = works.find((each) => each.index === index);
 
-  const [row, insertRow] = useState<any>([]);
+  const [row, editRow] = useState<any>([]);
+
+  useEffect(() => {
+
+  }, [works]);
 
   const addRow = () => {
     const rowIndex = shortenUUID(uuidv4());
+    // update the Redux Store
     dispatch(addrow({ index: index, rowIndex: rowIndex }));
-    insertRow(row.concat(<RowComp key={rowIndex} rowIndex={rowIndex} />));
+    //update the useState
+    editRow(
+      row.concat(
+        <RowComp
+          key={rowIndex}
+          index={index}
+          rowIndex={rowIndex}
+          editRow={editRow}
+          row={row}
+        />
+      )
+    );
+    console.log(row);
+  };
+
+  const deleteExp = () => {
+    // update the Redux Store
+    dispatch(deleteWorkExp({ index: index }));
+    //update the useState of "workExps"
+    const after_remove = workExps.filter((each: any) => each.key === index);
+    editWorkExps(after_remove);
   };
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
       <h3>Company {index}</h3>
-
+      <Button icon="delete" onClick={deleteExp} />
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Company Name:
         <InputGroup
@@ -120,40 +178,45 @@ const InputComp = ({ index }: Props) => {
         Job Description:{" "}
         <div className="w-full">
           <Button icon="insert" onClick={addRow} />
-          <TextArea
-            large={true}
-            style={{ width: "100%", height: 200 }}
-            fill={true}
-            onChange={(e) =>
-              dispatch(
-                editJobDescription({
-                  index: index,
-                  JobDescription: e.target.value,
-                })
-              )
-            }
-            //   value={textContent}
-          />
+          {row?.map((each: any, i: number) => (
+            <div key={i} className="border-2">
+              {each}
+            </div>
+          ))}
         </div>
       </FormGroup>
     </Card>
   );
 };
 
+//*         Important Info.       */
+// Child Component: InputComp
+//Parent Component: X
 export default function InsertWorkExp() {
   const dispatch = useDispatch();
-  const [links, insertLinks] = useState<any>([]);
+  const [workExps, editWorkExps] = useState<any>([]);
 
   const uuid = uuidv4();
 
-  const addLink = () => {
+  const addExp = () => {
+    // update the Redux Store
     dispatch(addWorkExp({ index: uuid }));
-    insertLinks(links.concat(<InputComp key={links.length} index={uuid} />));
+    //update the useState of "workExps"
+    editWorkExps(
+      workExps.concat(
+        <InputComp
+          key={workExps.length}
+          index={uuid}
+          workExps={workExps}
+          editWorkExps={editWorkExps}
+        />
+      )
+    );
   };
   return (
     <div>
-      <Button icon="insert" onClick={addLink} />
-      {links?.map((each: any, i: number) => (
+      <Button icon="insert" onClick={addExp} />
+      {workExps?.map((each: any, i: number) => (
         <div key={i} className="w-full">
           {each}
         </div>

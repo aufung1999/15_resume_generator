@@ -23,7 +23,9 @@ type Props = {
   term?: string;
 };
 
-//*****************Child Component
+//*         Important Info.       */
+// Child Component: X
+//Parent Component: InsertSkills
 const TermComp = ({ index, term }: Props) => {
   const dispatch = useDispatch();
 
@@ -32,7 +34,9 @@ const TermComp = ({ index, term }: Props) => {
   const [skillName, setSkillName] = useState("");
 
   const addSkill = () => {
+    // update the Redux Store
     dispatch(addskill({ index: index, skill: skillName }));
+    //clear the useState of "skillName"
     setSkillName("");
   };
 
@@ -74,7 +78,9 @@ const TermComp = ({ index, term }: Props) => {
   );
 };
 
-//*****************Parent Component
+//*         Important Info.       */
+// Child Component: TermComp
+//Parent Component: X
 export default function InsertSkills() {
   const dispatch = useDispatch();
 
@@ -82,7 +88,9 @@ export default function InsertSkills() {
   const [term, setTerm] = useState("");
 
   const addLink = () => {
+    // update the Redux Store
     dispatch(addterm({ index: links.length, term: term }));
+    //update the useState of "links"
     insertLinks(
       links.concat(
         <TermComp key={links.length} index={links.length} term={term} />
