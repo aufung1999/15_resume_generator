@@ -10,9 +10,31 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
 
+export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    // Signed in
+    console.log("user/Work Get");
+
+    await db.connect();
+    const exist = await Work.find({
+      email: session?.user?.email,
+    }).exec();
+    await db.disconnect();
+
+    if (exist) {
+      return NextResponse.json(exist);
+    }
+  } else {
+    // Not Signed in
+    res.status(401);
+  }
+  res.end();
+}
+
 export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
-
+  console.log('session?.user?.email: ' + session?.user?.email)
   if (session) {
     const body = await req.json();
     console.log("body: " + JSON.stringify(body, null, 1));
@@ -27,8 +49,6 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         EndDate,
         JobDescription,
       } = each;
-
-      console.log("index: " + index);
 
       //use the email from "Next-auth" to find the data in "Contact" collection
       await db.connect();

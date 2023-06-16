@@ -12,6 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   addWorkExp,
+  deleteWorkExp,
   editCompanyName,
   editPosition,
   editStartDate,
@@ -21,7 +22,6 @@ import {
   currentWorking,
   deleterow,
   WorkExpState,
-  deleteWorkExp,
 } from "@/slices/workSlice";
 import DatePicker from "react-date-picker";
 import { RootState } from "@/store/store";

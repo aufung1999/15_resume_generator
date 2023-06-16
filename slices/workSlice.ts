@@ -18,6 +18,7 @@ const workSlice = createSlice({
   initialState,
   reducers: {
     addWorkExp: (state, action) => {
+      const { index } = action.payload;
       state.push(action.payload);
     },
     deleteWorkExp: (state, action) => {

@@ -13,7 +13,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import FetchWorkExp from "./Components/fetchWorkExp";
+import FetchWorkExp from "./Components/FetchWorkExp";
 
 export default function Work() {
   const works = useSelector((state: RootState) => state.work);

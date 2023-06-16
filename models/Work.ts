@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const workSchema = new mongoose.Schema(
   {
+    email: { type: String, required: true },
     index: { type: String, required: true },
     CompanyName: { type: String, required: true },
     Position: { type: String, required: true },
