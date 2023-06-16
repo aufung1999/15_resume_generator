@@ -21,9 +21,10 @@ const workSlice = createSlice({
       state.push(action.payload);
     },
     deleteWorkExp: (state, action) => {
-
-      state.splice(state.findIndex((arrow) => arrow.index === action.payload), 1);
-
+      state.splice(
+        state.findIndex((arrow) => arrow.index !== action.payload),
+        1
+      );
     },
     editCompanyName: (state, action) => {
       const { index, CompanyName } = action.payload;

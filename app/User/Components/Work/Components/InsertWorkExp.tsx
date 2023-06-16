@@ -47,18 +47,10 @@ type rowProps = {
 const RowComp = ({ index, rowIndex, row, editRow }: rowProps) => {
   const dispatch = useDispatch();
 
-  const deleteRow = () => {
-    // update the Redux Store
-    dispatch(deleterow({ index: index, rowIndex: rowIndex }));
-    //update the useState of "row"
-    const after_remove = row.filter((each: any) => each.key === rowIndex);
-    editRow(after_remove);
-  };
-
   return (
-    <div>
+    <div key={rowIndex}>
       <div>{rowIndex}</div>
-      <Button icon="delete" onClick={deleteRow} />
+
       <TextArea
         large={true}
         style={{ width: "100%", height: 50 }}
@@ -89,9 +81,7 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
 
   const [row, editRow] = useState<any>([]);
 
-  useEffect(() => {
-
-  }, [works]);
+  useEffect(() => {}, [works]);
 
   const addRow = () => {
     const rowIndex = shortenUUID(uuidv4());
@@ -109,21 +99,21 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
         />
       )
     );
-    console.log(row);
+    // console.log(row);
   };
 
-  const deleteExp = () => {
+  const deleteRow = (received: string) => {
     // update the Redux Store
-    dispatch(deleteWorkExp({ index: index }));
-    //update the useState of "workExps"
-    const after_remove = workExps.filter((each: any) => each.key === index);
-    editWorkExps(after_remove);
+    dispatch(deleterow({ index: index, rowIndex: received }));
+    //update the useState of "row"
+    const after_remove = row.filter((each: any) => each.key === received);
+    editRow(after_remove);
   };
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
       <h3>Company {index}</h3>
-      <Button icon="delete" onClick={deleteExp} />
+
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Company Name:
         <InputGroup
@@ -180,6 +170,7 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
           <Button icon="insert" onClick={addRow} />
           {row?.map((each: any, i: number) => (
             <div key={i} className="border-2">
+              <Button icon="delete" onClick={() => deleteRow(each.key)} />
               {each}
             </div>
           ))}
@@ -196,9 +187,8 @@ export default function InsertWorkExp() {
   const dispatch = useDispatch();
   const [workExps, editWorkExps] = useState<any>([]);
 
-  const uuid = uuidv4();
-
   const addExp = () => {
+    const uuid = uuidv4();
     // update the Redux Store
     dispatch(addWorkExp({ index: uuid }));
     //update the useState of "workExps"
@@ -213,11 +203,24 @@ export default function InsertWorkExp() {
       )
     );
   };
+
+  const deleteExp = (received: string) => {
+    console.log(received);
+    // update the Redux Store
+    dispatch(deleteWorkExp({ index: received }));
+    //update the useState of "workExps"
+    const after_remove = workExps.filter((each: any) => each.key !== received);
+    if (after_remove) {
+      console.log(after_remove);
+    }
+    editWorkExps(after_remove);
+  };
   return (
     <div>
       <Button icon="insert" onClick={addExp} />
       {workExps?.map((each: any, i: number) => (
-        <div key={i} className="w-full">
+        <div key={i} className="w-full border-2">
+          <Button icon="delete" onClick={() => deleteExp(each.key)} />
           {each}
         </div>
       ))}
