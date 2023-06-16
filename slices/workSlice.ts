@@ -5,7 +5,7 @@ export interface WorkExpState {
   index: string;
   CompanyName: string;
   Position: string;
-  current: boolean;
+  current?: boolean;
   StartDate: string;
   EndDate?: string;
   JobDescription: { rowIndex: string; Row?: string }[];

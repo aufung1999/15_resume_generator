@@ -101,13 +101,12 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
     );
   };
 
-  const deleteRow = (received: string) => {
+  const deleteRow = (e: React.ChangeEvent<any>, received: string) => {
+    e.preventDefault();
     // update the Redux Store
     dispatch(deleterow({ index: index, rowIndex: received }));
     //update the useState of "row"
-    const after_remove = row.filter(
-      (each: any) => each.props.index !== received
-    );
+    const after_remove = row.filter((each: any) => each.key !== received);
     editRow(after_remove);
   };
 
@@ -171,10 +170,8 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
           <Button icon="insert" onClick={addRow} />
           {row?.map((each: any, i: number) => (
             <div key={i} className="border-2">
-              <Button
-                icon="delete"
-                onClick={() => deleteRow(each.props.index)}
-              />
+              {console.log("each: " + JSON.stringify(each, null, 1))}
+              <Button icon="delete" onClick={(e) => deleteRow(e, each.key)} />
               {each}
             </div>
           ))}
@@ -208,7 +205,8 @@ export default function InsertWorkExp() {
     );
   };
 
-  const deleteExp = (received: string) => {
+  const deleteExp = (e: React.ChangeEvent<any>, received: string) => {
+    e.preventDefault();
     // update the Redux Store
     dispatch(deleteWorkExp({ index: received }));
     //update the useState of "workExps"
@@ -222,7 +220,10 @@ export default function InsertWorkExp() {
       <Button icon="insert" onClick={addExp} />
       {workExps?.map((each: any, i: number) => (
         <div key={i} className="w-full border-2">
-          <Button icon="delete" onClick={() => deleteExp(each.props.index)} />
+          <Button
+            icon="delete"
+            onClick={(e) => deleteExp(e, each.props.index)}
+          />
           {each}
         </div>
       ))}
