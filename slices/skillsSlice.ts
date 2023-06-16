@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface SkillsState {
-  index: number;
+  index: string;
   term: string;
   skill: { skillIndex: number; skill: string }[];
 }
@@ -13,9 +13,19 @@ const awardSlice = createSlice({
   name: "skills",
   initialState,
   reducers: {
-    addterm: (state, action) => {
+    addTerm: (state, action) => {
       state.push(action.payload);
     },
+    deleteTerm: (state, action) => {
+      const { index } = action.payload;
+      // console.log("Redux index: " + index);
+
+      state.splice(
+        state.findIndex((arrow) => arrow.index === index),
+        1
+      );
+    },
+
     editTermName: (state, action) => {
       const { index, term } = action.payload;
       const Term = state.find((each) => each.index === index);
@@ -43,9 +53,7 @@ const awardSlice = createSlice({
       const Term = state.find((each) => each.index === index);
       if (Term) {
         console.log(current(Term.skill));
-        const Skill = Term.skill.find(
-          (each) => each.skillIndex === skillIndex
-        );
+        const Skill = Term.skill.find((each) => each.skillIndex === skillIndex);
         if (Skill) {
           Skill.skill = skill;
         }
@@ -54,6 +62,6 @@ const awardSlice = createSlice({
   },
 });
 
-export const { addterm, editTermName, addskill, editSkillName } =
+export const { addTerm, deleteTerm, editTermName, addskill, editSkillName } =
   awardSlice.actions;
 export default awardSlice.reducer;
