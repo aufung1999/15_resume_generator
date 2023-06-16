@@ -40,13 +40,14 @@ type rowProps = {
 //*         Important Info.       */
 // Child Component: X
 //Parent Component: InputComp
-const RowComp = ({ index, rowIndex, Row }: rowProps) => {
+const RowComp = ({ index, rowIndex }: rowProps) => {
   const dispatch = useDispatch();
 
-  // get the row from the redux store
+  // get the dynamic variable of "row" from the redux store
   const works: WorkExpState[] = useSelector((state: RootState) => state.work);
   const work = works.find((each) => each.index === index);
   const row = work?.JobDescription.find((each) => each.rowIndex === rowIndex);
+  //***/
 
   return (
     <div key={rowIndex}>

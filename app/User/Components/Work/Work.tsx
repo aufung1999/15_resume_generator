@@ -13,7 +13,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import FetchWorkExp from "./Components/FetchWorkExp";
 
 export default function Work() {
   const works = useSelector((state: RootState) => state.work);
@@ -39,13 +38,6 @@ export default function Work() {
     >
       <Toaster />
       <h1>Work</h1>
-
-      <div className=" border-4 flex flex-col items-center justify-center">
-        <div className=" w-9/12">
-          {/* Control the form size */}
-          <FetchWorkExp />
-        </div>
-      </div>
 
       <div className=" border-4 flex flex-col items-center justify-center">
         <div className=" w-9/12">
