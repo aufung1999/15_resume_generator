@@ -99,7 +99,6 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
         />
       )
     );
-    // console.log(row);
   };
 
   const deleteRow = (received: string) => {
@@ -210,16 +209,12 @@ export default function InsertWorkExp() {
   };
 
   const deleteExp = (received: string) => {
-    console.log(received);
     // update the Redux Store
     dispatch(deleteWorkExp({ index: received }));
     //update the useState of "workExps"
     const after_remove = workExps.filter(
       (each: any) => each.props.index !== received
     );
-    if (after_remove) {
-      console.log(after_remove);
-    }
     editWorkExps(after_remove);
   };
   return (

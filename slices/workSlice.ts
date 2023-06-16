@@ -22,7 +22,7 @@ const workSlice = createSlice({
     },
     deleteWorkExp: (state, action) => {
       const { index } = action.payload;
-      console.log("Redux index: " + index);
+      // console.log("Redux index: " + index);
 
       state.splice(
         state.findIndex((arrow) => arrow.index === index),
