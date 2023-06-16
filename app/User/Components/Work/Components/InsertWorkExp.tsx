@@ -31,21 +31,22 @@ import shortenUUID from "@/utils/shortenUUID";
 
 type Props = {
   index: string;
-  workExps: ReactElement[];
-  editWorkExps: Function;
 };
 type rowProps = {
   index: string;
   rowIndex: string;
-  row: ReactElement[];
-  editRow: Function; // pass from the parent component
 };
 
 //*         Important Info.       */
 // Child Component: X
 //Parent Component: InputComp
-const RowComp = ({ index, rowIndex, row, editRow }: rowProps) => {
+const RowComp = ({ index, rowIndex, Row }: rowProps) => {
   const dispatch = useDispatch();
+
+  // get the row from the redux store
+  const works: WorkExpState[] = useSelector((state: RootState) => state.work);
+  const work = works.find((each) => each.index === index);
+  const row = work?.JobDescription.find((each) => each.rowIndex === rowIndex);
 
   return (
     <div key={rowIndex}>
@@ -64,7 +65,7 @@ const RowComp = ({ index, rowIndex, row, editRow }: rowProps) => {
             })
           )
         }
-        //   value={textContent}
+        value={row ? row.Row : ""}
       />
     </div>
   );
@@ -73,7 +74,7 @@ const RowComp = ({ index, rowIndex, row, editRow }: rowProps) => {
 //*         Important Info.       */
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
-const InputComp = ({ workExps, editWorkExps, index }: Props) => {
+const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
   const works: WorkExpState[] = useSelector((state: RootState) => state.work);
@@ -81,7 +82,15 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
 
   const [row, editRow] = useState<any>([]);
 
-  useEffect(() => {}, [works]);
+  useEffect(() => {
+    work?.JobDescription.map((each: any) => {
+      editRow(
+        row.concat(
+          <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
+        )
+      );
+    });
+  }, []);
 
   const addRow = () => {
     const rowIndex = shortenUUID(uuidv4());
@@ -89,15 +98,7 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
     dispatch(addrow({ index: index, rowIndex: rowIndex }));
     //update the useState
     editRow(
-      row.concat(
-        <RowComp
-          key={rowIndex}
-          index={index}
-          rowIndex={rowIndex}
-          editRow={editRow}
-          row={row}
-        />
-      )
+      row.concat(<RowComp key={rowIndex} index={index} rowIndex={rowIndex} />)
     );
   };
 
@@ -117,6 +118,7 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Company Name:
         <InputGroup
+          value={work ? work?.CompanyName : ""}
           onChange={(e) =>
             dispatch(
               editCompanyName({ index: index, CompanyName: e.target.value })
@@ -125,13 +127,15 @@ const InputComp = ({ workExps, editWorkExps, index }: Props) => {
         />
         Position:{" "}
         <InputGroup
+          value={work ? work?.Position : ""}
           onChange={(e) =>
             dispatch(editPosition({ index: index, Position: e.target.value }))
           }
         />
         {/* ---------------------------Time Related-------------------------- */}
         <Switch
-          onChange={(value) =>
+          checked={work?.current}
+          onChange={() =>
             work?.current
               ? dispatch(
                   currentWorking({
@@ -188,20 +192,65 @@ export default function InsertWorkExp() {
   const dispatch = useDispatch();
   const [workExps, editWorkExps] = useState<any>([]);
 
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch("/api/user/work", {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      console.log(res);
+      const receivedata = await res.json();
+      console.log("data: " + JSON.stringify(receivedata, null, 1));
+
+      receivedata.map((each: WorkExpState) => {
+        //---After receive data from MongoDB, dispatch to Redux
+        dispatch(addWorkExp({ index: each.index }));
+        dispatch(
+          editCompanyName({ index: each.index, CompanyName: each.CompanyName })
+        );
+        dispatch(editPosition({ index: each.index, Position: each.Position }));
+        dispatch(
+          editStartDate({ index: each.index, StartDate: each.StartDate })
+        );
+        dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
+        dispatch(
+          currentWorking({
+            index: each.index,
+            current: each.current === undefined ? false : each.current,
+          })
+        );
+        each.JobDescription.map((row) => {
+          dispatch(addrow({ index: each.index, rowIndex: row.rowIndex }));
+          dispatch(
+            editJobDescription({
+              index: each.index,
+              rowIndex: row.rowIndex,
+              Row: row.Row,
+            })
+          );
+        });
+
+        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+        editWorkExps(
+          workExps.concat(
+            <InputComp key={workExps.length} index={each.index} />
+          )
+        );
+      });
+    };
+    getData();
+  }, []);
+
   const addExp = () => {
     const uuid = uuidv4();
     // update the Redux Store
     dispatch(addWorkExp({ index: uuid }));
     //update the useState of "workExps"
     editWorkExps(
-      workExps.concat(
-        <InputComp
-          key={workExps.length}
-          index={uuid}
-          workExps={workExps}
-          editWorkExps={editWorkExps}
-        />
-      )
+      workExps.concat(<InputComp key={workExps.length} index={uuid} />)
     );
   };
 
