@@ -23,23 +23,25 @@ import {
   editStartDate,
   editEndDate,
   currentStudying,
+  EducationState,
+  deleteEducation,
 } from "@/slices/educationSlice";
 import { RootState } from "@/store/store";
 
+import { v4 as uuidv4 } from "uuid";
+import shortenUUID from "@/utils/shortenUUID";
+
 type Props = {
-  index: number;
+  index: string;
 };
 
 const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
-  const education = useSelector((state: RootState) => state.education);
-
-  //---test---
-  if (education.length !== 0) {
-    console.log(education);
-    console.log(education[index].StartDate);
-  }
+  const educations: EducationState[] = useSelector(
+    (state: RootState) => state.education
+  );
+  const education = educations.find((each) => each.index === index);
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -48,6 +50,7 @@ const InputComp = ({ index }: Props) => {
       <FormGroup labelFor="text-input" labelInfo="(required)">
         School Name:
         <InputGroup
+          value={education ? education?.SchoolName : ""}
           onChange={(e) =>
             dispatch(
               editSchoolName({ index: index, SchoolName: e.target.value })
@@ -56,24 +59,27 @@ const InputComp = ({ index }: Props) => {
         />
         Degree:{" "}
         <InputGroup
+          value={education ? education?.Degree : ""}
           onChange={(e) =>
             dispatch(editDegree({ index: index, Degree: e.target.value }))
           }
         />
         Subject:{" "}
         <InputGroup
+          value={education ? education?.Subject : ""}
           onChange={(e) =>
             dispatch(editSubject({ index: index, Subject: e.target.value }))
           }
         />
         {/* ---------------------------Time Related-------------------------- */}
         <Switch
+          checked={education?.current}
           onChange={(value) =>
-            education[index].current
+            education?.current
               ? dispatch(
                   currentStudying({
                     index: index,
-                    current: !education[index].current,
+                    current: !education.current,
                   })
                 )
               : dispatch(currentStudying({ index: index, current: true }))
@@ -87,7 +93,7 @@ const InputComp = ({ index }: Props) => {
               onChange={(value) =>
                 dispatch(editStartDate({ index: index, StartDate: value }))
               }
-              value={education[index].StartDate || null}
+              value={education?.StartDate ? education.StartDate : null}
             />
           </div>
           End Date:
@@ -96,8 +102,8 @@ const InputComp = ({ index }: Props) => {
               onChange={(value) =>
                 dispatch(editEndDate({ index: index, EndDate: value }))
               }
-              value={education[index].EndDate || null}
-              disabled={education[index].current}
+              value={education?.EndDate ? education.EndDate : null}
+              disabled={education?.current ? education.current : false}
             />
           </div>
         </div>
@@ -110,20 +116,43 @@ const InputComp = ({ index }: Props) => {
 export default function InsertEducation() {
   const dispatch = useDispatch();
 
-  const [links, insertLinks] = useState<any>([]);
+  const [educations, editEducations] = useState<any>([]);
 
-  const addLink = () => {
-    dispatch(addEducation({ index: links.length }));
-
-    insertLinks(
-      links.concat(<InputComp key={links.length} index={links.length} />)
+  //---------------ADD/DELETE-------------------
+  const addEdu = () => {
+    //initialize the "index"
+    const uuid = uuidv4();
+    const short_id = shortenUUID(uuid);
+    // update the Redux Store
+    dispatch(addEducation({ index: short_id }));
+    //update the useState of "educations"
+    editEducations(
+      educations.concat(<InputComp key={short_id} index={short_id} />)
     );
   };
+
+  const deleteEdu = (e: React.ChangeEvent<any>, received: string) => {
+    e.preventDefault();
+    // update the Redux Store
+    dispatch(deleteEducation({ index: received }));
+    //update the useState of "educations"
+    const after_remove = educations.filter(
+      (each: any) => each.props.index !== received
+    );
+    editEducations(after_remove);
+  };
+  //***/
   return (
     <div>
-      <Button icon="insert" onClick={addLink} />
-      {links?.map((each: any, index: number) => (
-        <div key={index}>{each}</div>
+      <Button icon="insert" onClick={addEdu} />
+      {educations?.map((each: any, i: number) => (
+        <div key={i}>
+          <Button
+            icon="delete"
+            onClick={(e) => deleteEdu(e, each.props.index)}
+          />
+          {each}
+        </div>
       ))}
     </div>
   );

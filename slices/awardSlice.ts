@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface AwardState {
-  index: number;
+  index: string;
   AwardName: string;
   AwardBy: string;
   Date: string;
@@ -17,6 +17,13 @@ const awardSlice = createSlice({
   reducers: {
     addAward: (state, action) => {
       state.push(action.payload);
+    },
+    deleteAward: (state, action) => {
+      const { index } = action.payload;
+      state.splice(
+        state.findIndex((arrow) => arrow.index === index),
+        1
+      );
     },
     editAwardName: (state, action) => {
       const { index, AwardName } = action.payload;
@@ -52,6 +59,7 @@ const awardSlice = createSlice({
 
 export const {
   addAward,
+  deleteAward,
   editAwardName,
   editAwardBy,
   editDate,

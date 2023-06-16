@@ -93,6 +93,7 @@ const InputComp = ({ index }: Props) => {
     });
   }, []);
 
+  //---------------ADD/DELETE-------------------
   const addRow = () => {
     const rowIndex = shortenUUID(uuidv4());
     // update the Redux Store
@@ -111,6 +112,7 @@ const InputComp = ({ index }: Props) => {
     const after_remove = row.filter((each: any) => each.key !== received);
     editRow(after_remove);
   };
+  //***/
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -245,7 +247,9 @@ export default function InsertWorkExp() {
     getData();
   }, []);
 
+  //---------------ADD/DELETE-------------------
   const addExp = () => {
+    //initialize the "index"
     const uuid = uuidv4();
     // update the Redux Store
     dispatch(addWorkExp({ index: uuid }));
@@ -265,6 +269,7 @@ export default function InsertWorkExp() {
     );
     editWorkExps(after_remove);
   };
+  //***/
   return (
     <div>
       <Button icon="insert" onClick={addExp} />

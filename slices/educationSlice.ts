@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface EducationState {
-  index: number;
+  index: string;
   SchoolName: string;
   Degree: string;
   Subject: string;
@@ -20,7 +20,15 @@ const educationSlice = createSlice({
     addEducation: (state, action) => {
       state.push(action.payload);
     },
+    deleteEducation: (state, action) => {
+      const { index } = action.payload;
+      // console.log("Redux index: " + index);
 
+      state.splice(
+        state.findIndex((arrow) => arrow.index === index),
+        1
+      );
+    },
     editSchoolName: (state, action) => {
       const { index, SchoolName } = action.payload;
       const Education = state.find((each) => each.index === index);
@@ -68,6 +76,7 @@ const educationSlice = createSlice({
 
 export const {
   addEducation,
+  deleteEducation,
   editSchoolName,
   editDegree,
   editSubject,
