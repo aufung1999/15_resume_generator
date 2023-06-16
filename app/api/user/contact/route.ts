@@ -56,16 +56,17 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       GitHub,
     } = body;
 
+
+    //use the email from "Next-auth" to find the data in "Contact" collection
     await db.connect();
     const exist = await Contact.findOne({
       email: session?.user?.email,
     });
     await db.disconnect();
+    //***/
 
+    //if "Contact" collction has the data
     if (exist) {
-      //   console.log("exist");
-      //   console.log(exist.Email);
-
       const filter = { email: session?.user?.email };
       const update = {
         FirstName: FirstName,
@@ -89,7 +90,9 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
 
       return NextResponse.json({ message: "Hello" });
     }
+    //***/
 
+    //if "Contact" collction does NOT have the data
     const contact = await new Contact({
       email: session?.user?.email,
       FirstName: FirstName,
@@ -106,6 +109,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     });
 
     await contact.save();
+    //***/
 
     return NextResponse.json({ message: "Hello" });
   } else {
