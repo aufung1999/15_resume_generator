@@ -8,25 +8,27 @@ import {
   InputGroup,
 } from "@blueprintjs/core";
 
-const InputComp = ({ index }) => {
+type Props = {
+  index: string;
+};
+
+const InputComp = ({ index }: Props) => {
   return <input placeholder={"Your input here" + index} />;
 };
 
 export default function InsertLink() {
-  const [links, insertLinks] = useState([]);
+  const [links, insertLinks] = useState<any>([]);
 
-  const addLink = (event) => {
+  const addLink = (event: React.ChangeEvent<any>) => {
     insertLinks(
-      (links as []).concat(
-        <InputComp key={links.length} index={links.length} />
-      )
+      links.concat(<InputComp key={links.length} index={links.length} />)
     );
   };
   return (
     <div>
       <Button icon="insert" onClick={addLink}></Button>
-      {links?.map((each, index) => (
-        <div key={index}>{each}</div>
+      {links?.map((each: any, i: number) => (
+        <div key={i}>{each}</div>
       ))}
     </div>
   );
