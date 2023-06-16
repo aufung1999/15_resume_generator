@@ -22,7 +22,7 @@ const workSlice = createSlice({
     },
     deleteWorkExp: (state, action) => {
       state.splice(
-        state.findIndex((arrow) => arrow.index !== action.payload),
+        state.findIndex((arrow) => arrow.index === action.payload),
         1
       );
     },
