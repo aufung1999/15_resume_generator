@@ -12,8 +12,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   SkillsState,
-  addskill,
+  addSkill,
   addTerm,
+  deleteSkill,
   deleteTerm,
   editSkillName,
   editTermName,
@@ -39,12 +40,29 @@ const TermComp = ({ index, term }: Props) => {
 
   const [skillName, setSkillName] = useState("");
 
-  const addSkill = () => {
+  //---------------ADD/DELETE-------------------
+  const addskill = () => {
+    const skillIndex = shortenUUID(uuidv4());
     // update the Redux Store
-    dispatch(addskill({ index: index, skill: skillName }));
+    dispatch(
+      addSkill({ index: index, skillIndex: skillIndex, skill: skillName })
+    );
     //clear the useState of "skillName"
     setSkillName("");
   };
+
+  const deleteskill = (e: React.ChangeEvent<any>, received: string) => {
+    {
+      console.log("received: " + JSON.stringify(received, null, 1));
+    }
+    e.preventDefault();
+    // update the Redux Store
+    dispatch(deleteSkill({ index: index, skillIndex: received }));
+    // //update the useState of "row"
+    // const after_remove = row.filter((each: any) => each.key !== received);
+    // editRow(after_remove);
+  };
+  //***/
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -58,15 +76,21 @@ const TermComp = ({ index, term }: Props) => {
         }
       />
 
-      <Button icon="insert" onClick={addSkill} />
+      <Button icon="insert" onClick={addskill} />
       <InputGroup
         onChange={(e) => setSkillName(e.target.value)}
         value={skillName}
       />
 
-      {skill?.skill?.map((each: any) => (
-        <div key={index}>
-          {each.skill}
+      {skill?.Skill_list?.map((each: any, i: number) => (
+        <div key={i}>
+          <div>{each.skill}</div>
+          <div>{each.skillIndex}</div>
+
+          <Button
+            icon="delete"
+            onClick={(e) => deleteskill(e, each.skillIndex)}
+          />
           <InputGroup
             onChange={(e) =>
               dispatch(
@@ -99,7 +123,7 @@ export default function InsertSkills() {
     const uuid = uuidv4();
     const short_id = shortenUUID(uuid);
     // update the Redux Store
-    dispatch(addTerm({ index: terms.length, term: term }));
+    dispatch(addTerm({ index: short_id, term: term }));
     //update the useState of "terms"
     editTerms(
       terms.concat(<TermComp key={short_id} index={short_id} term={term} />)
@@ -122,8 +146,8 @@ export default function InsertSkills() {
     <div>
       <Button icon="insert" onClick={addterm} />
       <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
-      {terms?.map((each: any, index: number) => (
-        <div key={index}>
+      {terms?.map((each: any, i: number) => (
+        <div key={i}>
           <Button
             icon="delete"
             onClick={(e) => deleteterm(e, each.props.index)}

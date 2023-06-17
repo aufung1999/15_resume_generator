@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface SkillsState {
   index: string;
   term: string;
-  skill: { skillIndex: number; skill: string }[];
+  Skill_list: { skillIndex: number; skill: string }[];
 }
 
 const initialState: SkillsState[] = [];
@@ -34,26 +34,38 @@ const awardSlice = createSlice({
       }
     },
 
-    addskill: (state, action) => {
-      const { index, skill } = action.payload;
+    addSkill: (state, action) => {
+      const { index, skill, skillIndex } = action.payload;
       const Term = state.find((each) => each.index === index);
 
       if (Term) {
-        if (Term.skill === undefined) {
-          Term.skill = [];
+        if (Term.Skill_list === undefined) {
+          Term.Skill_list = [];
         }
-        Term.skill.push({
-          skillIndex: Term.skill.length,
+        Term.Skill_list.push({
+          skillIndex: skillIndex,
           skill: skill,
         });
       }
     },
+    deleteSkill: (state, action) => {
+      const { index, skillIndex } = action.payload;
+      let Term = state.find((each) => each.index === index);
+      if (Term) {
+        // WorkExp.JobDescription.push({ rowIndex: rowIndex });
+        Term.Skill_list.splice(
+          Term.Skill_list.findIndex((arrow) => arrow.skillIndex === skillIndex),
+          1
+        );
+      }
+    },
+
     editSkillName: (state, action) => {
       const { index, skillIndex, skill } = action.payload;
       const Term = state.find((each) => each.index === index);
       if (Term) {
-        console.log(current(Term.skill));
-        const Skill = Term.skill.find((each) => each.skillIndex === skillIndex);
+        console.log(current(Term.Skill_list));
+        const Skill = Term.Skill_list.find((each) => each.skillIndex === skillIndex);
         if (Skill) {
           Skill.skill = skill;
         }
@@ -62,6 +74,12 @@ const awardSlice = createSlice({
   },
 });
 
-export const { addTerm, deleteTerm, editTermName, addskill, editSkillName } =
-  awardSlice.actions;
+export const {
+  addTerm,
+  deleteTerm,
+  editTermName,
+  addSkill,
+  deleteSkill,
+  editSkillName,
+} = awardSlice.actions;
 export default awardSlice.reducer;
