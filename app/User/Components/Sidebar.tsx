@@ -18,7 +18,7 @@ interface Props {
   setSomeState: Dispatch<string>;
 }
 
-export default function Sidebar({ setTab }) {
+export default function Sidebar({ setTab }:any) {
   return (
     <div className=" flex justify-between border w-full">
       <Button icon="id-number" onClick={() => setTab("Contact")}>

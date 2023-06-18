@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React from "react";
 import {
   Button,
@@ -14,9 +14,15 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 
-export default function Work() {
+import { motion, useScroll, useSpring } from "framer-motion";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import db from "@/utils/db";
+import Work from "@/models/Work";
+
+export default function WorkComp() {
   const works = useSelector((state: RootState) => state.work);
-  
+  // console.log("server_works: " + JSON.stringify(server_works, null, 1));
   // Save to server
   const SubmitHandler = () => {
     // console.log(contact);
@@ -41,10 +47,15 @@ export default function Work() {
       <h1>Work</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
-        <div className=" w-9/12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          // exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          className=" w-9/12"
+        >
           {/* Control the form size */}
           <InsertWorkExp />
-        </div>
+        </motion.div>
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
@@ -52,3 +63,20 @@ export default function Work() {
     </Card>
   );
 }
+
+// export async function getStaticProps() {
+//   try {
+//     const session = await getServerSession(authOptions);
+//     await db.connect();
+//     const exist = await Work.find({
+//       email: session?.user?.email,
+//     }).exec();
+//     await db.disconnect();
+
+//     return {
+//       props: { works: JSON.parse(JSON.stringify(exist)) },
+//     };
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }

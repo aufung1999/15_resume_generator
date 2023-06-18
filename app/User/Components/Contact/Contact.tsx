@@ -30,40 +30,40 @@ import type { RootState } from "@/store/store";
 
 import toast, { Toaster } from "react-hot-toast";
 
+import useSWR from "swr";
+
 export default function Contact() {
   const contact = useSelector((state: RootState) => state.contact);
   const dispatch = useDispatch();
 
-  const [data, setData] = useState(null);
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error, isLoading } = useSWR("/api/user/contact", fetcher);
 
   useEffect(() => {
-    const getData = async () => {
-      const res = await fetch("/api/user/contact", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-
-      console.log(res);
-      const receivedata = await res.json();
-      console.log("data: " + JSON.stringify(data, null, 1));
+    const getData = () => {
+      // const res = await fetch("/api/user/contact", {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-type": "application/json; charset=UTF-8",
+      //   },
+      // });
+      // const receivedata = await res.json();
 
       //---After receive data from MongoDB, dispatch to Redux
-      dispatch(editEmail(receivedata.Email));
-      dispatch(editFirstName(receivedata.FirstName));
-      dispatch(editLastName(receivedata.LastName));
-      dispatch(editPhoneNumber(receivedata.PhoneNumber));
-      dispatch(editCountry(receivedata.Country));
-      dispatch(editCity(receivedata.City));
-      dispatch(editState(receivedata.State));
-      dispatch(editZipCode(receivedata.ZipCode));
-      dispatch(editPortfolio(receivedata.Portfolio));
-      dispatch(editLinkedIn(receivedata.LinkedIn));
-      dispatch(editGitHub(receivedata.GitHub));
+      dispatch(editEmail(data?.Email));
+      dispatch(editFirstName(data?.FirstName));
+      dispatch(editLastName(data?.LastName));
+      dispatch(editPhoneNumber(data?.PhoneNumber));
+      dispatch(editCountry(data?.Country));
+      dispatch(editCity(data?.City));
+      dispatch(editState(data?.State));
+      dispatch(editZipCode(data?.ZipCode));
+      dispatch(editPortfolio(data?.Portfolio));
+      dispatch(editLinkedIn(data?.LinkedIn));
+      dispatch(editGitHub(data?.GitHub));
     };
     getData();
-  }, []);
+  }, [data]);
 
   // Save to server
   const SubmitHandler = () => {

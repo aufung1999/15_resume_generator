@@ -28,6 +28,12 @@ import { RootState } from "@/store/store";
 
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
+import db from "@/utils/db";
+import { getServerSession } from "next-auth";
+import Work from "@/models/Work";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+import useSWR from "swr";
 
 type Props = {
   index: string;
@@ -177,7 +183,6 @@ const InputComp = ({ index }: Props) => {
           <Button icon="insert" onClick={addRow} />
           {row?.map((each: any, i: number) => (
             <div key={i} className="border-2">
-              {console.log("each: " + JSON.stringify(each, null, 1))}
               <Button icon="delete" onClick={(e) => deleteRow(e, each.key)} />
               {each}
             </div>
@@ -195,20 +200,21 @@ export default function InsertWorkExp() {
   const dispatch = useDispatch();
   const [workExps, editWorkExps] = useState<any>([]);
 
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error, isLoading } = useSWR("/api/user/work", fetcher);
+
+  //fetch data from the collection of "works" from Database at the initial stage
   useEffect(() => {
-    const getData = async () => {
-      const res = await fetch("/api/user/work", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
+    const getData = () => {
+      //   const res = await fetch("/api/user/work", {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-type": "application/json; charset=UTF-8",
+      //     },
+      //   });
+      //   const receivedata = await res.json();
 
-      console.log(res);
-      const receivedata = await res.json();
-      console.log("data: " + JSON.stringify(receivedata, null, 1));
-
-      receivedata.map((each: WorkExpState) => {
+      data?.map((each: WorkExpState) => {
         //---After receive data from MongoDB, dispatch to Redux
         dispatch(addWorkExp({ index: each.index }));
         dispatch(
@@ -245,7 +251,7 @@ export default function InsertWorkExp() {
       });
     };
     getData();
-  }, []);
+  }, [data]);
 
   //---------------ADD/DELETE-------------------
   const addExp = () => {
@@ -285,3 +291,20 @@ export default function InsertWorkExp() {
     </div>
   );
 }
+
+// export async function getStaticProps() {
+//   try {
+//     const session = await getServerSession(authOptions);
+//     await db.connect();
+//     const exist = await Work.find({
+//       email: session?.user?.email,
+//     }).exec();
+//     // await db.disconnect();
+
+//     return {
+//       props: { works: JSON.parse(JSON.stringify(exist)) },
+//     };
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }

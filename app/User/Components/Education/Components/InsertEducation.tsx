@@ -118,6 +118,8 @@ export default function InsertEducation() {
 
   const [educations, editEducations] = useState<any>([]);
 
+  
+
   //---------------ADD/DELETE-------------------
   const addEdu = () => {
     //initialize the "index"

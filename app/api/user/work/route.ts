@@ -14,7 +14,7 @@ export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
   if (session) {
     // Signed in
-    console.log("user/Work Get");
+    // console.log("user/Work Get");
 
     await db.connect();
     const exist = await Work.find({
@@ -34,10 +34,10 @@ export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
 
 export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
-  console.log('session?.user?.email: ' + session?.user?.email)
+  // console.log('session?.user?.email: ' + session?.user?.email)
   if (session) {
     const body = await req.json();
-    console.log("body: " + JSON.stringify(body, null, 1));
+    // console.log("body: " + JSON.stringify(body, null, 1));
 
     body.map(async (each: WorkExpState) => {
       const {

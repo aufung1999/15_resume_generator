@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 import PersonalInfo from "./Components/PersonalInfo";
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const { data: session, status } = useSession({
     required: true,
@@ -16,6 +16,9 @@ export default function page() {
       router.push("./login");
     },
   });
+
+
+
   return (
     <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex border-4">
       {/* h-screen */}
