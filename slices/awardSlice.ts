@@ -12,7 +12,7 @@ export interface AwardState {
 const initialState: AwardState[] = [];
 
 const awardSlice = createSlice({
-  name: "award",
+  name: "awards",
   initialState,
   reducers: {
     addAward: (state, action) => {

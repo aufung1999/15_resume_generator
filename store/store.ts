@@ -5,6 +5,7 @@ import workReducer from "../slices/workSlice";
 import educationReducer from "../slices/educationSlice";
 import awardReducer from "../slices/awardSlice";
 import skillsReducer from "../slices/skillsSlice";
+import objectiveReducer from "@/slices/objectiveSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     education: educationReducer,
     award: awardReducer,
     skills: skillsReducer,
+    objectives: objectiveReducer,
   },
   devTools: true,
 });

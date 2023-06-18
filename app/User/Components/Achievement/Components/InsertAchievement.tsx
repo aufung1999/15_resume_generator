@@ -32,11 +32,11 @@ type Props = {
 const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
-  const awards: AwardState[] = useSelector((state: RootState) => state.award);
+  const awards:AwardState[] = useSelector((state: RootState) => state.award);
   const award = awards.find((each) => each.index === index);
 
   return (
-    <Card interactive style={{ background: "gray", color: "white" }}>
+    <Card interactive={false} style={{ background: "gray", color: "white" }}>
       <h3>Award {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
