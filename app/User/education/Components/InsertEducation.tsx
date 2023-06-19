@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -30,6 +30,8 @@ import { RootState } from "@/store/store";
 
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
+
+import useSWR from "swr";
 
 type Props = {
   index: string;
@@ -118,7 +120,41 @@ export default function InsertEducation() {
 
   const [educations, editEducations] = useState<any>([]);
 
-  
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error, isLoading } = useSWR("/api/user/education", fetcher);
+
+  //fetch data from the collection of "educations" from Database at the initial stage
+  useEffect(() => {
+    const getData = () => {
+      data?.map((each: EducationState) => {
+        //---After receive data from MongoDB, dispatch to Redux
+        dispatch(addEducation({ index: each.index }));
+        dispatch(
+          editSchoolName({ index: each.index, SchoolName: each.SchoolName })
+        );
+        dispatch(editDegree({ index: each.index, Degree: each.Degree }));
+        dispatch(editSubject({ index: each.index, Subject: each.Subject }));
+        dispatch(
+          currentStudying({
+            index: each.index,
+            current: each.current === undefined ? false : each.current,
+          })
+        );
+        dispatch(
+          editStartDate({ index: each.index, StartDate: each.StartDate })
+        );
+        dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
+
+        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+        editEducations(
+          educations.concat(
+            <InputComp key={educations.length} index={each.index} />
+          )
+        );
+      });
+    };
+    getData();
+  }, [data]);
 
   //---------------ADD/DELETE-------------------
   const addEdu = () => {

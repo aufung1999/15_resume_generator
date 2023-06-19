@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 //   editJobDescription,
 // } from "@/slices/workSlice";
 
-const InputComp = ({ index }) => {
+const InputComp = ({ index }: any) => {
   const dispatch = useDispatch();
   return (
     <Card interactive style={{ background: "gray", color: "white" }}>
@@ -28,23 +28,23 @@ const InputComp = ({ index }) => {
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Company Name:
         <InputGroup
-          // onChange={(e) =>
-          //   dispatch(
-          //     editCompanyName({ index: index, CompanyName: e.target.value })
-          //   )
-          // }
+        // onChange={(e) =>
+        //   dispatch(
+        //     editCompanyName({ index: index, CompanyName: e.target.value })
+        //   )
+        // }
         />
         Position:{" "}
         <InputGroup
-          // onChange={(e) =>
-          //   dispatch(editPosition({ index: index, Position: e.target.value }))
-          // }
+        // onChange={(e) =>
+        //   dispatch(editPosition({ index: index, Position: e.target.value }))
+        // }
         />
         Start Date:{" "}
         <InputGroup
-          // onChange={(e) =>
-          //   dispatch(editStartDate({ index: index, StartDate: e.target.value }))
-          // }
+        // onChange={(e) =>
+        //   dispatch(editStartDate({ index: index, StartDate: e.target.value }))
+        // }
         />
         End Date:
         <InputGroup
@@ -77,7 +77,7 @@ const InputComp = ({ index }) => {
 
 export default function InsertEducation() {
   const dispatch = useDispatch();
-  const [links, insertLinks] = useState([]);
+  const [links, insertLinks] = useState<any>([]);
 
   const addLink = (event) => {
     // dispatch(addWorkExp({ index: links.length }));

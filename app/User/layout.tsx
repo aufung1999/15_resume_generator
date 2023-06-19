@@ -1,9 +1,83 @@
+import "@blueprintjs/core/lib/css/blueprint.css";
+import {
+  Navbar,
+  NavbarHeading,
+  NavbarGroup,
+  NavbarDivider,
+  Button,
+  Alignment,
+  Popover,
+  Tooltip,
+  Position,
+  Icon,
+  IconSize,
+} from "@blueprintjs/core";
+import Link from "next/link";
+
 export default function UserLayout({
-    children,
-  }: {
-    children: React.ReactNode
-  }) {
-    return <section>
-        
-        {children}</section>
-  }
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="flex flex-row">
+      <div className=" flex flex-col justify-evenly border-4 border-red-300 w-2/12">
+        {/* icon="id-number"  */}
+        <Link href="/user/contact">
+          <div className=" text-xs hover:text-sm">
+          {/* <Icon icon="id-number" size={IconSize} intent={intent} /> */}
+            Contact</div>
+        </Link>
+
+        <Link href="/user/work">
+          <div className=" text-xs hover:text-sm">Work</div>
+        </Link>
+
+        <Link href="/user/education">
+          <div className=" text-xs hover:text-sm">Education</div>
+        </Link>
+
+        <Link href="/user/skills">
+          <div className=" text-xs hover:text-sm">Skills</div>
+        </Link>
+
+        <Link href="/user/award">
+          <div className=" text-xs hover:text-sm">Award</div>
+        </Link>
+
+        <Link href="/user/objective">
+          <div className=" text-xs hover:text-sm">Objective</div>
+        </Link>
+
+        <Link href="/user/others">
+          <div className=" text-xs hover:text-sm">Others</div>
+        </Link>
+
+        {/* <Button icon="build" onClick={() => setTab("Work")}>
+          <div className=" text-xs hover:text-sm">Work</div>
+        </Button>
+
+        <Button icon="learning" onClick={() => setTab("Education")}>
+          <div className=" text-xs hover:text-sm">Education</div>
+        </Button>
+
+        <Button icon="star" onClick={() => setTab("Achievement")}>
+          <div className=" text-xs hover:text-sm">Achievement</div>
+        </Button>
+
+        <Button icon="property" onClick={() => setTab("Skills")}>
+          <div className=" text-xs hover:text-sm">Skills</div>
+        </Button>
+
+        <Button icon="flag" onClick={() => setTab("Objective")}>
+          <div className=" text-xs hover:text-sm">Objective</div>
+        </Button>
+
+        <Button icon="application" onClick={() => setTab("Others")}>
+          <div className=" text-xs hover:text-sm">Others</div>
+        </Button> */}
+      </div>
+      <div className=" w-full">{children}</div>
+    </section>
+  );
+}

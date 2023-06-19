@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -23,6 +23,8 @@ import { RootState } from "@/store/store";
 
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
+
+import useSWR from "swr";
 
 type Props = {
   index: string;
@@ -52,9 +54,6 @@ const TermComp = ({ index, term }: Props) => {
   };
 
   const deleteskill = (e: React.ChangeEvent<any>, received: string) => {
-    {
-      console.log("received: " + JSON.stringify(received, null, 1));
-    }
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteSkill({ index: index, skillIndex: received }));
@@ -114,8 +113,43 @@ const TermComp = ({ index, term }: Props) => {
 export default function InsertSkills() {
   const dispatch = useDispatch();
 
+  const skills: SkillsState[] = useSelector((state: RootState) => state.skills);
+
   const [terms, editTerms] = useState<any>([]);
   const [term, setTerm] = useState("");
+
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data, error, isLoading } = useSWR("/api/user/skill", fetcher);
+  //fetch data from the collection of "Skills" from Database at the initial stage
+  useEffect(() => {
+    let temp_arr: any[] = [];
+    const getData = async () => {
+      data?.map((each: SkillsState) => {
+        //---After receive data from MongoDB, dispatch to Redux
+        dispatch(addTerm({ index: each.index }));
+        dispatch(editTermName({ index: each.index, term: each.term }));
+
+        each.Skill_list?.map((row) => {
+          dispatch(addSkill({ index: each.index, skillIndex: row.skillIndex }));
+          dispatch(
+            editSkillName({
+              index: each.index,
+              skillIndex: row.skillIndex,
+              skill: row.skill,
+            })
+          );
+        });
+        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+        temp_arr.push(
+          <TermComp key={each.index} index={each.index} term={each.term} />
+        );
+      });
+    };
+    getData();
+
+    //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    editTerms(temp_arr);
+  }, [data]);
 
   //---------------ADD/DELETE-------------------
   const addterm = () => {
@@ -144,6 +178,7 @@ export default function InsertSkills() {
   //***/
   return (
     <div>
+      {console.log("terms: " + JSON.stringify(terms, null, 1))}
       <Button icon="insert" onClick={addterm} />
       <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
       {terms?.map((each: any, i: number) => (

@@ -7,23 +7,20 @@ import {
   FormGroup,
   InputGroup,
 } from "@blueprintjs/core";
-import InsertAchievement from "./Components/InsertAchievement";
+import InsertObjective from "./Components/InsertObjective";
 
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 
-export default function Achievement() {
-  const awards = useSelector((state: RootState) => state.award);
-
+export default function Page() {
+  const objectives = useSelector((state: RootState) => state.objectives);
   // Save to server
   const SubmitHandler = () => {
-    // console.log(contact);
-
-    fetch("/api/user/award", {
+    fetch("/api/user/objective", {
       method: "POST",
-      body: JSON.stringify(awards),
+      body: JSON.stringify(objectives),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -37,10 +34,11 @@ export default function Achievement() {
       interactive={false}
       elevation={Elevation.TWO}
     >
-      <h1>Achievement</h1>
+      <Toaster />
+      <h1>Objective</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
         <div className=" w-9/12">
-          <InsertAchievement />
+          <InsertObjective />
         </div>
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>

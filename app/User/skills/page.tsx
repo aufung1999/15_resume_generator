@@ -7,25 +7,26 @@ import {
   FormGroup,
   InputGroup,
 } from "@blueprintjs/core";
-import InsertObjective from "./Components/InsertObjective";
+import InsertSkills from "./Components/InsertSkills";
 
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 
-export default function Objective() {
-  const objectives = useSelector((state: RootState) => state.objectives);
+export default function Page() {
+  const skills = useSelector((state: RootState) => state.skills);
+
   // Save to server
   const SubmitHandler = () => {
-    fetch("/api/user/objective", {
+    fetch("/api/user/skill", {
       method: "POST",
-      body: JSON.stringify(objectives),
+      body: JSON.stringify(skills),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Work Info Updated!"))
+      .then(() => toast.success("User Skill Info Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
@@ -34,11 +35,12 @@ export default function Objective() {
       interactive={false}
       elevation={Elevation.TWO}
     >
-      <Toaster />
-      <h1>Objective</h1>
+      <h1>Skills</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
         <div className=" w-9/12">
-          <InsertObjective />
+          {" "}
+          {/* Control the form size */}
+          <InsertSkills />
         </div>
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>

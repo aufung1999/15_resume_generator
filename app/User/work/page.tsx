@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import React from "react";
 import {
   Button,
@@ -20,7 +20,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/utils/db";
 import Work from "@/models/Work";
 
-export default function WorkComp() {
+export default function Page() {
   const works = useSelector((state: RootState) => state.work);
   // console.log("server_works: " + JSON.stringify(server_works, null, 1));
   // Save to server

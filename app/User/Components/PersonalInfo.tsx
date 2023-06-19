@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   Button,
@@ -13,30 +13,28 @@ import {
 } from "@blueprintjs/core";
 import Sidebar from "./Sidebar";
 
-import Contact from "./Contact/Contact";
-import WorkComp from "./Work/WorkComp";
-import Education from "./Education/Education";
-import Achievement from "./Achievement/Achievement";
-import Skills from "./Skills/Skills";
-import Objective from "./Objective/Objective";
-import Others from "./Others/Others";
-import { AnimatePresence } from "framer-motion";
+import Contact from "../contact/page";
+import WorkComp from "../work/page";
+import Education from "../education/page";
+// import Achievement from "./Achievement/Achievement";
+import Skills from "../skills/page";
+import Objective from "../objective/page";
+import Others from "../others/page";
 
 export default function PersonalInfo() {
   const [tab, setTab] = useState<string>("Contact");
 
   return (
     <div className=" border-4 flex flex-col">
-      <Sidebar setTab={setTab} />
-      <AnimatePresence>
-        {tab === "Contact" && <Contact />}
-        {tab === "Work" && <WorkComp />}
-        {tab === "Education" && <Education />}
-        {tab === "Achievement" && <Achievement />}
-        {tab === "Skills" && <Skills />}
-        {tab === "Objective" && <Objective />}
-        {tab === "Others" && <Others />}
-      </AnimatePresence>
+      {/* <Sidebar setTab={setTab} />
+
+      {tab === "Contact" && <Contact />}
+      {tab === "Work" && <WorkComp />}
+      {tab === "Education" && <Education />}
+      {tab === "Achievement" && <Achievement />}
+      {tab === "Skills" && <Skills />}
+      {tab === "Objective" && <Objective />}
+      {tab === "Others" && <Others />} */}
     </div>
   );
 }

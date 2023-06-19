@@ -7,23 +7,23 @@ import {
   FormGroup,
   InputGroup,
 } from "@blueprintjs/core";
-import InsertEducation from "./Components/InsertEducation";
+import InsertAchievement from "./Components/InsertAchievement";
 
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 
-export default function Education() {
-  const educations = useSelector((state: RootState) => state.education);
+export default function Page() {
+  const awards = useSelector((state: RootState) => state.award);
 
   // Save to server
   const SubmitHandler = () => {
     // console.log(contact);
 
-    fetch("/api/user/education", {
+    fetch("/api/user/award", {
       method: "POST",
-      body: JSON.stringify(educations),
+      body: JSON.stringify(awards),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -31,18 +31,16 @@ export default function Education() {
       .then(() => toast.success("User Work Info Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
-
   return (
     <Card
       className="border border-blue-600 flex-1"
       interactive={false}
       elevation={Elevation.TWO}
     >
-      <Toaster />
-      <h1>Education</h1>
+      <h1>Achievement</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
         <div className=" w-9/12">
-          <InsertEducation />
+          <InsertAchievement />
         </div>
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>

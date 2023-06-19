@@ -8,7 +8,7 @@ import {
   InputGroup,
 } from "@blueprintjs/core";
 
-export default function Others() {
+export default function Page() {
   return (
     <Card className="border border-blue-600 flex-1" interactive={true} elevation={Elevation.TWO}>
 

@@ -32,7 +32,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import useSWR from "swr";
 
-export default function Contact() {
+export default function Page() {
   const contact = useSelector((state: RootState) => state.contact);
   const dispatch = useDispatch();
 

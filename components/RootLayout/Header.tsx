@@ -11,7 +11,7 @@ export default function Header() {
         {session?.user?.name}
       </div>
       <div className=" border-2">
-        <Link href="./User">User</Link>
+        <Link href="./user">User</Link>
       </div>
       {/* {console.log(JSON.stringify(session?.user._doc.address, null, 1))} */}
       <button onClick={() => signOut()}>SignOut</button>
