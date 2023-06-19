@@ -20,13 +20,14 @@ export default function UserLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="flex flex-row">
-      <div className=" flex flex-col justify-evenly border-4 border-red-300 w-2/12">
+    <section className="h-full flex flex-row border-2 border-yellow-300">
+      <div className=" flex flex-col justify-evenly w-2/12 border-4 border-red-300">
         {/* icon="id-number"  */}
         <Link href="/user/contact">
           <div className=" text-xs hover:text-sm">
-          {/* <Icon icon="id-number" size={IconSize} intent={intent} /> */}
-            Contact</div>
+            {/* <Icon icon="id-number" size={IconSize} intent={intent} /> */}
+            Contact
+          </div>
         </Link>
 
         <Link href="/user/work">
@@ -77,6 +78,7 @@ export default function UserLayout({
           <div className=" text-xs hover:text-sm">Others</div>
         </Button> */}
       </div>
+
       <div className=" w-full">{children}</div>
     </section>
   );

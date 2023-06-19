@@ -20,13 +20,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className={inter.className + " relative"}>
-          {/* Header */}
-          <div className=" border-4 w-full ">
-            <Header />
+        <body className=" h-screen border-8 border-blue-300">
+          <div
+            className={
+              inter.className +
+              " relative flex flex-col h-full border-8 border-yellow-300"
+            }
+          >
+            {/* Header */}
+            <div className="w-full border-4 border-red-300">
+              <Header />
+            </div>
+            {/* Body */}
+            <div className="h-full border-4 border-red-300">
+              <Providers>{children}</Providers>
+            </div>
           </div>
-          {/* Body */}
-          <Providers>{children}</Providers>
         </body>
       </Provider>
     </html>
