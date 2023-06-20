@@ -33,7 +33,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 import useSWR from "swr";
 
-export default function ContactClient({ data }: ContactState) {
+export default function ContactClient({ data }: any) {
   const contact = useSelector((state: RootState) => state.contact);
 
   const dispatch = useDispatch();

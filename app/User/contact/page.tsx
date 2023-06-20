@@ -41,77 +41,20 @@ import ContactClient from "./Components/Client";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  console.log("session: " + JSON.stringify(session, null, 1));
 
+  //Initialize a variable outside of "if" statement
   let contactData;
+  //check if "Authenticated"
   if (session) {
     await db.connect();
     contactData = await Contact.findOne({
       email: "admin@example.com",
     });
   }
-  /*
-  const contact = useSelector((state: RootState) => state.contact);
-  const dispatch = useDispatch();
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR("/api/user/contact", fetcher);
-
-  useEffect(() => {
-    const getData = () => {
-
-
-      //---After receive data from MongoDB, dispatch to Redux
-      dispatch(editEmail(data?.Email));
-      dispatch(editFirstName(data?.FirstName));
-      dispatch(editLastName(data?.LastName));
-      dispatch(editPhoneNumber(data?.PhoneNumber));
-      dispatch(editCountry(data?.Country));
-      dispatch(editCity(data?.City));
-      dispatch(editState(data?.State));
-      dispatch(editZipCode(data?.ZipCode));
-      dispatch(editPortfolio(data?.Portfolio));
-      dispatch(editLinkedIn(data?.LinkedIn));
-      dispatch(editGitHub(data?.GitHub));
-    };
-    getData();
-  }, [data]);
-
-  // Save to server
-  const SubmitHandler = () => {
-    // console.log(contact);
-
-    fetch("/api/user/contact", {
-      method: "POST",
-      body: JSON.stringify(contact),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then(() => toast.success("User Contact Info Updated!"))
-      .catch(() => toast.error("Cannot Update!"));
-  };
-*/
   return (
     <div>
       <ContactClient data={contactData} />
     </div>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps<any> = async () => {
-//   const session = await getServerSession(authOptions);
-//   // console.log("session: " + JSON.stringify(session, null, 1));
-//   try {
-//     await db.connect();
-//     const exist = await Contact.find({
-//       email: "admin@example.com",
-//     });
-//     // await db.disconnect();
-//     return {
-//       props: { exist: "hello" },
-//     };
-//   } catch (e) {
-//     console.error(e);
-//   }
-// };
