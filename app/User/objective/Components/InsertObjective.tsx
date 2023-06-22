@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -45,15 +45,37 @@ const InputComp = ({ index }: Props) => {
               editObjective({ index: index, ObjectiveDes: e.target.value })
             )
           }
+          value={objective ? objective?.ObjectiveDes : ""}
         />
       </FormGroup>
     </Card>
   );
 };
 
-export default function InsertObjective() {
+export default function InsertObjective({ data }) {
   const dispatch = useDispatch();
   const [objectives, editobjectives] = useState<any>([]);
+
+  //fetch data from the collection of "Skills" from Database at the initial stage
+  useEffect(() => {
+    let temp_arr: any[] = [];
+    const getData = async () => {
+      data?.map((each: ObjectiveState) => {
+        //---After receive data from MongoDB, dispatch to Redux
+        dispatch(addObjective({ index: each.index }));
+        dispatch(
+          editObjective({ index: each.index, ObjectiveDes: each.ObjectiveDes })
+        );
+
+        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+        temp_arr.push(<InputComp key={each.index} index={each.index} />);
+      });
+    };
+    getData();
+
+    //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    editobjectives(temp_arr);
+  }, [data]);
 
   //---------------ADD/DELETE-------------------
   const addObj = () => {

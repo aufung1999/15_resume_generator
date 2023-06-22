@@ -115,13 +115,13 @@ const InputComp = ({ index }: Props) => {
   );
 };
 
-export default function InsertEducation() {
+export default function InsertEducation({data}) {
   const dispatch = useDispatch();
 
   const [educations, editEducations] = useState<any>([]);
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR("/api/user/education", fetcher);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const { data, error, isLoading } = useSWR("/api/user/education", fetcher);
 
   //fetch data from the collection of "educations" from Database at the initial stage
   useEffect(() => {

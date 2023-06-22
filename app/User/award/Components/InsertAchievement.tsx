@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -10,7 +10,11 @@ import {
   TextArea,
 } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
+
 import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
+import "react-calendar/dist/Calendar.css";
+
 import { RootState } from "@/store/store";
 import {
   addAward,
@@ -32,7 +36,7 @@ type Props = {
 const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
-  const awards:AwardState[] = useSelector((state: RootState) => state.award);
+  const awards: AwardState[] = useSelector((state: RootState) => state.award);
   const award = awards.find((each) => each.index === index);
 
   return (
@@ -86,10 +90,39 @@ const InputComp = ({ index }: Props) => {
   );
 };
 
-export default function InsertAchievement() {
+export default function InsertAchievement({ data }) {
   const dispatch = useDispatch();
 
   const [awards, editAwards] = useState<any>([]);
+
+  //fetch data from the collection of "Skills" from Database at the initial stage
+  useEffect(() => {
+    let temp_arr: any[] = [];
+    const getData = async () => {
+      data?.map((each: AwardState) => {
+        //---After receive data from MongoDB, dispatch to Redux
+        dispatch(addAward({ index: each.index }));
+        dispatch(
+          editAwardName({ index: each.index, AwardName: each.AwardName })
+        );
+        dispatch(editAwardBy({ index: each.index, AwardBy: each.AwardBy }));
+        dispatch(editDate({ index: each.index, Date: each.Date }));
+        dispatch(
+          editAwardDescription({
+            index: each.index,
+            AwardDescription: each.AwardDescription,
+          })
+        );
+
+        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+        temp_arr.push(<InputComp key={each.index} index={each.index} />);
+      });
+    };
+    getData();
+
+    //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    editAwards(temp_arr);
+  }, [data]);
 
   //---------------ADD/DELETE-------------------
   const addAwa = () => {

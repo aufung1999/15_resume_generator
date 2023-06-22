@@ -110,7 +110,7 @@ const TermComp = ({ index, term }: Props) => {
 //*         Important Info.       */
 // Child Component: TermComp
 //Parent Component: X
-export default function InsertSkills() {
+export default function InsertSkills({data}) {
   const dispatch = useDispatch();
 
   const skills: SkillsState[] = useSelector((state: RootState) => state.skills);
@@ -118,8 +118,8 @@ export default function InsertSkills() {
   const [terms, editTerms] = useState<any>([]);
   const [term, setTerm] = useState("");
 
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR("/api/user/skill", fetcher);
+  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  // const { data, error, isLoading } = useSWR("/api/user/skill", fetcher);
   //fetch data from the collection of "Skills" from Database at the initial stage
   useEffect(() => {
     let temp_arr: any[] = [];
