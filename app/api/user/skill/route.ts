@@ -58,7 +58,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         const update = {
           index: index,
           term: term,
-          skill: Skill_list,
+          Skill_list: Skill_list,
         };
 
         // `doc` is the document _after_ `update` was applied because of
