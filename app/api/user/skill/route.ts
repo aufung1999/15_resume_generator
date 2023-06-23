@@ -46,17 +46,19 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       await db.connect();
       const exist = await Skill.findOne({
         email: session?.user?.email,
+        index: index,
       });
       await db.disconnect();
       //***/
 
       //if "Skill" collction has the data
       if (exist) {
+        console.log("exist: " + JSON.stringify(exist, null, 1));
         const filter = { email: session?.user?.email };
         const update = {
           index: index,
           term: term,
-          Skill_list: Skill_list,
+          skill: Skill_list,
         };
 
         // `doc` is the document _after_ `update` was applied because of
@@ -65,7 +67,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
           new: true,
         });
 
-        return NextResponse.json({ message: "Hello" });
+        return NextResponse.json({ message: "Updated" });
       }
       //***/
 

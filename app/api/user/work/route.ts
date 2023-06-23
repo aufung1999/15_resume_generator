@@ -54,6 +54,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       await db.connect();
       const exist = await Work.findOne({
         email: session?.user?.email,
+        index: index,
       });
       await db.disconnect();
       //***/

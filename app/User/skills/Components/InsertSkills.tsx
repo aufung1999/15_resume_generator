@@ -100,6 +100,7 @@ const TermComp = ({ index, term }: Props) => {
                 })
               )
             }
+            value={each ? each?.skill : ""}
           />
         </div>
       ))}
