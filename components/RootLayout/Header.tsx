@@ -13,6 +13,13 @@ export default function Header() {
       <div className=" border-2">
         <Link href="/user">User</Link>
       </div>
+      <div className=" border-2">
+        <Link href="/analyse">Analyse</Link>
+      </div>
+      <div className=" border-2">
+        <Link href="/resume">Resume</Link>
+      </div>
+
       {/* {console.log(JSON.stringify(session?.user._doc.address, null, 1))} */}
       <button onClick={() => signOut()}>SignOut</button>
     </div>

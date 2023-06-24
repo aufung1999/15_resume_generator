@@ -115,7 +115,7 @@ const InputComp = ({ index }: Props) => {
   );
 };
 
-export default function InsertEducation({data}) {
+export default function InsertEducation({ data }) {
   const dispatch = useDispatch();
 
   const [educations, editEducations] = useState<any>([]);
@@ -125,6 +125,7 @@ export default function InsertEducation({data}) {
 
   //fetch data from the collection of "educations" from Database at the initial stage
   useEffect(() => {
+    let temp_arr: any[] = [];
     const getData = () => {
       data?.map((each: EducationState) => {
         //---After receive data from MongoDB, dispatch to Redux
@@ -145,15 +146,13 @@ export default function InsertEducation({data}) {
         );
         dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
 
-        //this is the part where it Generate the Fetched data from MongoDB to Frontend
-        editEducations(
-          educations.concat(
-            <InputComp key={educations.length} index={each.index} />
-          )
-        );
+        temp_arr.push(<InputComp key={educations.length} index={each.index} />);
       });
     };
     getData();
+
+    //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    editEducations(temp_arr);
   }, [data]);
 
   //---------------ADD/DELETE-------------------

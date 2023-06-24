@@ -200,6 +200,7 @@ export default function InsertWorkExp({ data }) {
   const [workExps, editWorkExps] = useState<any>([]);
 
   useEffect(() => {
+    let temp_arr: any[] = [];
     const getData = () => {
       data?.map((each: WorkExpState) => {
         //---After receive data from MongoDB, dispatch to Redux
@@ -230,14 +231,13 @@ export default function InsertWorkExp({ data }) {
         });
 
         //this is the part where it Generate the Fetched data from MongoDB to Frontend
-        editWorkExps(
-          workExps.concat(
-            <InputComp key={workExps.length} index={each.index} />
-          )
-        );
+        temp_arr.push(<InputComp key={workExps.length} index={each.index} />);
       });
     };
     getData();
+
+    //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    editWorkExps(temp_arr);
   }, [data]);
 
   //---------------ADD/DELETE-------------------
