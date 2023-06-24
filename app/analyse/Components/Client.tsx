@@ -22,16 +22,36 @@ import {
 export default function AnalyseClient() {
   const dispatch = useDispatch();
   const stage_1 = useSelector((state: RootState) => state.analyse.stage_1);
+  const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);
 
-  const handleSubmit = () => {
-    const stage_2 = stage_1.split("\n");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const pre_stage_2 = stage_1.split("\n");
     console.log(stage_2);
-    if (stage_2) {
+    if (pre_stage_2) {
       //send to "redux store"
-      dispatch(editAnalyse_stage_2(stage_2));
+      dispatch(editAnalyse_stage_2(pre_stage_2));
       //remove the stage_1 after split func.
       dispatch(removeAnalyse_stage_1());
+
+      let array;
+
+      // stage_2.map((each) => {
+
+      // console.log("res: " + JSON.stringify(res, null, 1));
+      // });
+      // .then(() => toast.success("User Contact Info Updated!"))
+      // .catch(() => toast.error("Cannot Update!"))
     }
+
+    fetch("/api/chatgpt", {
+      method: "POST",
+      body: JSON.stringify(pre_stage_2),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
   };
 
   return (
@@ -43,7 +63,7 @@ export default function AnalyseClient() {
       {/* <Toaster /> */}
       <h1>Description</h1>
 
-       <div className="w-fullh-full border-4 flex flex-col items-center justify-center">
+      <div className="w-fullh-full border-4 flex flex-col items-center justify-center">
         {/* Control the form size */}
         <TextArea
           className="w-full h-72"
