@@ -17,6 +17,29 @@ const educationSlice = createSlice({
   name: "education",
   initialState,
   reducers: {
+    initialize_EducationData: (state, action: PayloadAction<string>) => {
+      const {
+        index,
+        SchoolName,
+        Degree,
+        Subject,
+        current,
+        StartDate,
+        EndDate,
+      }: any = action.payload;
+      //set the data format
+      let Data = {
+        index: index,
+        SchoolName: SchoolName,
+        Degree: Degree,
+        Subject: Subject,
+        current: current,
+        StartDate: StartDate,
+        EndDate: EndDate,
+      };
+      //push the tidied up data into state
+      state.push(Data);
+    },
     addEducation: (state, action) => {
       state.push(action.payload);
     },
@@ -75,6 +98,7 @@ const educationSlice = createSlice({
 });
 
 export const {
+  initialize_EducationData,
   addEducation,
   deleteEducation,
   editSchoolName,

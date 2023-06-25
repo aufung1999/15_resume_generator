@@ -18,6 +18,7 @@ import {
   addObjective,
   deleteObjective,
   editObjective,
+  initialize_ObjectiveData,
 } from "@/slices/objectiveSlice";
 import { RootState } from "@/store/store";
 
@@ -53,29 +54,49 @@ const InputComp = ({ index }: Props) => {
 };
 
 export default function InsertObjective({ data }) {
+  const objective = useSelector((state: RootState) => state.objectives);
   const dispatch = useDispatch();
   const [objectives, editobjectives] = useState<any>([]);
 
   //fetch data from the collection of "Skills" from Database at the initial stage
+  // useEffect(() => {
+  //   let temp_arr: any[] = [];
+  //   const getData = async () => {
+  //     data?.map((each: ObjectiveState) => {
+  //       //---After receive data from MongoDB, dispatch to Redux
+  //       dispatch(addObjective({ index: each.index }));
+  //       dispatch(
+  //         editObjective({ index: each.index, ObjectiveDes: each.ObjectiveDes })
+  //       );
+
+  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //       temp_arr.push(<InputComp key={each.index} index={each.index} />);
+  //     });
+  //   };
+  //   getData();
+
+  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //   editobjectives(temp_arr);
+  // }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      // console.log("data: " + JSON.stringify(data, null, 1));
+      data.map((each: any) => {
+        dispatch(initialize_ObjectiveData(each));
+      });
+    }
+  }, [data]);
+
   useEffect(() => {
     let temp_arr: any[] = [];
-    const getData = async () => {
-      data?.map((each: ObjectiveState) => {
-        //---After receive data from MongoDB, dispatch to Redux
-        dispatch(addObjective({ index: each.index }));
-        dispatch(
-          editObjective({ index: each.index, ObjectiveDes: each.ObjectiveDes })
-        );
-
-        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    if (objective.length !== 0) {
+      objective.map((each) => {
         temp_arr.push(<InputComp key={each.index} index={each.index} />);
       });
-    };
-    getData();
-
-    //this is the part where it Generate the Fetched data from MongoDB to Frontend
-    editobjectives(temp_arr);
-  }, [data]);
+      editobjectives(temp_arr);
+    }
+  }, [objective]);
 
   //---------------ADD/DELETE-------------------
   const addObj = () => {

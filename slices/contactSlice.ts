@@ -29,28 +29,6 @@ const initialState: ContactState = {
   GitHub: "",
 };
 
-// const getPosts = createAsyncThunk(
-//   "posts/getPosts",
-
-//   async (
-//     arg,
-//     { dispatch, getState, extra, requestId, signal, rejectWithValue }
-//   ) => {
-//     return fetch(
-//       `https://jsonplaceholder.typicode.com/posts?_limit=${arg.limit}`
-//     )
-//       .then((res) => {
-//         if (!res.ok) {
-//           return rejectWithValue([], "api url not found from");
-//         }
-//         return res.json();
-//       })
-//       .catch((error) => {
-//         return rejectWithValue([], error);
-//       });
-//   }
-// );
-
 const contactSlice = createSlice({
   name: "contact",
   initialState,

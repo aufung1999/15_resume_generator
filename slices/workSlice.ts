@@ -17,6 +17,29 @@ const workSlice = createSlice({
   name: "work",
   initialState,
   reducers: {
+    initialize_WorkData: (state, action: PayloadAction<string>) => {
+      const {
+        index,
+        CompanyName,
+        Position,
+        current,
+        StartDate,
+        EndDate,
+        JobDescription,
+      }: any = action.payload;
+      //set the data format
+      let Data = {
+        index: index,
+        CompanyName: CompanyName,
+        Position: Position,
+        current: current,
+        StartDate: StartDate,
+        EndDate: EndDate,
+        JobDescription: JobDescription,
+      };
+      //push the tidied up data into state
+      state.push(Data);
+    },
     addWorkExp: (state, action) => {
       const { index } = action.payload;
       state.push(action.payload);
@@ -112,6 +135,7 @@ const workSlice = createSlice({
 });
 
 export const {
+  initialize_WorkData,
   addWorkExp,
   deleteWorkExp,
   editCompanyName,

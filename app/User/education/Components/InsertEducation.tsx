@@ -25,6 +25,7 @@ import {
   currentStudying,
   EducationState,
   deleteEducation,
+  initialize_EducationData,
 } from "@/slices/educationSlice";
 import { RootState } from "@/store/store";
 
@@ -115,7 +116,8 @@ const InputComp = ({ index }: Props) => {
   );
 };
 
-export default function InsertEducation({ data }) {
+export default function InsertEducation({ data }: any) {
+  const education = useSelector((state: RootState) => state.education);
   const dispatch = useDispatch();
 
   const [educations, editEducations] = useState<any>([]);
@@ -124,36 +126,55 @@ export default function InsertEducation({ data }) {
   // const { data, error, isLoading } = useSWR("/api/user/education", fetcher);
 
   //fetch data from the collection of "educations" from Database at the initial stage
+  // useEffect(() => {
+  //   let temp_arr: any[] = [];
+  //   const getData = () => {
+  //     data?.map((each: EducationState) => {
+  //       //---After receive data from MongoDB, dispatch to Redux
+  //       dispatch(addEducation({ index: each.index }));
+  //       dispatch(
+  //         editSchoolName({ index: each.index, SchoolName: each.SchoolName })
+  //       );
+  //       dispatch(editDegree({ index: each.index, Degree: each.Degree }));
+  //       dispatch(editSubject({ index: each.index, Subject: each.Subject }));
+  //       dispatch(
+  //         currentStudying({
+  //           index: each.index,
+  //           current: each.current === undefined ? false : each.current,
+  //         })
+  //       );
+  //       dispatch(
+  //         editStartDate({ index: each.index, StartDate: each.StartDate })
+  //       );
+  //       dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
+
+  //       temp_arr.push(<InputComp key={educations.length} index={each.index} />);
+  //     });
+  //   };
+  //   getData();
+
+  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //   editEducations(temp_arr);
+  // }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      // console.log("data: " + JSON.stringify(data, null, 1));
+      data.map((each) => {
+        dispatch(initialize_EducationData(each));
+      });
+    }
+  }, [data]);
+
   useEffect(() => {
     let temp_arr: any[] = [];
-    const getData = () => {
-      data?.map((each: EducationState) => {
-        //---After receive data from MongoDB, dispatch to Redux
-        dispatch(addEducation({ index: each.index }));
-        dispatch(
-          editSchoolName({ index: each.index, SchoolName: each.SchoolName })
-        );
-        dispatch(editDegree({ index: each.index, Degree: each.Degree }));
-        dispatch(editSubject({ index: each.index, Subject: each.Subject }));
-        dispatch(
-          currentStudying({
-            index: each.index,
-            current: each.current === undefined ? false : each.current,
-          })
-        );
-        dispatch(
-          editStartDate({ index: each.index, StartDate: each.StartDate })
-        );
-        dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
-
-        temp_arr.push(<InputComp key={educations.length} index={each.index} />);
+    if (education.length !== 0) {
+      education.map((each) => {
+        temp_arr.push(<InputComp key={each.index} index={each.index} />);
       });
-    };
-    getData();
-
-    //this is the part where it Generate the Fetched data from MongoDB to Frontend
-    editEducations(temp_arr);
-  }, [data]);
+      editEducations(temp_arr);
+    }
+  }, [education]);
 
   //---------------ADD/DELETE-------------------
   const addEdu = () => {

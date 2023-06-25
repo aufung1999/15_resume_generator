@@ -12,6 +12,16 @@ const objectiveSlice = createSlice({
   name: "objectives",
   initialState,
   reducers: {
+    initialize_ObjectiveData: (state, action: PayloadAction<string>) => {
+      const { index, ObjectiveDes }: any = action.payload;
+      //set the data format
+      let Data = {
+        index: index,
+        ObjectiveDes: ObjectiveDes,
+      };
+      //push the tidied up data into state
+      state.push(Data);
+    },
     addObjective: (state, action) => {
       state.push(action.payload);
     },
@@ -32,6 +42,10 @@ const objectiveSlice = createSlice({
   },
 });
 
-export const { addObjective, deleteObjective, editObjective } =
-  objectiveSlice.actions;
+export const {
+  initialize_ObjectiveData,
+  addObjective,
+  deleteObjective,
+  editObjective,
+} = objectiveSlice.actions;
 export default objectiveSlice.reducer;

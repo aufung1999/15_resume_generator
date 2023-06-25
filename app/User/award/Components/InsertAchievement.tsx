@@ -24,6 +24,7 @@ import {
   editAwardDescription,
   AwardState,
   deleteAward,
+  initialize_AwardData,
 } from "@/slices/awardSlice";
 
 import { v4 as uuidv4 } from "uuid";
@@ -91,38 +92,58 @@ const InputComp = ({ index }: Props) => {
 };
 
 export default function InsertAchievement({ data }) {
+  const award = useSelector((state: RootState) => state.award);
   const dispatch = useDispatch();
 
   const [awards, editAwards] = useState<any>([]);
 
-  //fetch data from the collection of "Skills" from Database at the initial stage
+  //fetch data from the collection of "Award" from Database at the initial stage
+  // useEffect(() => {
+  //   let temp_arr: any[] = [];
+  //   const getData = async () => {
+  //     data?.map((each: AwardState) => {
+  //       //---After receive data from MongoDB, dispatch to Redux
+  //       dispatch(addAward({ index: each.index }));
+  //       dispatch(
+  //         editAwardName({ index: each.index, AwardName: each.AwardName })
+  //       );
+  //       dispatch(editAwardBy({ index: each.index, AwardBy: each.AwardBy }));
+  //       dispatch(editDate({ index: each.index, Date: each.Date }));
+  //       dispatch(
+  //         editAwardDescription({
+  //           index: each.index,
+  //           AwardDescription: each.AwardDescription,
+  //         })
+  //       );
+
+  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //       temp_arr.push(<InputComp key={each.index} index={each.index} />);
+  //     });
+  //   };
+  //   getData();
+
+  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //   editAwards(temp_arr);
+  // }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      // console.log("data: " + JSON.stringify(data, null, 1));
+      data.map((each) => {
+        dispatch(initialize_AwardData(each));
+      });
+    }
+  }, [data]);
+
   useEffect(() => {
     let temp_arr: any[] = [];
-    const getData = async () => {
-      data?.map((each: AwardState) => {
-        //---After receive data from MongoDB, dispatch to Redux
-        dispatch(addAward({ index: each.index }));
-        dispatch(
-          editAwardName({ index: each.index, AwardName: each.AwardName })
-        );
-        dispatch(editAwardBy({ index: each.index, AwardBy: each.AwardBy }));
-        dispatch(editDate({ index: each.index, Date: each.Date }));
-        dispatch(
-          editAwardDescription({
-            index: each.index,
-            AwardDescription: each.AwardDescription,
-          })
-        );
-
-        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    if (award.length !== 0) {
+      award.map((each) => {
         temp_arr.push(<InputComp key={each.index} index={each.index} />);
       });
-    };
-    getData();
-
-    //this is the part where it Generate the Fetched data from MongoDB to Frontend
-    editAwards(temp_arr);
-  }, [data]);
+      editAwards(temp_arr);
+    }
+  }, [award]);
 
   //---------------ADD/DELETE-------------------
   const addAwa = () => {
