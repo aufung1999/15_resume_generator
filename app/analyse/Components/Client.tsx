@@ -21,7 +21,7 @@ import {
 } from "@/slices/analyseSlice";
 import { initialize_ClientData } from "@/slices/contactSlice";
 
-export default function AnalyseClient({ data }) {
+export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
   const stage_1 = useSelector((state: RootState) => state.analyse.stage_1);
   const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);
@@ -33,7 +33,7 @@ export default function AnalyseClient({ data }) {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const pre_stage_2 = stage_1.split("\n");

@@ -160,7 +160,7 @@ export default function InsertEducation({ data }: any) {
   useEffect(() => {
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
-      data.map((each) => {
+      data.map((each: any) => {
         dispatch(initialize_EducationData(each));
       });
     }

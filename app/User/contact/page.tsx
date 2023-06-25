@@ -12,9 +12,13 @@ export default async function Page() {
   //check if "Authenticated"
   if (session) {
     await db.connect();
-    contactData = await Contact.findOne({
-      email: session?.user?.email,
-    });
+    contactData = JSON.parse(
+      JSON.stringify(
+        await Contact.findOne({
+          email: session?.user?.email,
+        })
+      )
+    );
     if (contactData) {
       contactData = db.convertDocToObj(contactData);
     }

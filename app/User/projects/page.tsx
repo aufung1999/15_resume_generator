@@ -1,32 +1,34 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/utils/db";
-import ObjectiveClient from "./Components/Client";
-import Objective from "@/models/Objective";
+import Work from "@/models/Work";
+
+import ProjectClient from "./Components/Client";
+import Project from "@/models/Project";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
   //Initialize a variable outside of "if" statement
-  let objectiveData;
+  let projectData;
   //check if "Authenticated", which means "Logged In?"
   if (session) {
     await db.connect();
-    objectiveData = JSON.parse(
+    projectData = JSON.parse(
       JSON.stringify(
-        await Objective.find({
+        await Project.find({
           email: session?.user?.email,
         })
       )
     );
-    if (objectiveData) {
-      // objectiveData = objectiveData.map((each) => db.convertDocToObj(each));
-      objectiveData = JSON.parse(JSON.stringify(objectiveData));
+    if (projectData) {
+      projectData = projectData.map((each: any) => db.convertDocToObj(each));
     }
   }
+
   return (
     <div>
-      <ObjectiveClient data={objectiveData} />
+      <ProjectClient data={projectData} />
     </div>
   );
 }

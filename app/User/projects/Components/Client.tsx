@@ -7,26 +7,27 @@ import {
   FormGroup,
   InputGroup,
 } from "@blueprintjs/core";
-import InsertWorkExp from "./InsertWorkExp";
 
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
+import InsertProject from "./InsertProject";
 
-export default function WorkClient({ data }: any) {
-  const works = useSelector((state: RootState) => state.work);
+export default function ProjectClient({ data }: any) {
+  const projects_redux = useSelector((state: RootState) => state.projects);
 
   // Save to server
   const SubmitHandler = () => {
-    fetch("/api/user/work", {
+    fetch("/api/user/project", {
+      //add this route later
       method: "POST",
-      body: JSON.stringify(works),
+      body: JSON.stringify(projects_redux),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Work Info Updated!"))
+      .then(() => toast.success("User Projects Info Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
@@ -36,11 +37,10 @@ export default function WorkClient({ data }: any) {
       elevation={Elevation.TWO}
     >
       <Toaster />
-      <h1>Work</h1>
+      <h1>Project</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
-        {/* Control the form size */}
-        <InsertWorkExp data={data} />
+        <InsertProject data={data} />
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit

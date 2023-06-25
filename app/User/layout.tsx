@@ -50,8 +50,8 @@ export default function UserLayout({
           <div className=" text-xs hover:text-sm">Objective</div>
         </Link>
 
-        <Link href="/user/others">
-          <div className=" text-xs hover:text-sm">Others</div>
+        <Link href="/user/projects">
+          <div className=" text-xs hover:text-sm">Project</div>
         </Link>
 
         {/* <Button icon="build" onClick={() => setTab("Work")}>

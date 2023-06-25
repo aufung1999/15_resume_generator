@@ -6,6 +6,7 @@ import educationReducer from "../slices/educationSlice";
 import awardReducer from "../slices/awardSlice";
 import skillsReducer from "../slices/skillsSlice";
 import objectiveReducer from "@/slices/objectiveSlice";
+import projectsReducer from "@/slices/projectsSlice";
 import analyseReducer from "@/slices/analyseSlice";
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     award: awardReducer,
     skills: skillsReducer,
     objectives: objectiveReducer,
+    projects: projectsReducer,
 
     //----Analyse----
     analyse: analyseReducer,

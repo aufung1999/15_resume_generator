@@ -12,9 +12,13 @@ export default async function Page() {
   //check if "Authenticated", which means "Logged In?"
   if (session) {
     await db.connect();
-    skillData = await Skill.find({
-      email: session?.user?.email,
-    });
+    skillData = JSON.parse(
+      JSON.stringify(
+        await Skill.find({
+          email: session?.user?.email,
+        })
+      )
+    );
     if (skillData) {
       // skillData = skillData.map((each) => db.convertDocToObj(each));
       skillData = JSON.parse(JSON.stringify(skillData));

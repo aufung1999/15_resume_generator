@@ -53,7 +53,7 @@ const InputComp = ({ index }: Props) => {
   );
 };
 
-export default function InsertObjective({ data }) {
+export default function InsertObjective({ data }: any) {
   const objective = useSelector((state: RootState) => state.objectives);
   const dispatch = useDispatch();
   const [objectives, editobjectives] = useState<any>([]);

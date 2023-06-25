@@ -12,11 +12,15 @@ export default async function Page() {
   //check if "Authenticated", which means "Logged In?"
   if (session) {
     await db.connect();
-    workData = await Work.find({
-      email: session?.user?.email,
-    });
+    workData = JSON.parse(
+      JSON.stringify(
+        await Work.find({
+          email: session?.user?.email,
+        })
+      )
+    );
     if (workData) {
-      workData = workData.map((each) => db.convertDocToObj(each));
+      workData = workData.map((each: any) => db.convertDocToObj(each));
     }
   }
 

@@ -12,9 +12,14 @@ export default async function Page() {
   //check if "Authenticated", which means "Logged In?"
   if (session) {
     await db.connect();
-    awardData = await Award.find({
-      email: session?.user?.email,
-    });
+    awardData = JSON.parse(
+      JSON.stringify(
+        await Award.find({
+          email: session?.user?.email,
+        })
+      )
+    );
+
     if (awardData) {
       // awardData = awardData.map((each) => db.convertDocToObj(each));
       awardData = JSON.parse(JSON.stringify(awardData));
