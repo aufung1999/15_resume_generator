@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface ContactState {
@@ -29,10 +29,59 @@ const initialState: ContactState = {
   GitHub: "",
 };
 
+// const getPosts = createAsyncThunk(
+//   "posts/getPosts",
+
+//   async (
+//     arg,
+//     { dispatch, getState, extra, requestId, signal, rejectWithValue }
+//   ) => {
+//     return fetch(
+//       `https://jsonplaceholder.typicode.com/posts?_limit=${arg.limit}`
+//     )
+//       .then((res) => {
+//         if (!res.ok) {
+//           return rejectWithValue([], "api url not found from");
+//         }
+//         return res.json();
+//       })
+//       .catch((error) => {
+//         return rejectWithValue([], error);
+//       });
+//   }
+// );
+
 const contactSlice = createSlice({
   name: "contact",
   initialState,
   reducers: {
+    initialize_ClientData: (state, action: PayloadAction<string>) => {
+      const {
+        FirstName,
+        LastName,
+        PhoneNumber,
+        Country,
+        City,
+        State,
+        ZipCode,
+        Email,
+        Portfolio,
+        LinkedIn,
+        GitHub,
+      } = action.payload;
+
+      state.FirstName = FirstName;
+      state.LastName = LastName;
+      state.PhoneNumber = PhoneNumber;
+      state.Country = Country;
+      state.City = City;
+      state.State = State;
+      state.ZipCode = ZipCode;
+      state.Email = Email;
+      state.Portfolio = Portfolio;
+      state.LinkedIn = LinkedIn;
+      state.GitHub = GitHub;
+    },
     editFirstName: (state, action: PayloadAction<string>) => {
       state.FirstName = action.payload;
     },
@@ -67,9 +116,22 @@ const contactSlice = createSlice({
       state.GitHub = action.payload;
     },
   },
+  // extraReducers: {
+  //   [getPosts.pending]: (state, action) => {
+  //     state.status = "loading";
+  //   },
+  //   [getPosts.fulfilled]: (state, { payload, meta }) => {
+  //     state.list_remarks = payload;
+  //     state.status = "success";
+  //   },
+  //   [getPosts.rejected]: (state, action) => {
+  //     state.status = "failed";
+  //   },
+  // },
 });
 
 export const {
+  initialize_ClientData,
   editFirstName,
   editLastName,
   editPhoneNumber,

@@ -16,7 +16,7 @@ export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
   if (session) {
     // Signed in
-    console.log("Get");
+    // console.log("Get");
 
     await db.connect();
     const exist = await Contact.findOne({
@@ -39,9 +39,9 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
 
   if (session) {
     // Signed in
-    console.log("Session", JSON.stringify(session?.user?.email, null, 2));
+    // console.log("Session", JSON.stringify(session?.user?.email, null, 2));
     const body = await req.json();
-    console.log(body);
+    // console.log(body);
     const {
       FirstName,
       LastName,

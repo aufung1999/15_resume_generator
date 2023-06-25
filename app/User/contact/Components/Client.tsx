@@ -26,6 +26,7 @@ import {
   editLinkedIn,
   editGitHub,
   ContactState,
+  initialize_ClientData,
 } from "@/slices/contactSlice";
 import type { RootState } from "@/store/store";
 
@@ -41,25 +42,30 @@ export default function ContactClient({ data }: any) {
   /*
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const { data, error, isLoading } = useSWR("/api/user/contact", fetcher);
-
-
   */
+
+  // useEffect(() => {
+  //   const getData = () => {
+  //     //---After receive data from MongoDB, dispatch to Redux
+  //     dispatch(editEmail(data?.Email));
+  //     dispatch(editFirstName(data?.FirstName));
+  //     dispatch(editLastName(data?.LastName));
+  //     dispatch(editPhoneNumber(data?.PhoneNumber));
+  //     dispatch(editCountry(data?.Country));
+  //     dispatch(editCity(data?.City));
+  //     dispatch(editState(data?.State));
+  //     dispatch(editZipCode(data?.ZipCode));
+  //     dispatch(editPortfolio(data?.Portfolio));
+  //     dispatch(editLinkedIn(data?.LinkedIn));
+  //     dispatch(editGitHub(data?.GitHub));
+  //   };
+  //   getData();
+  // }, [data]);
+
   useEffect(() => {
-    const getData = () => {
-      //---After receive data from MongoDB, dispatch to Redux
-      dispatch(editEmail(data?.Email));
-      dispatch(editFirstName(data?.FirstName));
-      dispatch(editLastName(data?.LastName));
-      dispatch(editPhoneNumber(data?.PhoneNumber));
-      dispatch(editCountry(data?.Country));
-      dispatch(editCity(data?.City));
-      dispatch(editState(data?.State));
-      dispatch(editZipCode(data?.ZipCode));
-      dispatch(editPortfolio(data?.Portfolio));
-      dispatch(editLinkedIn(data?.LinkedIn));
-      dispatch(editGitHub(data?.GitHub));
-    };
-    getData();
+    if (data) {
+      dispatch(initialize_ClientData(data));
+    }
   }, [data]);
 
   // Save to server
