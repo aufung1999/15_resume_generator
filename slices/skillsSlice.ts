@@ -13,6 +13,17 @@ const awardSlice = createSlice({
   name: "skills",
   initialState,
   reducers: {
+    initialize_SkillData: (state, action: PayloadAction<string>) => {
+      const { index, term, Skill_list }: any = action.payload;
+      //set the data format
+      let Data = {
+        index: index,
+        term: term,
+        Skill_list: Skill_list,
+      };
+      //push the tidied up data into state
+      state.push(Data);
+    },
     addTerm: (state, action) => {
       state.push(action.payload);
     },
@@ -65,7 +76,9 @@ const awardSlice = createSlice({
       const Term = state.find((each) => each.index === index);
       if (Term) {
         console.log(current(Term.Skill_list));
-        const Skill = Term.Skill_list.find((each) => each.skillIndex === skillIndex);
+        const Skill = Term.Skill_list.find(
+          (each) => each.skillIndex === skillIndex
+        );
         if (Skill) {
           Skill.skill = skill;
         }
@@ -75,6 +88,7 @@ const awardSlice = createSlice({
 });
 
 export const {
+  initialize_SkillData,
   addTerm,
   deleteTerm,
   editTermName,

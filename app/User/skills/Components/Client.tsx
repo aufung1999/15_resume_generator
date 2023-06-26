@@ -14,11 +14,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import InsertSkills from "./InsertSkills";
 
-export default function SkillClient({ data }) {
+export default function SkillClient({ data }: any) {
   const skills = useSelector((state: RootState) => state.skills);
 
   // Save to server
-  const SubmitHandler = () => {
+  const SubmitHandler = (e: any) => {
+    e.preventDefault();
     fetch("/api/user/skill", {
       method: "POST",
       body: JSON.stringify(skills),
@@ -36,7 +37,7 @@ export default function SkillClient({ data }) {
       elevation={Elevation.TWO}
     >
       <Toaster />
-      <h1>Work</h1>
+      <h1>Skills</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
         {/* Control the form size */}

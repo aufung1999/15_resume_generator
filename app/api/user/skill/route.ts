@@ -39,24 +39,26 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     const body = await req.json();
     console.log("body: " + JSON.stringify(body, null, 1));
 
-    body.map(async (each: SkillsState) => {
+    await db.connect();
+    body.map(async (each: SkillsState, i: number) => {
       const { index, term, Skill_list } = each;
-
+      console.log("term: " + term);
       //use the email from "Next-auth" to find the data in "Skill" collection
-      await db.connect();
       const exist = await Skill.findOne({
         email: session?.user?.email,
         index: index,
       });
-      await db.disconnect();
+
       //***/
 
       //if "Skill" collction has the data
       if (exist) {
         console.log("exist: " + JSON.stringify(exist, null, 1));
-        const filter = { email: session?.user?.email };
+        console.log("Skill_list: " + JSON.stringify(Skill_list, null, 1));
+
+        const filter = { email: session?.user?.email, index: index };
+
         const update = {
-          index: index,
           term: term,
           Skill_list: Skill_list,
         };
@@ -66,23 +68,25 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         await Skill.findOneAndUpdate(filter, update, {
           new: true,
         });
-
-        return NextResponse.json({ message: "Updated" });
       }
       //***/
 
       //if "Skill" collction does NOT have the data
-      const skill = await new Skill({
-        email: session?.user?.email,
-        index: index,
-        term: term,
-        Skill_list: Skill_list,
-      });
+      if (!exist) {
+        const skill = await new Skill({
+          email: session?.user?.email,
+          index: index,
+          term: term,
+          Skill_list: Skill_list,
+        });
 
-      await skill.save();
+        await skill.save();
+      }
       //***/
     });
 
+    await db.disconnect();
+    
     return NextResponse.json({ message: "Hello" });
   } else {
     // Not Signed in

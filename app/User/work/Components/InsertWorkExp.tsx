@@ -89,13 +89,14 @@ const InputComp = ({ index }: Props) => {
   const [row, editRow] = useState<any>([]);
 
   useEffect(() => {
+    let temp_arr: any[] = [];
     work?.JobDescription?.map((each: any) => {
-      editRow(
-        row.concat(
-          <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
-        )
+      temp_arr.push(
+        <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
       );
     });
+
+    editRow(temp_arr);
   }, []);
 
   //---------------ADD/DELETE-------------------

@@ -92,13 +92,14 @@ const InputComp = ({ index }: Props) => {
   const [row, editRow] = useState<any>([]);
 
   useEffect(() => {
+    let temp_arr: any[] = [];
     target_project?.ProjectDescription?.map((each: any) => {
-      editRow(
-        row.concat(
-          <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
-        )
+      temp_arr.push(
+        <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
       );
     });
+
+    editRow(temp_arr);
   }, []);
 
   //---------------ADD/DELETE-------------------
@@ -140,7 +141,9 @@ const InputComp = ({ index }: Props) => {
         <InputGroup
           value={target_project ? target_project?.Techniques : ""}
           onChange={(e) =>
-            dispatch(editTechniques({ index: index, Techniques: e.target.value }))
+            dispatch(
+              editTechniques({ index: index, Techniques: e.target.value })
+            )
           }
         />
         {/* ---------------------------Dynamic-------------------------- */}

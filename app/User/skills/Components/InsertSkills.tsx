@@ -18,6 +18,7 @@ import {
   deleteTerm,
   editSkillName,
   editTermName,
+  initialize_SkillData,
 } from "@/slices/skillsSlice";
 import { RootState } from "@/store/store";
 
@@ -37,8 +38,10 @@ type Props = {
 const TermComp = ({ index, term }: Props) => {
   const dispatch = useDispatch();
 
-  const skills: SkillsState[] = useSelector((state: RootState) => state.skills);
-  const skill = skills.find((each) => each.index === index);
+  const skills_redux: SkillsState[] = useSelector(
+    (state: RootState) => state.skills
+  );
+  const skill = skills_redux.find((each) => each.index === index);
 
   const [skillName, setSkillName] = useState("");
 
@@ -111,46 +114,67 @@ const TermComp = ({ index, term }: Props) => {
 //*         Important Info.       */
 // Child Component: TermComp
 //Parent Component: X
-export default function InsertSkills({data}) {
+export default function InsertSkills({ data }) {
   const dispatch = useDispatch();
 
-  const skills: SkillsState[] = useSelector((state: RootState) => state.skills);
+  const skills_redux: SkillsState[] = useSelector(
+    (state: RootState) => state.skills
+  );
 
   const [terms, editTerms] = useState<any>([]);
   const [term, setTerm] = useState("");
 
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  // const { data, error, isLoading } = useSWR("/api/user/skill", fetcher);
   //fetch data from the collection of "Skills" from Database at the initial stage
+  // useEffect(() => {
+  //   let temp_arr: any[] = [];
+  //   const getData = async () => {
+  //     data?.map((each: SkillsState) => {
+  //       //---After receive data from MongoDB, dispatch to Redux
+  //       dispatch(addTerm({ index: each.index }));
+  //       dispatch(editTermName({ index: each.index, term: each.term }));
+
+  //       each.Skill_list?.map((row) => {
+  //         dispatch(addSkill({ index: each.index, skillIndex: row.skillIndex }));
+  //         dispatch(
+  //           editSkillName({
+  //             index: each.index,
+  //             skillIndex: row.skillIndex,
+  //             skill: row.skill,
+  //           })
+  //         );
+  //       });
+  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //       temp_arr.push(
+  //         <TermComp key={each.index} index={each.index} term={each.term} />
+  //       );
+  //     });
+  //   };
+  //   getData();
+
+  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
+  //   editTerms(temp_arr);
+  // }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      // console.log("data: " + JSON.stringify(data, null, 1));
+      data.map((each: any) => {
+        dispatch(initialize_SkillData(each));
+      });
+    }
+  }, [data]);
+
   useEffect(() => {
     let temp_arr: any[] = [];
-    const getData = async () => {
-      data?.map((each: SkillsState) => {
-        //---After receive data from MongoDB, dispatch to Redux
-        dispatch(addTerm({ index: each.index }));
-        dispatch(editTermName({ index: each.index, term: each.term }));
-
-        each.Skill_list?.map((row) => {
-          dispatch(addSkill({ index: each.index, skillIndex: row.skillIndex }));
-          dispatch(
-            editSkillName({
-              index: each.index,
-              skillIndex: row.skillIndex,
-              skill: row.skill,
-            })
-          );
-        });
-        //this is the part where it Generate the Fetched data from MongoDB to Frontend
+    if (skills_redux.length !== 0) {
+      skills_redux.map((each) => {
         temp_arr.push(
           <TermComp key={each.index} index={each.index} term={each.term} />
         );
       });
-    };
-    getData();
-
-    //this is the part where it Generate the Fetched data from MongoDB to Frontend
-    editTerms(temp_arr);
-  }, [data]);
+      editTerms(temp_arr);
+    }
+  }, [skills_redux]);
 
   //---------------ADD/DELETE-------------------
   const addterm = () => {
