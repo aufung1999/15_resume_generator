@@ -50,7 +50,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         EndDate,
       } = each;
 
-      //use the email from "Next-auth" to find the data in "Contact" collection
+      //use the email from "Next-auth" to find the data in "Education" collection
       await db.connect();
       const exist = await Education.findOne({
         email: session?.user?.email,
@@ -59,7 +59,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       await db.disconnect();
       //***/
 
-      //if "Contact" collction has the data
+      //if "Education" collction has the data
       if (exist) {
         const filter = { email: session?.user?.email };
         const update = {
@@ -77,24 +77,24 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         await Education.findOneAndUpdate(filter, update, {
           new: true,
         });
-
-        return NextResponse.json({ message: "Hello" });
       }
       //***/
 
-      //if "Contact" collction does NOT have the data
-      const work = await new Education({
-        email: session?.user?.email,
-        index: index,
-        SchoolName: SchoolName,
-        Degree: Degree,
-        Subject: Subject,
-        current: current,
-        StartDate: StartDate,
-        EndDate: EndDate,
-      });
+      //if "Education" collction does NOT have the data
+      if (exist) {
+        const work = await new Education({
+          email: session?.user?.email,
+          index: index,
+          SchoolName: SchoolName,
+          Degree: Degree,
+          Subject: Subject,
+          current: current,
+          StartDate: StartDate,
+          EndDate: EndDate,
+        });
 
-      await work.save();
+        await work.save();
+      }
       //***/
     });
 

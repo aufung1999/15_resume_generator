@@ -39,23 +39,22 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     const body = await req.json();
     console.log("body: " + JSON.stringify(body, null, 1));
 
+    await db.connect();
     body.map(async (each: AwardState) => {
       const { index, AwardName, AwardBy, Date, AwardDescription } = each;
 
-      //use the email from "Next-auth" to find the data in "Contact" collection
-      await db.connect();
+      //use the email from "Next-auth" to find the data in "Award" collection
+
       const exist = await Award.findOne({
         email: session?.user?.email,
         index: index,
       });
-      await db.disconnect();
       //***/
 
-      //if "Contact" collction has the data
+      //if "Award" collction has the data
       if (exist) {
-        const filter = { email: session?.user?.email };
+        const filter = { email: session?.user?.email, index: index };
         const update = {
-          index: index,
           AwardName: AwardName,
           AwardBy: AwardBy,
           Date: Date,
@@ -67,25 +66,26 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         await Award.findOneAndUpdate(filter, update, {
           new: true,
         });
-
-        return NextResponse.json({ message: "Hello" });
       }
       //***/
 
-      //if "Contact" collction does NOT have the data
-      const work = await new Award({
-        email: session?.user?.email,
-        index: index,
-        AwardName: AwardName,
-        AwardBy: AwardBy,
-        Date: Date,
-        AwardDescription: AwardDescription,
-      });
+      //if "Award" collction does NOT have the data
+      if (!exist) {
+        const work = await new Award({
+          email: session?.user?.email,
+          index: index,
+          AwardName: AwardName,
+          AwardBy: AwardBy,
+          Date: Date,
+          AwardDescription: AwardDescription,
+        });
 
-      await work.save();
+        await work.save();
+      }
       //***/
     });
 
+    await db.disconnect();
     return NextResponse.json({ message: "Hello" });
   } else {
     // Not Signed in

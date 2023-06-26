@@ -56,7 +56,6 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       GitHub,
     } = body;
 
-
     //use the email from "Next-auth" to find the data in "Contact" collection
     await db.connect();
     const exist = await Contact.findOne({
@@ -88,7 +87,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         new: true,
       });
 
-      return NextResponse.json({ message: "Hello" });
+      return NextResponse.json({ message: "Contact Updated" });
     }
     //***/
 
@@ -111,7 +110,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     await contact.save();
     //***/
 
-    return NextResponse.json({ message: "Hello" });
+    return NextResponse.json({ message: "Contact Saved" });
   } else {
     // Not Signed in
     res.status(401);

@@ -38,7 +38,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
     // console.log("body: " + JSON.stringify(body, null, 1));
-
+    await db.connect();
     body.map(async (each: WorkExpState) => {
       const {
         index,
@@ -51,19 +51,18 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       } = each;
 
       //use the email from "Next-auth" to find the data in "Contact" collection
-      await db.connect();
+
       const exist = await Work.findOne({
         email: session?.user?.email,
         index: index,
       });
-      await db.disconnect();
+
       //***/
 
       //if "Contact" collction has the data
       if (exist) {
-        const filter = { email: session?.user?.email };
+        const filter = { email: session?.user?.email, index: index };
         const update = {
-          index: index,
           CompanyName: CompanyName,
           Position: Position,
           current: current,
@@ -77,27 +76,27 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         await Work.findOneAndUpdate(filter, update, {
           new: true,
         });
-
-        return NextResponse.json({ message: "Hello" });
       }
       //***/
 
       //if "Contact" collction does NOT have the data
-      const work = await new Work({
-        email: session?.user?.email,
-        index: index,
-        CompanyName: CompanyName,
-        Position: Position,
-        current: current,
-        StartDate: StartDate,
-        EndDate: EndDate,
-        JobDescription: JobDescription,
-      });
+      if (!exist) {
+        const work = await new Work({
+          email: session?.user?.email,
+          index: index,
+          CompanyName: CompanyName,
+          Position: Position,
+          current: current,
+          StartDate: StartDate,
+          EndDate: EndDate,
+          JobDescription: JobDescription,
+        });
 
-      await work.save();
+        await work.save();
+      }
       //***/
     });
-
+    await db.disconnect();
     return NextResponse.json({ message: "Hello" });
   } else {
     // Not Signed in

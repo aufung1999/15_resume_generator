@@ -40,7 +40,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     console.log("body: " + JSON.stringify(body, null, 1));
 
     await db.connect();
-    body.map(async (each: SkillsState, i: number) => {
+    body.map(async (each: SkillsState) => {
       const { index, term, Skill_list } = each;
       console.log("term: " + term);
       //use the email from "Next-auth" to find the data in "Skill" collection
@@ -86,7 +86,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     });
 
     await db.disconnect();
-    
+
     return NextResponse.json({ message: "Hello" });
   } else {
     // Not Signed in
