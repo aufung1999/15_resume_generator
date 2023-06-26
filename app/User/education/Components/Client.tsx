@@ -28,7 +28,7 @@ export default function EducationClient({ data }: any) {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Work Info Updated!"))
+      .then(() => toast.success("User Education Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
   return (

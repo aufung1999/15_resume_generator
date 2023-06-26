@@ -27,7 +27,7 @@ export default function SkillClient({ data }: any) {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Skill Info Updated!"))
+      .then(() => toast.success("User Skill Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
   return (

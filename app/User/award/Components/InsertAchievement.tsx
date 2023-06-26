@@ -99,35 +99,6 @@ export default function InsertAchievement({ data }) {
 
   const [awards, editAwards] = useState<any>([]);
 
-  //fetch data from the collection of "Award" from Database at the initial stage
-  // useEffect(() => {
-  //   let temp_arr: any[] = [];
-  //   const getData = async () => {
-  //     data?.map((each: AwardState) => {
-  //       //---After receive data from MongoDB, dispatch to Redux
-  //       dispatch(addAward({ index: each.index }));
-  //       dispatch(
-  //         editAwardName({ index: each.index, AwardName: each.AwardName })
-  //       );
-  //       dispatch(editAwardBy({ index: each.index, AwardBy: each.AwardBy }));
-  //       dispatch(editDate({ index: each.index, Date: each.Date }));
-  //       dispatch(
-  //         editAwardDescription({
-  //           index: each.index,
-  //           AwardDescription: each.AwardDescription,
-  //         })
-  //       );
-
-  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //       temp_arr.push(<InputComp key={each.index} index={each.index} />);
-  //     });
-  //   };
-  //   getData();
-
-  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //   editAwards(temp_arr);
-  // }, [data]);
-
   useEffect(() => {
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
@@ -180,18 +151,20 @@ export default function InsertAchievement({ data }) {
   };
   /***/
   return (
-    <div>
+    <div className=" border border-red-300 w-full">
       <Toaster />
       <Button icon="insert" onClick={addAwa} />
-      {awards?.map((each: any, i: number) => (
-        <div key={i}>
-          <Button
-            icon="delete"
-            onClick={(e) => deleteAwa(e, each.props.index)}
-          />
-          {each}
-        </div>
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {awards?.map((each: any, i: number) => (
+          <div key={i}>
+            <Button
+              icon="delete"
+              onClick={(e) => deleteAwa(e, each.props.index)}
+            />
+            {each}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

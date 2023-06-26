@@ -6,7 +6,7 @@ const awardSchema = new mongoose.Schema(
     index: { type: String, required: true },
     AwardName: { type: String, required: true },
     AwardBy: { type: String, required: true },
-    Date: { type: String, required: true },
+    Date: { type: String, required: false },
     AwardDescription: { type: String, required: true },
   },
   {

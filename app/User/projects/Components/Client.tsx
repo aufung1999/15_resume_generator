@@ -27,7 +27,7 @@ export default function ProjectClient({ data }: any) {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Projects Info Updated!"))
+      .then(() => toast.success("User Projects Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
   return (

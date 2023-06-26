@@ -28,7 +28,7 @@ export default function AwardClient({ data }) {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Work Info Updated!"))
+      .then(() => toast.success("User Award Updated!"))
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
@@ -39,9 +39,7 @@ export default function AwardClient({ data }) {
     >
       <h1>Achievement</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
-        <div className=" w-9/12">
-          <InsertAchievement data={data} />
-        </div>
+        <InsertAchievement data={data} />
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
