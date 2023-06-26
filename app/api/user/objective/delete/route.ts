@@ -3,20 +3,20 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/utils/db";
-import Work from "@/models/Work";
+import Objective from "@/models/Objective";
 
-export async function DELETE(
-  req: NextApiRequest,
-  { params }: { params: { id: string } }
-) {
+export interface IGetUserAuthInfoRequest extends NextApiRequest {
+  json: any; // or any other type
+}
+
+export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
   if (session) {
-    const { id } = params;
-    console.log("id: " + id);
+    const body = await req.json();
     await db.connect();
 
-    const query = { index: id, email: session?.user?.email };
-    Work.deleteOne(query)
+    const query = { index: body, email: session?.user?.email };
+    Objective.deleteOne(query)
       .then(function () {
         console.log("Data deleted"); // Success
       })

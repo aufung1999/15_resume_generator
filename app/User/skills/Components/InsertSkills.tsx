@@ -27,6 +27,8 @@ import shortenUUID from "@/utils/shortenUUID";
 
 import useSWR from "swr";
 
+import toast, { Toaster } from "react-hot-toast";
+
 type Props = {
   index: string;
   term?: string;
@@ -124,37 +126,6 @@ export default function InsertSkills({ data }: any) {
   const [terms, editTerms] = useState<any>([]);
   const [term, setTerm] = useState("");
 
-  //fetch data from the collection of "Skills" from Database at the initial stage
-  // useEffect(() => {
-  //   let temp_arr: any[] = [];
-  //   const getData = async () => {
-  //     data?.map((each: SkillsState) => {
-  //       //---After receive data from MongoDB, dispatch to Redux
-  //       dispatch(addTerm({ index: each.index }));
-  //       dispatch(editTermName({ index: each.index, term: each.term }));
-
-  //       each.Skill_list?.map((row) => {
-  //         dispatch(addSkill({ index: each.index, skillIndex: row.skillIndex }));
-  //         dispatch(
-  //           editSkillName({
-  //             index: each.index,
-  //             skillIndex: row.skillIndex,
-  //             skill: row.skill,
-  //           })
-  //         );
-  //       });
-  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //       temp_arr.push(
-  //         <TermComp key={each.index} index={each.index} term={each.term} />
-  //       );
-  //     });
-  //   };
-  //   getData();
-
-  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //   editTerms(temp_arr);
-  // }, [data]);
-
   useEffect(() => {
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
@@ -190,7 +161,7 @@ export default function InsertSkills({ data }: any) {
     setTerm("");
   };
 
-  const deleteterm = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteterm = async (e: React.ChangeEvent<any>, received: string) => {
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteTerm({ index: received }));
@@ -199,10 +170,21 @@ export default function InsertSkills({ data }: any) {
       (each: any) => each.props.index !== received
     );
     editTerms(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/skill/delete`, {
+      method: "POST",
+      body: JSON.stringify(received),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
   return (
     <div className=" border  border-red-300 w-full">
+      <Toaster />
       <Button icon="insert" onClick={addterm} />
       <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

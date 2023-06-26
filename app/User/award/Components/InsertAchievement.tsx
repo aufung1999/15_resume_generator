@@ -30,6 +30,8 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 
+import toast, { Toaster } from "react-hot-toast";
+
 type Props = {
   index: string;
 };
@@ -133,7 +135,7 @@ export default function InsertAchievement({ data }) {
         dispatch(initialize_AwardData(each));
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -156,7 +158,7 @@ export default function InsertAchievement({ data }) {
     editAwards(awards.concat(<InputComp key={short_id} index={short_id} />));
   };
 
-  const deleteAwa = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteAwa = async (e: React.ChangeEvent<any>, received: string) => {
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteAward({ index: received }));
@@ -165,10 +167,21 @@ export default function InsertAchievement({ data }) {
       (each: any) => each.props.index !== received
     );
     editAwards(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/award/delete`, {
+      method: "POST",
+      body: JSON.stringify(received),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   /***/
   return (
     <div>
+      <Toaster />
       <Button icon="insert" onClick={addAwa} />
       {awards?.map((each: any, i: number) => (
         <div key={i}>

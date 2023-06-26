@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import InsertEducation from "./InsertEducation";
 
-export default function EducationClient({ data }) {
+export default function EducationClient({ data }: any) {
   const educations = useSelector((state: RootState) => state.education);
 
   // Save to server
@@ -38,7 +38,7 @@ export default function EducationClient({ data }) {
       elevation={Elevation.TWO}
     >
       <Toaster />
-      <h1>Work</h1>
+      <h1>Education</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
         {/* Control the form size */}

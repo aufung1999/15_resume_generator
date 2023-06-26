@@ -31,6 +31,8 @@ import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 import { ProjectState } from "@/slices/projectsSlice";
 
+import toast, { Toaster } from "react-hot-toast";
+
 type Props = {
   index: string;
 };
@@ -113,13 +115,19 @@ const InputComp = ({ index }: Props) => {
     );
   };
 
-  const deleteRow = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteRow = async (e: React.ChangeEvent<any>, received: string) => {
     e.preventDefault();
     // update the Redux Store
     dispatch(deleterow({ index: index, rowIndex: received }));
     //update the useState of "row"
     const after_remove = row.filter((each: any) => each.key !== received);
     editRow(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/project/${received}`, {
+      method: "DELETE",
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
 
@@ -177,7 +185,7 @@ export default function InsertProject({ data }: any) {
         dispatch(initialize_ProjectData(each));
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -201,7 +209,7 @@ export default function InsertProject({ data }: any) {
     );
   };
 
-  const deleteExp = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteProj = async (e: React.ChangeEvent<any>, received: string) => {
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteProject({ index: received }));
@@ -210,6 +218,16 @@ export default function InsertProject({ data }: any) {
       (each: any) => each.props.index !== received
     );
     editProjects(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/project/delete`, {
+      method: "POST",
+      body: JSON.stringify(received),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
   return (
@@ -219,7 +237,7 @@ export default function InsertProject({ data }: any) {
         <div key={i} className="w-full border-2">
           <Button
             icon="delete"
-            onClick={(e) => deleteExp(e, each.props.index)}
+            onClick={(e) => deleteProj(e, each.props.index)}
           />
           {each}
         </div>

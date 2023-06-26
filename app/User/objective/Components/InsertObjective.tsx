@@ -22,6 +22,8 @@ import {
 } from "@/slices/objectiveSlice";
 import { RootState } from "@/store/store";
 
+import toast, { Toaster } from "react-hot-toast";
+
 type Props = {
   index: string;
 };
@@ -54,30 +56,9 @@ const InputComp = ({ index }: Props) => {
 };
 
 export default function InsertObjective({ data }: any) {
-  const objective = useSelector((state: RootState) => state.objectives);
+  const objective_redux = useSelector((state: RootState) => state.objectives);
   const dispatch = useDispatch();
   const [objectives, editobjectives] = useState<any>([]);
-
-  //fetch data from the collection of "Skills" from Database at the initial stage
-  // useEffect(() => {
-  //   let temp_arr: any[] = [];
-  //   const getData = async () => {
-  //     data?.map((each: ObjectiveState) => {
-  //       //---After receive data from MongoDB, dispatch to Redux
-  //       dispatch(addObjective({ index: each.index }));
-  //       dispatch(
-  //         editObjective({ index: each.index, ObjectiveDes: each.ObjectiveDes })
-  //       );
-
-  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //       temp_arr.push(<InputComp key={each.index} index={each.index} />);
-  //     });
-  //   };
-  //   getData();
-
-  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //   editobjectives(temp_arr);
-  // }, [data]);
 
   useEffect(() => {
     if (data) {
@@ -86,17 +67,17 @@ export default function InsertObjective({ data }: any) {
         dispatch(initialize_ObjectiveData(each));
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     let temp_arr: any[] = [];
-    if (objective.length !== 0) {
-      objective.map((each) => {
+    if (objective_redux.length !== 0) {
+      objective_redux.map((each) => {
         temp_arr.push(<InputComp key={each.index} index={each.index} />);
       });
       editobjectives(temp_arr);
     }
-  }, [objective]);
+  }, [objective_redux]);
 
   //---------------ADD/DELETE-------------------
   const addObj = () => {
@@ -111,7 +92,7 @@ export default function InsertObjective({ data }: any) {
     );
   };
 
-  const deleteObj = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteObj = async (e: React.ChangeEvent<any>, received: string) => {
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteObjective({ index: received }));
@@ -120,10 +101,21 @@ export default function InsertObjective({ data }: any) {
       (each: any) => each.props.index !== received
     );
     editobjectives(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/objective/delete`, {
+      method: "POST",
+      body: JSON.stringify(received),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
   return (
     <div>
+      <Toaster />
       <Button icon="insert" onClick={addObj} />
       {objectives?.map((each: any, i: number) => (
         <div key={i}>

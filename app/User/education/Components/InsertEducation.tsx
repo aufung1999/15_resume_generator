@@ -32,7 +32,7 @@ import { RootState } from "@/store/store";
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 
-import useSWR from "swr";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {
   index: string;
@@ -122,41 +122,6 @@ export default function InsertEducation({ data }: any) {
 
   const [educations, editEducations] = useState<any>([]);
 
-  // const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  // const { data, error, isLoading } = useSWR("/api/user/education", fetcher);
-
-  //fetch data from the collection of "educations" from Database at the initial stage
-  // useEffect(() => {
-  //   let temp_arr: any[] = [];
-  //   const getData = () => {
-  //     data?.map((each: EducationState) => {
-  //       //---After receive data from MongoDB, dispatch to Redux
-  //       dispatch(addEducation({ index: each.index }));
-  //       dispatch(
-  //         editSchoolName({ index: each.index, SchoolName: each.SchoolName })
-  //       );
-  //       dispatch(editDegree({ index: each.index, Degree: each.Degree }));
-  //       dispatch(editSubject({ index: each.index, Subject: each.Subject }));
-  //       dispatch(
-  //         currentStudying({
-  //           index: each.index,
-  //           current: each.current === undefined ? false : each.current,
-  //         })
-  //       );
-  //       dispatch(
-  //         editStartDate({ index: each.index, StartDate: each.StartDate })
-  //       );
-  //       dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
-
-  //       temp_arr.push(<InputComp key={educations.length} index={each.index} />);
-  //     });
-  //   };
-  //   getData();
-
-  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //   editEducations(temp_arr);
-  // }, [data]);
-
   useEffect(() => {
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
@@ -164,7 +129,7 @@ export default function InsertEducation({ data }: any) {
         dispatch(initialize_EducationData(each));
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -182,14 +147,13 @@ export default function InsertEducation({ data }: any) {
     const uuid = uuidv4();
     const short_id = shortenUUID(uuid);
     // update the Redux Store
-    dispatch(addEducation({ index: short_id }));
+    dispatch(addEducation({ index: uuid }));
     //update the useState of "educations"
-    editEducations(
-      educations.concat(<InputComp key={short_id} index={short_id} />)
-    );
+    editEducations(educations.concat(<InputComp key={uuid} index={uuid} />));
   };
 
-  const deleteEdu = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteEdu = async (e: React.ChangeEvent<any>, received: string) => {
+    console.log("received: " + received);
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteEducation({ index: received }));
@@ -198,20 +162,33 @@ export default function InsertEducation({ data }: any) {
       (each: any) => each.props.index !== received
     );
     editEducations(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/education/delete`, {
+      method: "POST",
+      body: JSON.stringify(received),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
   return (
-    <div>
+    <div className=" border border-red-300 w-full">
+      <Toaster />
       <Button icon="insert" onClick={addEdu} />
-      {educations?.map((each: any, i: number) => (
-        <div key={i}>
-          <Button
-            icon="delete"
-            onClick={(e) => deleteEdu(e, each.props.index)}
-          />
-          {each}
-        </div>
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {educations?.map((each: any, i: number) => (
+          <div key={i}>
+            <Button
+              icon="delete"
+              onClick={(e) => deleteEdu(e, each.props.index)}
+            />
+            {each}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

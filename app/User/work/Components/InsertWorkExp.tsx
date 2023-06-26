@@ -286,8 +286,12 @@ export default function InsertWorkExp({ data }: any) {
     );
     editWorkExps(after_remove);
     //delete from the MongoDB
-    await fetch(`/api/user/work/${received}`, {
-      method: "DELETE",
+    await fetch(`/api/user/work/delete`, {
+      method: "POST",
+      body: JSON.stringify(received),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
     })
       .then(() => toast.success("Deleted!"))
       .catch(() => toast.error("Cannot Delete!"));

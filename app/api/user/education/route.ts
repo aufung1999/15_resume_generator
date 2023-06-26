@@ -37,7 +37,6 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   console.log("session?.user?.email: " + session?.user?.email);
   if (session) {
     const body = await req.json();
-    console.log("body: " + JSON.stringify(body, null, 1));
 
     body.map(async (each: EducationState) => {
       const {
