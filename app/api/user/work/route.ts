@@ -34,10 +34,9 @@ export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
 
 export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
-  // console.log('session?.user?.email: ' + session?.user?.email)
   if (session) {
     const body = await req.json();
-    // console.log("body: " + JSON.stringify(body, null, 1));
+
     await db.connect();
     body.map(async (each: WorkExpState) => {
       const {
@@ -50,7 +49,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         JobDescription,
       } = each;
 
-      //use the email from "Next-auth" to find the data in "Contact" collection
+      //use the email from "Next-auth" to find the data in "Work" collection
 
       const exist = await Work.findOne({
         email: session?.user?.email,
@@ -59,7 +58,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
 
       //***/
 
-      //if "Contact" collction has the data
+      //if "Work" collction has the data
       if (exist) {
         const filter = { email: session?.user?.email, index: index };
         const update = {
@@ -79,7 +78,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       }
       //***/
 
-      //if "Contact" collction does NOT have the data
+      //if "Work" collction does NOT have the data
       if (!exist) {
         const work = await new Work({
           email: session?.user?.email,
@@ -104,3 +103,4 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   }
   res.end();
 }
+

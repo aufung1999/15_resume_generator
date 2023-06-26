@@ -22,11 +22,13 @@ export default async function Page() {
     if (workData) {
       workData = workData.map((each: any) => db.convertDocToObj(each));
     }
+
+    return (
+      <div>
+        <WorkClient data={workData} />
+      </div>
+    );
   }
 
-  return (
-    <div>
-      <WorkClient data={workData} />
-    </div>
-  );
+  return <div>Please Login</div>;
 }

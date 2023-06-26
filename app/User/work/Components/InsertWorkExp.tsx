@@ -34,6 +34,8 @@ import { RootState } from "@/store/store";
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 
+import toast, { Toaster } from "react-hot-toast";
+
 type Props = {
   index: string;
 };
@@ -250,7 +252,7 @@ export default function InsertWorkExp({ data }: any) {
         dispatch(initialize_WorkData(each));
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -274,7 +276,7 @@ export default function InsertWorkExp({ data }: any) {
     );
   };
 
-  const deleteExp = (e: React.ChangeEvent<any>, received: string) => {
+  const deleteExp = async (e: React.ChangeEvent<any>, received: string) => {
     e.preventDefault();
     // update the Redux Store
     dispatch(deleteWorkExp({ index: received }));
@@ -283,10 +285,17 @@ export default function InsertWorkExp({ data }: any) {
       (each: any) => each.props.index !== received
     );
     editWorkExps(after_remove);
+    //delete from the MongoDB
+    await fetch(`/api/user/work/${received}`, {
+      method: "DELETE",
+    })
+      .then(() => toast.success("Deleted!"))
+      .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
   return (
     <div className="w-full">
+      <Toaster />
       <Button icon="insert" onClick={addExp} />
       {workExps?.map((each: any, i: number) => (
         <div key={i} className="w-full border-2">

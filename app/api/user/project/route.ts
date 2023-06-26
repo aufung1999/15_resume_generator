@@ -14,7 +14,6 @@ export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
   if (session) {
     // Signed in
-    // console.log("user/Project Get");
 
     await db.connect();
     const exist = await Project.find({

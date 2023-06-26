@@ -4,6 +4,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function Page() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+  }
   // const router = useRouter();
   // const { data: session, status } = useSession({
   //   required: true,
