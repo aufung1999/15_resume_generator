@@ -114,7 +114,7 @@ const TermComp = ({ index, term }: Props) => {
 //*         Important Info.       */
 // Child Component: TermComp
 //Parent Component: X
-export default function InsertSkills({ data }) {
+export default function InsertSkills({ data }: any) {
   const dispatch = useDispatch();
 
   const skills_redux: SkillsState[] = useSelector(
@@ -162,7 +162,7 @@ export default function InsertSkills({ data }) {
         dispatch(initialize_SkillData(each));
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -202,19 +202,20 @@ export default function InsertSkills({ data }) {
   };
   //***/
   return (
-    <div>
-      {console.log("terms: " + JSON.stringify(terms, null, 1))}
+    <div className=" border  border-red-300 w-full">
       <Button icon="insert" onClick={addterm} />
       <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
-      {terms?.map((each: any, i: number) => (
-        <div key={i}>
-          <Button
-            icon="delete"
-            onClick={(e) => deleteterm(e, each.props.index)}
-          />
-          {each}
-        </div>
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {terms?.map((each: any, i: number) => (
+          <div key={i}>
+            <Button
+              icon="delete"
+              onClick={(e) => deleteterm(e, each.props.index)}
+            />
+            {each}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
