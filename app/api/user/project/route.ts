@@ -38,24 +38,22 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
     // console.log("body: " + JSON.stringify(body, null, 1));
-
+    await db.connect();
     body.map(async (each: ProjectState) => {
       const { index, ProjectName, Techniques, ProjectDescription } = each;
 
-      //use the email from "Next-auth" to find the data in "Contact" collection
-      await db.connect();
+      //use the email from "Next-auth" to find the data in "Project" collection
+
       const exist = await Project.findOne({
         email: session?.user?.email,
         index: index,
       });
-      await db.disconnect();
       //***/
 
-      //if "Contact" collction has the data
+      //if "Project" collction has the data
       if (exist) {
-        const filter = { email: session?.user?.email };
+        const filter = { email: session?.user?.email, index: index };
         const update = {
-          index: index,
           ProjectName: ProjectName,
           Techniques: Techniques,
           ProjectDescription: ProjectDescription,
@@ -66,25 +64,26 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         await Project.findOneAndUpdate(filter, update, {
           new: true,
         });
-
-        return NextResponse.json({ message: "Hello" });
       }
       //***/
 
-      //if "Contact" collction does NOT have the data
-      const work = await new Project({
-        email: session?.user?.email,
-        index: index,
-        ProjectName: ProjectName,
-        Techniques: Techniques,
-        ProjectDescription: ProjectDescription,
-      });
+      //if "Project" collction does NOT have the data
+      if (!exist) {
+        const project = await new Project({
+          email: session?.user?.email,
+          index: index,
+          ProjectName: ProjectName,
+          Techniques: Techniques,
+          ProjectDescription: ProjectDescription,
+        });
 
-      await work.save();
+        await project.save();
+      }
       //***/
     });
 
-    return NextResponse.json({ message: "Hello" });
+    await db.disconnect();
+    return NextResponse.json({ message: "Updaed" });
   } else {
     // Not Signed in
     res.status(401);
