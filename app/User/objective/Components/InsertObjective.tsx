@@ -16,6 +16,7 @@ import shortenUUID from "@/utils/shortenUUID";
 import {
   ObjectiveState,
   addObjective,
+  cleanUp_Objective_redux,
   deleteObjective,
   editObjective,
   initialize_ObjectiveData,
@@ -61,6 +62,7 @@ export default function InsertObjective({ data }: any) {
   const [objectives, editobjectives] = useState<any>([]);
 
   useEffect(() => {
+    dispatch(cleanUp_Objective_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {

@@ -15,8 +15,11 @@ const awardSlice = createSlice({
   name: "awards",
   initialState,
   reducers: {
+    cleanUp_Award_redux: (state) => {
+      state = initialState;
+    },
     initialize_AwardData: (state, action: PayloadAction<string>) => {
-      const { index, AwardName, AwardBy, Date, AwardDescription } =
+      const { index, AwardName, AwardBy, Date, AwardDescription }: any =
         action.payload;
       //set the data format
       let Data = {
@@ -72,6 +75,7 @@ const awardSlice = createSlice({
 });
 
 export const {
+  cleanUp_Award_redux,
   initialize_AwardData,
   addAward,
   deleteAward,

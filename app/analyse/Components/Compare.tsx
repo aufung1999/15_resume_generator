@@ -25,24 +25,13 @@ export default function Compare() {
   const project_redux = useSelector((state: RootState) => state.projects);
 
   const CompareHandler = () => {
-    const res = stringSimilarity.compareTwoStrings("healed", "sealed");
-    console.log("res: " + res);
-
     if (Array.isArray(stage_2)) {
-      // stage_2?.map((each_input) => {
-      //   console.log("each_input: " + each_input);
-      //   project_redux.map((each) => {
-      //     each.ProjectDescription.map((row) => {
-      //       console.log("row.Row: " + row.Row),
-      //         console.log(
-      //           "res: " +
-      //             stringSimilarity.compareTwoStrings(each_input, row.Row)
-      //         );
-      //     });
-      //   });
-      // });
-      const res = project_redux.map((each) => extractTerms(each?.Techniques));
-      console.log("res: " + JSON.stringify(res, null, 1));
+      let temp_arr = [];
+
+      project_redux.map((each) =>
+        temp_arr.push({ [each.index]: extractTerms(each?.Techniques) })
+      );
+      console.log("res: " + JSON.stringify(temp_arr, null, 1));
     }
   };
   return (

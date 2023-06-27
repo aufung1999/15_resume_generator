@@ -27,6 +27,7 @@ import {
   editGitHub,
   ContactState,
   initialize_ClientData,
+  cleanUp_Contact_redux,
 } from "@/slices/contactSlice";
 import type { RootState } from "@/store/store";
 
@@ -40,6 +41,7 @@ export default function ContactClient({ data }: any) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(cleanUp_Contact_redux());
     if (data) {
       dispatch(initialize_ClientData(data));
     }

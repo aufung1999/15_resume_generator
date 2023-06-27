@@ -12,6 +12,9 @@ const objectiveSlice = createSlice({
   name: "objectives",
   initialState,
   reducers: {
+    cleanUp_Objective_redux: (state) => {
+      state = initialState;
+    },
     initialize_ObjectiveData: (state, action: PayloadAction<string>) => {
       const { index, ObjectiveDes }: any = action.payload;
       //set the data format
@@ -43,6 +46,7 @@ const objectiveSlice = createSlice({
 });
 
 export const {
+  cleanUp_Objective_redux,
   initialize_ObjectiveData,
   addObjective,
   deleteObjective,

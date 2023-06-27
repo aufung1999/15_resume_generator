@@ -19,6 +19,7 @@ import {
   addrow,
   deleterow,
   editProjectDescription,
+  cleanUp_Project_redux,
 } from "@/slices/projectsSlice";
 
 import DatePicker from "react-date-picker";
@@ -179,6 +180,7 @@ export default function InsertProject({ data }: any) {
   const [projects_csr, editProjects] = useState<any>([]);
 
   useEffect(() => {
+    dispatch(cleanUp_Project_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {

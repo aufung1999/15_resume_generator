@@ -17,6 +17,9 @@ const workSlice = createSlice({
   name: "work",
   initialState,
   reducers: {
+    cleanUp_Work_redux: (state) => {
+      state = initialState;
+    },
     initialize_WorkData: (state, action: PayloadAction<string>) => {
       const {
         index,
@@ -135,6 +138,7 @@ const workSlice = createSlice({
 });
 
 export const {
+  cleanUp_Work_redux,
   initialize_WorkData,
   addWorkExp,
   deleteWorkExp,

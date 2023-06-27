@@ -13,6 +13,9 @@ const awardSlice = createSlice({
   name: "skills",
   initialState,
   reducers: {
+    cleanUp_Skill_redux: (state) => {
+      state = initialState;
+    },
     initialize_SkillData: (state, action: PayloadAction<string>) => {
       const { index, term, Skill_list }: any = action.payload;
       //set the data format
@@ -88,6 +91,7 @@ const awardSlice = createSlice({
 });
 
 export const {
+  cleanUp_Skill_redux,
   initialize_SkillData,
   addTerm,
   deleteTerm,

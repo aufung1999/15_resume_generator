@@ -19,16 +19,29 @@ import {
   editAnalyse_stage_2,
   removeAnalyse_stage_1,
 } from "@/slices/analyseSlice";
-import { initialize_ClientData } from "@/slices/contactSlice";
-import { WorkExpState, initialize_WorkData } from "@/slices/workSlice";
+import {
+  cleanUp_Contact_redux,
+  initialize_ClientData,
+} from "@/slices/contactSlice";
+import { WorkExpState, cleanUp_Work_redux, initialize_WorkData } from "@/slices/workSlice";
 import {
   EducationState,
+  cleanUp_Education_redux,
   initialize_EducationData,
 } from "@/slices/educationSlice";
-import { initialize_AwardData } from "@/slices/awardSlice";
-import { initialize_SkillData } from "@/slices/skillsSlice";
-import { initialize_ObjectiveData } from "@/slices/objectiveSlice";
-import { initialize_ProjectData } from "@/slices/projectsSlice";
+import { cleanUp_Award_redux, initialize_AwardData } from "@/slices/awardSlice";
+import {
+  cleanUp_Skill_redux,
+  initialize_SkillData,
+} from "@/slices/skillsSlice";
+import {
+  cleanUp_Objective_redux,
+  initialize_ObjectiveData,
+} from "@/slices/objectiveSlice";
+import {
+  cleanUp_Project_redux,
+  initialize_ProjectData,
+} from "@/slices/projectsSlice";
 import Stage_2 from "./Stage_2";
 import Compare from "./Compare";
 
@@ -39,6 +52,14 @@ export default function AnalyseClient({ data }: any) {
 
   useEffect(() => {
     if (data) {
+      dispatch(cleanUp_Award_redux());
+      dispatch(cleanUp_Contact_redux());
+      dispatch(cleanUp_Education_redux());
+      dispatch(cleanUp_Objective_redux());
+      dispatch(cleanUp_Project_redux());
+      dispatch(cleanUp_Skill_redux());
+      dispatch(cleanUp_Work_redux());
+      //initialize all the data to Redux Store
       dispatch(initialize_ClientData(data.contact));
       data.work.map((each: any) => {
         dispatch(initialize_WorkData(each));

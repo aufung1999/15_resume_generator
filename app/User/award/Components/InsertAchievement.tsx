@@ -25,6 +25,7 @@ import {
   AwardState,
   deleteAward,
   initialize_AwardData,
+  cleanUp_Award_redux,
 } from "@/slices/awardSlice";
 
 import { v4 as uuidv4 } from "uuid";
@@ -93,16 +94,17 @@ const InputComp = ({ index }: Props) => {
   );
 };
 
-export default function InsertAchievement({ data }) {
+export default function InsertAchievement({ data }: any) {
   const award = useSelector((state: RootState) => state.award);
   const dispatch = useDispatch();
 
   const [awards, editAwards] = useState<any>([]);
 
   useEffect(() => {
+    dispatch(cleanUp_Award_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
-      data.map((each) => {
+      data.map((each: any) => {
         dispatch(initialize_AwardData(each));
       });
     }
@@ -111,7 +113,7 @@ export default function InsertAchievement({ data }) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (award.length !== 0) {
-      award.map((each) => {
+      award.map((each: any) => {
         temp_arr.push(<InputComp key={each.index} index={each.index} />);
       });
       editAwards(temp_arr);

@@ -14,6 +14,7 @@ import {
   SkillsState,
   addSkill,
   addTerm,
+  cleanUp_Skill_redux,
   deleteSkill,
   deleteTerm,
   editSkillName,
@@ -127,6 +128,7 @@ export default function InsertSkills({ data }: any) {
   const [term, setTerm] = useState("");
 
   useEffect(() => {
+    dispatch(cleanUp_Skill_redux())
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {

@@ -23,6 +23,7 @@ import {
   deleterow,
   WorkExpState,
   initialize_WorkData,
+  cleanUp_Work_redux,
 } from "@/slices/workSlice";
 
 import DatePicker from "react-date-picker";
@@ -204,48 +205,8 @@ export default function InsertWorkExp({ data }: any) {
   const dispatch = useDispatch();
   const [workExps, editWorkExps] = useState<any>([]);
 
-  // useEffect(() => {
-  //   let temp_arr: any[] = [];
-  //   const getData = () => {
-  //     data?.map((each: WorkExpState) => {
-  //       //---After receive data from MongoDB, dispatch to Redux
-  //       dispatch(addWorkExp({ index: each.index }));
-  //       dispatch(
-  //         editCompanyName({ index: each.index, CompanyName: each.CompanyName })
-  //       );
-  //       dispatch(editPosition({ index: each.index, Position: each.Position }));
-  //       dispatch(
-  //         editStartDate({ index: each.index, StartDate: each.StartDate })
-  //       );
-  //       dispatch(editEndDate({ index: each.index, EndDate: each.EndDate }));
-  //       dispatch(
-  //         currentWorking({
-  //           index: each.index,
-  //           current: each.current === undefined ? false : each.current,
-  //         })
-  //       );
-  //       each.JobDescription.map((row) => {
-  //         dispatch(addrow({ index: each.index, rowIndex: row.rowIndex }));
-  //         dispatch(
-  //           editJobDescription({
-  //             index: each.index,
-  //             rowIndex: row.rowIndex,
-  //             Row: row.Row,
-  //           })
-  //         );
-  //       });
-
-  //       //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //       temp_arr.push(<InputComp key={workExps.length} index={each.index} />);
-  //     });
-  //   };
-  //   getData();
-
-  //   //this is the part where it Generate the Fetched data from MongoDB to Frontend
-  //   editWorkExps(temp_arr);
-  // }, [data]);
-
   useEffect(() => {
+    dispatch(cleanUp_Work_redux())
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {

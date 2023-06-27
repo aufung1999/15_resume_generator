@@ -78,6 +78,8 @@ export default async function Home() {
       skill: skillData,
       objective: objectiveData,
     };
+
+    
   }
 
   return (

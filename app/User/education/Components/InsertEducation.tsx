@@ -26,6 +26,7 @@ import {
   EducationState,
   deleteEducation,
   initialize_EducationData,
+  cleanUp_Education_redux,
 } from "@/slices/educationSlice";
 import { RootState } from "@/store/store";
 
@@ -41,10 +42,10 @@ type Props = {
 const InputComp = ({ index }: Props) => {
   const dispatch = useDispatch();
 
-  const educations: EducationState[] = useSelector(
+  const education_redux: EducationState[] = useSelector(
     (state: RootState) => state.education
   );
-  const education = educations.find((each) => each.index === index);
+  const education = education_redux.find((each) => each.index === index);
 
   return (
     <Card interactive={false} style={{ background: "gray", color: "white" }}>
@@ -117,12 +118,13 @@ const InputComp = ({ index }: Props) => {
 };
 
 export default function InsertEducation({ data }: any) {
-  const education = useSelector((state: RootState) => state.education);
+  const education_redux = useSelector((state: RootState) => state.education);
   const dispatch = useDispatch();
 
   const [educations, editEducations] = useState<any>([]);
 
   useEffect(() => {
+    dispatch(cleanUp_Education_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {
@@ -133,13 +135,13 @@ export default function InsertEducation({ data }: any) {
 
   useEffect(() => {
     let temp_arr: any[] = [];
-    if (education.length !== 0) {
-      education.map((each) => {
+    if (education_redux.length !== 0) {
+      education_redux.map((each) => {
         temp_arr.push(<InputComp key={each.index} index={each.index} />);
       });
       editEducations(temp_arr);
     }
-  }, [education]);
+  }, [education_redux]);
 
   //---------------ADD/DELETE-------------------
   const addEdu = () => {
