@@ -20,6 +20,17 @@ import {
   removeAnalyse_stage_1,
 } from "@/slices/analyseSlice";
 import { initialize_ClientData } from "@/slices/contactSlice";
+import { WorkExpState, initialize_WorkData } from "@/slices/workSlice";
+import {
+  EducationState,
+  initialize_EducationData,
+} from "@/slices/educationSlice";
+import { initialize_AwardData } from "@/slices/awardSlice";
+import { initialize_SkillData } from "@/slices/skillsSlice";
+import { initialize_ObjectiveData } from "@/slices/objectiveSlice";
+import { initialize_ProjectData } from "@/slices/projectsSlice";
+import Stage_2 from "./Stage_2";
+import Compare from "./Compare";
 
 export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
@@ -28,8 +39,19 @@ export default function AnalyseClient({ data }: any) {
 
   useEffect(() => {
     if (data) {
-      console.log("data: " + JSON.stringify(data, null, 1));
       dispatch(initialize_ClientData(data.contact));
+      data.work.map((each: any) => {
+        dispatch(initialize_WorkData(each));
+      });
+      data.education.map((each: any) =>
+        dispatch(initialize_EducationData(each))
+      );
+      data.award.map((each: any) => dispatch(initialize_AwardData(each)));
+      data.skill.map((each: any) => dispatch(initialize_SkillData(each)));
+      data.objective.map((each: any) =>
+        dispatch(initialize_ObjectiveData(each))
+      );
+      data.project.map((each: any) => dispatch(initialize_ProjectData(each)));
     }
   }, []);
 
@@ -43,15 +65,6 @@ export default function AnalyseClient({ data }: any) {
       dispatch(editAnalyse_stage_2(pre_stage_2));
       //remove the stage_1 after split func.
       dispatch(removeAnalyse_stage_1());
-
-      let array;
-
-      // stage_2.map((each) => {
-
-      // console.log("res: " + JSON.stringify(res, null, 1));
-      // });
-      // .then(() => toast.success("User Contact Info Updated!"))
-      // .catch(() => toast.error("Cannot Update!"))
     }
 
     fetch("/api/chatgpt", {
@@ -64,24 +77,33 @@ export default function AnalyseClient({ data }: any) {
   };
 
   return (
-    <Card
-      className="border border-blue-600 w-full h-full"
-      interactive={false}
-      elevation={Elevation.TWO}
-    >
-      {/* <Toaster /> */}
-      <h1>Description</h1>
+    <div className=" flex">
+      <Card
+        className="border border-blue-600 w-6/12 h-full"
+        interactive={false}
+        elevation={Elevation.TWO}
+      >
+        {/* <Toaster /> */}
+        <h1>Description</h1>
 
-      <div className="w-fullh-full border-4 flex flex-col items-center justify-center">
-        {/* Control the form size */}
-        <TextArea
-          className="w-full h-72"
-          onChange={(e) => dispatch(editAnalyse_stage_1(e.target.value))}
-        />
-      </div>
-      <Button className="bp3-intent-primary" onClick={handleSubmit}>
-        Submit
-      </Button>
-    </Card>
+        <div className="w-full h-full border-4 flex flex-col items-center justify-center">
+          {/* Control the form size */}
+          <TextArea
+            className="w-full h-72"
+            onChange={(e) => dispatch(editAnalyse_stage_1(e.target.value))}
+          />
+        </div>
+        <Button className="bp3-intent-primary" onClick={handleSubmit}>
+          Submit
+        </Button>
+
+        <div className="w-full">
+          {Array.isArray(stage_2) && <Stage_2 stage_2={stage_2} />}
+        </div>
+      </Card>
+      <Card className="border border-red-600 w-6/12 h-full">
+        {Array.isArray(stage_2) && <Compare />}
+      </Card>
+    </div>
   );
 }

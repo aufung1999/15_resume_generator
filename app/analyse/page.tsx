@@ -10,6 +10,7 @@ import Education from "@/models/Education";
 import Award from "@/models/Award";
 import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
+import Project from "@/models/Project";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -21,7 +22,8 @@ export default async function Page() {
     educationData,
     awardData,
     objectiveData,
-    skillData;
+    skillData,
+    projectData;
   //check if "Authenticated"
   if (session) {
     await db.connect();
@@ -31,6 +33,8 @@ export default async function Page() {
     });
     if (contactData) {
       contactData = db.convertDocToObj(contactData);
+      // const { _id, createdAt, updatedAt, __v, ...rest } = contactData._doc;
+      // console.log("rest: " + JSON.stringify(rest, null, 1));
     }
     //fetch Work
     workData = await Work.find({
@@ -51,24 +55,28 @@ export default async function Page() {
       email: session?.user?.email,
     });
     if (awardData) {
-      // awardData = awardData.map((each) => db.convertDocToObj(each));
-      awardData = JSON.parse(JSON.stringify(awardData));
+      awardData = awardData.map((each) => db.convertDocToObj(each));
     }
     //fetch Objective
     objectiveData = await Objective.find({
       email: session?.user?.email,
     });
     if (objectiveData) {
-      // objectiveData = objectiveData.map((each) => db.convertDocToObj(each));
-      objectiveData = JSON.parse(JSON.stringify(objectiveData));
+      objectiveData = objectiveData.map((each) => db.convertDocToObj(each));
     }
     //fetch Skill
     skillData = await Skill.find({
       email: session?.user?.email,
     });
     if (skillData) {
-      // skillData = skillData.map((each) => db.convertDocToObj(each));
-      skillData = JSON.parse(JSON.stringify(skillData));
+      skillData = skillData.map((each) => db.convertDocToObj(each));
+    }
+    //fetch Project
+    projectData = await Project.find({
+      email: session?.user?.email,
+    });
+    if (projectData) {
+      projectData = projectData.map((each) => db.convertDocToObj(each));
     }
 
     clientData = {
@@ -78,13 +86,15 @@ export default async function Page() {
       award: awardData,
       skill: skillData,
       objective: objectiveData,
+      project: projectData,
     };
 
     // console.log("clientData: " + JSON.stringify(clientData, null, 1));
+    return (
+      <div className="border-4 border-blue-300 w-full h-full">
+        <AnalyseClient data={JSON.parse(JSON.stringify(clientData))} />
+      </div>
+    );
   }
-  return (
-    <div className="border-4 border-blue-300 w-full h-full">
-      <AnalyseClient data={clientData} />
-    </div>
-  );
+  return <div>go Login</div>;
 }

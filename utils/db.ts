@@ -42,6 +42,7 @@ function convertDocToObj(doc:any) {
   doc._id = doc._id.toString();
   doc.createdAt = doc.createdAt.toString();
   doc.updatedAt = doc.updatedAt.toString();
+  doc.__v = doc.__v.toString();
   return doc;
 }
 

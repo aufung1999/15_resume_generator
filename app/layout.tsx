@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className=" h-screen border-8 border-blue-300">
+        <body className=" min-h-screen border-8 border-blue-300">
           <div
             className={
               inter.className +

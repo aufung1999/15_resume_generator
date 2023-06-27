@@ -46,7 +46,7 @@ const contactSlice = createSlice({
         Portfolio,
         LinkedIn,
         GitHub,
-      } = action.payload;
+      }: any = action.payload;
 
       state.FirstName = FirstName;
       state.LastName = LastName;
