@@ -13,21 +13,35 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
 
   if (session) {
     const body = await req.json();
-    console.log("body: " + JSON.stringify(body, null, 1));
 
-    // const chatCompletion = await openai.createChatCompletion({
-    //   model: "gpt-3.5-turbo",
-    //   messages: [
-    //     {
-    //       role: "user",
-    //       content: "Can you generate text for a meme related to JavaScript",
-    //     },
-    //   ],
-    // });
+    const { input_data, user_data } = body;
 
-    //   console.log(chatCompletion.data.choices[0].message.content);
-    // const response = chatCompletion.data.choices[0].message.content;
+    const statement_1 = input_data;
+    const statement_2 = Object.values(user_data);
+    
+    console.log("*****************************");
+    console.log(statement_1);
+    console.log("*****************************");
+    console.log(statement_2);
+    console.log("*****************************");
 
-    return NextResponse.json({ message: "This Worked", success: true });
+    //----------------------Cost Money--------------------Careful---------------------
+    // try {
+    //   const chatCompletion: any = await openai.createChatCompletion({
+    //     model: "gpt-3.5-turbo",
+    //     messages: [
+    //       {
+    //         role: "user",
+    //         content: `if "${statement_1}" includes any of "${statement_2}".`,
+
+    //       },
+    //     ],
+    //   });
+    //   const response = await chatCompletion?.data;
+    //   console.log(response);
+    //   return NextResponse.json(response);
+    // } catch (err) {
+    //   res.status(500).json({ error: "failed to load data" });
+    // }
   }
 }

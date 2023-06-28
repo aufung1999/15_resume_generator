@@ -52,6 +52,7 @@ export default function AnalyseClient({ data }: any) {
 
   useEffect(() => {
     if (data) {
+      //clean up Redux data
       dispatch(cleanUp_Award_redux());
       dispatch(cleanUp_Contact_redux());
       dispatch(cleanUp_Education_redux());
@@ -88,13 +89,7 @@ export default function AnalyseClient({ data }: any) {
       dispatch(removeAnalyse_stage_1());
     }
 
-    fetch("/api/chatgpt", {
-      method: "POST",
-      body: JSON.stringify(pre_stage_2),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
+
   };
 
   return (
