@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -13,6 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import extractTerms from "../Functions/extractTerms";
 import compare from "../Functions/compare";
+import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+import Statistic from "./Statistic";
 
 export default function Compare() {
   const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);
@@ -24,61 +26,94 @@ export default function Compare() {
   const objective_redux = useSelector((state: RootState) => state.objectives);
   const project_redux = useSelector((state: RootState) => state.projects);
 
+  const [result, setRes] = useState<any>([]);
+
+  //===total results from the function
+  let temp_arr: any[] = [];
+
   const CompareHandler = async () => {
+    setRes([]);
     if (Array.isArray(stage_2)) {
-      //=====Project=====
-      let temp_project_arr1: any[] = [];
-      let temp_project_arr2: any[] = [];
-      project_redux.map((each) =>
-        temp_project_arr1.push({
-          index: each.index,
-          array: extractTerms(each?.Techniques, "project_redux"),
-        })
-      );
+      let fetch_stage_2: any[] = [];
       stage_2.map((each, index) =>
-        temp_project_arr2.push({
+        fetch_stage_2.push({
           index: each,
           array: extractTerms(each, "input"),
         })
       );
-      compare(temp_project_arr1, temp_project_arr2, "project");
+      //=====Project=====
+      let temp_project: any[] = [];
+      project_redux.map((each) =>
+        temp_project.push({
+          index: each.index,
+          array: extractTerms(each?.Techniques, "project_redux"),
+        })
+      );
+
+      temp_arr.push(...compare(temp_project, fetch_stage_2, "project"));
 
       //=====Skill=====
-      let temp_skill_arr1: any[] = [];
-      let temp_skill_arr2: any[] = [];
+      let temp_skill: any[] = [];
 
       skills_redux.map((each) =>
-        temp_skill_arr1.push({
+        temp_skill.push({
           index: each.index,
           array: each.Skill_list,
         })
       );
+      temp_arr.push(...compare(temp_skill, fetch_stage_2, "skill"));
 
-      compare(temp_skill_arr1, temp_project_arr2, "skill");
+      //=====Pre-process Work=====
+      const filtered_stage_2 = stage_2.filter(
+        (each) =>
+          temp_arr.find((each_each) => each_each.match_sentence === each)
+            ?.match_sentence !== each
+      );
 
-      /**
+      console.log(
+        "filtered_stage_2: " + JSON.stringify(filtered_stage_2, null, 1)
+      );
 
-const fetch_data = { user_data: temp_arr, input_data: stage_2 };
+      //=====Work=====
+      let temp_work: any[] = [];
 
-// ----result from the chatgpt API
-const res = await fetch("/api/chatgpt", {
-  method: "POST",
-  body: JSON.stringify(fetch_data),
-  headers: {
-    "Content-type": "application/json; charset=UTF-8",
-  },
-});
-const data = await res.json();
+      work_redux.map((each) =>
+        each.JobDescription.map((element) =>
+          temp_work.push({
+            index_1st: each.index,
+            index_2nd: element.rowIndex,
+            JobDescription: element.Row,
+          })
+        )
+      );
+      const fetch_data = { user_data: temp_work, input_data: filtered_stage_2 };
 
-console.log("data: " + JSON.stringify(data, null, 1));
-//
-*
- */
+      // ----result from the chatgpt API
+      const res = await fetch("/api/chatgpt", {
+        method: "POST",
+        body: JSON.stringify(fetch_data),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      const data = await res.json();
+      //=====Get the result and display=====
+      setRes([...temp_arr, ...data]);
+      // setRes(data);
     }
   };
+
   return (
     <div>
       <Button onClick={CompareHandler}>Compare</Button>
+      {/* <div>
+        {result?.map((each: any, i: number) => (
+          <div key={i}>{JSON.stringify(each.match_sentence, null, 1)}</div>
+        ))}
+      </div> */}
+      <div className=" border-2 border-red-300">
+        {result.length !== 0 && <Statistic res={result} />}
+      </div>
     </div>
   );
 }

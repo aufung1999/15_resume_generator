@@ -19,5 +19,9 @@ export default function extractTerms(input: any, mode: string) {
       );
 
       return cleaned_input;
+    case "cleanup":
+      cleaned_input = input.replace(/[^A-Za-z/]/g, "");
+
+      return cleaned_input;
   }
 }

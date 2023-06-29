@@ -14,9 +14,10 @@ type anything =
 export interface AnalyseState {
   stage_1: string;
   stage_2: string;
+  stage_3: string;
 }
 
-const initialState: AnalyseState = { stage_1: "", stage_2: "" };
+const initialState: AnalyseState = { stage_1: "", stage_2: "", stage_3: "" };
 
 const analyseSlice = createSlice({
   name: "analyse",
@@ -31,6 +32,9 @@ const analyseSlice = createSlice({
     editAnalyse_stage_2: (state, action) => {
       state.stage_2 = action.payload;
     },
+    editAnalyse_stage_3: (state, action) => {
+      state.stage_3 = action.payload;
+    },
   },
 });
 
@@ -38,5 +42,6 @@ export const {
   editAnalyse_stage_1,
   removeAnalyse_stage_1,
   editAnalyse_stage_2,
+  editAnalyse_stage_3,
 } = analyseSlice.actions;
 export default analyseSlice.reducer;
