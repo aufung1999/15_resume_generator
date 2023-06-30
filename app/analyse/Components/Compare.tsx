@@ -29,7 +29,7 @@ export default function Compare() {
   const [result, setRes] = useState<any>([]);
 
   //===total results from the function
-  let temp_arr: any[] = [];
+  let temp_arr: any[]  = [];
 
   const CompareHandler = async () => {
     setRes([]);

@@ -32,7 +32,8 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     let temp_arr: any[] = [];
     let chatCompletion: any;
     return Promise.all(
-      statement_2.slice(0, 2).map((each) =>
+      //NEED to delete .Slice function
+      statement_2.slice(0, 2).map((each: any) =>
         Promise.all(
           input_data.slice(0, 1).map(async (each_input: string) => {
             chatCompletion = await openai.createChatCompletion({
