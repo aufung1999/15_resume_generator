@@ -26,10 +26,9 @@ export default function EditResume({ data }: any) {
   dispatch(cleanUp_Skill_redux());
   dispatch(cleanUp_Work_redux());
 
-  let newObject;
   if (typeof window !== "undefined") {
     if (localStorage.getItem("stage_3")) {
-      newObject = window.localStorage.getItem("stage_3");
+      const newObject: any = window.localStorage.getItem("stage_3");
       console.log(JSON.parse(newObject));
     } else {
       return [];

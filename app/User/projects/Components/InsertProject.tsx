@@ -20,6 +20,7 @@ import {
   deleterow,
   editProjectDescription,
   cleanUp_Project_redux,
+  switch_display_in_Resume,
 } from "@/slices/projectsSlice";
 
 import DatePicker from "react-date-picker";
@@ -132,9 +133,42 @@ const InputComp = ({ index }: Props) => {
   };
   //***/
 
+  //---------------Compare Result from the chatgpt/other algorithms-------------------
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("stage_3")) {
+      const newObject = window.localStorage.getItem("stage_3");
+      JSON.parse(newObject)?.map((each: any) =>
+        each.match_index === index
+          ? dispatch(
+              switch_display_in_Resume({
+                index: index,
+                display_in_Resume: true,
+              })
+            )
+          : null
+      );
+    } else {
+      return null;
+    }
+  }
+  //***/
+
   return (
     <Card interactive={false} style={{ background: "gray", color: "black" }}>
-      <h3>Project {index}</h3>
+      <div className="flex-row">
+        <h3>Project {index}</h3>
+        <Switch
+          checked={target_project?.display_in_Resume}
+          onChange={() =>
+            dispatch(
+              switch_display_in_Resume({
+                index: index,
+                display_in_Resume: !target_project?.display_in_Resume,
+              })
+            )
+          }
+        />
+      </div>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Project Name:

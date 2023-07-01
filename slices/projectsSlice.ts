@@ -6,6 +6,7 @@ export interface ProjectState {
   ProjectName: string;
   Techniques?: string;
   ProjectDescription: { rowIndex: string; Row?: string }[];
+  display_in_Resume?: boolean;
 }
 
 const initialState: ProjectState[] = [];
@@ -26,6 +27,7 @@ const projectsSlice = createSlice({
         ProjectName: ProjectName,
         Techniques: Techniques,
         ProjectDescription: ProjectDescription,
+        display_in_Resume: false,
       };
       //push the tidied up data into state
       state.push(Data);
@@ -100,6 +102,13 @@ const projectsSlice = createSlice({
         }
       }
     },
+    switch_display_in_Resume: (state, action) => {
+      const { index, display_in_Resume } = action.payload;
+      const Project = state.find((each) => each.index === index);
+      if (Project) {
+        Project.display_in_Resume = display_in_Resume;
+      }
+    },
   },
 });
 
@@ -113,5 +122,6 @@ export const {
   addrow,
   deleterow,
   editProjectDescription,
+  switch_display_in_Resume,
 } = projectsSlice.actions;
 export default projectsSlice.reducer;
