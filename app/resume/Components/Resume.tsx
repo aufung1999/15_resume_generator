@@ -2,7 +2,7 @@
 import { RootState } from "@/store/store";
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import BasicIntro from "./BasicIntro";
+import Contact from "./Contact";
 import { WorkSection } from "./Work";
 import EducationSection from "./Education";
 import SkillSection from "./Skill";
@@ -25,7 +25,7 @@ const Resume = forwardRef((props, ref: any) => {
     >
       <div className={"flex-col h-full "}>
         <div className="">
-          <BasicIntro
+          <Contact
             FirstName={contact_redux.FirstName}
             LastName={contact_redux.LastName}
             PhoneNumber={contact_redux.PhoneNumber}
