@@ -41,6 +41,7 @@ export default function SocialMedia({
           id="text-input"
           onChange={(e) => dispatch(edit(e.target.value))}
           value={SocialMedia}
+          className="w-full border overflow-hidden"
         />
       </FormGroup>
     </>

@@ -38,8 +38,10 @@ export default function Statistic({ res }: any) {
   }, []);
 
   const ClickHandler = () => {
-    //store the result from chatgpt / other algorithms to redux store
+    //store the result from chatgpt / other algorithms to redux store  ***Choose
     dispatch(editAnalyse_stage_3(res));
+    //store the result from chatgpt / other algorithms to localStorage  ***Choose
+    window.localStorage.setItem("stage_3", JSON.stringify(res));
     //Jump to another tab
     router.push("/resume");
   };
@@ -73,7 +75,7 @@ export default function Statistic({ res }: any) {
           </div>
           <div>
             <Button onClick={ClickHandler}>
-              Lets' go to Edit Your Resume!
+              Lets&apos; go to Edit Your Resume!
             </Button>
           </div>
         </>

@@ -4,6 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface ObjectiveState {
   index: string;
   ObjectiveDes: string;
+  display_in_Resume?: boolean;
 }
 
 const initialState: ObjectiveState[] = [];
@@ -21,6 +22,7 @@ const objectiveSlice = createSlice({
       let Data = {
         index: index,
         ObjectiveDes: ObjectiveDes,
+        display_in_Resume: true,
       };
       //push the tidied up data into state
       state.push(Data);
@@ -42,6 +44,13 @@ const objectiveSlice = createSlice({
         Objective.ObjectiveDes = ObjectiveDes;
       }
     },
+    switch_display_in_Resume: (state, action) => {
+      const { index, display_in_Resume } = action.payload;
+      const Objective = state.find((each) => each.index === index);
+      if (Objective) {
+        Objective.display_in_Resume = display_in_Resume;
+      }
+    },
   },
 });
 
@@ -51,5 +60,6 @@ export const {
   addObjective,
   deleteObjective,
   editObjective,
+  switch_display_in_Resume,
 } = objectiveSlice.actions;
 export default objectiveSlice.reducer;

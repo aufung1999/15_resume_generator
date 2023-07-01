@@ -133,7 +133,7 @@ const InputComp = ({ index }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "white" }}>
+    <Card interactive={false} style={{ background: "gray", color: "black" }}>
       <h3>Project {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">

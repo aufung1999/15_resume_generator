@@ -124,7 +124,7 @@ const InputComp = ({ index }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "white" }}>
+    <Card interactive={false} style={{ background: "gray", color: "black" }}>
       <h3>Company {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -159,7 +159,7 @@ const InputComp = ({ index }: Props) => {
           }
           label=" Currently Working"
         />
-        <div className=" flex ">
+        <div className=" flex-col ">
           Start Date:{" "}
           <div className=" text-black ">
             <DatePicker
@@ -167,7 +167,6 @@ const InputComp = ({ index }: Props) => {
                 dispatch(editStartDate({ index: index, StartDate: value }))
               }
               value={work?.StartDate ? work.StartDate : null}
-              className="w-full"
             />
           </div>
           End Date:
@@ -206,7 +205,7 @@ export default function InsertWorkExp({ data }: any) {
   const [workExps, editWorkExps] = useState<any>([]);
 
   useEffect(() => {
-    dispatch(cleanUp_Work_redux())
+    dispatch(cleanUp_Work_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {

@@ -48,7 +48,7 @@ const InputComp = ({ index }: Props) => {
   const education = education_redux.find((each) => each.index === index);
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "white" }}>
+    <Card interactive={false} style={{ background: "gray", color: "black" }}>
       <h3>Education {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -90,7 +90,7 @@ const InputComp = ({ index }: Props) => {
           }
           label=" Currently Studying"
         />
-        <div className=" flex">
+        <div className=" flex-col">
           Start Date:{" "}
           <div className=" text-black">
             <DatePicker

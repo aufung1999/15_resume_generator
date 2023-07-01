@@ -37,7 +37,7 @@ export default function ObjectiveClient({ data }) {
       <Toaster />
       <h1>Objective</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
-        <div className=" w-9/12">
+        <div className=" w-full">
           <InsertObjective data={data} />
         </div>
       </div>

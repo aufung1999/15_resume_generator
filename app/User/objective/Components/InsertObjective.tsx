@@ -20,6 +20,7 @@ import {
   deleteObjective,
   editObjective,
   initialize_ObjectiveData,
+  switch_display_in_Resume,
 } from "@/slices/objectiveSlice";
 import { RootState } from "@/store/store";
 
@@ -38,8 +39,21 @@ const InputComp = ({ index }: Props) => {
   const objective = objectives.find((each) => each.index === index);
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "white" }}>
-      <h3>Objective {index}</h3>
+    <Card interactive={false} style={{ background: "gray", color: "black" }}>
+      <div className="flex-row">
+        <h3>Objective {index}</h3>
+        <Switch
+          checked={objective?.display_in_Resume}
+          onChange={() =>
+            dispatch(
+              switch_display_in_Resume({
+                index: index,
+                display_in_Resume: !objective?.display_in_Resume,
+              })
+            )
+          }
+        />
+      </div>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Objective Description:
@@ -116,7 +130,7 @@ export default function InsertObjective({ data }: any) {
   };
   //***/
   return (
-    <div>
+    <div className="w-full">
       <Toaster />
       <Button icon="insert" onClick={addObj} />
       {objectives?.map((each: any, i: number) => (

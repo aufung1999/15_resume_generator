@@ -64,32 +64,36 @@ export default function ContactClient({ data }: any) {
   return (
     <Card
       className="border border-blue-600 flex-1"
-      interactive={true}
+      interactive={false}
       elevation={Elevation.TWO}
     >
       <Toaster />
       <h1>Contact</h1>
       {/* ....................First Name/ Family Name............................ */}
-      <div className=" border-4 flex flex-col items-center justify-center">
-        <div className=" flex flex-row justify-between border w-8/12">
+      <div className=" border flex flex-col md:items-center md:justify-center">
+        <div className=" grid grid-cols-2 border w-full">
           <FormGroup
             label="First Name"
             labelFor="text-input"
             labelInfo="(required)"
+            className="w-full border "
           >
-            <InputGroup
-              id="text-input"
-              placeholder=""
-              autoComplete="given-name"
-              onChange={(e) => dispatch(editFirstName(e.target.value))}
-              value={contact.FirstName}
-            />
+              <InputGroup
+                id="text-input"
+                placeholder=""
+                autoComplete="given-name"
+                onChange={(e) => dispatch(editFirstName(e.target.value))}
+                fill={true}
+                value={contact.FirstName}
+                className="w-full border overflow-hidden"
+              />
           </FormGroup>
 
           <FormGroup
             label="Last Name"
             labelFor="text-input"
             labelInfo="(required)"
+            className="w-full border"
           >
             <InputGroup
               id="text-input"
@@ -97,23 +101,25 @@ export default function ContactClient({ data }: any) {
               autoComplete="family-name"
               onChange={(e) => dispatch(editLastName(e.target.value))}
               value={contact.LastName}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
         </div>
 
         {/* ................................................ */}
-        <div className=" w-8/12">
+        <div className=" w-full md:w-8/12">
           <FormGroup label="Phone" labelFor="text-input" labelInfo="(required)">
             <InputGroup
               id="text-input"
               placeholder=""
               onChange={(e) => dispatch(editPhoneNumber(e.target.value))}
               value={contact.PhoneNumber}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
         </div>
         {/* ..................Country/City.............................. */}
-        <div className=" flex flex-row justify-between w-8/12">
+        <div className=" grid grid-cols-2 w-full md:w-8/12">
           <FormGroup
             label="Country"
             labelFor="text-input"
@@ -125,6 +131,7 @@ export default function ContactClient({ data }: any) {
               autoComplete="country"
               onChange={(e) => dispatch(editCountry(e.target.value))}
               value={contact.Country}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
 
@@ -135,17 +142,19 @@ export default function ContactClient({ data }: any) {
               autoComplete="shipping locality"
               onChange={(e) => dispatch(editCity(e.target.value))}
               value={contact.City}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" flex flex-row justify-between w-8/12">
+        <div className="grid grid-cols-2 w-full md:w-8/12">
           <FormGroup label="State" labelFor="text-input" labelInfo="(required)">
             <InputGroup
               id="text-input"
               placeholder=""
               onChange={(e) => dispatch(editState(e.target.value))}
               value={contact.State}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
 
@@ -160,22 +169,24 @@ export default function ContactClient({ data }: any) {
               autoComplete="shipping postal-code"
               onChange={(e) => dispatch(editZipCode(e.target.value))}
               value={contact.ZipCode}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-8/12">
+        <div className=" w-full md:w-8/12">
           <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
             <InputGroup
               id="text-input"
               placeholder="abc123@gmail.com"
               onChange={(e) => dispatch(editEmail(e.target.value))}
               value={contact.Email}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-8/12">
+        <div className=" w-full md:w-8/12">
           <FormGroup
             label="Portfolio"
             labelFor="Portfolio"
@@ -185,11 +196,12 @@ export default function ContactClient({ data }: any) {
               id="text-input"
               onChange={(e) => dispatch(editPortfolio(e.target.value))}
               value={contact.Portfolio}
+              className="w-full border overflow-hidden"
             />
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}
-        <div className=" w-8/12">
+        <div className=" w-full md:w-8/12">
           <SocialMedia
             key="LinkedIn"
             urlParam="linkedin"
@@ -200,7 +212,7 @@ export default function ContactClient({ data }: any) {
           />
         </div>
         {/* ............*GitHub*.................................... */}
-        <div className=" w-8/12">
+        <div className=" w-full md:w-8/12">
           <SocialMedia
             key="GitHub"
             urlParam="github"
@@ -211,7 +223,9 @@ export default function ContactClient({ data }: any) {
           />
         </div>
         {/* ...................(Add more links?)............................. */}
-        <InsertLink />
+        <div>
+          <InsertLink />
+        </div>
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
