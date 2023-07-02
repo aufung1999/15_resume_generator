@@ -23,7 +23,7 @@ export default function Contact({
       {/* <SectionSubtitle label={label} /> */}
       <div className="flex gap-3 border justify-center">
         <div className="flex">
-          <div className="text-sm font-semibold">Tel: &nbsp;</div>
+          <div className="text-xs font-semibold">Tel: &nbsp;</div>
           <ProfileContact text={PhoneNumber} />
         </div>
         <div className="flex">

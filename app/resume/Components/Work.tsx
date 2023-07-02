@@ -5,21 +5,25 @@ import { SectionHeading } from "../atoms/SectionHeading";
 import { SectionList } from "../atoms/SectionList";
 import { SectionSubtitle } from "../atoms/SectionSubtitle";
 import { SectionTitle } from "../atoms/SectionTitle";
+import { timeConverter } from "../Functions/timeConvertor";
 
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
   return (
-    <div className="mb-3">
+    <div className="mb-2">
       <SectionHeading title="Experience" />
 
       {experience.map((item: WorkExpState, i: number) => {
         return (
-          <div key={i} className="py-2">
-            <SectionTitle label={item.CompanyName} />
+          <div key={i} className="py-1">
+            <SectionTitle label={item.Position} />
             <div className="flex justify-between items-center">
-              <SectionSubtitle label={item.Position} />
+              <SectionSubtitle label={item.CompanyName} />
               <div>
-                <p className="text-xs">
-                  {item.StartDate} -{item.current ? "present" : item.EndDate}
+                <p className="text-sm">
+                  {timeConverter(Date.parse(item.StartDate))} -
+                  {item.current
+                    ? "present"
+                    : timeConverter(Date.parse(item?.EndDate))}
                 </p>
               </div>
             </div>

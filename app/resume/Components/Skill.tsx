@@ -10,7 +10,7 @@ import { RootState } from "@/store/store";
 
 export default function SkillSection({ skill }: SkillsState[] | any) {
   return (
-    <div className="my-3">
+    <div className="mb-2">
       <SectionHeading title="Technical Skills" />
       <div className="grid grid-cols-4">
         {skill?.map((item: SkillsState, i: number) => (

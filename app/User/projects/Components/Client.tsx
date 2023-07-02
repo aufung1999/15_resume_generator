@@ -32,7 +32,7 @@ export default function ProjectClient({ data }: any) {
   };
   return (
     <Card
-      className="border border-blue-600 flex-1"
+      className="border border-blue-600 flex-1 overflow-auto"
       interactive={false}
       elevation={Elevation.TWO}
     >

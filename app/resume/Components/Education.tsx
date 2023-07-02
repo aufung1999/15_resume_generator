@@ -10,7 +10,7 @@ export default function EducationSection({
   education,
 }: EducationState[] | any) {
   return (
-    <div className="mb-3">
+    <div className="mb-2">
       <SectionHeading title="Education" />
 
       {education.map((item: EducationState, index: number) => {
@@ -19,7 +19,7 @@ export default function EducationSection({
             <div>
               <u>
                   <SectionTitle label={item.SchoolName} />
-               
+
               </u>
               <div className="flex justify-between items-center">
                 <SectionSubtitle label={`${item.Subject}`} />

@@ -87,11 +87,11 @@ export default async function Page() {
       project: projectData,
     };
     return (
-      <div className="flex w-full">
-        <div className=" w-3/12">
+      <div className="flex w-full max-h-screen">
+        <div className=" w-3/12 overflow-auto">
           <EditResume data={JSON.parse(JSON.stringify(clientData))} />
         </div>
-        <div className=" w-9/12">
+        <div className=" w-9/12 overflow-auto">
           <ResumeClient />
         </div>
       </div>

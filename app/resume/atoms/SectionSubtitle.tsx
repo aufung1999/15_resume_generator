@@ -5,5 +5,5 @@ const SubTitle = styled.p`
 `;
 
 export const SectionSubtitle = ({ label }: { label: string }) => {
-  return <SubTitle className="text-base font-normal">{label}</SubTitle>;
+  return <SubTitle className="text-sm font-normal">{label}</SubTitle>;
 };
