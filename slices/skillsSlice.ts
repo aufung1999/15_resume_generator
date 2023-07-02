@@ -18,7 +18,6 @@ const awardSlice = createSlice({
     },
     initialize_SkillData: (state, action: PayloadAction<string>) => {
       const { index, term, Skill_list }: any = action.payload;
-      console.log("Skill_list: " + JSON.stringify(Skill_list, null, 1));
       //if the "stage_3" data exists
       let stage_3_exist = false;
       //get the index from "stage_3"

@@ -4,6 +4,7 @@ import { SectionHeading } from "../atoms/SectionHeading";
 import { SectionList } from "../atoms/SectionList";
 import { SectionSubtitle } from "../atoms/SectionSubtitle";
 import { SectionTitle } from "../atoms/SectionTitle";
+import { timeConverter } from "../Functions/timeConvertor";
 
 export default function EducationSection({
   education,
@@ -16,12 +17,18 @@ export default function EducationSection({
         return (
           <div key={index} className="py-2">
             <div>
-              <SectionTitle label={`${item.Subject} - ${item.Degree}`} />
+              <u>
+                  <SectionTitle label={item.SchoolName} />
+               
+              </u>
               <div className="flex justify-between items-center">
-                <SectionSubtitle label={item.SchoolName} />
+                <SectionSubtitle label={`${item.Subject}`} />
                 <div className="flex gap-3">
-                  <p className="text-xs">
-                    {item.StartDate} -{item.current ? "present" : item.EndDate}
+                  <p className="text-sm">
+                    {timeConverter(Date.parse(item.StartDate))} -
+                    {item.current
+                      ? "present"
+                      : timeConverter(Date.parse(item.EndDate))}
                   </p>
                 </div>
               </div>
