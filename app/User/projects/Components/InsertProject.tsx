@@ -98,6 +98,7 @@ const InputComp = ({ index }: Props) => {
   useEffect(() => {
     let temp_arr: any[] = [];
     target_project?.ProjectDescription?.map((each: any) => {
+      
       temp_arr.push(
         <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
       );

@@ -4,6 +4,7 @@ import ContactClient from "@/app/user/contact/Components/Client";
 import EducationClient from "@/app/user/education/Components/Client";
 import ObjectiveClient from "@/app/user/objective/Components/Client";
 import ProjectClient from "@/app/user/projects/Components/Client";
+import SkillClient from "@/app/user/skills/Components/Client";
 import WorkClient from "@/app/user/work/Components/Client";
 import { cleanUp_Award_redux } from "@/slices/awardSlice";
 import { cleanUp_Contact_redux } from "@/slices/contactSlice";
@@ -43,6 +44,9 @@ export default function EditResume({ data }: any) {
       </div>
       <div>
         <ObjectiveClient data={data.objective} />
+      </div>
+      <div>
+        <SkillClient data={data.skill} />
       </div>
       <div>
         <EducationClient data={data.education} />

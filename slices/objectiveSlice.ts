@@ -22,7 +22,7 @@ const objectiveSlice = createSlice({
       let Data = {
         index: index,
         ObjectiveDes: ObjectiveDes,
-        display_in_Resume: true,
+        display_in_Resume: false,
       };
       //push the tidied up data into state
       state.push(Data);

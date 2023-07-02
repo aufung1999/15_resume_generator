@@ -5,7 +5,26 @@ import { SectionList } from "../atoms/SectionList";
 import { SectionSubtitle } from "../atoms/SectionSubtitle";
 import { SectionTitle } from "../atoms/SectionTitle";
 
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store/store";
+
 export default function SkillSection({ skill }: SkillsState[] | any) {
+  let match_index: any[] = [];
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("stage_3")) {
+      const newObject: any = window.localStorage.getItem("stage_3");
+      JSON.parse(newObject)?.find(
+        (each: any) =>
+          each.match_index_2nd && match_index.push(each.match_index_2nd)
+      );
+    }
+  }
+
+  let arrayy = [];
+
+
+  // console.log("match_skills: " + JSON.stringify(match_skills, null, 1));
+
   return (
     <div className="my-3">
       {skill?.map((item: SkillsState, i: number) => (

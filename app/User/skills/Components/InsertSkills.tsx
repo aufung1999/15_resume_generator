@@ -70,7 +70,7 @@ const TermComp = ({ index, term }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "white" }}>
+    <Card interactive={false} style={{ background: "gray", color: "black" }}>
       <h3>
         {skill?.term} {index}
       </h3>
@@ -128,7 +128,7 @@ export default function InsertSkills({ data }: any) {
   const [term, setTerm] = useState("");
 
   useEffect(() => {
-    dispatch(cleanUp_Skill_redux())
+    dispatch(cleanUp_Skill_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: any) => {
