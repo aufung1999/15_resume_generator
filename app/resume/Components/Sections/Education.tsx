@@ -1,10 +1,10 @@
 import { EducationState } from "@/slices/educationSlice";
 import React from "react";
-import { SectionHeading } from "../atoms/SectionHeading";
-import { SectionList } from "../atoms/SectionList";
-import { SectionSubtitle } from "../atoms/SectionSubtitle";
-import { SectionTitle } from "../atoms/SectionTitle";
-import { timeConverter } from "../Functions/timeConvertor";
+import { SectionHeading } from "../../atoms/SectionHeading";
+import { SectionList } from "../../atoms/SectionList";
+import { SectionSubtitle } from "../../atoms/SectionSubtitle";
+import { SectionTitle } from "../../atoms/SectionTitle";
+import { timeConverter } from "../../Functions/timeConvertor";
 
 export default function EducationSection({
   education,

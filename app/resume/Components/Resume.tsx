@@ -2,13 +2,14 @@
 import { RootState } from "@/store/store";
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Contact from "./Contact";
-import { WorkSection } from "./Work";
-import EducationSection from "./Education";
-import SkillSection from "./Skill";
-import ProjectSection from "./Project";
-import ObjectiveSection from "./Objective";
+import Contact from "./Sections/Contact";
+import { WorkSection } from "./Sections/Work";
+import EducationSection from "./Sections/Education";
+import SkillSection from "./Sections/Skill";
+import ProjectSection from "./Sections/Project";
+import ObjectiveSection from "./Sections/Objective";
 import { forwardRef } from "react";
+import DisplaySkill from "./Match/Skill";
 
 const Resume = forwardRef((props, ref: any) => {
   const contact_redux = useSelector((state: RootState) => state.contact);
@@ -45,8 +46,11 @@ const Resume = forwardRef((props, ref: any) => {
         <div className="">
           <EducationSection education={education_redux} />
         </div>
-        <div className="">
+        <div className="flex relative">
           <SkillSection skill={skill_redux} />
+          {/* <div className="absolute -left-0">
+            <DisplaySkill />
+          </div> */}
         </div>
         <div className="">
           <WorkSection experience={work_redux} />

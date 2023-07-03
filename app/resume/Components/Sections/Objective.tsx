@@ -1,9 +1,9 @@
 import { ObjectiveState } from "@/slices/objectiveSlice";
 import React from "react";
-import { SectionHeading } from "../atoms/SectionHeading";
-import { SectionList } from "../atoms/SectionList";
-import { SectionSubtitle } from "../atoms/SectionSubtitle";
-import { SectionTitle } from "../atoms/SectionTitle";
+import { SectionHeading } from "../../atoms/SectionHeading";
+import { SectionList } from "../../atoms/SectionList";
+import { SectionSubtitle } from "../../atoms/SectionSubtitle";
+import { SectionTitle } from "../../atoms/SectionTitle";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";

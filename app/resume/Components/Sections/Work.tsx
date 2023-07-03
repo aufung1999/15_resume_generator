@@ -1,11 +1,12 @@
 // import { dateParser } from "src/helpers/utils";
 // import { HTMLRenderer } from "src/helpers/common/components/HTMLRenderer";
 import { WorkExpState } from "@/slices/workSlice";
-import { SectionHeading } from "../atoms/SectionHeading";
-import { SectionList } from "../atoms/SectionList";
-import { SectionSubtitle } from "../atoms/SectionSubtitle";
-import { SectionTitle } from "../atoms/SectionTitle";
-import { timeConverter } from "../Functions/timeConvertor";
+import { SectionHeading } from "../../atoms/SectionHeading";
+import { SectionList } from "../../atoms/SectionList";
+import { SectionSubtitle } from "../../atoms/SectionSubtitle";
+import { SectionTitle } from "../../atoms/SectionTitle";
+import { timeConverter } from "../../Functions/timeConvertor";
+import CustomedTooltip from "../Match/Tooltip";
 
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
   return (
@@ -30,7 +31,16 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
 
             {item?.JobDescription?.map((each: any, ind: number) => (
               <SectionList key={ind}>
-                <div>{each?.Row}</div>
+                <CustomedTooltip
+                  index_1st={item.index}
+                  index_2nd={null}
+                  text={
+                    <div className="flex">
+                      <li />
+                      <div>{each?.Row}</div>
+                    </div>
+                  }
+                />
               </SectionList>
             ))}
           </div>

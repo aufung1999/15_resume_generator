@@ -1,7 +1,7 @@
 import { ContactState } from "@/slices/contactSlice";
 import React from "react";
-import { ProfileName } from "../atoms/ProfileName";
-import { ProfileContact } from "../atoms/ProfileContact";
+import { ProfileName } from "../../atoms/ProfileName";
+import { ProfileContact } from "../../atoms/ProfileContact";
 
 export default function Contact({
   FirstName,

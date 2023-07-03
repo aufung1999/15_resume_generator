@@ -13,9 +13,10 @@ type anything =
 
 export interface resumeState {
   switch: string;
+  match_skill: [];
 }
 
-const initialState: resumeState = { switch: "Contact" };
+const initialState: resumeState = { switch: "Contact", match_skill: [] };
 
 const analyseSlice = createSlice({
   name: "resume",
@@ -25,8 +26,12 @@ const analyseSlice = createSlice({
       const { select } = action.payload;
       state.switch = select;
     },
+    add_skill_match: (state, action) => {
+      const { match } = action.payload;
+      state.match_skill.push(match);
+    },
   },
 });
 
-export const { switch_resumeComponents } = analyseSlice.actions;
+export const { switch_resumeComponents,add_skill_match } = analyseSlice.actions;
 export default analyseSlice.reducer;
