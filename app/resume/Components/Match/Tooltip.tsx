@@ -66,8 +66,12 @@ export default function CustomedTooltip({
     <div className={on ? " bg-yellow-300" : ""}>
       {on ? (
         <Tooltip
-          title={target?.map((each: any, i: number) => (
-            <div key={i}>
+          title={matches?.map((each: string, i: number) => (
+            <div
+              key={i}
+              className={target.includes(each) ? " font-semibold" : "text-gray-300"}
+            >
+              {target.includes(each) && <span>✔️</span>}
               {matches.indexOf(each)}:{each}
             </div>
           ))}
