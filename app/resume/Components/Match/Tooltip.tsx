@@ -16,13 +16,12 @@ export default function CustomedTooltip({
   index_2nd: any;
   text: any;
 }) {
-  const dispatch = useDispatch();
   const [on, setOn] = useState<any>(false);
   const [target, setTarget] = useState<any>([]);
-
   const [matches, setMatches] = useState<any>(null);
 
   useEffect(() => {
+    let temp_array: any[] = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
         const newObject: any = window.localStorage.getItem("stage_3");
@@ -30,12 +29,10 @@ export default function CustomedTooltip({
         // *****NOT exist*****
         if (index_2nd === undefined || index_2nd === null) {
           JSON.parse(newObject).map((each: any) =>
-            each.match_index === index_1st
-              ? (setOn(true),
-                setTarget((oldArray: string[]) => [
-                  ...oldArray,
-                  each.match_sentence,
-                ]))
+            each.match_index === index_1st &&
+            //To avoid duplication
+            temp_array.includes(each.match_sentence) === false
+              ? (setOn(true), temp_array.push(each.match_sentence))
               : null
           );
         }
@@ -43,12 +40,10 @@ export default function CustomedTooltip({
         if (index_2nd) {
           JSON.parse(newObject).map((each: any) => {
             each.match_index_1st === index_1st &&
-            each.match_index_2nd === index_2nd
-              ? (setOn(true),
-                setTarget((oldArray: string[]) => [
-                  ...oldArray,
-                  each.match_sentence,
-                ]))
+            each.match_index_2nd === index_2nd &&
+            //To avoid duplication
+            temp_array.includes(each.match_sentence) === false
+              ? (setOn(true), temp_array.push(each.match_sentence))
               : null;
           });
         }
@@ -56,8 +51,15 @@ export default function CustomedTooltip({
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {
         const newObject: any = window.localStorage.getItem("matches");
+        //sorting for "temp_array"
+        temp_array.sort((a, b) =>
+          newObject.indexOf(a) > newObject.indexOf(b) ? 1 : -1
+        );
+        //pass the synchronous "temp_array" variable to a asynchronous state "matches"
         setMatches(JSON.parse(newObject));
       }
+      //pass the synchronous "temp_array" variable to a asynchronous state "target"
+      setTarget(temp_array);
     }
   }, []);
   return (
@@ -65,7 +67,9 @@ export default function CustomedTooltip({
       {on ? (
         <Tooltip
           title={target?.map((each: any, i: number) => (
-            <div key={i}>{matches.indexOf(each)}</div>
+            <div key={i}>
+              {matches.indexOf(each)}:{each}
+            </div>
           ))}
         >
           {text}
