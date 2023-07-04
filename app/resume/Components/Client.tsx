@@ -4,8 +4,8 @@ import React, { useRef } from "react";
 import ReactToPrint from "react-to-print";
 import { Button } from "@blueprintjs/core";
 import Resume from "./Resume";
-import Result from "./Match/Result";
 import useDragger from "./Match/useDragger";
+import ResultBoard from "./Match/ResultBoard";
 
 const ResumeClient = () => {
   const componentRef = useRef<any>();
@@ -22,16 +22,9 @@ const ResumeClient = () => {
 
       <div
         id="boundary"
-        className="flex border-8 border-green-300 justify-center relative"
+        className="flex border-8 border-green-300 justify-center relative w-full"
       >
-        {/* draggable of "matches" result */}
-        <Result id="matches" whatToGet="matches" customedCSS="left-0" />
-        {/* draggable of "unmatches" result */}
-        <Result
-          id="unmatches"
-          whatToGet="unmatches"
-          customedCSS="right-0 bg-red-400"
-        />
+        <ResultBoard />
         <Resume ref={componentRef} />
       </div>
     </div>

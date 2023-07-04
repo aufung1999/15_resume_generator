@@ -23,7 +23,7 @@ export default function Result({
   return (
     <div
       className={
-        "bg-green-300 border-4 absolute cursor-pointer top-0  z-10 " +
+        "bg-green-300 border-4  cursor-pointer top-0 z-10 " +
         customedCSS
       }
       id={id}
