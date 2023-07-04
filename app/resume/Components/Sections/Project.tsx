@@ -20,7 +20,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                 <CustomedTooltip
                   index_1st={item.index}
                   index_2nd={null}
-                  text={<SectionSubtitle label={item.Techniques} />}
+                  text={item.Techniques}
                 />
               </div>
 

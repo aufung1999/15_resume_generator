@@ -7,11 +7,15 @@ import { Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { add_skill_match } from "@/slices/resumeSlice";
 
-export default function CustomedTooltip({ index_1st, index_2nd, text }): {
+export default function CustomedTooltip({
+  index_1st,
+  index_2nd,
+  text,
+}: {
   index_1st: any;
   index_2nd: any;
   text: any;
-} {
+}) {
   const dispatch = useDispatch();
   const [on, setOn] = useState<any>(false);
   const [target, setTarget] = useState<any>([]);
@@ -55,12 +59,14 @@ export default function CustomedTooltip({ index_1st, index_2nd, text }): {
         setMatches(JSON.parse(newObject));
       }
     }
-  }, [])
+  }, []);
   return (
     <div className={on ? " bg-yellow-300" : ""}>
       {on ? (
         <Tooltip
-          title={target?.map((each: any, i: number) => <div key={i}>{each}</div>)}
+          title={target?.map((each: any, i: number) => (
+            <div key={i}>{matches.indexOf(each)}</div>
+          ))}
         >
           {text}
         </Tooltip>
