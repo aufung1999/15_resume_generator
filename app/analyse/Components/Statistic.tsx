@@ -41,7 +41,17 @@ export default function Statistic({ res }: any) {
     //store the result from chatgpt / other algorithms to redux store  ***Choose
     dispatch(editAnalyse_stage_3(res));
     //store the result from chatgpt / other algorithms to localStorage  ***Choose
+
     window.localStorage.setItem("stage_3", JSON.stringify(res));
+
+    //store the result from chatgpt / other algorithms to localStorage  ***Choose
+
+    window.localStorage.setItem("matches", JSON.stringify(matches));
+
+    //store the result from chatgpt / other algorithms to localStorage  ***Choose
+
+    window.localStorage.setItem("unmatches", JSON.stringify(unmatches));
+
     //Jump to another tab
     router.push("/resume");
   };

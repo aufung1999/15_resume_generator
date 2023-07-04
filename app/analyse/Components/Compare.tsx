@@ -29,7 +29,7 @@ export default function Compare() {
   const [result, setRes] = useState<any>([]);
 
   //===total results from the function
-  let temp_arr: any[]  = [];
+  let temp_arr: any[] = [];
 
   const CompareHandler = async () => {
     setRes([]);
@@ -47,6 +47,7 @@ export default function Compare() {
         temp_project.push({
           index: each.index,
           array: extractTerms(each?.Techniques, "project_redux"),
+        
         })
       );
 

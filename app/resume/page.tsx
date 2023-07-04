@@ -88,10 +88,10 @@ export default async function Page() {
     };
     return (
       <div className="flex w-full max-h-screen">
-        <div className=" w-3/12 overflow-auto">
+        <div className=" w-3/12 overflow-auto no-scrollbar">
           <EditResume data={JSON.parse(JSON.stringify(clientData))} />
         </div>
-        <div className=" w-9/12 overflow-auto">
+        <div className=" w-9/12 overflow-auto relative no-scrollbar">
           <ResumeClient />
         </div>
       </div>

@@ -4,6 +4,7 @@ import { SectionHeading } from "../../atoms/SectionHeading";
 import { SectionList } from "../../atoms/SectionList";
 import { SectionSubtitle } from "../../atoms/SectionSubtitle";
 import { SectionTitle } from "../../atoms/SectionTitle";
+import CustomedTooltip from "../Match/Tooltip";
 
 export default function ProjectSection({ project }: ProjectState[] | any) {
   return (
@@ -16,12 +17,16 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
             <div key={i} className="py-1">
               <div className="flex justify-between items-center">
                 <SectionTitle label={item.ProjectName} />
-                <SectionSubtitle label={item.Techniques} />
+                <CustomedTooltip
+                  index_1st={item.index}
+                  index_2nd={null}
+                  text={<SectionSubtitle label={item.Techniques} />}
+                />
               </div>
 
               {item?.ProjectDescription.map((each: any, ind: number) => (
                 <SectionList key={ind}>
-                  <div className=" flex">
+                  <div className="flex">
                     <li />
                     <div>{each?.Row}</div>
                   </div>

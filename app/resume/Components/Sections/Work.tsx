@@ -33,7 +33,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
               <SectionList key={ind}>
                 <CustomedTooltip
                   index_1st={item.index}
-                  index_2nd={null}
+                  index_2nd={each.rowIndex}
                   text={
                     <div className="flex">
                       <li />
