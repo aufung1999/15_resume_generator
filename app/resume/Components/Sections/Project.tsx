@@ -15,7 +15,6 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
   function handleOnDragEnd(result) {
     if (!result.destination) return;
 
-    
     dispatch(drag_drop({ result: result }));
     // const items = Array.from();
     // const [reorderedItem] = items.splice(result.source.index, 1);
@@ -61,7 +60,11 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                             <SectionList key={ind}>
                               <div className="flex">
                                 <li />
-                                <div>{each?.Row}</div>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html: each?.Row,
+                                  }}
+                                ></div>
                               </div>
                             </SectionList>
                           )

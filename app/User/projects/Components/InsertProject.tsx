@@ -35,6 +35,9 @@ import { ProjectState } from "@/slices/projectsSlice";
 
 import toast, { Toaster } from "react-hot-toast";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+
 type Props = {
   index: string;
 };
@@ -62,8 +65,19 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   return (
     <div key={rowIndex}>
       <div>{rowIndex}</div>
-
-      <TextArea
+      <ReactQuill
+        value={row ? row.Row : ""}
+        onChange={(value) =>
+          dispatch(
+            editProjectDescription({
+              index: index,
+              rowIndex: rowIndex,
+              Row: value,
+            })
+          )
+        }
+      />
+      {/* <TextArea
         large={true}
         style={{ width: "100%", height: 50 }}
         fill={true}
@@ -77,7 +91,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
           )
         }
         value={row ? row.Row : ""}
-      />
+      /> */}
     </div>
   );
 };
@@ -98,7 +112,6 @@ const InputComp = ({ index }: Props) => {
   useEffect(() => {
     let temp_arr: any[] = [];
     target_project?.ProjectDescription?.map((each: any) => {
-
       temp_arr.push(
         <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
       );
