@@ -1,4 +1,4 @@
-import { ProjectState } from "@/slices/projectsSlice";
+import { ProjectState, drag_drop } from "@/slices/projectsSlice";
 import React from "react";
 import { SectionHeading } from "../../atoms/SectionHeading";
 import { SectionList } from "../../atoms/SectionList";
@@ -7,11 +7,16 @@ import { SectionTitle } from "../../atoms/SectionTitle";
 import CustomedTooltip from "../Match/Tooltip";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
 
 export default function ProjectSection({ project }: ProjectState[] | any) {
+  const dispatch = useDispatch();
+
   function handleOnDragEnd(result) {
     if (!result.destination) return;
 
+    
+    dispatch(drag_drop({ result: result }));
     // const items = Array.from();
     // const [reorderedItem] = items.splice(result.source.index, 1);
     // items.splice(result.destination.index, 0, reorderedItem);
@@ -37,12 +42,11 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                     {(provided) => (
                       <div
                         key={i}
-                        className={item.display_in_Resume?"":"hidden"}
+                        className={item.display_in_Resume ? "" : "hidden"}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-
                         <div className="flex justify-between items-center">
                           <SectionTitle label={item.ProjectName} />
                           <CustomedTooltip

@@ -130,9 +130,16 @@ const projectsSlice = createSlice({
       const { index, display_in_Resume } = action.payload;
       const Project = state.find((each) => each.index === index);
       if (Project) {
-        console.log("display_in_Resume: " + display_in_Resume);
         Project.display_in_Resume = display_in_Resume;
       }
+    },
+    drag_drop: (state, action) => {
+      const { result } = action.payload;
+      console.log("result: " + JSON.stringify(result.draggableId, null, 1));
+      console.log("result: " + JSON.stringify(result.source.index, null, 1));
+      console.log("state: " + JSON.stringify(state, null, 1));
+      const [reorderedItem] = state.splice(result.source.index, 1);
+      state.splice(result.destination.index, 0, reorderedItem);
     },
   },
 });
@@ -148,5 +155,6 @@ export const {
   deleterow,
   editProjectDescription,
   switch_display_in_Resume,
+  drag_drop,
 } = projectsSlice.actions;
 export default projectsSlice.reducer;
