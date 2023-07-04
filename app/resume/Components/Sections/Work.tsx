@@ -16,9 +16,11 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
       {experience.map((item: WorkExpState, i: number) => {
         return (
           <div key={i} className="py-1">
-            <SectionTitle label={item.Position} />
             <div className="flex justify-between items-center">
-              <SectionSubtitle label={item.CompanyName} />
+              <div className="flex">
+                <SectionTitle label={item.Position} />
+                <SectionSubtitle label={item.CompanyName} />
+              </div>
               <div>
                 <p className="text-sm">
                   {timeConverter(Date.parse(item.StartDate))} -
