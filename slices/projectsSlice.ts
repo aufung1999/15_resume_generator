@@ -50,7 +50,9 @@ const projectsSlice = createSlice({
           //Condition add to array,
           //"unshift" is to add at the beginning:
           //"push" is to add at the end
-          match_index.includes(index) ? state.unshift(Data) : state.push(Data);
+          match_index.includes(index)
+            ? ((Data.display_in_Resume = true), state.unshift(Data))
+            : state.push(Data);
         }
       }
     },
@@ -128,6 +130,7 @@ const projectsSlice = createSlice({
       const { index, display_in_Resume } = action.payload;
       const Project = state.find((each) => each.index === index);
       if (Project) {
+        console.log("display_in_Resume: " + display_in_Resume);
         Project.display_in_Resume = display_in_Resume;
       }
     },

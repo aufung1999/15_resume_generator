@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/uuid": "^9.0.2"
   }
 }

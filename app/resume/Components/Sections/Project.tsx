@@ -6,36 +6,71 @@ import { SectionSubtitle } from "../../atoms/SectionSubtitle";
 import { SectionTitle } from "../../atoms/SectionTitle";
 import CustomedTooltip from "../Match/Tooltip";
 
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 export default function ProjectSection({ project }: ProjectState[] | any) {
+  function handleOnDragEnd(result) {
+    if (!result.destination) return;
+
+    // const items = Array.from();
+    // const [reorderedItem] = items.splice(result.source.index, 1);
+    // items.splice(result.destination.index, 0, reorderedItem);
+  }
   return (
     <div className="mb-3">
       <SectionHeading title="Project" />
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="projects">
+          {(provided: any) => (
+            <div
+              className="projects"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {project.map((item: ProjectState, i: number) => {
+                return (
+                  <Draggable
+                    key={item.index}
+                    draggableId={item.index}
+                    index={i}
+                  >
+                    {(provided) => (
+                      <div
+                        key={i}
+                        className={item.display_in_Resume?"":"hidden"}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
 
-      {project.map((item: ProjectState, i: number) => {
-        return (
-          item.display_in_Resume && (
-            <div key={i} className="py-1">
-              <div className="flex justify-between items-center">
-                <SectionTitle label={item.ProjectName} />
-                <CustomedTooltip
-                  index_1st={item.index}
-                  index_2nd={null}
-                  text={item.Techniques}
-                />
-              </div>
+                        <div className="flex justify-between items-center">
+                          <SectionTitle label={item.ProjectName} />
+                          <CustomedTooltip
+                            index_1st={item.index}
+                            index_2nd={null}
+                            text={item.Techniques}
+                          />
+                        </div>
 
-              {item?.ProjectDescription.map((each: any, ind: number) => (
-                <SectionList key={ind}>
-                  <div className="flex">
-                    <li />
-                    <div>{each?.Row}</div>
-                  </div>
-                </SectionList>
-              ))}
+                        {item?.ProjectDescription.map(
+                          (each: any, ind: number) => (
+                            <SectionList key={ind}>
+                              <div className="flex">
+                                <li />
+                                <div>{each?.Row}</div>
+                              </div>
+                            </SectionList>
+                          )
+                        )}
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
             </div>
-          )
-        );
-      })}
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 }

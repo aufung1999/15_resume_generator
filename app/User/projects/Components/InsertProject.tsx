@@ -98,7 +98,7 @@ const InputComp = ({ index }: Props) => {
   useEffect(() => {
     let temp_arr: any[] = [];
     target_project?.ProjectDescription?.map((each: any) => {
-      
+
       temp_arr.push(
         <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
       );
@@ -132,26 +132,6 @@ const InputComp = ({ index }: Props) => {
       .then(() => toast.success("Deleted!"))
       .catch(() => toast.error("Cannot Delete!"));
   };
-  //***/
-
-  //---------------Compare Result from the chatgpt/other algorithms-------------------
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("stage_3")) {
-      const newObject = window.localStorage.getItem("stage_3");
-      JSON.parse(newObject)?.map((each: any) =>
-        each.match_index === index
-          ? dispatch(
-              switch_display_in_Resume({
-                index: index,
-                display_in_Resume: true,
-              })
-            )
-          : null
-      );
-    } else {
-      return null;
-    }
-  }
   //***/
 
   return (
