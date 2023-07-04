@@ -12,7 +12,7 @@ const ResumeClient = () => {
 
   return (
     <div className=" bg-gray-300 relative">
-      <div className="absolute invisible">
+      <div className="absolute z-10">
         <ReactToPrint
           removeAfterPrint={true}
           trigger={() => <Button>Print this out!</Button>}

@@ -8,16 +8,15 @@ export default function ResultBoard() {
 
   useDragger("move-board");
   return (
-    <div id="move-board" className="border-8 absolute z-10">
-      <Paper elevation={1}>
-        <ButtonGroup
-          disableElevation
-          variant="contained"
-          aria-label="Disabled elevation buttons"
-        >
-          <Button onClick={() => setDisplay("UNMATCH")}>UNMATCH</Button>
-          <Button onClick={() => setDisplay("MATCH")}>MATCH</Button>
-        </ButtonGroup>
+    <div id="move-board" className=" absolute z-10">
+      <div>
+        <div className=" bg-white inline-block">
+          <ButtonGroup aria-label="Disabled elevation buttons">
+            <Button onClick={() => setDisplay("")}>Hide</Button>
+            <Button onClick={() => setDisplay("UNMATCH")}>UNMATCH</Button>
+            <Button onClick={() => setDisplay("MATCH")}>MATCH</Button>
+          </ButtonGroup>
+        </div>
         {/* draggable of "matches" result */}
         <Result
           id="matches"
@@ -28,9 +27,11 @@ export default function ResultBoard() {
         <Result
           id="unmatches"
           whatToGet="unmatches"
-          customedCSS={display === "UNMATCH" ? "left-0 bg-red-400 " : "hidden"}
+          customedCSS={
+            display === "UNMATCH" ? "left-0  border-red-500" : "hidden"
+          }
         />
-      </Paper>
+      </div>
     </div>
   );
 }

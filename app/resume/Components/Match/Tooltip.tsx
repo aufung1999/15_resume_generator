@@ -12,9 +12,9 @@ export default function CustomedTooltip({
   index_2nd,
   text,
 }: {
-  index_1st: any;
-  index_2nd: any;
-  text: any;
+  index_1st: string | any;
+  index_2nd: string | any;
+  text: string | any;
 }) {
   const [on, setOn] = useState<any>(false);
   const [target, setTarget] = useState<any>([]);
@@ -63,24 +63,32 @@ export default function CustomedTooltip({
     }
   }, []);
   return (
-    <div className={on ? " bg-yellow-300" : ""}>
-      {on ? (
-        <Tooltip
-          title={matches?.map((each: string, i: number) => (
-            <div
-              key={i}
-              className={target.includes(each) ? " font-semibold" : "text-gray-300"}
-            >
-              {target.includes(each) && <span>✔️</span>}
-              {matches.indexOf(each)}:{each}
-            </div>
-          ))}
-        >
-          {text}
-        </Tooltip>
-      ) : (
-        <div>{text}</div>
-      )}
-    </div>
+    <>
+      <div className={on ? " bg-yellow-300" : ""}>
+        {on ? (
+          <Tooltip
+            title={
+              <>
+                {matches?.map((each: string, i: number) => (
+                  <div
+                    key={i}
+                    className={
+                      target.includes(each) ? " font-semibold" : "text-gray-300"
+                    }
+                  >
+                    {target.includes(each) && <span>✔️</span>}
+                    {matches.indexOf(each)}:{each}
+                  </div>
+                ))}
+              </>
+            }
+          >
+            {text}
+          </Tooltip>
+        ) : (
+          <div>{text}</div>
+        )}
+      </div>
+    </>
   );
 }

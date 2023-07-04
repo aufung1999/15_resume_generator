@@ -23,7 +23,7 @@ export default function Result({
   return (
     <div
       className={
-        "bg-green-300 border-4  cursor-pointer top-0 z-10 " +
+        "bg-white px-3 py-1 cursor-pointer top-0 z-10 rounded border-2  border-green-500 " +
         customedCSS
       }
       id={id}
@@ -31,7 +31,7 @@ export default function Result({
     >
       {get?.map((each, i) => (
         <div key={i} className="flex">
-          <div> {i}</div>
+          <div> {i}</div>&nbsp;
           <div className=" text-xs">{each}</div>
         </div>
       ))}

@@ -21,16 +21,38 @@ const projectsSlice = createSlice({
     initialize_ProjectData: (state, action: PayloadAction<string>) => {
       const { index, ProjectName, Techniques, ProjectDescription }: any =
         action.payload;
-      //set the data format
-      let Data = {
-        index: index,
-        ProjectName: ProjectName,
-        Techniques: Techniques,
-        ProjectDescription: ProjectDescription,
-        display_in_Resume: false,
-      };
-      //push the tidied up data into state
-      state.push(Data);
+      //if the "stage_3" data exists
+      let stage_3_exist = false;
+      //get the index from "stage_3"
+      let match_index: any[] = [];
+      //clone the data of ORIGINAL "Skill_list" data
+      let arrayForSort: any[] = [];
+      //REARRANGE of "Skill_list"
+      let rearrange_State;
+
+      if (typeof window !== "undefined") {
+        if (localStorage.getItem("stage_3")) {
+          stage_3_exist = true;
+          const newObject: any = window.localStorage.getItem("stage_3");
+          JSON.parse(newObject)?.map(
+            (each: any) =>
+              each.match_index === index && match_index.push(each.match_index)
+          );
+
+          //set the data format
+          let Data = {
+            index: index,
+            ProjectName: ProjectName,
+            Techniques: Techniques,
+            ProjectDescription: ProjectDescription,
+            display_in_Resume: false,
+          };
+          //Condition add to array,
+          //"unshift" is to add at the beginning:
+          //"push" is to add at the end
+          match_index.includes(index) ? state.unshift(Data) : state.push(Data);
+        }
+      }
     },
     addProject: (state, action) => {
       const { index } = action.payload;
