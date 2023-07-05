@@ -24,6 +24,8 @@ const Resume = forwardRef((props, ref: any) => {
       className=" w-a4 h-a4 border-2  px-6 py-2 bg-white text-black"
       ref={ref}
     >
+      {/* //rename the print Default Name */}
+      <title>Filename</title>
       <div className={"flex-col h-full "}>
         <div className="">
           <Contact

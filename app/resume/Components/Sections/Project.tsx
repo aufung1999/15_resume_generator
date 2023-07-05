@@ -51,22 +51,23 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                             text={item.Techniques}
                           />
                         </div>
-
-                        {item?.ProjectDescription.map(
-                          (each: any, ind: number) => (
-                            <SectionList key={ind}>
-                              <span className="flex leading-none">
-                                <li />
-                                <div
-                                  className=" flex leading-none"
-                                  dangerouslySetInnerHTML={{
-                                    __html: each?.Row,
-                                  }}
-                                />
-                              </span>
-                            </SectionList>
-                          )
-                        )}
+                        <div className="px-3">
+                          {item?.ProjectDescription.map(
+                            (each: any, ind: number) => (
+                              <SectionList key={ind}>
+                                <span className="flex leading-none">
+                                  <li />
+                                  <div
+                                    className=" flex leading-none"
+                                    dangerouslySetInnerHTML={{
+                                      __html: each?.Row,
+                                    }}
+                                  />
+                                </span>
+                              </SectionList>
+                            )
+                          )}
+                        </div>
                       </div>
                     )}
                   </Draggable>
