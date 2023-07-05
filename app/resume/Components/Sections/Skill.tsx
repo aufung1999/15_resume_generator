@@ -10,6 +10,7 @@ import { RootState } from "@/store/store";
 import CustomedTooltip from "../Match/Tooltip";
 
 export default function SkillSection({ skill }: SkillsState[] | any) {
+
   return (
     <div className="mb-2 w-full">
       <SectionHeading title="Technical Skills" />

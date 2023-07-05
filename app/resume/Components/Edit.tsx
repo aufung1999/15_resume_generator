@@ -43,7 +43,6 @@ export default function EditResume({ data }: any) {
 
   return (
     <div className=" w-full relative">
-      <div>Edit</div>
       <div className="grid grid-cols-3">
         <Button
           onClick={() =>

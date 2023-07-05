@@ -6,6 +6,7 @@ import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
 import { add_skill_match } from "@/slices/resumeSlice";
+import { RootState } from "@/store/store";
 
 export default function CustomedTooltip({
   index_1st,
@@ -19,6 +20,9 @@ export default function CustomedTooltip({
   const [on, setOn] = useState<any>(false);
   const [target, setTarget] = useState<any>([]);
   const [matches, setMatches] = useState<any>(null);
+  const control_highlight_dsiplay = useSelector(
+    (state: RootState) => state.resume.control_highlight_dsiplay
+  );
 
   useEffect(() => {
     let temp_array: any[] = [];
@@ -64,8 +68,8 @@ export default function CustomedTooltip({
   }, []);
   return (
     <>
-      <div className={on ? " bg-yellow-300" : ""}>
-        {on ? (
+      <div className={on && control_highlight_dsiplay ? " bg-yellow-300" : ""}>
+        {on && control_highlight_dsiplay ? (
           <Tooltip
             title={
               <>
