@@ -18,12 +18,12 @@ export default function ObjectiveSection({
   return (
     <>
       {display && (
-        <div className="mb-3">
+        <div className="mb-2">
           <SectionHeading title="Objective" />
           {objective.map((item: ObjectiveState, i: number) => {
             return (
               item.display_in_Resume && (
-                <div key={i} className="py-2">
+                <div key={i} className="">
                   <div className="flex justify-between items-center">
                     <SectionSubtitle label={item.ObjectiveDes} />
                   </div>

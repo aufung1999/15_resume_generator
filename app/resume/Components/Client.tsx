@@ -11,11 +11,10 @@ import { RootState } from "@/store/store";
 import StatisticBoard from "./Match/StatisticBoard";
 import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
+import { control_Highlight_Dsiplay } from "@/slices/resumeSlice";
 
 const ResumeClient = () => {
   const dispatch = useDispatch();
-
-  const select = useSelector((state: RootState) => state.resume.switch_Result);
 
   const componentRef = useRef<any>();
 
@@ -23,6 +22,10 @@ const ResumeClient = () => {
     <div className=" bg-gray-300 relative">
       <div className="absolute z-10 right-0 flex flex-col">
         <ReactToPrint
+          onBeforePrint={() =>
+            //because there is a "!" in the reducer, so set the "true" here
+            dispatch(control_Highlight_Dsiplay({ select: true }))
+          }
           removeAfterPrint={true}
           trigger={() => (
             <ButtonGroup

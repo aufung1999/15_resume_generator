@@ -14,10 +14,10 @@ export default function DisplayResultBoard() {
     <div>
       <ButtonGroup
         aria-label="Disabled elevation buttons"
-        className="bg-white inline-block"
+        className="bg-white w-full"
       >
         <Button
-          className=" "
+          className="w-full "
           onClick={() =>
             dispatch(control_Highlight_Dsiplay({ select: select }))
           }

@@ -11,10 +11,10 @@ export default function StatisticBoard() {
 
   const select = useSelector((state: RootState) => state.resume.switch_Statistic);
   return (
-    <div>
-      <ButtonGroup aria-label="Disabled elevation buttons"  className="bg-white inline-block">
+    <div className="w-full">
+      <ButtonGroup aria-label="Disabled elevation buttons"  className="bg-white w-full">
         <Button
-          className=" "
+          className=" w-full"
           onClick={() => dispatch(switch_Statistic({ select: select }))}
         >
           Statistic
