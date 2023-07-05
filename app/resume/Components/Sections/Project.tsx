@@ -21,7 +21,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
     // items.splice(result.destination.index, 0, reorderedItem);
   }
   return (
-    <div className="mb-3">
+    <div className="mb-2">
       <SectionHeading title="Project" />
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="projects">
@@ -58,14 +58,15 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                         {item?.ProjectDescription.map(
                           (each: any, ind: number) => (
                             <SectionList key={ind}>
-                              <div className="flex">
+                              <span className="flex leading-none">
                                 <li />
                                 <div
+                                  className=" flex leading-none"
                                   dangerouslySetInnerHTML={{
                                     __html: each?.Row,
                                   }}
-                                ></div>
-                              </div>
+                                />
+                              </span>
                             </SectionList>
                           )
                         )}

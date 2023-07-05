@@ -22,22 +22,22 @@ export default function Contact({
 
       {/* <SectionSubtitle label={label} /> */}
       <div className="flex gap-3 border justify-center">
-        <div className="flex">
-          <div className="text-xs font-semibold">Tel: &nbsp;</div>
-          <ProfileContact text={PhoneNumber} />
+        <div className="text-sm font-semibold flex ">
+          Tel: &nbsp; <ProfileContact text={PhoneNumber} />
         </div>
-        <div className="flex">
-          <div className="text-sm font-semibold">Email: &nbsp;</div>
-          <ProfileContact text={Email} />
+
+        <div className="text-sm font-semibold flex">
+          Email: &nbsp; <ProfileContact text={Email} />
         </div>
-        <div className="flex">
-          <div className="text-sm font-semibold">Location: &nbsp;</div>
+
+        <div className="text-sm font-semibold flex">
+          Location: &nbsp;
           <ProfileContact text={City + ", " + Country} />
         </div>
 
         {Portfolio && (
-          <div className="flex items-center">
-            <div className="text-sm font-semibold">Link: &nbsp;</div>
+          <div className="text-sm font-semibold flex">
+            Link: &nbsp;{" "}
             <a href={Portfolio}>
               <u>
                 <ProfileContact text="Portfolio" />

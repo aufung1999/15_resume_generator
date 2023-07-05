@@ -17,7 +17,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
         return (
           <div key={i} className="py-1">
             <div className="flex justify-between items-center">
-              <div className="flex">
+              <div className="flex flex-col">
                 <SectionTitle label={item.Position} />
                 <SectionSubtitle label={item.CompanyName} />
               </div>

@@ -15,22 +15,19 @@ export default function EducationSection({
 
       {education.map((item: EducationState, index: number) => {
         return (
-          <div key={index} className="py-2">
-            <div>
-              <u>
-                  <SectionTitle label={item.SchoolName} />
-
-              </u>
-              <div className="flex justify-between items-center">
-                <SectionSubtitle label={`${item.Subject}`} />
-                <div className="flex gap-3">
-                  <p className="text-sm">
-                    {timeConverter(Date.parse(item.StartDate))} -
-                    {item.current
-                      ? "present"
-                      : timeConverter(Date.parse(item.EndDate))}
-                  </p>
-                </div>
+          <div key={index} className="">
+            <u>
+              <SectionTitle label={item.SchoolName} />
+            </u>
+            <div className="flex justify-between items-center">
+              <SectionSubtitle label={`${item.Subject}`} />
+              <div className="flex gap-3">
+                <p className="text-sm">
+                  {timeConverter(Date.parse(item.StartDate))} -
+                  {item.current
+                    ? "present"
+                    : timeConverter(Date.parse(item.EndDate))}
+                </p>
               </div>
             </div>
           </div>
