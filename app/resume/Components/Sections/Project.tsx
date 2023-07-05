@@ -12,13 +12,10 @@ import { useDispatch } from "react-redux";
 export default function ProjectSection({ project }: ProjectState[] | any) {
   const dispatch = useDispatch();
 
-  function handleOnDragEnd(result) {
+  function handleOnDragEnd(result: any) {
     if (!result.destination) return;
 
     dispatch(drag_drop({ result: result }));
-    // const items = Array.from();
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
   }
   return (
     <div className="mb-2">
