@@ -23,5 +23,8 @@ module.exports = {
       xxs: "200px", // min-width
     },
   },
-  plugins: [],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };

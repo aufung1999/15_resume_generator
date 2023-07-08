@@ -12,21 +12,43 @@ import StatisticBoard from "./Match/StatisticBoard";
 import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
 import { control_Highlight_Dsiplay } from "@/slices/resumeSlice";
+import Testhtml from "./test/Testhtml";
+
+import toast, { Toaster } from "react-hot-toast";
+
+//To store the componentRef.current to MongoDB
+import DOMPurify from "dompurify";
 
 const ResumeClient = () => {
   const dispatch = useDispatch();
 
-  const componentRef = useRef<any>();
+  const componentRef = useRef<any>(null);
 
   return (
     <div className=" bg-gray-300 relative">
       <div className="absolute z-10 right-0 flex flex-col">
+        <Toaster />
         <ReactToPrint
-          onBeforePrint={() =>
+          // onBeforePrint={() =>
             //because there is a "!" in the reducer, so set the "true" here
-            dispatch(control_Highlight_Dsiplay({ select: true }))
+            // dispatch(control_Highlight_Dsiplay({ select: true }))
+          // }
+          onAfterPrint={async () =>
+            await fetch(`/api/user/resume`, {
+              method: "POST",
+              body: JSON.stringify(
+                DOMPurify.sanitize(componentRef.current, {
+                  USE_PROFILES: { html: true },
+                })
+              ),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+            })
+              .then(() => toast.success("Stored Resume!"))
+              .catch(() => toast.error("Cannot Delete!"))
           }
-          removeAfterPrint={true}
+          // removeAfterPrint={true}
           trigger={() => (
             <ButtonGroup
               aria-label="Disabled elevation buttons"
