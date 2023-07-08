@@ -19,6 +19,8 @@ import toast, { Toaster } from "react-hot-toast";
 //To store the componentRef.current to MongoDB
 import DOMPurify from "dompurify";
 
+import * as htmlToImage from "html-to-image";
+
 const ResumeClient = () => {
   const dispatch = useDispatch();
 
@@ -29,25 +31,30 @@ const ResumeClient = () => {
       <div className="absolute z-10 right-0 flex flex-col">
         <Toaster />
         <ReactToPrint
-          // onBeforePrint={() =>
+          onBeforePrint={() =>
             //because there is a "!" in the reducer, so set the "true" here
-            // dispatch(control_Highlight_Dsiplay({ select: true }))
-          // }
-          onAfterPrint={async () =>
-            await fetch(`/api/user/resume`, {
-              method: "POST",
-              body: JSON.stringify(
-                DOMPurify.sanitize(componentRef.current, {
-                  USE_PROFILES: { html: true },
-                })
-              ),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8",
-              },
-            })
-              .then(() => toast.success("Stored Resume!"))
-              .catch(() => toast.error("Cannot Delete!"))
+            dispatch(control_Highlight_Dsiplay({ select: true }))
           }
+          onAfterPrint={async () => {
+            //1. convert the html-to-image
+            htmlToImage
+              .toPng(componentRef.current)
+              .then(async (dataUrl) => {
+                //2. after getting the string of result, fetch it to mongoDB
+                await fetch(`/api/user/resume`, {
+                  method: "POST",
+                  body: JSON.stringify(dataUrl),
+                  headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                  },
+                })
+                  .then(() => toast.success("Stored Resume!"))
+                  .catch(() => toast.error("Cannot Delete!"));
+              })
+              .catch((error) => {
+                console.error("oops, something went wrong!", error);
+              });
+          }}
           // removeAfterPrint={true}
           trigger={() => (
             <ButtonGroup
