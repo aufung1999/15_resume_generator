@@ -15,15 +15,22 @@ import toast, { Toaster } from "react-hot-toast";
 import { RootState } from "@/store/store";
 
 import {
+  editAnalyse_company_name,
+  editAnalyse_job_position,
   editAnalyse_stage_1,
   editAnalyse_stage_2,
+  editAnalyse_website,
   removeAnalyse_stage_1,
 } from "@/slices/analyseSlice";
 import {
   cleanUp_Contact_redux,
   initialize_ClientData,
 } from "@/slices/contactSlice";
-import { WorkExpState, cleanUp_Work_redux, initialize_WorkData } from "@/slices/workSlice";
+import {
+  WorkExpState,
+  cleanUp_Work_redux,
+  initialize_WorkData,
+} from "@/slices/workSlice";
 import {
   EducationState,
   cleanUp_Education_redux,
@@ -49,6 +56,14 @@ export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
   const stage_1 = useSelector((state: RootState) => state.analyse.stage_1);
   const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);
+
+  const job_position = useSelector(
+    (state: RootState) => state.analyse.job_position
+  );
+  const company_name = useSelector(
+    (state: RootState) => state.analyse.company_name
+  );
+  const website = useSelector((state: RootState) => state.analyse.website);
 
   useEffect(() => {
     if (data) {
@@ -88,8 +103,6 @@ export default function AnalyseClient({ data }: any) {
       //remove the stage_1 after split func.
       dispatch(removeAnalyse_stage_1());
     }
-
-
   };
 
   return (
@@ -100,6 +113,48 @@ export default function AnalyseClient({ data }: any) {
         elevation={Elevation.TWO}
       >
         {/* <Toaster /> */}
+        <div className="grid grid-cols-2">
+          <div>
+            <h1>Job Position</h1>
+            <div>
+              <InputGroup
+                onChange={(e) =>
+                  dispatch(editAnalyse_job_position(e.target.value))
+                }
+                maxLength={50}
+                value={job_position}
+                placeholder="copy from the Job description"
+                className="w-full flex flex-col "
+                fill={true}
+              />
+            </div>
+          </div>
+          <div className="w-full flex flex-col ">
+            <h1>Compnay Name</h1>
+            <InputGroup
+              onChange={(e) =>
+                dispatch(editAnalyse_company_name(e.target.value))
+              }
+              maxLength={30}
+              value={company_name}
+              placeholder="copy from the Job description"
+              className="w-full flex flex-col "
+              fill={true}
+            />
+          </div>
+          <div>
+            <h1>Website</h1>
+            <div>
+              <InputGroup
+                onChange={(e) => dispatch(editAnalyse_website(e.target.value))}
+                value={website}
+                maxLength={30}
+                placeholder="e.g. indeed"
+                className="w-full flex flex-col "
+              />
+            </div>
+          </div>
+        </div>
         <h1>Description</h1>
 
         <div className="w-full h-full border-4 flex flex-col items-center justify-center">

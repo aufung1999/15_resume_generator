@@ -10,6 +10,14 @@ export default function Statistic({ res }: any) {
   const dispatch = useDispatch();
   const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);
 
+  const job_position = useSelector(
+    (state: RootState) => state.analyse.job_position
+  );
+  const company_name = useSelector(
+    (state: RootState) => state.analyse.company_name
+  );
+  const website = useSelector((state: RootState) => state.analyse.website);
+
   const [matches, setMatch] = useState<string[] | null>(null);
   const [unmatches, setUnMatch] = useState<string[] | null>(null);
 
@@ -38,19 +46,24 @@ export default function Statistic({ res }: any) {
   }, []);
 
   const ClickHandler = () => {
-    //store the result from chatgpt / other algorithms to redux store  ***Choose
-    dispatch(editAnalyse_stage_3(res));
     //store the result from chatgpt / other algorithms to localStorage  ***Choose
-
     window.localStorage.setItem("stage_3", JSON.stringify(res));
 
-    //store the result from chatgpt / other algorithms to localStorage  ***Choose
-
+    //store the "matches" from chatgpt / other algorithms to localStorage
     window.localStorage.setItem("matches", JSON.stringify(matches));
 
-    //store the result from chatgpt / other algorithms to localStorage  ***Choose
-
+    //store the "unmatches" from chatgpt / other algorithms to localStorage
     window.localStorage.setItem("unmatches", JSON.stringify(unmatches));
+
+    //store the "job related"
+    window.localStorage.setItem(
+      "job_details",
+      JSON.stringify({
+        job_position: job_position,
+        company_name: company_name,
+        website: website,
+      })
+    );
 
     //Jump to another tab
     router.push("/resume");

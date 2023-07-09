@@ -33,8 +33,10 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     let chatCompletion: any;
     return Promise.all(
       //NEED to delete .slice function
+      // statement_2.slice(0,1).map((each: any) =>
       statement_2.map((each: any) =>
         Promise.all(
+          // input_data.slice(0,1).map(async (each_input: string) => {
           input_data.map(async (each_input: string) => {
             chatCompletion = await openai.createChatCompletion({
               model: "gpt-3.5-turbo",
