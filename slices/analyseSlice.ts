@@ -15,9 +15,9 @@ export interface AnalyseState {
   stage_1: string;
   stage_2: string;
   stage_3: string;
-  job_position: string;
-  company_name: string;
-  website: string;
+  job_position?: string;
+  company_name?: string;
+  website?: string;
 }
 
 const initialState: AnalyseState = {

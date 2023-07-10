@@ -8,7 +8,6 @@ export default function DisplayResult({ whatToGet }: { whatToGet: string }) {
       if (localStorage.getItem(whatToGet)) {
         const newObject: any = window.localStorage.getItem(whatToGet);
         setGet(JSON.parse(newObject));
-
       }
     }
   }, []);

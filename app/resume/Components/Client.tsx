@@ -26,6 +26,8 @@ const ResumeClient = () => {
 
   const componentRef = useRef<any>(null);
 
+  const job_details = window.localStorage.getItem("job_details");
+
   return (
     <div className=" bg-gray-300 relative">
       <div className="absolute z-10 right-0 flex flex-col">
@@ -43,7 +45,10 @@ const ResumeClient = () => {
                 //2. after getting the string of result, fetch it to mongoDB
                 await fetch(`/api/user/resume`, {
                   method: "POST",
-                  body: JSON.stringify(dataUrl),
+                  body: JSON.stringify({
+                    image: dataUrl,
+                    job_details: job_details,
+                  }),
                   headers: {
                     "Content-type": "application/json; charset=UTF-8",
                   },
@@ -75,7 +80,9 @@ const ResumeClient = () => {
         className="flex border-8 border-green-300 justify-center relative w-full"
       >
         <ResultBoard />
-        <Resume ref={componentRef} />
+        <div className=" h-a4 border-4">
+          <Resume ref={componentRef} />
+        </div>
       </div>
     </div>
   );

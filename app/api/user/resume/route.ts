@@ -18,9 +18,11 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     // Signed in
     const body = await req.json();
     console.log(body);
+    const { image, job_details } = body;
     const resume = await new Resume({
       email: session?.user?.email,
-      HTMLDIVElement: body,
+      HTMLDIVElement: image,
+      Job_Details: job_details,
     });
     await resume.save();
 
