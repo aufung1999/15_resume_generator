@@ -83,7 +83,6 @@ export default function ResumeDetail({
   return (
     <div>
       <h1>Details about product {params.resumeID}</h1>
-      {console.log(data_csr)}
       <div className="flex">
         <div className="w-1/2 border-2">
           <img src={data_csr?.image.src} />
@@ -98,7 +97,7 @@ export default function ResumeDetail({
           </div>
           <div className="border">
             <div>Matches</div>
-            {data_csr?.matches?.map((each, i) => (
+            {data_csr?.matches?.map((each: string[], i: number) => (
               <div key={i} className=" break-words">
                 {each}
               </div>
@@ -106,7 +105,7 @@ export default function ResumeDetail({
           </div>
           <div className="border">
             <div>Un-Matches</div>
-            {data_csr?.unmatches?.map((each, i) => (
+            {data_csr?.unmatches?.map((each: string[], i: number) => (
               <div key={i} className=" break-words">
                 {each}
               </div>
