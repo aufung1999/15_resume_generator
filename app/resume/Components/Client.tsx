@@ -26,7 +26,11 @@ const ResumeClient = () => {
 
   const componentRef = useRef<any>(null);
 
-  const job_details = window.localStorage.getItem("job_details");
+  //save all the localStorage data to Database
+  const stage_3_ls = window.localStorage.getItem("stage_3");
+  const matches_ls = window.localStorage.getItem("matches");
+  const unmatches_ls = window.localStorage.getItem("unmatches");
+  const job_details_ls = window.localStorage.getItem("job_details");
 
   return (
     <div className=" bg-gray-300 relative">
@@ -45,9 +49,13 @@ const ResumeClient = () => {
                 //2. after getting the string of result, fetch it to mongoDB
                 await fetch(`/api/user/resume`, {
                   method: "POST",
+                  //need to stringify all the thing BEFORE send to API
                   body: JSON.stringify({
                     image: dataUrl,
-                    job_details: job_details,
+                    stage_3: stage_3_ls,
+                    matches: matches_ls,
+                    unmatches: unmatches_ls,
+                    job_details: job_details_ls,
                   }),
                   headers: {
                     "Content-type": "application/json; charset=UTF-8",

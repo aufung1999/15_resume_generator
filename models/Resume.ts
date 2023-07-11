@@ -4,6 +4,9 @@ const resumeSchema = new mongoose.Schema(
   {
     email: { type: String, required: true },
     HTMLDIVElement: { type: String, required: true },
+    Stage_3: { type: String, required: false },
+    Matches: { type: String, required: false },
+    Unmatches: { type: String, required: false },
     Job_Details: { type: String, required: false },
   },
   { timestamps: true }

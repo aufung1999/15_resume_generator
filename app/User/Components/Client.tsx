@@ -10,7 +10,7 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
   useEffect(() => {
     let images_db: any[] = [];
     resumeData.map(async (each) => {
-      var img = new Image();
+      const img = new Image();
       img.src = each.HTMLDIVElement;
       images_db.push({
         _id: each._id,
