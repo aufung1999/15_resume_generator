@@ -49,6 +49,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                             index_1st={item.index}
                             index_2nd={null}
                             text={item.Techniques}
+                            whichSection="project"
                           />
                         </div>
                         <div className="px-3">

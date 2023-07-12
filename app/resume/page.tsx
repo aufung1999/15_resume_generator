@@ -91,7 +91,7 @@ export default async function Page() {
         <div className=" w-3/12 overflow-auto no-scrollbar">
           <EditResume data={JSON.parse(JSON.stringify(clientData))} />
         </div>
-        <div className=" w-9/12 overflow-auto relative no-scrollbar">
+        <div className=" w-9/12 overflow-auto relative no-scrollbar z-10">
           <ResumeClient />
         </div>
       </div>

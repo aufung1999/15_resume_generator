@@ -7,8 +7,10 @@ import { SectionSubtitle } from "../../atoms/SectionSubtitle";
 import { SectionTitle } from "../../atoms/SectionTitle";
 import { timeConverter } from "../../Functions/timeConvertor";
 import CustomedTooltip from "../Match/Tooltip";
+import Revalidation from "../Unmatch/Revalidation";
 
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
+  // Revalidation(experience)
   return (
     <div className="mb-2">
       <SectionHeading title="Experience" />
@@ -36,12 +38,14 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                   <CustomedTooltip
                     index_1st={item.index}
                     index_2nd={each.rowIndex}
+                    description={each?.Row}
                     text={
                       <div className="flex">
                         <li />
                         <div>{each?.Row}</div>
                       </div>
                     }
+                    whichSection="work"
                   />
                 </SectionList>
               ))}

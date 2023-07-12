@@ -5,18 +5,23 @@ import { Button, mergeRefs, Popover, Tag } from "@blueprintjs/core";
 import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { add_skill_match } from "@/slices/resumeSlice";
+import { add_skill_match, editResume_stage_4 } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 
 export default function CustomedTooltip({
   index_1st,
   index_2nd,
+  description,
   text,
+  whichSection,
 }: {
   index_1st: string | any;
   index_2nd: string | any;
+  description?: string | any;
   text: string | any;
+  whichSection: string | any;
 }) {
+  const dispatch = useDispatch();
   const [on, setOn] = useState<any>(false);
   const [target, setTarget] = useState<any>([]);
   const [matches, setMatches] = useState<any>(null);
@@ -53,13 +58,37 @@ export default function CustomedTooltip({
                 null;
           });
         }
+        //---------------------To fetch the "not_included" description, for the revalidation part
+        if (index_2nd) {
+          let not_included = true;
+          JSON.parse(newObject).map((each: any) => {
+            each.match_index_1st === index_1st &&
+            each.match_index_2nd === index_2nd
+              ? (not_included = false)
+              : //This means that the row description is not included in the "stage_3" ----^
+                null;
+          });
+
+          if (not_included === true) {
+            dispatch(
+              editResume_stage_4({
+                index_1st: index_1st,
+                index_2nd: index_2nd,
+                Description: description,
+                whichSection: whichSection,
+              })
+            );
+          }
+        }
       }
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {
         const newObject: any = window.localStorage.getItem("matches");
         //sorting for "temp_array"
         temp_array.sort((a, b) =>
-          newObject.indexOf(a) > newObject.indexOf(b) ? 1 : -1
+          JSON.parse(newObject).indexOf(a) > JSON.parse(newObject).indexOf(b)
+            ? 1
+            : -1
         );
         //pass the synchronous "temp_array" variable to a asynchronous state "matches"
         setMatches(JSON.parse(newObject));
@@ -92,7 +121,10 @@ export default function CustomedTooltip({
             {text}
           </Tooltip>
         ) : (
-          <div>{text}</div>
+          <div>
+            {text}
+            {/* dispatch the thing to Redux */}
+          </div>
         )}
       </div>
     </>

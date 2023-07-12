@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
   Card,
@@ -12,14 +12,17 @@ export default function Result({
   id,
   whatToGet,
   customedCSS,
+  update,
+  setUpdate,
 }: {
   id: string;
   whatToGet: string;
   customedCSS: string;
+  update: boolean;
+  setUpdate: Function;
 }) {
   const [get, setGet] = useState<any[]>([]);
 
-  //first time useEffect does not use "[]"
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem(whatToGet)) {
@@ -27,9 +30,10 @@ export default function Result({
         setGet(JSON.parse(newObject));
       }
     }
-  });
+  }, [update]);
 
   const ClickHandler = (deleteIndex: number) => {
+    setUpdate(!update);
     switch (whatToGet) {
       case "unmatches":
         const move_to_matches = get[deleteIndex];
@@ -46,10 +50,6 @@ export default function Result({
         return;
     }
   };
-  // useEffect(() => {
-  //   window.addEventListener("storage", ClickHandler());
-  //   return () => window.removeEventListener("storage", ClickHandler());
-  // }, []);
 
   return (
     <div

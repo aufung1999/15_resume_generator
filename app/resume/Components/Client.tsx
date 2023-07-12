@@ -87,7 +87,7 @@ const ResumeClient = () => {
 
       <div
         id="boundary"
-        className="flex border-8 border-green-300 justify-center relative w-full"
+        className="flex border-8 border-green-300 justify-center relative w-full "
       >
         <ResultBoard />
         <div className=" h-a4 border-4">
