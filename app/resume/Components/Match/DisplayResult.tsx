@@ -24,3 +24,4 @@ export default function DisplayResult({ whatToGet }: { whatToGet: string }) {
       </div>
     </div>
   );
+}

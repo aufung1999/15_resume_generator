@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import {
+  Button,
+  Card,
+  Elevation,
+  FormGroup,
+  InputGroup,
+  Switch,
+  TextArea,
+} from "@blueprintjs/core";
 export default function Result({
   id,
   whatToGet,
@@ -11,6 +19,7 @@ export default function Result({
 }) {
   const [get, setGet] = useState<any[]>([]);
 
+  //first time useEffect does not use "[]"
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem(whatToGet)) {
@@ -18,7 +27,29 @@ export default function Result({
         setGet(JSON.parse(newObject));
       }
     }
-  }, []);
+  });
+
+  const ClickHandler = (deleteIndex: number) => {
+    switch (whatToGet) {
+      case "unmatches":
+        const move_to_matches = get[deleteIndex];
+        const filtered_array = get.filter((each) => each !== move_to_matches);
+        // console.log(filtered_array)
+        //update localStorage "unmatches"
+        localStorage.setItem("unmatches", JSON.stringify(filtered_array));
+        //update localStorage "matches"
+        const newObject: any = window.localStorage.getItem("matches");
+        const new_matches: any[] = [...JSON.parse(newObject), move_to_matches];
+        localStorage.setItem("matches", JSON.stringify(new_matches));
+        return;
+      case "matches":
+        return;
+    }
+  };
+  // useEffect(() => {
+  //   window.addEventListener("storage", ClickHandler());
+  //   return () => window.removeEventListener("storage", ClickHandler());
+  // }, []);
 
   return (
     <div
@@ -33,6 +64,9 @@ export default function Result({
         <div key={i} className="flex">
           <div> {i}</div>&nbsp;
           <div className=" text-xs">{each}</div>
+          <div className={whatToGet === "unmatches" ? " " : "hidden"}>
+            <Button onClick={() => ClickHandler(i)}>-</Button>
+          </div>
         </div>
       ))}
     </div>

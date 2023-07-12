@@ -37,7 +37,8 @@ export default function CustomedTooltip({
             //To avoid duplication
             temp_array.includes(each.match_sentence) === false
               ? (setOn(true), temp_array.push(each.match_sentence))
-              : null
+              : //This means that the row description is not included in the "stage_3" ----v
+                null
           );
         }
         // *****Exist*****
@@ -48,7 +49,8 @@ export default function CustomedTooltip({
             //To avoid duplication
             temp_array.includes(each.match_sentence) === false
               ? (setOn(true), temp_array.push(each.match_sentence))
-              : null;
+              : //This means that the row description is not included in the "stage_3" ----^
+                null;
           });
         }
       }

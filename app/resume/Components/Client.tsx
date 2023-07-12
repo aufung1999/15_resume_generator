@@ -20,6 +20,7 @@ import toast, { Toaster } from "react-hot-toast";
 import DOMPurify from "dompurify";
 
 import * as htmlToImage from "html-to-image";
+import Revalidate from "./Match/Revalidate";
 
 const ResumeClient = () => {
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ const ResumeClient = () => {
         />
         <StatisticBoard />
         <DisplayResultBoard />
+        <Revalidate />
       </div>
 
       <div
