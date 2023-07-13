@@ -47,7 +47,6 @@ export default function Compare() {
         temp_project.push({
           index: each.index,
           array: extractTerms(each?.Techniques, "project_redux"),
-        
         })
       );
 

@@ -59,27 +59,27 @@ export default function CustomedTooltip({
           });
         }
         //---------------------To fetch the "not_included" description, for the revalidation part
-        if (index_2nd) {
-          let not_included = true;
-          JSON.parse(newObject).map((each: any) => {
-            each.match_index_1st === index_1st &&
-            each.match_index_2nd === index_2nd
-              ? (not_included = false)
-              : //This means that the row description is not included in the "stage_3" ----^
-                null;
-          });
+        // if (index_2nd) {
+        //   let not_included = true;
+        //   JSON.parse(newObject).map((each: any) => {
+        //     each.match_index_1st === index_1st &&
+        //     each.match_index_2nd === index_2nd
+        //       ? (not_included = false)
+        //       : //This means that the row description is not included in the "stage_3" ----^
+        //         null;
+        //   });
 
-          if (not_included === true) {
-            dispatch(
-              editResume_stage_4({
-                index_1st: index_1st,
-                index_2nd: index_2nd,
-                Description: description,
-                whichSection: whichSection,
-              })
-            );
-          }
-        }
+        //   if (not_included === true) {
+        //     dispatch(
+        //       editResume_stage_4({
+        //         index_1st: index_1st,
+        //         index_2nd: index_2nd,
+        //         Description: description,
+        //         whichSection: whichSection,
+        //       })
+        //     );
+        //   }
+        // }
       }
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {

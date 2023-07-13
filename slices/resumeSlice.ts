@@ -50,24 +50,21 @@ const analyseSlice = createSlice({
     editResume_stage_4: (state, action) => {
       const { index_1st, Description, whichSection, index_2nd } =
         action.payload;
-      console.log(Description);
 
       if (whichSection === "work") {
-        const check = state.stage_4.work.some(
+        //find the EXISTed target
+        const check = state.stage_4.work.find(
           (each) => each.index_1st === index_1st && each.index_2nd === index_2nd
         );
-
-
-        check
-          ? //Do nothing when it eits in the redux
-            null
-          : //Push to redux when it DOES not exist
-            //This Object naming is accroding to the /analyze/compare component
-            state.stage_4.work.push({
-              index_1st: index_1st,
-              index_2nd: index_2nd,
-              JobDescription: Description,
-            });
+        if (check) {
+          check.Description = Description;
+          return;
+        }
+        state.stage_4.work.push({
+          index_1st: index_1st,
+          index_2nd: index_2nd,
+          JobDescription: Description,
+        });
       }
     },
   },
