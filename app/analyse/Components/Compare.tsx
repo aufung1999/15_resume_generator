@@ -96,7 +96,8 @@ export default function Compare() {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      const {data,total_usage} = await res.json();
+      const { data, total_usage } = await res.json();
+      localStorage.setItem("total_usage", total_usage);
       //=====Get the result and display=====
       setRes([...temp_arr, ...data]);
       // setRes(data);

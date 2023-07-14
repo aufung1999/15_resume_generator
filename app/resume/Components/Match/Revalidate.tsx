@@ -86,9 +86,6 @@ export default function Revalidate() {
           const unmatches_ls_revalidated = unmatches_revalidated;
           const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
 
-          console.log(matches_ls_revalidated);
-          console.log(unmatches_ls_revalidated);
-          console.log(stage_3_ls_revalidated);
           //update the localStorage of "matches", "unmatches", and "stage_3"
           window.localStorage.setItem(
             "stage_3",
@@ -106,6 +103,10 @@ export default function Revalidate() {
             "unmatches",
             JSON.stringify(unmatches_ls_revalidated)
           );
+          //Update total_usage
+          const total_usage_ls = localStorage.getItem("total_usage");
+          const total_usage_ls_revalidated = total_usage_ls + total_usage;
+          localStorage.setItem("total_usage", total_usage_ls_revalidated);
           //After everything update the Client side page
           dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
         }
