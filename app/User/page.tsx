@@ -17,7 +17,7 @@ export default async function Page() {
       JSON.stringify(
         await Resume.find({
           email: session?.user?.email,
-        })
+        }).sort({ createdAt: "descending" })
       )
     );
     if (resumeData) {
