@@ -71,10 +71,10 @@ export default function Statistic({ res }: any) {
 
   return (
     <>
-      <div>Result</div>
+      <h1 className=" font-bold text-lg">Result</h1>
       <div>
         <div className="flex justify-center border-4">Match</div>
-        <div>
+        <div className="px-3">
           {matches?.map((each, i) => (
             <div key={i}>{JSON.stringify(each, null, 1)}</div>
           ))}
@@ -82,22 +82,46 @@ export default function Statistic({ res }: any) {
       </div>
       <div>
         <div className="flex justify-center border-4">UN-Match</div>
-        <div>
+        <div className="px-3">
           {" "}
           {unmatches?.map((each, i) => (
             <div key={i}>{JSON.stringify(each, null, 1)}</div>
           ))}
         </div>
       </div>
+      <hr
+        style={{
+          color: "black",
+          backgroundColor: "black",
+          height: 5,
+        }}
+      />
       {matches && (
         <>
           <div>
-            <div>Matches: {matches?.length}</div>
-            <div>Does Not Match: {unmatches?.length}</div>
-            <div>Percentage:{matches?.length / stage_2?.length}</div>
+            <div className="flex">
+              <b className=" w-1/4 flex hover:justify-end">Matches</b>
+              <b>:</b>
+              <div className=" w-3/4">{matches?.length}</div>
+            </div>
+
+            <div className="flex">
+              <b className=" w-1/4 flex hover:justify-end">Does Not Match</b>
+              <b>:</b>
+              <div className=" w-3/4">{unmatches?.length}</div>
+            </div>
+
+            <div className="flex">
+              <b className=" w-1/4 flex hover:justify-end">Percentage</b>
+              <b>:</b>
+              <div className=" w-3/4">{matches?.length / stage_2?.length}</div>
+            </div>
           </div>
-          <div>
-            <Button onClick={ClickHandler}>
+          <div className=" border flex justify-center hover:text-2xl">
+            <Button
+              onClick={ClickHandler}
+              className=" bg-blue-500 rounded px-3"
+            >
               Lets&apos; go to Edit Your Resume!
             </Button>
           </div>

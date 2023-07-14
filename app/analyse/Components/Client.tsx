@@ -108,14 +108,14 @@ export default function AnalyseClient({ data }: any) {
   return (
     <div className=" flex">
       <Card
-        className="border border-blue-600 w-6/12 h-full"
+        className="border border-blue-600 w-6/12 h-full px-5 py-3"
         interactive={false}
         elevation={Elevation.TWO}
       >
         {/* <Toaster /> */}
         <div className="grid grid-cols-2">
-          <div>
-            <h1>Job Position</h1>
+          <div className="">
+            <h1 className=" font-semibold italic underline">Job Position</h1>
             <div>
               <InputGroup
                 onChange={(e) =>
@@ -130,7 +130,7 @@ export default function AnalyseClient({ data }: any) {
             </div>
           </div>
           <div className="w-full flex flex-col ">
-            <h1>Compnay Name</h1>
+            <h1 className=" font-semibold italic underline">Compnay Name</h1>
             <InputGroup
               onChange={(e) =>
                 dispatch(editAnalyse_company_name(e.target.value))
@@ -143,7 +143,7 @@ export default function AnalyseClient({ data }: any) {
             />
           </div>
           <div>
-            <h1>Website</h1>
+            <h1 className=" font-semibold italic underline">Website</h1>
             <div>
               <InputGroup
                 onChange={(e) => dispatch(editAnalyse_website(e.target.value))}
@@ -160,13 +160,30 @@ export default function AnalyseClient({ data }: any) {
         <div className="w-full h-full border-4 flex flex-col items-center justify-center">
           {/* Control the form size */}
           <TextArea
-            className="w-full h-72"
+            className="w-full h-72 p-3"
             onChange={(e) => dispatch(editAnalyse_stage_1(e.target.value))}
+            growVertically={true}
+            value={stage_1}
+            placeholder="Paste the Job Description here"
           />
         </div>
-        <Button className="bp3-intent-primary" onClick={handleSubmit}>
-          Submit
-        </Button>
+        <div className="w-full flex justify-end pe-10">
+          <Button
+            className={`bp3-intent-primary border ${
+              JSON.stringify(stage_1.length) === "0"
+                ? " text-gray-200 rounded"
+                : " text-black rounded"
+            }`}
+            disabled={
+              JSON.stringify(stage_1.length) === "0" || stage_1 === null
+                ? true
+                : false
+            }
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </div>
 
         <div className="w-full">
           {Array.isArray(stage_2) && <Stage_2 stage_2={stage_2} />}

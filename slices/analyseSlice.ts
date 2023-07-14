@@ -12,8 +12,8 @@ type anything =
   | undefined;
 
 export interface AnalyseState {
-  stage_1: string[];
-  stage_2: string[];
+  stage_1: string;
+  stage_2: string[] | null;
   stage_3: string[];
   job_position?: string;
   company_name?: string;
@@ -21,7 +21,7 @@ export interface AnalyseState {
 }
 
 const initialState: AnalyseState = {
-  stage_1: [],
+  stage_1: "",
   stage_2: [],
   stage_3: [],
   job_position: "",

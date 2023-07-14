@@ -106,7 +106,12 @@ export default function Compare() {
 
   return (
     <div>
-      <Button onClick={CompareHandler}>Compare</Button>
+      <Button
+        onClick={CompareHandler}
+        className={stage_2 ? " rounded border text-lg" : "hidden"}
+      >
+        Compare
+      </Button>
       {/* <div>
         {result?.map((each: any, i: number) => (
           <div key={i}>{JSON.stringify(each.match_sentence, null, 1)}</div>
