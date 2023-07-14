@@ -21,7 +21,7 @@ export default function Revalidate() {
         work_redux.map((each) =>
           each.JobDescription.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
-              (item) =>
+              (item: any) =>
                 each.index === item.match_index_1st &&
                 each_2.rowIndex === item.match_index_2nd
             )

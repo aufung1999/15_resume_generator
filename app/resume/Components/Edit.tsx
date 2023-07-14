@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useEffect } from "react";
+
 import ContactClient from "@/app/user/contact/Components/Client";
 import EducationClient from "@/app/user/education/Components/Client";
 import ObjectiveClient from "@/app/user/objective/Components/Client";
@@ -22,13 +24,16 @@ import { useSelector, useDispatch } from "react-redux";
 export default function EditResume({ data }: any) {
   const dispatch = useDispatch();
   //clean up Redux data
-  dispatch(cleanUp_Award_redux());
-  dispatch(cleanUp_Contact_redux());
-  dispatch(cleanUp_Education_redux());
-  dispatch(cleanUp_Objective_redux());
-  dispatch(cleanUp_Project_redux());
-  dispatch(cleanUp_Skill_redux());
-  dispatch(cleanUp_Work_redux());
+
+  useEffect(() => {
+    dispatch(cleanUp_Award_redux());
+    dispatch(cleanUp_Contact_redux());
+    dispatch(cleanUp_Education_redux());
+    dispatch(cleanUp_Objective_redux());
+    dispatch(cleanUp_Project_redux());
+    dispatch(cleanUp_Skill_redux());
+    dispatch(cleanUp_Work_redux());
+  }, []);
 
   // if (typeof window !== "undefined") {
   //   if (localStorage.getItem("stage_3")) {
