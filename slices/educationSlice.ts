@@ -17,9 +17,7 @@ const educationSlice = createSlice({
   name: "education",
   initialState,
   reducers: {
-    cleanUp_Education_redux: (state) => {
-      state = initialState;
-    },
+    cleanUp_Education_redux:() => initialState,
     initialize_EducationData: (state, action: PayloadAction<string>) => {
       const {
         index,

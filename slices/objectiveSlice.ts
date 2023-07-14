@@ -13,9 +13,7 @@ const objectiveSlice = createSlice({
   name: "objectives",
   initialState,
   reducers: {
-    cleanUp_Objective_redux: (state) => {
-      state = initialState;
-    },
+    cleanUp_Objective_redux:() => initialState,
     initialize_ObjectiveData: (state, action: PayloadAction<string>) => {
       const { index, ObjectiveDes }: any = action.payload;
       //set the data format

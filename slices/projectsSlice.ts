@@ -15,9 +15,7 @@ const projectsSlice = createSlice({
   name: "project",
   initialState,
   reducers: {
-    cleanUp_Project_redux: (state) => {
-      state = initialState;
-    },
+    cleanUp_Project_redux:() => initialState,
     initialize_ProjectData: (state, action: PayloadAction<string>) => {
       const { index, ProjectName, Techniques, ProjectDescription }: any =
         action.payload;
