@@ -54,14 +54,7 @@ export default function ResumeDetail({
         window.localStorage.setItem("unmatches", Unmatches);
 
         //store the "job related"
-        window.localStorage.setItem(
-          "job_details",
-          JSON.stringify({
-            job_position: Job_Details.job_position,
-            company_name: Job_Details.company_name,
-            website: Job_Details.website,
-          })
-        );
+        window.localStorage.setItem("job_details", Job_Details);
 
         setData({
           image: img,

@@ -10,6 +10,7 @@ import Award from "@/models/Award";
 import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
 import Project from "@/models/Project";
+import Resume from "@/models/Resume";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -76,6 +77,11 @@ export default async function Page() {
     if (projectData) {
       projectData = projectData.map((each) => db.convertDocToObj(each));
     }
+
+    // //get job_details
+    // const job_details = await Resume.find({
+    //   email: session?.user?.email,
+    // });
 
     clientData = {
       contact: contactData,
