@@ -7,10 +7,6 @@ import { useSelector } from "react-redux";
 
 export default function ResultBoard() {
   const [display, setDisplay] = useState("UNMATCH");
-  //Use this method to force the Functional Component to update whenever the "Button" is clicked
-  //Parent Component
-  //Children Component: <Result id="matches" ...props>, <Result id="unmatches" ...props>
-  const [update, setUpdate] = useState(false);
 
   const control_highlight_dsiplay = useSelector(
     (state: RootState) => state.resume.control_highlight_dsiplay
@@ -34,8 +30,6 @@ export default function ResultBoard() {
         id="matches"
         whatToGet="matches"
         customedCSS={display === "MATCH" ? "left-0 " : "hidden"}
-        update={update}
-        setUpdate={setUpdate}
       />
       {/* draggable of "unmatches" result */}
       <Result
@@ -44,8 +38,6 @@ export default function ResultBoard() {
         customedCSS={
           display === "UNMATCH" ? "left-0  border-red-500" : "hidden"
         }
-        update={update}
-        setUpdate={setUpdate}
       />
     </div>
   );

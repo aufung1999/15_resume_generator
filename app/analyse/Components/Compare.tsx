@@ -89,14 +89,14 @@ export default function Compare() {
       const fetch_data = { user_data: temp_work, input_data: filtered_stage_2 };
 
       // ----result from the chatgpt API
-      const res = await fetch("/api/chatgpt", {
+      const res = await fetch("/api/chatgpt/work", {
         method: "POST",
         body: JSON.stringify(fetch_data),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      const data = await res.json();
+      const {data,total_usage} = await res.json();
       //=====Get the result and display=====
       setRes([...temp_arr, ...data]);
       // setRes(data);

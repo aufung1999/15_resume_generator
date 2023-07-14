@@ -21,13 +21,16 @@ export default function CustomedTooltip({
   text: string | any;
   whichSection: string | any;
 }) {
-  const dispatch = useDispatch();
-  const [on, setOn] = useState<any>(false);
-  const [target, setTarget] = useState<any>([]);
-  const [matches, setMatches] = useState<any>(null);
   const control_highlight_dsiplay = useSelector(
     (state: RootState) => state.resume.control_highlight_dsiplay
   );
+  const force_to_update_redux = useSelector(
+    (state: RootState) => state.resume.force_to_update
+  );
+
+  const [on, setOn] = useState<any>(false);
+  const [target, setTarget] = useState<any>([]);
+  const [matches, setMatches] = useState<any>(null);
 
   useEffect(() => {
     let temp_array: any[] = [];
@@ -58,28 +61,6 @@ export default function CustomedTooltip({
                 null;
           });
         }
-        //---------------------To fetch the "not_included" description, for the revalidation part
-        // if (index_2nd) {
-        //   let not_included = true;
-        //   JSON.parse(newObject).map((each: any) => {
-        //     each.match_index_1st === index_1st &&
-        //     each.match_index_2nd === index_2nd
-        //       ? (not_included = false)
-        //       : //This means that the row description is not included in the "stage_3" ----^
-        //         null;
-        //   });
-
-        //   if (not_included === true) {
-        //     dispatch(
-        //       editResume_stage_4({
-        //         index_1st: index_1st,
-        //         index_2nd: index_2nd,
-        //         Description: description,
-        //         whichSection: whichSection,
-        //       })
-        //     );
-        //   }
-        // }
       }
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {
@@ -96,7 +77,7 @@ export default function CustomedTooltip({
       //pass the synchronous "temp_array" variable to a asynchronous state "target"
       setTarget(temp_array);
     }
-  }, []);
+  }, [force_to_update_redux, index_1st, index_2nd]);
   return (
     <>
       <div className={on && control_highlight_dsiplay ? " bg-yellow-300" : ""}>

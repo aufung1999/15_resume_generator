@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { openai } from "../../../utils/openai";
+import { openai } from "../../../../utils/openai";
 import { NextApiRequest, NextApiResponse } from "next";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import extractTerms from "@/app/analyse/Functions/extractTerms";
 
@@ -30,6 +30,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     //----------------------Cost Money--------------------Careful---------------------
 
     let temp_arr: any[] = [];
+    let total_usage = 0;
     let chatCompletion: any;
     return Promise.all(
       //NEED to delete .slice function
@@ -38,6 +39,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         Promise.all(
           // input_data.slice(0,1).map(async (each_input: string) => {
           input_data.map(async (each_input: string) => {
+            //result here
             chatCompletion = await openai.createChatCompletion({
               model: "gpt-3.5-turbo",
               messages: [
@@ -47,6 +49,8 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
                 },
               ],
             });
+
+            console.log(chatCompletion?.data.choices[0].message.content);
 
             if (
               extractTerms(
@@ -59,15 +63,24 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
                 match_index_2nd: each.index_2nd,
                 user_data: each.JobDescription,
                 match_sentence: each_input,
-                usage: chatCompletion?.data.usage.total_tokens,
+                usage:
+                  (Number(chatCompletion?.data.usage.prompt_tokens) * 0.0015 +
+                    Number(chatCompletion?.data.usage.completion_tokens) *
+                      0.002) /
+                  1000,
               });
             }
+            total_usage =
+              total_usage +
+              (Number(chatCompletion?.data.usage.prompt_tokens) * 0.0015 +
+                Number(chatCompletion?.data.usage.completion_tokens) * 0.002) /
+                1000;
           })
         )
       )
     ).then((values) => {
       console.log(temp_arr);
-      return NextResponse.json(temp_arr);
+      return NextResponse.json({ data: temp_arr, total_usage: total_usage });
     });
 
     // console.log(temp_arr);

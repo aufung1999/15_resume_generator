@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Paper, ButtonGroup, Button } from "@mui/material";
 import { RootState } from "@/store/store";
-import { editResume_stage_4 } from "@/slices/resumeSlice";
+import { FORCE_to_UPDATE, editResume_stage_4 } from "@/slices/resumeSlice";
+
 export default function Revalidate() {
   const dispatch = useDispatch();
 
@@ -12,9 +13,6 @@ export default function Revalidate() {
   );
 
   const work_redux = useSelector((state: RootState) => state.work);
-
-  //set Result
-  const [result, setRes] = useState<any>([]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,7 +30,7 @@ export default function Revalidate() {
                   editResume_stage_4({
                     index_1st: each.index,
                     index_2nd: each_2.rowIndex,
-                    Description: each_2.Row,
+                    JobDescription: each_2.Row,
                     whichSection: "work",
                   })
                 )
@@ -54,16 +52,63 @@ export default function Revalidate() {
           input_data: JSON.parse(unmatches_ls),
         };
         // ----result from the chatgpt API
-        const res = await fetch("/api/chatgpt", {
+        const res = await fetch("/api/chatgpt/work", {
           method: "POST",
           body: JSON.stringify(fetch_data),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
         });
-        const data = await res.json();
-        //=====Get the result and display=====
-        setRes(data);
+        const { data, total_usage } = await res.json();
+        // Update the localStorage after revalidation
+        if (data) {
+          const matches_ls: any = window.localStorage.getItem("matches");
+          const stage_3_ls: any = window.localStorage.getItem("stage_3");
+
+          //Process
+          const unmatches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
+            (each: any) =>
+              data.find((each_each: any) => each_each.match_sentence === each)
+                ?.match_sentence !== each
+          );
+
+          const matches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
+            (each: any) =>
+              data.find((each_each: any) => each_each.match_sentence === each)
+                ?.match_sentence === each
+          );
+
+          // update the fetch object for localStorage of "matches_ls"
+          const matches_ls_revalidated = [
+            ...JSON.parse(matches_ls),
+            ...matches_revalidated,
+          ];
+          const unmatches_ls_revalidated = unmatches_revalidated;
+          const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
+
+          console.log(matches_ls_revalidated);
+          console.log(unmatches_ls_revalidated);
+          console.log(stage_3_ls_revalidated);
+          //update the localStorage of "matches", "unmatches", and "stage_3"
+          window.localStorage.setItem(
+            "stage_3",
+            JSON.stringify(stage_3_ls_revalidated)
+          );
+
+          //store the "matches" from chatgpt / other algorithms to localStorage
+          window.localStorage.setItem(
+            "matches",
+            JSON.stringify(matches_ls_revalidated)
+          );
+
+          //store the "unmatches" from chatgpt / other algorithms to localStorage
+          window.localStorage.setItem(
+            "unmatches",
+            JSON.stringify(unmatches_ls_revalidated)
+          );
+          //After everything update the Client side page
+          dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+        }
       }
     }
   };

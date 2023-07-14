@@ -8,19 +8,24 @@ import {
   Switch,
   TextArea,
 } from "@blueprintjs/core";
+import { useSelector, useDispatch } from "react-redux";
+import { FORCE_to_UPDATE } from "@/slices/resumeSlice";
+import { RootState } from "@/store/store";
+
 export default function Result({
   id,
   whatToGet,
   customedCSS,
-  update,
-  setUpdate,
 }: {
   id: string;
   whatToGet: string;
   customedCSS: string;
-  update: boolean;
-  setUpdate: Function;
 }) {
+  const dispatch = useDispatch();
+  const force_to_update_redux = useSelector(
+    (state: RootState) => state.resume.force_to_update
+  );
+
   const [get, setGet] = useState<any[]>([]);
 
   useEffect(() => {
@@ -30,10 +35,10 @@ export default function Result({
         setGet(JSON.parse(newObject));
       }
     }
-  }, [update]);
+  }, [force_to_update_redux, whatToGet]);
 
   const ClickHandler = (deleteIndex: number) => {
-    setUpdate(!update);
+    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     switch (whatToGet) {
       case "unmatches":
         const move_to_matches = get[deleteIndex];
