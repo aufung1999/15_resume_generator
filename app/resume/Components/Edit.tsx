@@ -8,14 +8,9 @@ import ObjectiveClient from "@/app/user/objective/Components/Client";
 import ProjectClient from "@/app/user/projects/Components/Client";
 import SkillClient from "@/app/user/skills/Components/Client";
 import WorkClient from "@/app/user/work/Components/Client";
-import { cleanUp_Award_redux } from "@/slices/awardSlice";
-import { cleanUp_Contact_redux } from "@/slices/contactSlice";
-import { cleanUp_Education_redux } from "@/slices/educationSlice";
-import { cleanUp_Objective_redux } from "@/slices/objectiveSlice";
-import { cleanUp_Project_redux } from "@/slices/projectsSlice";
+
 import { switch_resumeComponents } from "@/slices/resumeSlice";
-import { cleanUp_Skill_redux } from "@/slices/skillsSlice";
-import { cleanUp_Work_redux } from "@/slices/workSlice";
+
 import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
 
@@ -23,26 +18,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function EditResume({ data }: any) {
   const dispatch = useDispatch();
-  //clean up Redux data
-
-  useEffect(() => {
-    dispatch(cleanUp_Award_redux());
-    dispatch(cleanUp_Contact_redux());
-    dispatch(cleanUp_Education_redux());
-    dispatch(cleanUp_Objective_redux());
-    dispatch(cleanUp_Project_redux());
-    dispatch(cleanUp_Skill_redux());
-    dispatch(cleanUp_Work_redux());
-  }, []);
-
-  // if (typeof window !== "undefined") {
-  //   if (localStorage.getItem("stage_3")) {
-  //     const newObject: any = window.localStorage.getItem("stage_3");
-  //     console.log(JSON.parse(newObject));
-  //   } else {
-  //     return [];
-  //   }
-  // }
 
   const switch_tab = useSelector((state: RootState) => state.resume.switch);
 
