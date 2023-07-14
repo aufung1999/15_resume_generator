@@ -7,6 +7,7 @@ import {
   InputGroup,
   Switch,
   TextArea,
+  Icon,
 } from "@blueprintjs/core";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -107,16 +108,31 @@ export default function Compare() {
   return (
     <div>
       <Button
+        large
         onClick={CompareHandler}
-        className={stage_2 ? " rounded border text-lg" : "hidden"}
+        className={`flex w-full justify-center m-3 ${
+          JSON.stringify(stage_2?.length) === "0"
+            ? " text-gray-200 rounded"
+            : " text-black rounded"
+        }`}
+        disabled={
+          JSON.stringify(stage_2?.length) === "0" || stage_2 === null
+            ? true
+            : false
+        }
       >
-        Compare
+        <div className="flex">
+          <div className="flex items-center me-2">
+            {JSON.stringify(stage_2?.length) === "0" || stage_2 === null ? (
+              <Icon icon="lock" color="red" iconSize={10} />
+            ) : (
+              <Icon icon="unlock" color="green" iconSize={10} />
+            )}
+          </div>
+          <div>Compare</div>
+        </div>
       </Button>
-      {/* <div>
-        {result?.map((each: any, i: number) => (
-          <div key={i}>{JSON.stringify(each.match_sentence, null, 1)}</div>
-        ))}
-      </div> */}
+     
       <div className=" border-2 border-red-300">
         {result.length !== 0 && <Statistic res={result} />}
       </div>

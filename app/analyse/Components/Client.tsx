@@ -8,6 +8,7 @@ import {
   InputGroup,
   Switch,
   TextArea,
+  Icon,
 } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
@@ -169,7 +170,7 @@ export default function AnalyseClient({ data }: any) {
         </div>
         <div className="w-full flex justify-end pe-10">
           <Button
-            className={`bp3-intent-primary border ${
+            className={`flex ${
               JSON.stringify(stage_1.length) === "0"
                 ? " text-gray-200 rounded"
                 : " text-black rounded"
@@ -181,7 +182,16 @@ export default function AnalyseClient({ data }: any) {
             }
             onClick={handleSubmit}
           >
-            Submit
+            <div className="flex">
+              <div className="flex items-center me-2">
+                {JSON.stringify(stage_1.length) === "0" || stage_1 === null ? (
+                  <Icon icon="lock" color="red" iconSize={10} />
+                ) : (
+                  <Icon icon="unlock" color="green" iconSize={10} />
+                )}
+              </div>
+              <div>Submit</div>
+            </div>
           </Button>
         </div>
 
