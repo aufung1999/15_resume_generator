@@ -22,7 +22,7 @@ import DOMPurify from "dompurify";
 import * as htmlToImage from "html-to-image";
 import Revalidate from "./Match/Revalidate";
 
-const ResumeClient = () => {
+const ResumeClient = ({ resumeID }: { resumeID: string }) => {
   const dispatch = useDispatch();
 
   const componentRef = useRef<any>(null);
@@ -57,12 +57,15 @@ const ResumeClient = () => {
                     matches: matches_ls,
                     unmatches: unmatches_ls,
                     job_details: job_details_ls,
+                    resumeID: resumeID,
                   }),
                   headers: {
                     "Content-type": "application/json; charset=UTF-8",
                   },
                 })
-                  .then(() => toast.success("Stored Resume!"))
+                  .then((res) => res.json())
+                  .then((data) => toast.error(data?.message))
+                  // .then((res) => toast.success(res?.json().message))
                   .catch(() => toast.error("Cannot Delete!"));
               })
               .catch((error) => {

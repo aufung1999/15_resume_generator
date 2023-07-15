@@ -60,7 +60,7 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
             onClick={() => ClickHandler(each._id)}
           >
             <div className=" border border-red-500">
-              <img src={each.image.src} />
+              <img src={each.image.src} alt="" />
             </div>
           </div>
         </div>
