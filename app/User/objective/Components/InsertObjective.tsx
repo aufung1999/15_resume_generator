@@ -5,10 +5,13 @@ import {
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
 } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import { v4 as uuidv4 } from "uuid";
@@ -39,7 +42,7 @@ const InputComp = ({ index }: Props) => {
   const objective = objectives.find((each) => each.index === index);
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "black" }}>
+    <Card interactive={false} style={{ background: "white", color: "black" }}>
       <div className="flex-row">
         <h3>Objective {index}</h3>
         <Switch
@@ -57,13 +60,15 @@ const InputComp = ({ index }: Props) => {
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Objective Description:
-        <InputGroup
+        <TextArea
           onChange={(e) =>
             dispatch(
               editObjective({ index: index, ObjectiveDes: e.target.value })
             )
           }
           value={objective ? objective?.ObjectiveDes : ""}
+          growVertically={true}
+          fill
         />
       </FormGroup>
     </Card>
@@ -132,16 +137,33 @@ export default function InsertObjective({ data }: any) {
   return (
     <div className="w-full">
       <Toaster />
-      <Button icon="insert" onClick={addObj} />
+
       {objectives?.map((each: any, i: number) => (
         <div key={i}>
-          <Button
-            icon="delete"
-            onClick={(e) => deleteObj(e, each.props.index)}
-          />
-          {each}
+          <div className="flex relative">
+            <div>{each}</div>
+
+            <Button
+              className="absolute top-0 right-0 "
+              style={{
+                backgroundColor: "rgba(255,0,0,0.6)",
+                borderRadius: "25% 10%",
+              }}
+              onClick={(e) => deleteObj(e, each.props.index)}
+            >
+              <Icon icon="delete" className="" style={{ color: "white" }} />
+            </Button>
+          </div>
         </div>
       ))}
+      <Button
+        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        onClick={addObj}
+        fill
+        style={{
+          backgroundColor: "rgba(0,120,255,1)",
+        }}
+      />
     </div>
   );
 }

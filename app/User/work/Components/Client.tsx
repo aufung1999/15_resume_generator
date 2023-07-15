@@ -30,11 +30,7 @@ export default function WorkClient({ data }: any) {
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
-    <Card
-      className="border border-blue-600 flex-1"
-      interactive={false}
-      elevation={Elevation.TWO}
-    >
+    <div className="border border-blue-600 flex-1 relative">
       <Toaster />
       <h1>Work</h1>
 
@@ -42,9 +38,9 @@ export default function WorkClient({ data }: any) {
         {/* Control the form size */}
         <InsertWorkExp data={data} />
       </div>
-      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
+      <Button fill className="top-0" onClick={SubmitHandler}>
         Submit
       </Button>
-    </Card>
+    </div>
   );
 }

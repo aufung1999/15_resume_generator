@@ -5,6 +5,7 @@ import {
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
@@ -77,21 +78,6 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
           )
         }
       />
-      {/* <TextArea
-        large={true}
-        style={{ width: "100%", height: 50 }}
-        fill={true}
-        onChange={(e) =>
-          dispatch(
-            editProjectDescription({
-              index: index,
-              rowIndex: rowIndex,
-              Row: e.target.value,
-            })
-          )
-        }
-        value={row ? row.Row : ""}
-      /> */}
     </div>
   );
 };
@@ -148,7 +134,7 @@ const InputComp = ({ index }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "black" }}>
+    <Card interactive={false} style={{ background: "white", color: "black" }}>
       <div className="flex-row">
         <h3>Project {index}</h3>
         <Switch
@@ -186,13 +172,38 @@ const InputComp = ({ index }: Props) => {
         {/* ---------------------------Dynamic-------------------------- */}
         Project Description:{" "}
         <div className="w-full">
-          <Button icon="insert" onClick={addRow} />
           {row?.map((each: any, i: number) => (
-            <div key={i} className="border-2">
-              <Button icon="delete" onClick={(e) => deleteRow(e, each.key)} />
+            <div key={i} className="border-2 relative">
+              <Button
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                className="absolute top-0 right-0 "
+                onClick={(e) => deleteRow(e, each.key)}
+                icon={
+                  <Icon
+                    icon="delete"
+                    className=""
+                    style={{ color: "white" }}
+                    size={10}
+                  />
+                }
+                small
+              />
               {each}
             </div>
           ))}
+          <Button
+            icon={
+              <Icon icon="insert" className="" style={{ color: "white" }} />
+            }
+            onClick={addRow}
+            style={{
+              backgroundColor: "rgba(0,120,255,1)",
+            }}
+            small
+          />
         </div>
       </FormGroup>
     </Card>
@@ -262,16 +273,31 @@ export default function InsertProject({ data }: any) {
   //***/
   return (
     <div className="w-full">
-      <Button icon="insert" onClick={addProj} />
       {projects_csr?.map((each: any, i: number) => (
         <div key={i} className="w-full border-2">
-          <Button
-            icon="delete"
-            onClick={(e) => deleteProj(e, each.props.index)}
-          />
-          {each}
+          <div className="relative">
+            {each}
+            <Button
+              className="absolute top-0 right-0 "
+              style={{
+                backgroundColor: "rgba(255,0,0,0.6)",
+                borderRadius: "25% 10%",
+              }}
+              onClick={(e) => deleteProj(e, each.props.index)}
+            >
+              <Icon icon="delete" className="" style={{ color: "white" }} />
+            </Button>
+          </div>
         </div>
       ))}
+      <Button
+        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        onClick={addProj}
+        fill
+        style={{
+          backgroundColor: "rgba(0,120,255,1)",
+        }}
+      />
     </div>
   );
 }

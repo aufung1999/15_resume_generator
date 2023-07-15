@@ -5,6 +5,7 @@ import {
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
@@ -70,46 +71,73 @@ const TermComp = ({ index, term }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "black" }}>
+    <Card interactive={false} style={{ background: "white", color: "black" }}>
       <h3>
         {skill?.term} {index}
       </h3>
 
-      <InputGroup
-        onChange={(e) =>
-          dispatch(editTermName({ index: index, term: e.target.value }))
-        }
-      />
-
-      <Button icon="insert" onClick={addskill} />
-      <InputGroup
-        onChange={(e) => setSkillName(e.target.value)}
-        value={skillName}
-      />
+      <div className="mb-3">
+        <InputGroup
+          onChange={(e) =>
+            dispatch(editTermName({ index: index, term: e.target.value }))
+          }
+        />
+      </div>
 
       {skill?.Skill_list?.map((each: any, i: number) => (
         <div key={i}>
           <div>{each.skill}</div>
           <div>{each.skillIndex}</div>
 
-          <Button
-            icon="delete"
-            onClick={(e) => deleteskill(e, each.skillIndex)}
-          />
-          <InputGroup
-            onChange={(e) =>
-              dispatch(
-                editSkillName({
-                  index: index,
-                  skillIndex: each.skillIndex,
-                  skill: e.target.value,
-                })
-              )
-            }
-            value={each ? each?.skill : ""}
-          />
+          <div className="flex relative">
+            <InputGroup
+              onChange={(e) =>
+                dispatch(
+                  editSkillName({
+                    index: index,
+                    skillIndex: each.skillIndex,
+                    skill: e.target.value,
+                  })
+                )
+              }
+              value={each ? each?.skill : ""}
+              fill
+            />
+
+            <Button
+              style={{
+                backgroundColor: "rgba(255,0,0,0.6)",
+                borderRadius: "25% 10%",
+              }}
+              className="absolute top-0 right-0 "
+              onClick={(e) => deleteskill(e, each.skillIndex)}
+              icon={
+                <Icon
+                  icon="delete"
+                  className=""
+                  style={{ color: "white" }}
+                  size={10}
+                />
+              }
+              small
+            />
+          </div>
         </div>
       ))}
+      <div className="flex mt-5">
+        <InputGroup
+          onChange={(e) => setSkillName(e.target.value)}
+          value={skillName}
+        />
+        <Button
+          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+          onClick={addskill}
+          style={{
+            backgroundColor: "rgba(0,120,255,1)",
+          }}
+          small
+        />
+      </div>
     </Card>
   );
 };
@@ -187,18 +215,37 @@ export default function InsertSkills({ data }: any) {
   return (
     <div className=" border  border-red-300 w-full">
       <Toaster />
-      <Button icon="insert" onClick={addterm} />
-      <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {terms?.map((each: any, i: number) => (
           <div key={i}>
-            <Button
-              icon="delete"
-              onClick={(e) => deleteterm(e, each.props.index)}
-            />
-            {each}
+            <div className="flex relative">
+              <div>{each}</div>
+              <Button
+                className="absolute top-0 right-0 "
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                onClick={(e) => deleteterm(e, each.props.index)}
+              >
+                <Icon icon="delete" className="" style={{ color: "white" }} />
+              </Button>
+            </div>
           </div>
         ))}
+      </div>
+      <div className=" felx-col px-20">
+        <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
+
+        <Button
+          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+          onClick={addterm}
+          fill
+          style={{
+            backgroundColor: "rgba(0,120,255,1)",
+          }}
+        />
       </div>
     </div>
   );

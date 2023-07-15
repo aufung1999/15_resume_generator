@@ -5,6 +5,7 @@ import {
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
@@ -48,7 +49,7 @@ const InputComp = ({ index }: Props) => {
   const education = education_redux.find((each) => each.index === index);
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "black" }}>
+    <Card interactive={false} style={{ background: "white", color: "black" }}>
       <h3>Education {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -179,17 +180,32 @@ export default function InsertEducation({ data }: any) {
   return (
     <div className=" border border-red-300 w-full">
       <Toaster />
-      <Button icon="insert" onClick={addEdu} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {educations?.map((each: any, i: number) => (
           <div key={i}>
-            <Button
-              icon="delete"
-              onClick={(e) => deleteEdu(e, each.props.index)}
-            />
-            {each}
+            <div className=" relative">
+              {each}
+              <Button
+                className="absolute top-0 right-0 "
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                onClick={(e) => deleteEdu(e, each.props.index)}
+              >
+                <Icon icon="delete" className="" style={{ color: "white" }} />
+              </Button>
+            </div>
           </div>
         ))}
+        <Button
+          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+          onClick={addEdu}
+          fill
+          style={{
+            backgroundColor: "rgba(0,120,255,1)",
+          }}
+        />
       </div>
     </div>
   );

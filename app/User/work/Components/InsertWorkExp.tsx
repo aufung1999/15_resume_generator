@@ -5,10 +5,13 @@ import {
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
 } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   addWorkExp,
@@ -63,8 +66,8 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 
       <TextArea
         large={true}
-        style={{ width: "100%", height: 50 }}
         fill={true}
+        growVertically={true}
         onChange={(e) =>
           dispatch(
             editJobDescription({
@@ -124,7 +127,7 @@ const InputComp = ({ index }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "gray", color: "black" }}>
+    <Card interactive={false} style={{ background: "white", color: "black" }}>
       <h3>Company {index}</h3>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -183,13 +186,38 @@ const InputComp = ({ index }: Props) => {
         {/* ---------------------------Dynamic-------------------------- */}
         Job Description:{" "}
         <div className="w-full">
-          <Button icon="insert" onClick={addRow} />
           {row?.map((each: any, i: number) => (
-            <div key={i} className="border-2">
-              <Button icon="delete" onClick={(e) => deleteRow(e, each.key)} />
+            <div key={i} className="border-2 relative">
+              <Button
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                className="absolute top-0 right-0 "
+                onClick={(e) => deleteRow(e, each.key)}
+                icon={
+                  <Icon
+                    icon="delete"
+                    className=""
+                    style={{ color: "white" }}
+                    size={10}
+                  />
+                }
+                small
+              />
               {each}
             </div>
-          ))}
+          ))}{" "}
+          <Button
+            icon={
+              <Icon icon="insert" className="" style={{ color: "white" }} />
+            }
+            onClick={addRow}
+            style={{
+              backgroundColor: "rgba(0,120,255,1)",
+            }}
+            small
+          />
         </div>
       </FormGroup>
     </Card>
@@ -260,16 +288,30 @@ export default function InsertWorkExp({ data }: any) {
   return (
     <div className="w-full">
       <Toaster />
-      <Button icon="insert" onClick={addExp} />
+
       {workExps?.map((each: any, i: number) => (
-        <div key={i} className="w-full border-2">
+        <div key={i} className="w-full border-2 relative">
           <Button
-            icon="delete"
+            className="absolute top-0 right-0 "
+            style={{
+              backgroundColor: "rgba(255,0,0,0.6)",
+              borderRadius: "25% 10%",
+            }}
             onClick={(e) => deleteExp(e, each.props.index)}
-          />
+          >
+            <Icon icon="delete" className="" style={{ color: "white" }} />
+          </Button>
           {each}
         </div>
       ))}
+      <Button
+        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        onClick={addExp}
+        fill
+        style={{
+          backgroundColor: "rgba(0,120,255,1)",
+        }}
+      />
     </div>
   );
 }

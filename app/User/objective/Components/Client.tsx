@@ -29,11 +29,7 @@ export default function ObjectiveClient({ data }) {
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
-    <Card
-      className="border border-blue-600 flex-1"
-      interactive={false}
-      elevation={Elevation.TWO}
-    >
+    <div className="border border-blue-600 flex-1">
       <Toaster />
       <h1>Objective</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
@@ -44,6 +40,6 @@ export default function ObjectiveClient({ data }) {
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
       </Button>
-    </Card>
+    </div>
   );
 }
