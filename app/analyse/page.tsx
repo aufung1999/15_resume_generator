@@ -11,6 +11,7 @@ import Award from "@/models/Award";
 import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
 import Project from "@/models/Project";
+import APIKey from "@/models/APIKey";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -23,7 +24,8 @@ export default async function Page() {
     awardData,
     objectiveData,
     skillData,
-    projectData;
+    projectData,
+    API_Key;
   //check if "Authenticated"
   if (session) {
     await db.connect();
@@ -78,6 +80,10 @@ export default async function Page() {
     if (projectData) {
       projectData = projectData.map((each) => db.convertDocToObj(each));
     }
+    //fetch APIKey
+    API_Key = await APIKey.findOne({
+      email: session?.user?.email,
+    });
 
     clientData = {
       contact: contactData,
@@ -87,6 +93,7 @@ export default async function Page() {
       skill: skillData,
       objective: objectiveData,
       project: projectData,
+      api_key: API_Key,
     };
 
     // console.log("clientData: " + JSON.stringify(clientData, null, 1));

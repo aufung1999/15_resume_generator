@@ -9,6 +9,7 @@ import objectiveReducer from "@/slices/objectiveSlice";
 import projectsReducer from "@/slices/projectsSlice";
 import analyseReducer from "@/slices/analyseSlice";
 import resumeReducer from "@/slices/resumeSlice";
+import controlReducer from "@/slices/controlSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,8 @@ export const store = configureStore({
     analyse: analyseReducer,
     //----Resume Generator Tab----
     resume: resumeReducer,
+
+    control: controlReducer,
   },
   devTools: true,
 });

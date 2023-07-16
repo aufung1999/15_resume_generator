@@ -4,6 +4,7 @@ import {
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
@@ -66,11 +67,31 @@ export default function Result({
       content="hi"
     >
       {get?.map((each, i) => (
-        <div key={i} className="flex">
-          <div> {i}</div>&nbsp;
-          <div className=" text-xs">{each}</div>
-          <div className={whatToGet === "unmatches" ? " " : "hidden"}>
-            <Button onClick={() => ClickHandler(i)}>-</Button>
+        <div key={i} className="flex justify-between mb-2">
+          <div className="flex">
+            <div> {i + 1}</div>&nbsp;
+            <div className=" text-xs break-words">{each}</div>
+          </div>
+          <div
+            className={
+              whatToGet === "unmatches"
+                ? " hover:border-2 hover:border-green-400 "
+                : "hidden"
+            }
+          >
+            <Button
+              icon={
+                <Icon
+                  icon="tick"
+                  className=" transition duration-500 "
+                  style={{ color: "white" }}
+                  size={10}
+                />
+              }
+              style={{ backgroundColor: "green" }}
+              small
+              onClick={() => ClickHandler(i)}
+            />
           </div>
         </div>
       ))}

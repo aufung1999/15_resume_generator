@@ -9,10 +9,15 @@ import Statistic from "./Statistic";
 export default function StatisticBoard() {
   const dispatch = useDispatch();
 
-  const select = useSelector((state: RootState) => state.resume.switch_Statistic);
+  const select = useSelector(
+    (state: RootState) => state.resume.switch_Statistic
+  );
   return (
-    <div className="w-full">
-      <ButtonGroup aria-label="Disabled elevation buttons"  className="bg-white w-full">
+    <div className="flex w-full ">
+      <ButtonGroup
+        aria-label="Disabled elevation buttons"
+        className="bg-white w-full"
+      >
         <Button
           className=" w-full"
           onClick={() => dispatch(switch_Statistic({ select: select }))}
@@ -20,9 +25,6 @@ export default function StatisticBoard() {
           Statistic
         </Button>
       </ButtonGroup>
-      <div className={select ? "" : "hidden"}>
-        <Statistic whatToGet="stage_3" />
-      </div>
     </div>
   );
 }

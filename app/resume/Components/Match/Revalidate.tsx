@@ -105,8 +105,8 @@ export default function Revalidate() {
           );
           //Update total_usage
           const total_usage_ls = localStorage.getItem("total_usage");
-          const total_usage_ls_revalidated = total_usage_ls + total_usage;
-          localStorage.setItem("total_usage", total_usage_ls_revalidated);
+          const total_usage_ls_revalidated = Number(total_usage_ls) + Number(total_usage);
+          localStorage.setItem("total_usage", JSON.stringify(total_usage_ls_revalidated));
           //After everything update the Client side page
           dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
         }

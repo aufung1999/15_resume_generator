@@ -80,7 +80,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       //***/
 
       //if "Education" collction does NOT have the data
-      if (exist) {
+      if (!exist) {
         const work = await new Education({
           email: session?.user?.email,
           index: index,

@@ -4,6 +4,13 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
   const [get, setGet] = useState<any[]>([]);
   const [usage, setTotalUsage] = useState<any>(0);
   const [job_details_csr, set_job_details_csr] = useState<any>(0);
+  const [matches_csr, setMatches] = useState<string[]>(null);
+  const [unmatches_csr, setUnMatches] = useState<string[]>(null);
+
+  const check_usage_ls = localStorage.getItem("total_usage");
+  const check_job_details_ls = localStorage.getItem("job_details");
+  const check_matches_ls = localStorage.getItem("matches");
+  const check_unmatches_ls = localStorage.getItem("unmatches");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -29,8 +36,23 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
           window.localStorage.getItem("job_details");
         set_job_details_csr(JSON.parse(job_details_ls));
       }
+      if (localStorage.getItem("matches")) {
+        const matches_ls: any | null = window.localStorage.getItem("matches");
+        setMatches(JSON.parse(matches_ls));
+      }
+      if (localStorage.getItem("unmatches")) {
+        const unmatches_ls: any | null =
+          window.localStorage.getItem("unmatches");
+        setUnMatches(JSON.parse(unmatches_ls));
+      }
     }
-  }, []);
+  }, [
+    whatToGet,
+    check_usage_ls,
+    check_job_details_ls,
+    check_matches_ls,
+    check_unmatches_ls,
+  ]);
 
   return (
     <div
@@ -39,11 +61,42 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
       }
     >
       <div>
-        <div>Company:{job_details_csr?.company_name}</div>
-        <div>Job Position:{job_details_csr?.job_position}</div>
-        <div>Website:{job_details_csr?.website}</div>
-        <div>Match:</div>
-        <div className=" text-xs">Usage:{usage}</div>
+        <div className="grid grid-cols-10 w-full mb-2">
+          <div className=" col-span-2 flex justify-center">Company:</div>
+          <div className=" col-span-8 break-words">
+            {job_details_csr?.company_name}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-10 w-full mb-2">
+          <div className=" col-span-2 flex justify-center">Position:</div>
+          <div className=" col-span-8 break-words">
+            {job_details_csr?.job_position}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-10 w-full mb-2">
+          <div className=" col-span-2 flex justify-center">Website:</div>
+          <div className=" col-span-8 break-words">
+            {job_details_csr?.website}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-10 w-full mb-2">
+          <div className=" col-span-2 flex justify-center">Match:</div>
+          <div className=" col-span-8 break-words">
+            {(
+              (matches_csr?.length /
+                (matches_csr?.length + unmatches_csr?.length)) *
+              100
+            ).toFixed(2)}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-10 w-full mb-2">
+          <div className=" col-span-2 flex justify-center">Usage:</div>
+          <div className=" col-span-8 break-words">{usage}</div>
+        </div>
       </div>
     </div>
   );

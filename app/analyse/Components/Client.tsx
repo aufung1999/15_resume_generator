@@ -52,6 +52,7 @@ import {
 } from "@/slices/projectsSlice";
 import Stage_2 from "./Stage_2";
 import Compare from "./Compare";
+import { editAPI_KEY } from "@/slices/controlSlice";
 
 export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
@@ -65,6 +66,8 @@ export default function AnalyseClient({ data }: any) {
     (state: RootState) => state.analyse.company_name
   );
   const website = useSelector((state: RootState) => state.analyse.website);
+
+  const API_KEY = useSelector((state: RootState) => state.control.API_KEY);
 
   useEffect(() => {
     if (data) {
@@ -90,6 +93,10 @@ export default function AnalyseClient({ data }: any) {
         dispatch(initialize_ObjectiveData(each))
       );
       data.project.map((each: any) => dispatch(initialize_ProjectData(each)));
+
+      if (data.api_key) {
+        dispatch(editAPI_KEY(data.api_key.api_key));
+      }
     }
   }, []);
 
@@ -106,8 +113,25 @@ export default function AnalyseClient({ data }: any) {
     }
   };
 
+  const APIKeyHandler = (e: any) => {
+    if (API_KEY === "") {
+      return toast.error("nothing typed");
+    }
+    fetch("/api/user/apikey", {
+      method: "POST",
+      body: JSON.stringify({ API_Key: API_KEY }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => toast.success(data?.message))
+      .catch(() => toast.error("Cannot Update!"));
+  };
+
   return (
     <div className=" flex">
+      <Toaster />
       <Card
         className="border border-blue-600 w-6/12 h-full px-5 py-3"
         interactive={false}
@@ -199,7 +223,18 @@ export default function AnalyseClient({ data }: any) {
           {Array.isArray(stage_2) && <Stage_2 stage_2={stage_2} />}
         </div>
       </Card>
-      <Card className="border border-red-600 w-6/12 h-full">
+      <Card className="border border-red-600 w-6/12 h-full relative">
+        <div className="absolute top-0 right-0 flex border">
+          <div>API Key:</div>
+          <InputGroup
+            onChange={(e) => dispatch(editAPI_KEY(e.target.value))}
+            value={API_KEY}
+            // maxLength={30}
+            placeholder="e.g. indeed"
+            // className="w-full flex flex-col "
+          />
+          <Button onClick={APIKeyHandler} icon="insert" />
+        </div>
         {Array.isArray(stage_2) && <Compare />}
       </Card>
     </div>

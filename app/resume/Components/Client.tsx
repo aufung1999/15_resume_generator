@@ -21,6 +21,7 @@ import DOMPurify from "dompurify";
 
 import * as htmlToImage from "html-to-image";
 import Revalidate from "./Match/Revalidate";
+import Statistic from "./Match/Statistic";
 
 const ResumeClient = ({ resumeID }: { resumeID: string }) => {
   const dispatch = useDispatch();
@@ -33,59 +34,70 @@ const ResumeClient = ({ resumeID }: { resumeID: string }) => {
   const unmatches_ls = window.localStorage.getItem("unmatches");
   const job_details_ls = window.localStorage.getItem("job_details");
 
+  //To show the Statistic here becuz of the format
+  const select = useSelector(
+    (state: RootState) => state.resume.switch_Statistic
+  );
+
   return (
     <div className=" bg-gray-300 relative">
-      <div className="absolute z-10 right-0 flex flex-col">
-        <Toaster />
-        <ReactToPrint
-          onBeforePrint={() =>
-            //because there is a "!" in the reducer, so set the "true" here
-            dispatch(control_Highlight_Dsiplay({ select: true }))
-          }
-          onAfterPrint={async () => {
-            //1. convert the html-to-image
-            htmlToImage
-              .toPng(componentRef.current)
-              .then(async (dataUrl) => {
-                //2. after getting the string of result, fetch it to mongoDB
-                await fetch(`/api/user/resume`, {
-                  method: "POST",
-                  //need to stringify all the thing BEFORE send to API
-                  body: JSON.stringify({
-                    image: dataUrl,
-                    stage_3: stage_3_ls,
-                    matches: matches_ls,
-                    unmatches: unmatches_ls,
-                    job_details: job_details_ls,
-                    resumeID: resumeID,
-                  }),
-                  headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                  },
+      <div className="absolute z-10 right-0 flex">
+        <div className={select ? "" : "hidden"}>
+          <Statistic whatToGet="stage_3" />
+        </div>
+
+        <div className=" flex flex-col">
+          <Toaster />
+          <ReactToPrint
+            onBeforePrint={() =>
+              //because there is a "!" in the reducer, so set the "true" here
+              dispatch(control_Highlight_Dsiplay({ select: true }))
+            }
+            onAfterPrint={async () => {
+              //1. convert the html-to-image
+              htmlToImage
+                .toPng(componentRef.current)
+                .then(async (dataUrl) => {
+                  //2. after getting the string of result, fetch it to mongoDB
+                  await fetch(`/api/user/resume`, {
+                    method: "POST",
+                    //need to stringify all the thing BEFORE send to API
+                    body: JSON.stringify({
+                      image: dataUrl,
+                      stage_3: stage_3_ls,
+                      matches: matches_ls,
+                      unmatches: unmatches_ls,
+                      job_details: job_details_ls,
+                      resumeID: resumeID,
+                    }),
+                    headers: {
+                      "Content-type": "application/json; charset=UTF-8",
+                    },
+                  })
+                    .then((res) => res.json())
+                    .then((data) => toast.error(data?.message))
+                    // .then((res) => toast.success(res?.json().message))
+                    .catch(() => toast.error("Cannot Delete!"));
                 })
-                  .then((res) => res.json())
-                  .then((data) => toast.error(data?.message))
-                  // .then((res) => toast.success(res?.json().message))
-                  .catch(() => toast.error("Cannot Delete!"));
-              })
-              .catch((error) => {
-                console.error("oops, something went wrong!", error);
-              });
-          }}
-          // removeAfterPrint={true}
-          trigger={() => (
-            <ButtonGroup
-              aria-label="Disabled elevation buttons"
-              className="bg-white inline-block"
-            >
-              <Button>Print this out!</Button>
-            </ButtonGroup>
-          )}
-          content={() => componentRef.current}
-        />
-        <StatisticBoard />
-        <DisplayResultBoard />
-        <Revalidate />
+                .catch((error) => {
+                  console.error("oops, something went wrong!", error);
+                });
+            }}
+            // removeAfterPrint={true}
+            trigger={() => (
+              <ButtonGroup
+                aria-label="Disabled elevation buttons"
+                className="bg-white inline-block"
+              >
+                <Button className="w-full">Print this out!</Button>
+              </ButtonGroup>
+            )}
+            content={() => componentRef.current}
+          />
+          <StatisticBoard />
+          <DisplayResultBoard />
+          <Revalidate />
+        </div>
       </div>
 
       <div

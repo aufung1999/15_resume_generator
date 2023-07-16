@@ -64,16 +64,16 @@ export default function Compare() {
       );
       temp_arr.push(...compare(temp_skill, fetch_stage_2, "skill"));
 
-      //=====Pre-process Work=====
+      //=====Pre-process Work=====            NOT USED
       const filtered_stage_2 = stage_2.filter(
         (each) =>
           temp_arr.find((each_each) => each_each.match_sentence === each)
             ?.match_sentence !== each
       );
 
-      console.log(
-        "filtered_stage_2: " + JSON.stringify(filtered_stage_2, null, 1)
-      );
+      // console.log(
+      //   "filtered_stage_2: " + JSON.stringify(filtered_stage_2, null, 1)
+      // );
 
       //=====Work=====
       let temp_work: any[] = [];
@@ -87,7 +87,7 @@ export default function Compare() {
           })
         )
       );
-      const fetch_data = { user_data: temp_work, input_data: filtered_stage_2 };
+      const fetch_data = { user_data: temp_work, input_data: stage_2 };
 
       // ----result from the chatgpt API
       const res = await fetch("/api/chatgpt/work", {
@@ -132,7 +132,7 @@ export default function Compare() {
           <div>Compare</div>
         </div>
       </Button>
-     
+
       <div className=" border-2 border-red-300">
         {result.length !== 0 && <Statistic res={result} />}
       </div>

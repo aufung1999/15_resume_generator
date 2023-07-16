@@ -1,17 +1,3 @@
-import "@blueprintjs/core/lib/css/blueprint.css";
-import {
-  Navbar,
-  NavbarHeading,
-  NavbarGroup,
-  NavbarDivider,
-  Button,
-  Alignment,
-  Popover,
-  Tooltip,
-  Position,
-  Icon,
-  IconSize,
-} from "@blueprintjs/core";
 import Link from "next/link";
 
 export default function UserLayout({
@@ -25,10 +11,7 @@ export default function UserLayout({
         <div className="h-full w-full flex flex-col justify-evenly border-4 border-red-300 absolute">
           {/* icon="id-number"  */}
           <Link href="/user/contact" className="border flex justify-center">
-            <div className=" text-xs hover:text-sm">
-              {/* <Icon icon="id-number" size={IconSize} intent={intent} /> */}
-              Contact
-            </div>
+            <div className=" text-xs hover:text-sm">Contact</div>
           </Link>
 
           <Link href="/user/work" className="border flex justify-center">
