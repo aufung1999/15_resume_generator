@@ -12,6 +12,7 @@ import Project from "@/models/Project";
 import Resume from "@/models/Resume";
 import EditResume from "../Components/Edit";
 import ResumeClient from "../Components/Client";
+import APIKey from "@/models/APIKey";
 
 export default async function Page({
   params,
@@ -28,7 +29,9 @@ export default async function Page({
     awardData,
     objectiveData,
     skillData,
-    projectData;
+    projectData,
+    API_Key;
+
   if (session) {
     await db.connect();
     //fetch Contact
@@ -83,10 +86,10 @@ export default async function Page({
       projectData = projectData.map((each) => db.convertDocToObj(each));
     }
 
-    // //get job_details
-    // const job_details = await Resume.find({
-    //   email: session?.user?.email,
-    // });
+    //fetch APIKey
+    API_Key = await APIKey.findOne({
+      email: session?.user?.email,
+    });
 
     clientData = {
       contact: contactData,
@@ -96,6 +99,7 @@ export default async function Page({
       skill: skillData,
       objective: objectiveData,
       project: projectData,
+      api_key: API_Key,
     };
     return (
       <div className="flex w-full max-h-screen">
@@ -103,7 +107,7 @@ export default async function Page({
           <EditResume data={JSON.parse(JSON.stringify(clientData))} />
         </div>
         <div className=" w-9/12 overflow-auto relative no-scrollbar z-10">
-          <ResumeClient resumeID={params.resumeID}  />
+          <ResumeClient resumeID={params.resumeID} />
         </div>
       </div>
     );

@@ -14,6 +14,9 @@ export default function Revalidate() {
 
   const work_redux = useSelector((state: RootState) => state.work);
 
+  //Get the Client API Key from ChatGPT, but stored inDatabase
+  const API_KEY = useSelector((state: RootState) => state.control.API_KEY);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
@@ -50,6 +53,7 @@ export default function Revalidate() {
         const fetch_data = {
           user_data: work_unmatches,
           input_data: JSON.parse(unmatches_ls),
+          API_KEY: API_KEY,
         };
         // ----result from the chatgpt API
         const res = await fetch("/api/chatgpt/work", {
@@ -105,8 +109,12 @@ export default function Revalidate() {
           );
           //Update total_usage
           const total_usage_ls = localStorage.getItem("total_usage");
-          const total_usage_ls_revalidated = Number(total_usage_ls) + Number(total_usage);
-          localStorage.setItem("total_usage", JSON.stringify(total_usage_ls_revalidated));
+          const total_usage_ls_revalidated =
+            Number(total_usage_ls) + Number(total_usage);
+          localStorage.setItem(
+            "total_usage",
+            JSON.stringify(total_usage_ls_revalidated)
+          );
           //After everything update the Client side page
           dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
         }

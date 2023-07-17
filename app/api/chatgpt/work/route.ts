@@ -1,9 +1,10 @@
 import { getServerSession } from "next-auth";
-import { openai } from "../../../../utils/openai";
+// import { openai } from "../../../../utils/openai";
 import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import extractTerms from "@/app/analyse/Functions/extractTerms";
+import { Configuration, OpenAIApi } from "openai";
 
 export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
@@ -15,7 +16,14 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
 
-    const { input_data, user_data } = body;
+    const { input_data, user_data, API_KEY } = body;
+
+    //Chat GPT
+    const configuration = new Configuration({
+      apiKey: API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    //------------------------------------------------------------------------------
 
     const statement_1 = input_data;
     // const statement_2 = Object.values(user_data);

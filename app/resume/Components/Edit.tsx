@@ -15,11 +15,16 @@ import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
 
 import { useSelector, useDispatch } from "react-redux";
+import { editAPI_KEY } from "@/slices/controlSlice";
 
 export default function EditResume({ data }: any) {
   const dispatch = useDispatch();
 
   const switch_tab = useSelector((state: RootState) => state.resume.switch);
+
+  if (data.api_key) {
+    dispatch(editAPI_KEY(data.api_key.api_key));
+  }
 
   return (
     <div className=" w-full relative">

@@ -4,7 +4,7 @@ var stringSimilarity = require("string-similarity");
 
 export default function compare(user: any, input: any, mode: string) {
   let sim_res,
-    test = [];
+    test: any[] = [];
   switch (mode) {
     case "project":
       console.log(user, input);

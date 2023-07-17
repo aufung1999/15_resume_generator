@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import extractTerms from "../Functions/extractTerms";
 import compare from "../Functions/compare";
-import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 import Statistic from "./Statistic";
 
 export default function Compare() {
@@ -26,6 +25,9 @@ export default function Compare() {
   const skills_redux = useSelector((state: RootState) => state.skills);
   const objective_redux = useSelector((state: RootState) => state.objectives);
   const project_redux = useSelector((state: RootState) => state.projects);
+
+  //Get the Client API Key from ChatGPT, but stored inDatabase
+  const API_KEY = useSelector((state: RootState) => state.control.API_KEY);
 
   const [result, setRes] = useState<any>([]);
 
@@ -87,7 +89,11 @@ export default function Compare() {
           })
         )
       );
-      const fetch_data = { user_data: temp_work, input_data: stage_2 };
+      const fetch_data = {
+        user_data: temp_work,
+        input_data: stage_2,
+        API_KEY: API_KEY,
+      };
 
       // ----result from the chatgpt API
       const res = await fetch("/api/chatgpt/work", {

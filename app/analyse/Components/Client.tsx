@@ -180,16 +180,36 @@ export default function AnalyseClient({ data }: any) {
             </div>
           </div>
         </div>
-        <h1>Description</h1>
 
-        <div className="w-full h-full border-4 flex flex-col items-center justify-center">
+        <div className="flex justify-between">
+          <h1>Description</h1>
+          <div className="flex border">
+            <div>API Key:</div>
+            <InputGroup
+              onChange={(e) => dispatch(editAPI_KEY(e.target.value))}
+              value={API_KEY}
+              // maxLength={30}
+              placeholder="e.g. indeed"
+              // className="w-full flex flex-col "
+            />
+            <Button onClick={APIKeyHandler} icon="insert" />
+          </div>
+        </div>
+
+        <div className="w-full h-full border-4 flex flex-col items-center justify-center relative">
+          {/* if the chatGPT API key is not present */}
           {/* Control the form size */}
           <TextArea
             className="w-full h-72 p-3"
             onChange={(e) => dispatch(editAnalyse_stage_1(e.target.value))}
             growVertically={true}
             value={stage_1}
-            placeholder="Paste the Job Description here"
+            placeholder={
+              API_KEY
+                ? "Paste the Job Description here"
+                : "Paste your API Key from ChatGPT first"
+            }
+            disabled={API_KEY ? false : true}
           />
         </div>
         <div className="w-full flex justify-end pe-10">
@@ -224,17 +244,6 @@ export default function AnalyseClient({ data }: any) {
         </div>
       </Card>
       <Card className="border border-red-600 w-6/12 h-full relative">
-        <div className="absolute top-0 right-0 flex border">
-          <div>API Key:</div>
-          <InputGroup
-            onChange={(e) => dispatch(editAPI_KEY(e.target.value))}
-            value={API_KEY}
-            // maxLength={30}
-            placeholder="e.g. indeed"
-            // className="w-full flex flex-col "
-          />
-          <Button onClick={APIKeyHandler} icon="insert" />
-        </div>
         {Array.isArray(stage_2) && <Compare />}
       </Card>
     </div>

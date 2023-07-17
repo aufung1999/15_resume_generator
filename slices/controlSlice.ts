@@ -20,8 +20,11 @@ const controlSlice = createSlice({
     editAPI_KEY: (state, action: PayloadAction<string>) => {
       state.API_KEY = action.payload;
     },
+    editLayout: (state, action: PayloadAction<string>) => {
+      state.Layout = action.payload;
+    },
   },
 });
 
-export const { cleanUp_Control_redux, editAPI_KEY } = controlSlice.actions;
+export const { editLayout, editAPI_KEY } = controlSlice.actions;
 export default controlSlice.reducer;

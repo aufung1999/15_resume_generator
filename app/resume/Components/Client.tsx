@@ -23,7 +23,7 @@ import * as htmlToImage from "html-to-image";
 import Revalidate from "./Match/Revalidate";
 import Statistic from "./Match/Statistic";
 
-const ResumeClient = ({ resumeID }: { resumeID: string }) => {
+const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   const dispatch = useDispatch();
 
   const componentRef = useRef<any>(null);
