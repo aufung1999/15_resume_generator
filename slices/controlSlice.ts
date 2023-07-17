@@ -7,7 +7,7 @@ export interface ControlState {
 }
 
 const initialState: ControlState = {
-  Layout: "",
+  Layout: "user",
   API_KEY: "",
 };
 

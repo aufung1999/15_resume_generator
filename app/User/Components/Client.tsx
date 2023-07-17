@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/navigation";
+import { Tooltip } from "@mui/material";
 
 export default function UserClient({ resumeData }: { resumeData: any }) {
   const router = useRouter();
@@ -17,6 +18,8 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
         image: img,
         job_details: JSON.parse(each.Job_Details),
         createdAt: each.createdAt,
+        matches: JSON.parse(each.Matches),
+        unmatches: JSON.parse(each.Unmatches),
       });
     });
     setEachResume(images_db);
@@ -29,7 +32,7 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
   return (
     <div
       id="user"
-      className=" mt-5 grid grid-cols-4 gap-3 xl:grid-cols-3 place-items-start relative "
+      className=" mt-5 grid grid-cols-4 gap-3  place-items-start relative "
     >
       {resume_csr?.map((each, i: number) => (
         <div key={i} className="group ">
@@ -55,13 +58,28 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
               <div className=" w-3/4 ">{each.createdAt.substring(0, 10)}</div>
             </div>
           </div>
+
           <div
-            className="group-hover:scale-[1.7] transition duration-500 border-4 "
+            className="group-hover:scale-[1.7] group-hover:w-full transition duration-500 border-4 flex"
             onClick={() => ClickHandler(each._id)}
           >
-            <div className=" border border-red-500">
-              <img src={each.image.src} alt="" />
-            </div>
+            <img src={each.image.src} alt="" />
+            <Tooltip title={<>hi</>} placement="left">
+              <div className="relative border border-red-300">
+                {/* <div className="group-hover:visible  invisible">
+                  {each.matches?.map((item, index) => (
+                    <div key={index} className=" break-words">
+                      {item}
+                    </div>
+                  ))}
+                  {each.unmatches?.map((item, index) => (
+                    <div key={index} className=" break-words">
+                      {item}
+                    </div>
+                  ))}
+                </div> */}
+              </div>
+            </Tooltip>
           </div>
         </div>
       ))}

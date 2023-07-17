@@ -28,12 +28,14 @@ import {
 import { RootState } from "@/store/store";
 
 import toast, { Toaster } from "react-hot-toast";
+import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
 };
 
 const InputComp = ({ index }: Props) => {
+  const pathname = usePathname();
   const dispatch = useDispatch();
 
   const objectives: ObjectiveState[] = useSelector(
@@ -42,20 +44,23 @@ const InputComp = ({ index }: Props) => {
   const objective = objectives.find((each) => each.index === index);
 
   return (
-    <Card interactive={false} style={{ background: "white", color: "black" }}>
+    <div className="w-full " style={{ background: "white", color: "black" }}>
       <div className="flex-row">
-        <h3>Objective {index}</h3>
-        <Switch
-          checked={objective?.display_in_Resume}
-          onChange={() =>
-            dispatch(
-              switch_display_in_Resume({
-                index: index,
-                display_in_Resume: !objective?.display_in_Resume,
-              })
-            )
-          }
-        />
+        {/* hide the index */}
+        {/* <h3>Objective {index}</h3> */}
+        {pathname.split("/").includes("resume") && (
+          <Switch
+            checked={objective?.display_in_Resume}
+            onChange={() =>
+              dispatch(
+                switch_display_in_Resume({
+                  index: index,
+                  display_in_Resume: !objective?.display_in_Resume,
+                })
+              )
+            }
+          />
+        )}
       </div>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -71,11 +76,12 @@ const InputComp = ({ index }: Props) => {
           fill
         />
       </FormGroup>
-    </Card>
+    </div>
   );
 };
 
 export default function InsertObjective({ data }: any) {
+  const pathname = usePathname();
   const objective_redux = useSelector((state: RootState) => state.objectives);
   const dispatch = useDispatch();
   const [objectives, editobjectives] = useState<any>([]);
@@ -137,25 +143,48 @@ export default function InsertObjective({ data }: any) {
   return (
     <div className="w-full">
       <Toaster />
+      <div
+        className={`
+          grid grid-cols-1 border border-green-300 ${
+            pathname.split("/").includes("user")
+              ? "  grid-cols-3 gap-3 "
+              : "" + pathname.split("/").includes("resume")
+              ? " w-full "
+              : ""
+          }
+        `}
+      >
+        {objectives?.map((each: any, i: number) => (
+          <div key={i} className="w-full border-2 border-green-300 ">
+            <div className="flex relative">
+              <div
+                className={`
+           border-green-300 ${
+             pathname.split("/").includes("user")
+               ? "  p-3 w-full "
+               : "" + pathname.split("/").includes("resume")
+               ? " w-full "
+               : ""
+           }
+        `}
+              >
+                {each}
+              </div>
 
-      {objectives?.map((each: any, i: number) => (
-        <div key={i}>
-          <div className="flex relative">
-            <div>{each}</div>
-
-            <Button
-              className="absolute top-0 right-0 "
-              style={{
-                backgroundColor: "rgba(255,0,0,0.6)",
-                borderRadius: "25% 10%",
-              }}
-              onClick={(e) => deleteObj(e, each.props.index)}
-            >
-              <Icon icon="delete" className="" style={{ color: "white" }} />
-            </Button>
+              <Button
+                className="absolute top-0 right-0 "
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                onClick={(e) => deleteObj(e, each.props.index)}
+              >
+                <Icon icon="delete" className="" style={{ color: "white" }} />
+              </Button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <Button
         icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
         onClick={addObj}

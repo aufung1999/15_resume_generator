@@ -39,6 +39,8 @@ import toast, { Toaster } from "react-hot-toast";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 
+import { usePathname } from "next/navigation";
+
 type Props = {
   index: string;
 };
@@ -65,7 +67,8 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 
   return (
     <div key={rowIndex}>
-      <div>{rowIndex}</div>
+      {/* hide the index */}
+      {/* <div>{rowIndex}</div> */}
       <ReactQuill
         value={row ? row.Row : ""}
         onChange={(value) =>
@@ -77,6 +80,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
             })
           )
         }
+        
       />
     </div>
   );
@@ -86,6 +90,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
 const InputComp = ({ index }: Props) => {
+  const pathname = usePathname();
   const dispatch = useDispatch();
 
   const projects_redux: ProjectState[] = useSelector(
@@ -136,18 +141,21 @@ const InputComp = ({ index }: Props) => {
   return (
     <Card interactive={false} style={{ background: "white", color: "black" }}>
       <div className="flex-row">
-        <h3>Project {index}</h3>
-        <Switch
-          checked={target_project?.display_in_Resume}
-          onChange={() =>
-            dispatch(
-              switch_display_in_Resume({
-                index: index,
-                display_in_Resume: !target_project?.display_in_Resume,
-              })
-            )
-          }
-        />
+        {/* hide the index */}
+        {/* <h3>Project {index}</h3> */}
+        {pathname.split("/").includes("resume") && (
+          <Switch
+            checked={target_project?.display_in_Resume}
+            onChange={() =>
+              dispatch(
+                switch_display_in_Resume({
+                  index: index,
+                  display_in_Resume: !target_project?.display_in_Resume,
+                })
+              )
+            }
+          />
+        )}
       </div>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
@@ -214,6 +222,7 @@ const InputComp = ({ index }: Props) => {
 // Child Component: InputComp
 //Parent Component: X
 export default function InsertProject({ data }: any) {
+  const pathname = usePathname();
   const projects_redux = useSelector((state: RootState) => state.projects);
   const dispatch = useDispatch();
   const [projects_csr, editProjects] = useState<any>([]);
@@ -273,23 +282,35 @@ export default function InsertProject({ data }: any) {
   //***/
   return (
     <div className="w-full">
-      {projects_csr?.map((each: any, i: number) => (
-        <div key={i} className="w-full border-2">
-          <div className="relative">
-            {each}
-            <Button
-              className="absolute top-0 right-0 "
-              style={{
-                backgroundColor: "rgba(255,0,0,0.6)",
-                borderRadius: "25% 10%",
-              }}
-              onClick={(e) => deleteProj(e, each.props.index)}
-            >
-              <Icon icon="delete" className="" style={{ color: "white" }} />
-            </Button>
+      <div
+        className={`
+          grid grid-cols-1 border border-green-300 ${
+            pathname.split("/").includes("user")
+              ? "  grid-cols-3 gap-3 "
+              : "" + pathname.split("/").includes("resume")
+              ? " w-full "
+              : ""
+          }
+        `}
+      >
+        {projects_csr?.map((each: any, i: number) => (
+          <div key={i} className="w-full border-2">
+            <div className="relative">
+              {each}
+              <Button
+                className="absolute top-0 right-0 "
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                onClick={(e) => deleteProj(e, each.props.index)}
+              >
+                <Icon icon="delete" className="" style={{ color: "white" }} />
+              </Button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <Button
         icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
         onClick={addProj}

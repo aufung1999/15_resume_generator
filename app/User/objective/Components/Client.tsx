@@ -29,7 +29,7 @@ export default function ObjectiveClient({ data }) {
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
-    <div className="border border-blue-600 flex-1">
+    <div className="border border-blue-600 flex-1 ">
       <Toaster />
       <h1>Objective</h1>
       <div className=" border-4 flex flex-col items-center justify-center">

@@ -35,6 +35,7 @@ import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 
 import toast, { Toaster } from "react-hot-toast";
+import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
@@ -50,7 +51,8 @@ const InputComp = ({ index }: Props) => {
 
   return (
     <Card interactive={false} style={{ background: "white", color: "black" }}>
-      <h3>Education {index}</h3>
+      {/* hide the index */}
+      {/* <h3>Education {index}</h3> */}
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         School Name:
@@ -119,6 +121,7 @@ const InputComp = ({ index }: Props) => {
 };
 
 export default function InsertEducation({ data }: any) {
+  const pathname = usePathname();
   const education_redux = useSelector((state: RootState) => state.education);
   const dispatch = useDispatch();
 
@@ -180,9 +183,19 @@ export default function InsertEducation({ data }: any) {
   return (
     <div className=" border border-red-300 w-full">
       <Toaster />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        className={`
+          grid grid-cols-1 border border-green-300 ${
+            pathname.split("/").includes("user")
+              ? "  grid-cols-3 gap-3 "
+              : "" + pathname.split("/").includes("resume")
+              ? " w-full "
+              : ""
+          }
+        `}
+      >
         {educations?.map((each: any, i: number) => (
-          <div key={i}>
+          <div key={i} className="w-full border-2 border-green-300 ">
             <div className=" relative">
               {each}
               <Button
@@ -198,15 +211,15 @@ export default function InsertEducation({ data }: any) {
             </div>
           </div>
         ))}
-        <Button
-          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
-          onClick={addEdu}
-          fill
-          style={{
-            backgroundColor: "rgba(0,120,255,1)",
-          }}
-        />
       </div>
+      <Button
+        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        onClick={addEdu}
+        fill
+        style={{
+          backgroundColor: "rgba(0,120,255,1)",
+        }}
+      />
     </div>
   );
 }

@@ -30,6 +30,7 @@ import shortenUUID from "@/utils/shortenUUID";
 import useSWR from "swr";
 
 import toast, { Toaster } from "react-hot-toast";
+import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
@@ -40,6 +41,7 @@ type Props = {
 // Child Component: X
 //Parent Component: InsertSkills
 const TermComp = ({ index, term }: Props) => {
+  const pathname = usePathname();
   const dispatch = useDispatch();
 
   const skills_redux: SkillsState[] = useSelector(
@@ -71,10 +73,22 @@ const TermComp = ({ index, term }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "white", color: "black" }}>
-      <h3>
+    <div
+      className={`
+      w-full border  ${
+        pathname.split("/").includes("user")
+          ? "  px-5 "
+          : "" + pathname.split("/").includes("resume")
+          ? " "
+          : ""
+      }
+        `}
+      style={{ background: "white", color: "black" }}
+    >
+      {/* hide the index */}
+      {/* <h3>
         {skill?.term} {index}
-      </h3>
+      </h3> */}
 
       <div className="mb-3">
         <InputGroup
@@ -87,7 +101,8 @@ const TermComp = ({ index, term }: Props) => {
       {skill?.Skill_list?.map((each: any, i: number) => (
         <div key={i}>
           <div>{each.skill}</div>
-          <div>{each.skillIndex}</div>
+          {/* hide the index */}
+          {/* <div>{each.skillIndex}</div> */}
 
           <div className="flex relative">
             <InputGroup
@@ -124,8 +139,9 @@ const TermComp = ({ index, term }: Props) => {
           </div>
         </div>
       ))}
-      <div className="flex mt-5">
+      <div className="flex mt-5 ">
         <InputGroup
+          fill
           onChange={(e) => setSkillName(e.target.value)}
           value={skillName}
         />
@@ -138,7 +154,7 @@ const TermComp = ({ index, term }: Props) => {
           small
         />
       </div>
-    </Card>
+    </div>
   );
 };
 
@@ -146,6 +162,8 @@ const TermComp = ({ index, term }: Props) => {
 // Child Component: TermComp
 //Parent Component: X
 export default function InsertSkills({ data }: any) {
+  const pathname = usePathname();
+
   const dispatch = useDispatch();
 
   const skills_redux: SkillsState[] = useSelector(
@@ -213,14 +231,24 @@ export default function InsertSkills({ data }: any) {
   };
   //***/
   return (
-    <div className=" border  border-red-300 w-full">
+    <div className={" border  border-red-300 w-full"}>
       <Toaster />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        className={`
+          grid grid-cols-1 border border-green-300 ${
+            pathname.split("/").includes("user")
+              ? "  grid-cols-3 gap-3 w-full "
+              : "" + pathname.split("/").includes("resume")
+              ? " w-full "
+              : ""
+          }
+        `}
+      >
         {terms?.map((each: any, i: number) => (
-          <div key={i}>
+          <div key={i} className="w-full border-2 border-green-300 ">
             <div className="flex relative">
-              <div>{each}</div>
+              <div className="w-full">{each}</div>
               <Button
                 className="absolute top-0 right-0 "
                 style={{
@@ -235,7 +263,7 @@ export default function InsertSkills({ data }: any) {
           </div>
         ))}
       </div>
-      <div className=" felx-col px-20">
+      <div className=" flex-col px-20 ">
         <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
 
         <Button

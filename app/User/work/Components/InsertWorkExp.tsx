@@ -39,6 +39,7 @@ import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 
 import toast, { Toaster } from "react-hot-toast";
+import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
@@ -62,7 +63,8 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 
   return (
     <div key={rowIndex}>
-      <div>{rowIndex}</div>
+      {/* hide the index */}
+      {/* <div>{rowIndex}</div> */}
 
       <TextArea
         large={true}
@@ -128,7 +130,8 @@ const InputComp = ({ index }: Props) => {
 
   return (
     <Card interactive={false} style={{ background: "white", color: "black" }}>
-      <h3>Company {index}</h3>
+      {/* hide the index */}
+      {/* <h3>Company {index}</h3> */}
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Company Name:
@@ -228,6 +231,7 @@ const InputComp = ({ index }: Props) => {
 // Child Component: InputComp
 //Parent Component: X
 export default function InsertWorkExp({ data }: any) {
+  const pathname = usePathname();
   const work = useSelector((state: RootState) => state.work);
   const dispatch = useDispatch();
   const [workExps, editWorkExps] = useState<any>([]);
@@ -289,21 +293,33 @@ export default function InsertWorkExp({ data }: any) {
     <div className="w-full">
       <Toaster />
 
-      {workExps?.map((each: any, i: number) => (
-        <div key={i} className="w-full border-2 relative">
-          <Button
-            className="absolute top-0 right-0 "
-            style={{
-              backgroundColor: "rgba(255,0,0,0.6)",
-              borderRadius: "25% 10%",
-            }}
-            onClick={(e) => deleteExp(e, each.props.index)}
-          >
-            <Icon icon="delete" className="" style={{ color: "white" }} />
-          </Button>
-          {each}
-        </div>
-      ))}
+      <div
+        className={`
+          grid grid-cols-1 border border-green-300 ${
+            pathname.split("/").includes("user")
+              ? "  grid-cols-3 gap-3 "
+              : "" + pathname.split("/").includes("resume")
+              ? " w-full "
+              : ""
+          }
+        `}
+      >
+        {workExps?.map((each: any, i: number) => (
+          <div key={i} className="w-full border-2 relative">
+            <Button
+              className="absolute top-0 right-0 "
+              style={{
+                backgroundColor: "rgba(255,0,0,0.6)",
+                borderRadius: "25% 10%",
+              }}
+              onClick={(e) => deleteExp(e, each.props.index)}
+            >
+              <Icon icon="delete" className="" style={{ color: "white" }} />
+            </Button>
+            {each}
+          </div>
+        ))}
+      </div>
       <Button
         icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
         onClick={addExp}

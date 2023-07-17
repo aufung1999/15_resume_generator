@@ -140,7 +140,12 @@ export default function AnalyseClient({ data }: any) {
         {/* <Toaster /> */}
         <div className="grid grid-cols-2">
           <div className="">
-            <h1 className=" font-semibold italic underline">Job Position</h1>
+            <div className="flex">
+              <h1 className=" font-semibold italic underline ">
+                Job Position{" "}
+              </h1>
+              <span className="ms-1 text-xs">(Required)</span>
+            </div>
             <div>
               <InputGroup
                 onChange={(e) =>
@@ -155,7 +160,10 @@ export default function AnalyseClient({ data }: any) {
             </div>
           </div>
           <div className="w-full flex flex-col ">
-            <h1 className=" font-semibold italic underline">Compnay Name</h1>
+            <div className="flex">
+              <h1 className=" font-semibold italic underline ">Compnay Name</h1>
+              <span className="ms-1 text-xs">(Required)</span>
+            </div>
             <InputGroup
               onChange={(e) =>
                 dispatch(editAnalyse_company_name(e.target.value))
@@ -168,7 +176,10 @@ export default function AnalyseClient({ data }: any) {
             />
           </div>
           <div>
-            <h1 className=" font-semibold italic underline">Website</h1>
+            <div className="flex">
+              <h1 className=" font-semibold italic underline ">Website</h1>
+              <span className="ms-1 text-xs">(Required)</span>
+            </div>
             <div>
               <InputGroup
                 onChange={(e) => dispatch(editAnalyse_website(e.target.value))}
@@ -220,7 +231,12 @@ export default function AnalyseClient({ data }: any) {
                 : " text-black rounded"
             }`}
             disabled={
-              JSON.stringify(stage_1.length) === "0" || stage_1 === null
+              JSON.stringify(stage_1.length) === "0" ||
+              stage_1 === null ||
+              API_KEY === null ||
+              job_position === null ||
+              company_name === null ||
+              website === null
                 ? true
                 : false
             }
@@ -228,7 +244,12 @@ export default function AnalyseClient({ data }: any) {
           >
             <div className="flex">
               <div className="flex items-center me-2">
-                {JSON.stringify(stage_1.length) === "0" || stage_1 === null ? (
+                {JSON.stringify(stage_1.length) === "0" ||
+                stage_1 === null ||
+                API_KEY === null ||
+                job_position === null ||
+                company_name === null ||
+                website === null ? (
                   <Icon icon="lock" color="red" iconSize={10} />
                 ) : (
                   <Icon icon="unlock" color="green" iconSize={10} />
