@@ -234,9 +234,9 @@ export default function AnalyseClient({ data }: any) {
               JSON.stringify(stage_1.length) === "0" ||
               stage_1 === null ||
               API_KEY === null ||
-              job_position === null ||
-              company_name === null ||
-              website === null
+              job_position === "" ||
+              company_name === "" ||
+              website === ""
                 ? true
                 : false
             }
@@ -247,9 +247,9 @@ export default function AnalyseClient({ data }: any) {
                 {JSON.stringify(stage_1.length) === "0" ||
                 stage_1 === null ||
                 API_KEY === null ||
-                job_position === null ||
-                company_name === null ||
-                website === null ? (
+                job_position === "" ||
+                company_name === "" ||
+                website === "" ? (
                   <Icon icon="lock" color="red" iconSize={10} />
                 ) : (
                   <Icon icon="unlock" color="green" iconSize={10} />

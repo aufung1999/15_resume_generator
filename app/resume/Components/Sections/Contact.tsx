@@ -17,11 +17,11 @@ export default function Contact({
   GitHub,
 }: ContactState) {
   return (
-    <div className="flex-col border justify-center items-center p-2">
+    <div className="flex-col  justify-center items-center p-2">
       <ProfileName name={FirstName} />
 
       {/* <SectionSubtitle label={label} /> */}
-      <div className="flex gap-3 border justify-center">
+      <div className="flex gap-3  justify-center">
         <div className="text-sm font-semibold flex ">
           Tel: &nbsp; <ProfileContact text={PhoneNumber} />
         </div>

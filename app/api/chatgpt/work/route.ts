@@ -53,7 +53,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
               messages: [
                 {
                   role: "user",
-                  content: `Are "${each.JobDescription}" and "${each_input}" similar. Answer in Yes or No Only`,
+                  content: `Are "${each.JobDescription}" and "${each_input}" similar. Please think twice and Answer in Yes or No Only`,
                 },
               ],
             });
