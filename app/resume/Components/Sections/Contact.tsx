@@ -30,10 +30,10 @@ export default function Contact({
           Email: &nbsp; <ProfileContact text={Email} />
         </div>
 
-        <div className="text-sm font-semibold flex">
+        {/* <div className="text-sm font-semibold flex">
           Location: &nbsp;
           <ProfileContact text={City + ", " + Country} />
-        </div>
+        </div> */}
 
         {Portfolio && (
           <div className="text-sm font-semibold flex">
@@ -41,6 +41,24 @@ export default function Contact({
             <a href={Portfolio}>
               <u>
                 <ProfileContact text="Portfolio" />
+              </u>
+            </a>
+          </div>
+        )}
+        {LinkedIn && (
+          <div className="text-sm font-semibold flex">
+            <a href={LinkedIn}>
+              <u>
+                <ProfileContact text="LinkedIn" />
+              </u>
+            </a>
+          </div>
+        )}
+        {GitHub && (
+          <div className="text-sm font-semibold flex">
+            <a href={GitHub}>
+              <u>
+                <ProfileContact text="GitHub" />
               </u>
             </a>
           </div>
