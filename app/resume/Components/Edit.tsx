@@ -17,7 +17,12 @@ import { Button } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import { editAPI_KEY } from "@/slices/controlSlice";
 
+import { useSearchParams } from "next/navigation";
+
 export default function EditResume({ data }: any) {
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search");
+
   const dispatch = useDispatch();
 
   const switch_tab = useSelector((state: RootState) => state.resume.switch);
@@ -27,7 +32,7 @@ export default function EditResume({ data }: any) {
   }
 
   return (
-    <div className=" w-full relative">
+    <div className=" w-full relative" key={search}>
       <div className="grid grid-cols-3">
         <Button
           onClick={() =>

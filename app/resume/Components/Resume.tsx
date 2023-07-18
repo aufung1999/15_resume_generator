@@ -11,7 +11,12 @@ import ObjectiveSection from "./Sections/Objective";
 import { forwardRef } from "react";
 import DisplaySkill from "./Match/Skill";
 
+import { useSearchParams } from "next/navigation";
+
 const Resume = forwardRef((props, ref: any) => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search')
+
   const contact_redux = useSelector((state: RootState) => state.contact);
   const work_redux = useSelector((state: RootState) => state.work);
   const education_redux = useSelector((state: RootState) => state.education);
@@ -23,9 +28,10 @@ const Resume = forwardRef((props, ref: any) => {
     <div
       className=" w-a4 border-2  px-6 py-2 bg-white text-black"
       ref={ref}
+      key={search}
     >
       {/* //rename the print Default Name */}
-      <title>Filename</title>
+      <title>Hello</title>
       <div className={"flex-col h-full "}>
         <div className="">
           <Contact
@@ -49,7 +55,7 @@ const Resume = forwardRef((props, ref: any) => {
           <EducationSection education={education_redux} />
         </div>
         <div className="flex relative">
-          <SkillSection skill={skill_redux} />
+          <SkillSection key={search} skill={skill_redux} />
           {/* <div className="absolute -left-0">
             <DisplaySkill />
           </div> */}

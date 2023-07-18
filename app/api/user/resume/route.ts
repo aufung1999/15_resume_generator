@@ -23,6 +23,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     db.connect();
     if (resumeID) {
       console.log("resumeID: " + resumeID);
+      console.log("unmatches: " + unmatches);
       const filter = { email: session?.user?.email, _id: resumeID };
       const update = {
         HTMLDIVElement: image,
@@ -31,7 +32,9 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         Unmatches: unmatches,
       };
 
+      db.disconnect();
       await Resume.findOneAndUpdate(filter, update);
+      return NextResponse.json({ message: "Resume Updated" });
     }
 
     if (!resumeID) {
@@ -43,11 +46,10 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         Unmatches: unmatches,
         Job_Details: job_details,
       });
+      db.disconnect();
       await resume.save();
+      return NextResponse.json({ message: "Resume Saved" });
     }
-    db.disconnect();
-
-    return NextResponse.json({ message: "Resume Saved" });
   } else {
     // Not Signed in
     res.status(401);

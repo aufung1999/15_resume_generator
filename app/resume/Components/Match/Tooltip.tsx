@@ -21,6 +21,8 @@ export default function CustomedTooltip({
   text: string | any;
   whichSection: string | any;
 }) {
+
+
   const control_highlight_dsiplay = useSelector(
     (state: RootState) => state.resume.control_highlight_dsiplay
   );
@@ -77,37 +79,40 @@ export default function CustomedTooltip({
       //pass the synchronous "temp_array" variable to a asynchronous state "target"
       setTarget(temp_array);
     }
+
+    return () => {
+      setOn(false);
+    };
   }, [force_to_update_redux, index_1st, index_2nd]);
+
   return (
-    <>
-      <div className={on && control_highlight_dsiplay ? " bg-yellow-300" : ""}>
-        {on && control_highlight_dsiplay ? (
-          <Tooltip
-            title={
-              <>
-                {matches?.map((each: string, i: number) => (
-                  <div
-                    key={i}
-                    className={
-                      target.includes(each) ? " font-semibold" : "text-gray-300"
-                    }
-                  >
-                    {target.includes(each) && <span>✔️</span>}
-                    {matches.indexOf(each)}:{each}
-                  </div>
-                ))}
-              </>
-            }
-          >
-            {text}
-          </Tooltip>
-        ) : (
-          <div>
-            {text}
-            {/* dispatch the thing to Redux */}
-          </div>
-        )}
-      </div>
-    </>
+    <div className={on && control_highlight_dsiplay ? " bg-yellow-300" : ""}>
+      {on && control_highlight_dsiplay ? (
+        <Tooltip
+          title={
+            <>
+              {matches?.map((each: string, i: number) => (
+                <div
+                  key={i}
+                  className={
+                    target.includes(each) ? " font-semibold" : "text-gray-300"
+                  }
+                >
+                  {target.includes(each) && <span>✔️</span>}
+                  {matches.indexOf(each)}:{each}
+                </div>
+              ))}
+            </>
+          }
+        >
+          {text}
+        </Tooltip>
+      ) : (
+        <div>
+          {text}
+          {/* dispatch the thing to Redux */}
+        </div>
+      )}
+    </div>
   );
 }

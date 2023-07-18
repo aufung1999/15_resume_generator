@@ -23,7 +23,11 @@ import * as htmlToImage from "html-to-image";
 import Revalidate from "./Match/Revalidate";
 import Statistic from "./Match/Statistic";
 
+import { useSearchParams } from "next/navigation";
+
 const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search')
   const dispatch = useDispatch();
 
   const componentRef = useRef<any>(null);
@@ -40,7 +44,7 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   );
 
   return (
-    <div className=" bg-gray-300 relative">
+    <div className=" bg-gray-300 relative" key={search}>
       <div className="absolute z-10 right-0 flex">
         <div className={select ? "" : "hidden"}>
           <Statistic whatToGet="stage_3" />
@@ -75,7 +79,7 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
                     },
                   })
                     .then((res) => res.json())
-                    .then((data) => toast.error(data?.message))
+                    .then((data) => toast.success(data?.message))
                     // .then((res) => toast.success(res?.json().message))
                     .catch(() => toast.error("Cannot Delete!"));
                 })

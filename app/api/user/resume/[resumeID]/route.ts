@@ -9,7 +9,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function GET(
   req: NextApiRequest,
-  { params },
+  { params }: { params: string },
   res: NextApiResponse
 ) {
   const session = await getServerSession(authOptions);

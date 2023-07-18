@@ -26,7 +26,7 @@ export default async function Page() {
     skillData,
     projectData,
     API_Key;
-    
+
   if (session) {
     await db.connect();
     //fetch Contact
