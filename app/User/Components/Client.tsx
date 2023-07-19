@@ -3,11 +3,15 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/navigation";
 import { Tooltip } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editPreview, editSearch } from "@/slices/controlSlice";
-import { useSelector } from "react-redux";
+
 import { RootState } from "@/store/store";
-import { Icon, InputGroup, Button } from "@blueprintjs/core";
+
+import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
+import Search from "../skills/Components/Search";
 
 export default function UserClient({ resumeData }: { resumeData: any }) {
   const router = useRouter();
@@ -19,13 +23,19 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
   const job_details_redux = useSelector(
     (state: RootState) => state.control.job_details
   );
+
   const search_redux = useSelector((state: RootState) => state.control.search);
 
-  const [resume_csr, setEachResume] = useState<any[]>([]);
+  const [resumes_copy, setResumes_copy] = useState<any[]>([]);
+  const [resumes_csr, setResumes] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (resumes_copy) setResumes(resumes_copy);
+  }, [search_redux]);
 
   useEffect(() => {
     let images_db: any[] = [];
-    resumeData.map(async (each) => {
+    resumeData.map(async (each: any) => {
       const img = new Image();
       img.src = each.HTMLDIVElement;
       images_db.push({
@@ -37,17 +47,11 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
         unmatches: JSON.parse(each.Unmatches),
       });
     });
-    setEachResume(images_db);
+    // for the local
+    setResumes(images_db);
+    //for the copy after search
+    setResumes_copy(images_db);
   }, []);
-
-  const searchHandler = () => {
-    if (resume_csr.length > 0 && search_redux !== "") {
-      const filtered_array = resume_csr.filter(
-        (each) => each.job_details.job_position === search_redux
-      );
-      console.log(filtered_array);
-    }
-  };
 
   const ClickHandler = (received: string) => {
     //Jump to another tab
@@ -58,27 +62,10 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
       <div className=" col-span-1"></div>
 
       <div id="user" className=" col-span-7 border-4">
-        <div>
-          Search
-          <InputGroup
-            id="text-input"
-            onChange={(e) => dispatch(editSearch(e.target.value))}
-            value={search_redux}
-            className="w-full border overflow-hidden"
-          />
-          <Button
-            icon={
-              <Icon icon="search" className="" style={{ color: "white" }} />
-            }
-            onClick={searchHandler}
-            fill
-            style={{
-              backgroundColor: "rgba(0,120,255,1)",
-            }}
-          />
-        </div>
+        {/* Search Engine */}
+        <Search resume_csr={resumes_csr} setResumes={setResumes} />
         <div className="grid grid-cols-3 gap-3 place-items-start relative ">
-          {resume_csr?.map((each, i: number) => (
+          {resumes_csr?.map((each: any, i: number) => (
             <div key={i} className="group/left relative ">
               {/* Job Description */}
               <div className="border border-green-500 bottom-0 px-2 bg-white ">
@@ -136,7 +123,11 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                       editPreview({
                         matches: [],
                         unmatches: [],
-                        job_details: "",
+                        job_details: {
+                          job_position: "",
+                          company_name: "",
+                          website: "",
+                        },
                       })
                     )
                   }

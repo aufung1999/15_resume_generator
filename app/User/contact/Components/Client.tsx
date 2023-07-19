@@ -8,6 +8,7 @@ import {
   FormGroup,
   InputGroup,
 } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
 
 import InsertLink from "./InsertLink";
 import SocialMedia from "./SocialMedia";

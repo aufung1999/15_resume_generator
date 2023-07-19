@@ -10,6 +10,8 @@ import {
   Switch,
   TextArea,
 } from "@blueprintjs/core";
+
+import "@blueprintjs/core/lib/css/blueprint.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   SkillsState,

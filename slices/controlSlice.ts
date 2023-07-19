@@ -6,7 +6,7 @@ export interface ControlState {
   API_KEY: string;
   preview: { matches: string[]; unmatches: string[]; img: string };
   job_details: any;
-  search: string;
+  search: { index: string; input: string | null }[];
 }
 
 const initialState: ControlState = {
@@ -14,7 +14,7 @@ const initialState: ControlState = {
   API_KEY: "",
   preview: { matches: [], unmatches: [], img: "" },
   job_details: { job_position: "", company_name: "", website: "" },
-  search: "",
+  search: [],
 };
 
 const controlSlice = createSlice({
@@ -29,7 +29,7 @@ const controlSlice = createSlice({
     editLayout: (state, action: PayloadAction<string>) => {
       state.Layout = action.payload;
     },
-    editPreview: (state, action: PayloadAction<string>) => {
+    editPreview: (state, action: PayloadAction<any>) => {
       const { matches, unmatches, img, job_details }: any = action.payload;
       console.log(matches);
       if (matches) {
@@ -47,12 +47,28 @@ const controlSlice = createSlice({
         state.job_details.website = job_details.website;
       }
     },
-    editSearch: (state, action: PayloadAction<string>) => {
-      state.search = action.payload;
+    addSearchBar_redux: (state, action) => {
+      state.search.push(action.payload);
+    },
+    editSearch: (
+      state,
+      action: PayloadAction<{ input: string; index: string }>
+    ) => {
+      const { index, input } = action.payload;
+      const Search = state.search.find((each) => each.index === index);
+      if (Search) {
+        Search.input = input;
+      }
+      // console.log("input: " + input);
     },
   },
 });
 
-export const { editLayout, editAPI_KEY, editPreview, editSearch } =
-  controlSlice.actions;
+export const {
+  editLayout,
+  editAPI_KEY,
+  editPreview,
+  editSearch,
+  addSearchBar_redux,
+} = controlSlice.actions;
 export default controlSlice.reducer;

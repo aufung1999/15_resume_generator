@@ -1,0 +1,91 @@
+import React, { useState, useEffect, useRef } from "react";
+
+import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { addSearchBar_redux, editSearch } from "@/slices/controlSlice";
+import extractTerms from "@/app/analyse/Functions/extractTerms";
+
+var stringSimilarity = require("string-similarity");
+
+import { v4 as uuidv4 } from "uuid";
+import shortenUUID from "@/utils/shortenUUID";
+
+export default function Search({
+  resume_csr,
+  setResumes,
+}: {
+  resume_csr: any;
+  setResumes: Function;
+}) {
+  const dispatch = useDispatch();
+
+  const search_redux = useSelector((state: RootState) => state.control.search);
+
+  const searchHandler = () => {
+    if (resume_csr.length > 0 && search_redux !== "") {
+      const filtered_array = resume_csr.filter(
+        (each) =>
+          stringSimilarity.findBestMatch(
+            search_redux.toLowerCase(),
+            extractTerms(each.job_details.job_position, "search")
+          ).bestMatch.rating > 0.6 ||
+          stringSimilarity.findBestMatch(
+            search_redux.toLowerCase(),
+            extractTerms(each.job_details.website, "search")
+          ).bestMatch.rating > 0.6
+      );
+      //   console.log(filtered_array);
+      setResumes(filtered_array);
+    }
+  };
+
+  const [searchBar_csr, editSearchBar] = useState<any>([]);
+
+  const addSearchBar = () => {
+    //initialize the "index"
+    const uuid = uuidv4();
+    const short_id = shortenUUID(uuid);
+    // update the Redux Store
+    dispatch(addSearchBar_redux({ index: short_id }));
+    //update the useState of "searchBar"
+    editSearchBar(
+      searchBar_csr.concat(
+        <InputGroup
+          id={short_id}
+          key={short_id}
+          onChange={(e) =>
+            dispatch(editSearch({ input: e.target.value, index: short_id }))
+          }
+          //   value={search_redux}
+          className="w-full border "
+        />
+      )
+    );
+  };
+
+  return (
+    <div className=" border-2 w-full flex relative flex-col">
+      <Button
+        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        onClick={addSearchBar}
+        fill
+        style={{
+          backgroundColor: "rgba(0,120,255,1)",
+        }}
+      />
+      {searchBar_csr?.map((each, i: number) => (
+        <div key={i}>{each}</div>
+      ))}
+      {/* <Button
+        icon={<Icon icon="search" className="" style={{ color: "white" }} />}
+        onClick={searchHandler}
+        style={{
+          backgroundColor: "rgba(0,120,255,1)",
+        }}
+      /> */}
+    </div>
+  );
+}
