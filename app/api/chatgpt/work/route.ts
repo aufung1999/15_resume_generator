@@ -29,11 +29,11 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     // const statement_2 = Object.values(user_data);
     const statement_2 = user_data;
 
-    console.log("*****************************");
-    console.log(statement_1);
-    console.log("*****************************");
-    console.log(JSON.stringify(statement_2, null, 1));
-    console.log("*****************************");
+    // console.log("*****************************");
+    // console.log(statement_1);
+    // console.log("*****************************");
+    // console.log(JSON.stringify(statement_2, null, 1));
+    // console.log("*****************************");
 
     //----------------------Cost Money--------------------Careful---------------------
 

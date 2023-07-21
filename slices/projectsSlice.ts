@@ -15,7 +15,7 @@ const projectsSlice = createSlice({
   name: "project",
   initialState,
   reducers: {
-    cleanUp_Project_redux:() => initialState,
+    cleanUp_Project_redux: () => initialState,
     initialize_ProjectData: (state, action: PayloadAction<string>) => {
       const { index, ProjectName, Techniques, ProjectDescription }: any =
         action.payload;
@@ -32,10 +32,19 @@ const projectsSlice = createSlice({
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
           const newObject: any = window.localStorage.getItem("stage_3");
-          JSON.parse(newObject)?.map(
-            (each: any) =>
-              each.match_index === index && match_index.push(each.match_index)
-          );
+          JSON.parse(newObject)?.map((each: any) => {
+            each.match_index === index &&
+              match_index.push({ match_index_1st: index }),
+              ProjectDescription?.map(
+                (item: { Row: string; rowIndex: string }) =>
+                  each.match_index_1st === index &&
+                  each.match_index_2nd === item.rowIndex &&
+                  match_index.push({
+                    match_index_1st: index,
+                    match_index_2nd: item.rowIndex,
+                  })
+              );
+          });
 
           //set the data format
           let Data = {
@@ -48,8 +57,20 @@ const projectsSlice = createSlice({
           //Condition add to array,
           //"unshift" is to add at the beginning:
           //"push" is to add at the end
-          match_index.includes(index)
-            ? ((Data.display_in_Resume = true), state.unshift(Data))
+
+          match_index.includes(index) ? (Data.display_in_Resume = true) : null;
+          // console.log(match_index);
+          ProjectDescription?.map((each: { Row: string; rowIndex: string }) =>
+            match_index.some(
+              (item) =>
+                item?.match_index_1st === index &&
+                item?.match_index_2nd === each.rowIndex
+            )
+              ? (Data.display_in_Resume = true)
+              : null
+          );
+          Data?.display_in_Resume === true
+            ? state.unshift(Data)
             : state.push(Data);
         }
       }
@@ -133,9 +154,9 @@ const projectsSlice = createSlice({
     },
     drag_drop: (state, action) => {
       const { result } = action.payload;
-      console.log("result: " + JSON.stringify(result.draggableId, null, 1));
-      console.log("result: " + JSON.stringify(result.source.index, null, 1));
-      console.log("state: " + JSON.stringify(state, null, 1));
+      // console.log("result: " + JSON.stringify(result.draggableId, null, 1));
+      // console.log("result: " + JSON.stringify(result.source.index, null, 1));
+      // console.log("state: " + JSON.stringify(state, null, 1));
       const [reorderedItem] = state.splice(result.source.index, 1);
       state.splice(result.destination.index, 0, reorderedItem);
     },

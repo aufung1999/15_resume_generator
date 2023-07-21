@@ -56,15 +56,23 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                           {item?.ProjectDescription.map(
                             (each: any, ind: number) => (
                               <SectionList key={ind}>
-                                <span className="flex leading-none">
-                                  <li />
-                                  <div
-                                    className=" flex leading-none"
-                                    dangerouslySetInnerHTML={{
-                                      __html: each?.Row,
-                                    }}
-                                  />
-                                </span>
+                                <CustomedTooltip
+                                  index_1st={item.index}
+                                  index_2nd={each.rowIndex}
+                                  description={each?.Row}
+                                  text={
+                                    <span className="flex leading-none">
+                                      <li />
+                                      <div
+                                        className=" flex leading-none"
+                                        dangerouslySetInnerHTML={{
+                                          __html: each?.Row,
+                                        }}
+                                      />
+                                    </span>
+                                  }
+                                  whichSection="project"
+                                />
                               </SectionList>
                             )
                           )}

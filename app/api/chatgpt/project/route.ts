@@ -30,6 +30,13 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     const statement_2 = user_data;
 
     console.log("*****************************");
+    console.log("Project");
+    console.log("Project");
+    console.log("Project");
+    console.log("Project");
+    console.log("Project");
+    console.log("Project");
+    console.log("Project");
     console.log(statement_1);
     console.log("*****************************");
     console.log(JSON.stringify(statement_2, null, 1));
@@ -53,7 +60,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
               messages: [
                 {
                   role: "user",
-                  content: `Are "${each.JobDescription}" and "${each_input}" similar. Please think twice and Answer in Yes or No Only`,
+                  content: `Are "${each.ProjectDescription}" and "${each_input}" similar. Please think twice and Answer in Yes or No Only`,
                 },
               ],
             });
@@ -69,7 +76,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
               temp_arr.push({
                 match_index_1st: each.index_1st,
                 match_index_2nd: each.index_2nd,
-                user_data: each.JobDescription,
+                user_data: each.ProjectDescription,
                 match_sentence: each_input,
                 usage:
                   (Number(chatCompletion?.data.usage.prompt_tokens) * 0.0015 +
@@ -90,7 +97,5 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
       console.log(temp_arr);
       return NextResponse.json({ data: temp_arr, total_usage: total_usage });
     });
-
-
   }
 }

@@ -44,16 +44,6 @@ export default function Compare() {
           array: extractTerms(each, "input"),
         })
       );
-      //=====Project=====
-      let temp_project: any[] = [];
-      project_redux.map((each) =>
-        temp_project.push({
-          index: each.index,
-          array: extractTerms(each?.Techniques, "project_redux"),
-        })
-      );
-
-      temp_arr.push(...compare(temp_project, fetch_stage_2, "project"));
 
       //=====Skill=====
       let temp_skill: any[] = [];
@@ -65,6 +55,45 @@ export default function Compare() {
         })
       );
       temp_arr.push(...compare(temp_skill, fetch_stage_2, "skill"));
+
+      //=====Project===== --------------------- 1
+      let temp_project: any[] = [];
+      project_redux.map((each) =>
+        temp_project.push({
+          index: each.index,
+          array: extractTerms(each?.Techniques, "project_redux"),
+        })
+      );
+
+      temp_arr.push(...compare(temp_project, fetch_stage_2, "project"));
+
+      //=====Project===== --------------------- 2
+      let temp_project_2: any[] = [];
+      project_redux.map((each) =>
+        each.ProjectDescription.map((element) =>
+          temp_project_2.push({
+            index_1st: each.index,
+            index_2nd: element.rowIndex,
+            ProjectDescription: element.Row,
+          })
+        )
+      );
+      const fetch_data_project = {
+        user_data: temp_project_2,
+        input_data: stage_2,
+        API_KEY: API_KEY,
+      };
+      // ----result from the chatgpt API
+      const res_project = await fetch("/api/chatgpt/project", {
+        method: "POST",
+        body: JSON.stringify(fetch_data_project),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      const { data: data_project, total_usage: total_usage_project } =
+        await res_project.json();
+      // localStorage.setItem("total_usage", total_usage);
 
       //=====Pre-process Work=====            NOT USED
       const filtered_stage_2 = stage_2.filter(
@@ -104,9 +133,12 @@ export default function Compare() {
         },
       });
       const { data, total_usage } = await res.json();
-      localStorage.setItem("total_usage", total_usage);
       //=====Get the result and display=====
-      setRes([...temp_arr, ...data]);
+      localStorage.setItem(
+        "total_usage",
+        JSON.stringify(Number(total_usage) + Number(total_usage_project))
+      );
+      setRes([...temp_arr, ...data, ...data_project]);
       // setRes(data);
     }
   };
