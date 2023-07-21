@@ -12,6 +12,7 @@ import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
 
 import Search from "../skills/Components/Search";
+import classNames from "classnames";
 
 export default function UserClient({ resumeData }: { resumeData: any }) {
   const router = useRouter();
@@ -57,6 +58,18 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
     //Jump to another tab
     router.push(`user/resumes/${received}`);
   };
+
+  const [showDiv, setShowDiv] = useState(false);
+
+  // Delay the display of the div after a certain delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowDiv(true);
+    }, 1000); // Delay of 1 second (adjust as needed)
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className=" grid grid-cols-12 relative">
       <div className=" col-span-1"></div>
@@ -106,32 +119,59 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                 className="group-hover/left:scale-[1.8] group-hover/left:absolute group-hover/left:flex group-hover/left:justify-center transition duration-500 border-4 flex hover:z-20 z-10"
                 onClick={() => ClickHandler(each._id)}
               >
-                <img
-                  src={each.image.src}
-                  alt=""
-                  onMouseEnter={() =>
-                    dispatch(
-                      editPreview({
-                        matches: each.matches,
-                        unmatches: each.unmatches,
-                        job_details: each.job_details,
-                      })
-                    )
+                <Tooltip
+                  title={
+                    <div>
+                      <div>Matches</div>
+                      <div className="break-words">
+                        {each.matches?.map((item, ind: number) => (
+                          <div className="flex ">
+                            <div>{ind + 1}: </div>
+                            <div className=" ">{item}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div>Un-Matches</div>
+                      <div className="break-words">
+                        {each.unmatches?.map((item, ind: number) => (
+                          <div className="flex break-words">
+                            <div>{ind + 1}: </div>
+                            <div>{item}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   }
-                  onMouseLeave={() =>
-                    dispatch(
-                      editPreview({
-                        matches: [],
-                        unmatches: [],
-                        job_details: {
-                          job_position: "",
-                          company_name: "",
-                          website: "",
-                        },
-                      })
-                    )
-                  }
-                />
+                  placement={i <= resumes_csr.length / 2 ? "right" : "left"}
+                  followCursor
+                >
+                  <img
+                    src={each.image.src}
+                    alt=""
+                    onMouseEnter={() =>
+                      dispatch(
+                        editPreview({
+                          matches: each.matches,
+                          unmatches: each.unmatches,
+                          job_details: each.job_details,
+                        })
+                      )
+                    }
+                    onMouseLeave={() =>
+                      dispatch(
+                        editPreview({
+                          matches: [],
+                          unmatches: [],
+                          job_details: {
+                            job_position: "",
+                            company_name: "",
+                            website: "",
+                          },
+                        })
+                      )
+                    }
+                  />
+                </Tooltip>
               </div>
             </div>
           ))}
@@ -143,29 +183,73 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
       <div className=" col-span-3 h-screen border-2 relative">
         <div className=" border border-red-300 absolute w-full ">
           <div className="group-hover/left:block border-red-300 border bg-white">
-            <div>{job_details_redux.job_position}</div>
-            <div>{job_details_redux.company_name}</div>
-            <div>{job_details_redux.website}</div>
-            <div>
-              <div>Matches:</div>
-              <div>
-                {preview_redux.matches?.map((item: string, i) => (
-                  <div key={i} className=" text-xs break-words w-full">
-                    {item}
-                  </div>
-                ))}
+            <div className="border text-sm flex justify-between me-5">
+              <div className="text-4xl font-black text-gray-900 dark:text-white">
+                {(
+                  (preview_redux?.matches.length /
+                    (preview_redux?.matches.length +
+                      preview_redux?.unmatches.length)) *
+                  100
+                ).toFixed(2)}
+                %
               </div>
             </div>
-            <div>
-              <div>UnMatches:</div>
-              <div>
-                {preview_redux.unmatches?.map((item: string, i) => (
-                  <div key={i} className=" break-words text-xs w-full">
-                    {item}
-                  </div>
-                ))}
+            <div className="border">
+              <div className="text-xl font-black text-gray-900 ">
+                Job Details
+              </div>
+
+              <div className="grid grid-cols-10 w-full mb-2">
+                <div className=" col-span-2 border flex justify-center">
+                  Company:
+                </div>
+                <div className=" col-span-8 break-words">
+                  {job_details_redux.company_name}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-10 w-full mb-2">
+                <div className=" col-span-2 border flex justify-center">
+                  Position:
+                </div>
+                <div className=" col-span-8 break-words">
+                  {job_details_redux.job_position}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-10 w-full mb-2">
+                <div className=" col-span-2 border flex justify-center">
+                  Website:
+                </div>
+                <div className=" col-span-8 break-words">
+                  {job_details_redux.website}
+                </div>
               </div>
             </div>
+            {/* <div className="border">
+              <div className="text-sm font-black text-gray-900 ">Matches</div>
+              {preview_redux?.matches?.map((each: string, i: number) => (
+                <div key={i} className="grid grid-cols-10 w-full mb-2">
+                  <div className=" col-span-1 border flex justify-center">
+                    {i + 1}
+                  </div>
+                  <div className=" col-span-9 break-words">{each}</div>
+                </div>
+              ))}
+            </div>
+            <div className="border">
+              <div className="text-sm font-black text-gray-900 ">
+                Un-Matches
+              </div>
+              {preview_redux?.unmatches?.map((each: string, i: number) => (
+                <div key={i} className="grid grid-cols-10 w-full mb-2">
+                  <div className=" col-span-1 border flex justify-center">
+                    {i + 1}
+                  </div>
+                  <div className=" col-span-9 break-words">{each}</div>
+                </div>
+              ))}
+            </div> */}
           </div>
         </div>
       </div>

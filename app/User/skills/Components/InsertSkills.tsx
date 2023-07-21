@@ -88,9 +88,10 @@ const TermComp = ({ index, term }: Props) => {
       style={{ background: "white", color: "black" }}
     >
       {/* hide the index */}
-      {/* <h3>
-        {skill?.term} {index}
-      </h3> */}
+      <h3>
+        {skill?.term}
+        {/* {index} */}
+      </h3>
 
       <div className="mb-3">
         <InputGroup
