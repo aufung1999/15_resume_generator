@@ -25,20 +25,24 @@ export default function Search({
   const search_redux = useSelector((state: RootState) => state.control.search);
 
   const searchHandler = () => {
-    if (resume_csr.length > 0 && search_redux !== "") {
-      const filtered_array = resume_csr.filter(
-        (each) =>
-          stringSimilarity.findBestMatch(
-            search_redux.toLowerCase(),
-            extractTerms(each.job_details.job_position, "search")
-          ).bestMatch.rating > 0.6 ||
-          stringSimilarity.findBestMatch(
-            search_redux.toLowerCase(),
-            extractTerms(each.job_details.website, "search")
-          ).bestMatch.rating > 0.6
+    if (resume_csr.length > 0 && search_redux.length !== 0) {
+      const filtered_array = resume_csr.filter((each) =>
+        search_redux.find(
+          (item: { index: string; input: string | null }) =>
+            (item.input &&
+              stringSimilarity.findBestMatch(
+                item?.input?.toLowerCase(),
+                extractTerms(each.job_details.job_position, "search")
+              ).bestMatch.rating > 0.6) ||
+            (item.input &&
+              stringSimilarity.findBestMatch(
+                item.input?.toLowerCase(),
+                extractTerms(each.job_details.website, "search")
+              ).bestMatch.rating > 0.6)
+        )
       );
       //   console.log(filtered_array);
-      setResumes(filtered_array);
+      if (filtered_array.length !== 0) setResumes(filtered_array);
     }
   };
 
@@ -67,25 +71,26 @@ export default function Search({
   };
 
   return (
-    <div className=" border-2 w-full flex relative flex-col">
+    <div className=" border-2 w-full flex relative justify-between">
       <Button
         icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
         onClick={addSearchBar}
-        fill
         style={{
           backgroundColor: "rgba(0,120,255,1)",
         }}
       />
-      {searchBar_csr?.map((each, i: number) => (
-        <div key={i}>{each}</div>
-      ))}
-      {/* <Button
+      <div className="flex">
+        {searchBar_csr?.map((each, i: number) => (
+          <div key={i}>{each}</div>
+        ))}
+      </div>
+      <Button
         icon={<Icon icon="search" className="" style={{ color: "white" }} />}
         onClick={searchHandler}
         style={{
           backgroundColor: "rgba(0,120,255,1)",
         }}
-      /> */}
+      />
     </div>
   );
 }
