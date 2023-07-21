@@ -12,7 +12,8 @@ import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
 
 import Search from "../skills/Components/Search";
-import classNames from "classnames";
+
+import { PieChart } from "react-minimal-pie-chart";
 
 export default function UserClient({ resumeData }: { resumeData: any }) {
   const router = useRouter();
@@ -122,18 +123,22 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                 <Tooltip
                   title={
                     <div>
-                      <div>Matches</div>
+                      <div className=" font-bold flex justify-center">
+                        Matches
+                      </div>
                       <div className="break-words">
-                        {each.matches?.map((item, ind: number) => (
+                        {each.matches?.map((item: string, ind: number) => (
                           <div className="flex ">
                             <div>{ind + 1}: </div>
                             <div className=" ">{item}</div>
                           </div>
                         ))}
                       </div>
-                      <div>Un-Matches</div>
+                      <div className=" font-bold flex justify-center">
+                        Un-Matches
+                      </div>
                       <div className="break-words">
-                        {each.unmatches?.map((item, ind: number) => (
+                        {each.unmatches?.map((item: string, ind: number) => (
                           <div className="flex break-words">
                             <div>{ind + 1}: </div>
                             <div>{item}</div>
@@ -143,7 +148,7 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                     </div>
                   }
                   placement={i <= resumes_csr.length / 2 ? "right" : "left"}
-                  followCursor
+                  // followCursor
                 >
                   <img
                     src={each.image.src}
@@ -225,6 +230,22 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                   {job_details_redux.website}
                 </div>
               </div>
+            </div>
+            <div>
+              <PieChart
+                data={[
+                  {
+                    title: "Matches",
+                    value: Number(preview_redux?.matches.length),
+                    color: "#a7ff78",
+                  },
+                  {
+                    title: "Un-Matches",
+                    value: Number(preview_redux?.unmatches.length),
+                    color: "#ff869c",
+                  },
+                ]}
+              />
             </div>
             {/* <div className="border">
               <div className="text-sm font-black text-gray-900 ">Matches</div>
