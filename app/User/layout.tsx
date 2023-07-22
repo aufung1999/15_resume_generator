@@ -7,7 +7,7 @@ export default function UserLayout({
 }) {
   return (
     <section className=" flex flex-col border-2 border-yellow-300">
-      <div className="h-full w-full flex flex-row justify-evenly border-4 border-red-300 ">
+      {/* <div className="h-full w-full flex flex-row justify-evenly border-4 border-red-300 "> */}
         {/* icon="id-number"  */}
         {/* <Link href="/user/contact" className="border flex justify-center">
           <div className=" text-xs hover:text-sm">Contact</div>
@@ -60,7 +60,7 @@ export default function UserLayout({
         <Button icon="application" onClick={() => setTab("Others")}>
           <div className=" text-xs hover:text-sm">Others</div>
         </Button> */}
-      </div>
+      {/* </div> */}
 
       <div className=" w-full">{children}</div>
     </section>

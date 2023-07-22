@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/navigation";
-import { Tooltip } from "@mui/material";
+// import { Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { editPreview, editSearch } from "@/slices/controlSlice";
 
@@ -14,6 +14,17 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import Search from "../skills/Components/Search";
 
 import { PieChart } from "react-minimal-pie-chart";
+
+import { styled } from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+
+const CustomWidthTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 500,
+  },
+});
 
 export default function Resume({ resumeData }: { resumeData: any }) {
   const router = useRouter();
@@ -119,7 +130,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
                 className="group-hover/left:scale-[1.8] group-hover/left:absolute group-hover/left:flex group-hover/left:justify-center transition duration-500 border-4 flex hover:z-20 z-10"
                 onClick={() => ClickHandler(each._id)}
               >
-                <Tooltip
+                <CustomWidthTooltip
                   title={
                     <div>
                       <div className="border border-green-500 bottom-0 px-2  ">
@@ -242,7 +253,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
                       )
                     }
                   />
-                </Tooltip>
+                </CustomWidthTooltip>
               </div>
             </div>
           ))}
