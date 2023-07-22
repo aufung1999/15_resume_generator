@@ -22,7 +22,7 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 500,
+    maxWidth: 400,
   },
 });
 
@@ -88,7 +88,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
         {/* Search Engine */}
         <Search resume_csr={resumes_csr} setResumes={setResumes} />
         {/* if the grid-cols-3 changes, Remember to change the show left or right */}
-        <div className="grid grid-cols-3 gap-3 place-items-start relative h-1/2 ">
+        <div className="grid grid-cols-3 gap-3 place-items-start relative">
           {resumes_csr?.map((each: any, i: number) => (
             <div key={i} className="group/left relative">
               {/* Job Description */}
