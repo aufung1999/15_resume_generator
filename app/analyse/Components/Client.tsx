@@ -151,7 +151,7 @@ export default function AnalyseClient({ data }: any) {
                 onChange={(e) =>
                   dispatch(editAnalyse_job_position(e.target.value))
                 }
-                maxLength={50}
+                maxLength={100}
                 value={job_position}
                 placeholder="copy from the Job description"
                 className="w-full flex flex-col "
@@ -168,7 +168,7 @@ export default function AnalyseClient({ data }: any) {
               onChange={(e) =>
                 dispatch(editAnalyse_company_name(e.target.value))
               }
-              maxLength={30}
+              maxLength={100}
               value={company_name}
               placeholder="copy from the Job description"
               className="w-full flex flex-col "
@@ -184,7 +184,7 @@ export default function AnalyseClient({ data }: any) {
               <InputGroup
                 onChange={(e) => dispatch(editAnalyse_website(e.target.value))}
                 value={website}
-                maxLength={30}
+                maxLength={100}
                 placeholder="e.g. indeed"
                 className="w-full flex flex-col "
               />

@@ -72,15 +72,14 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
   }, []);
 
   return (
-    <div className=" grid grid-cols-12 relative">
-      <div className=" col-span-1"></div>
-
-      <div id="user" className=" col-span-7 border-4">
+    <div className=" relative ">
+      <div id="user" className="  border-4 px-72 ">
         {/* Search Engine */}
         <Search resume_csr={resumes_csr} setResumes={setResumes} />
-        <div className="grid grid-cols-3 gap-3 place-items-start relative ">
+        {/* if the grid-cols-3 changes, Remember to change the show left or right */}
+        <div className="grid grid-cols-3 gap-3 place-items-start relative h-1/2 ">
           {resumes_csr?.map((each: any, i: number) => (
-            <div key={i} className="group/left relative ">
+            <div key={i} className="group/left relative">
               {/* Job Description */}
               <div className="border border-green-500 bottom-0 px-2 bg-white ">
                 <div className="flex">
@@ -123,6 +122,72 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                 <Tooltip
                   title={
                     <div>
+                      <div className="border border-green-500 bottom-0 px-2  ">
+                        <div className="flex">
+                          <b className=" w-1/4 flex group-hover/left:justify-end">
+                            Position
+                          </b>
+                          <b>:</b>
+                          <div className=" w-3/4">
+                            {each.job_details.job_position}
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <b className=" w-1/4 flex group-hover/left:justify-end">
+                            Company
+                          </b>
+                          <b>:</b>
+                          <div className="  w-3/4">
+                            {each.job_details.company_name}
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <b className=" w-1/4 flex group-hover/left:justify-end">
+                            Website
+                          </b>
+                          <b>:</b>
+                          <div className=" w-3/4 ">
+                            {each.job_details.website}
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <b className=" w-1/4 flex group-hover/left:justify-end">
+                            Date
+                          </b>
+                          <b>:</b>
+                          <div className=" w-3/4 ">
+                            {each.createdAt.substring(0, 10)}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="border border-blue-300 relative w-full flex justify-center">
+                        <PieChart
+                          className="w-1/3"
+                          data={[
+                            {
+                              title: "Un-Matches",
+                              value: Number(each?.unmatches.length),
+                              color: "#ff869c",
+                            },
+                            {
+                              title: "Matches",
+                              value: Number(each?.matches.length),
+                              color: "#a7ff78",
+                            },
+                          ]}
+                        />
+                        <div className="border text-sm flex justify-center items-center  absolute  w-full h-full">
+                          <div className="text-xl font-black text-black">
+                            {(
+                              (each?.matches.length /
+                                (each?.matches.length +
+                                  each?.unmatches.length)) *
+                              100
+                            ).toFixed(2)}
+                            %
+                          </div>
+                        </div>
+                      </div>
                       <div className=" font-bold flex justify-center">
                         Matches
                       </div>
@@ -147,7 +212,8 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                       </div>
                     </div>
                   }
-                  placement={i <= resumes_csr.length / 2 ? "right" : "left"}
+                  placement="right"
+                  enterDelay={800}
                   // followCursor
                 >
                   <img
@@ -183,22 +249,9 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
         </div>
       </div>
 
-      <div className=" col-span-1"></div>
-
-      <div className=" col-span-3 h-screen border-2 relative">
+      {/* <div className=" col-span-3 h-screen border-2 relative">
         <div className=" border border-red-300 absolute w-full ">
           <div className="group-hover/left:block border-red-300 border bg-white">
-            <div className="border text-sm flex justify-between me-5">
-              <div className="text-4xl font-black text-gray-900 dark:text-white">
-                {(
-                  (preview_redux?.matches.length /
-                    (preview_redux?.matches.length +
-                      preview_redux?.unmatches.length)) *
-                  100
-                ).toFixed(2)}
-                %
-              </div>
-            </div>
             <div className="border">
               <div className="text-xl font-black text-gray-900 ">
                 Job Details
@@ -231,49 +284,47 @@ export default function UserClient({ resumeData }: { resumeData: any }) {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="border border-blue-300 relative">
               <PieChart
+                animationDuration={500}
+                animationEasing="ease-out"
+                center={[50, 50]}
                 data={[
-                  {
-                    title: "Matches",
-                    value: Number(preview_redux?.matches.length),
-                    color: "#a7ff78",
-                  },
                   {
                     title: "Un-Matches",
                     value: Number(preview_redux?.unmatches.length),
                     color: "#ff869c",
                   },
+                  {
+                    title: "Matches",
+                    value: Number(preview_redux?.matches.length),
+                    color: "#a7ff78",
+                  },
                 ]}
+                labelPosition={50}
+                lengthAngle={360}
+                lineWidth={35}
+                paddingAngle={0}
+                radius={50}
+                startAngle={0}
+                viewBoxSize={[100, 100]}
               />
-            </div>
-            {/* <div className="border">
-              <div className="text-sm font-black text-gray-900 ">Matches</div>
-              {preview_redux?.matches?.map((each: string, i: number) => (
-                <div key={i} className="grid grid-cols-10 w-full mb-2">
-                  <div className=" col-span-1 border flex justify-center">
-                    {i + 1}
-                  </div>
-                  <div className=" col-span-9 break-words">{each}</div>
+              <div className="border text-sm flex justify-center items-center me-5 absolute top-0 w-full h-full">
+                <div className="text-4xl font-black text-gray-900 dark:text-white">
+                  {preview_redux &&
+                    (
+                      (preview_redux?.matches.length /
+                        (preview_redux?.matches.length +
+                          preview_redux?.unmatches.length)) *
+                      100
+                    ).toFixed(2)}
+                  %
                 </div>
-              ))}
-            </div>
-            <div className="border">
-              <div className="text-sm font-black text-gray-900 ">
-                Un-Matches
               </div>
-              {preview_redux?.unmatches?.map((each: string, i: number) => (
-                <div key={i} className="grid grid-cols-10 w-full mb-2">
-                  <div className=" col-span-1 border flex justify-center">
-                    {i + 1}
-                  </div>
-                  <div className=" col-span-9 break-words">{each}</div>
-                </div>
-              ))}
-            </div> */}
+            </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className=" absolute border-4 flex justify-center px-96 hidden">
         <div>
