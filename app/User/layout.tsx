@@ -9,7 +9,7 @@ export default function UserLayout({
     <section className=" flex flex-col border-2 border-yellow-300">
       <div className="h-full w-full flex flex-row justify-evenly border-4 border-red-300 ">
         {/* icon="id-number"  */}
-        <Link href="/user/contact" className="border flex justify-center">
+        {/* <Link href="/user/contact" className="border flex justify-center">
           <div className=" text-xs hover:text-sm">Contact</div>
         </Link>
 
@@ -35,7 +35,7 @@ export default function UserLayout({
 
         <Link href="/user/projects" className="border flex justify-center">
           <div className=" text-xs hover:text-sm">Project</div>
-        </Link>
+        </Link> */}
 
         {/* <Button icon="build" onClick={() => setTab("Work")}>
           <div className=" text-xs hover:text-sm">Work</div>

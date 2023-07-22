@@ -3,6 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface ControlState {
   Layout: string;
+  switch: string;
   API_KEY: string;
   preview: { matches: string[]; unmatches: string[]; img: string };
   job_details: any;
@@ -11,6 +12,7 @@ export interface ControlState {
 
 const initialState: ControlState = {
   Layout: "user",
+  switch: "Contact",
   API_KEY: "",
   preview: { matches: [], unmatches: [], img: "" },
   job_details: { job_position: "", company_name: "", website: "" },
@@ -61,6 +63,10 @@ const controlSlice = createSlice({
       }
       // console.log("input: " + input);
     },
+    switch_Components: (state, action) => {
+      const { select } = action.payload;
+      state.switch = select;
+    },
   },
 });
 
@@ -70,5 +76,6 @@ export const {
   editPreview,
   editSearch,
   addSearchBar_redux,
+  switch_Components,
 } = controlSlice.actions;
 export default controlSlice.reducer;
