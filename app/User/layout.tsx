@@ -1,5 +1,6 @@
 import Link from "next/link";
-
+import { Suspense } from "react";
+import Loading from "./loading";
 export default function UserLayout({
   children,
 }: {
@@ -8,8 +9,8 @@ export default function UserLayout({
   return (
     <section className=" flex flex-col border-2 border-yellow-300">
       {/* <div className="h-full w-full flex flex-row justify-evenly border-4 border-red-300 "> */}
-        {/* icon="id-number"  */}
-        {/* <Link href="/user/contact" className="border flex justify-center">
+      {/* icon="id-number"  */}
+      {/* <Link href="/user/contact" className="border flex justify-center">
           <div className=" text-xs hover:text-sm">Contact</div>
         </Link>
 
@@ -37,7 +38,7 @@ export default function UserLayout({
           <div className=" text-xs hover:text-sm">Project</div>
         </Link> */}
 
-        {/* <Button icon="build" onClick={() => setTab("Work")}>
+      {/* <Button icon="build" onClick={() => setTab("Work")}>
           <div className=" text-xs hover:text-sm">Work</div>
         </Button>
 
@@ -62,7 +63,9 @@ export default function UserLayout({
         </Button> */}
       {/* </div> */}
 
-      <div className=" w-full">{children}</div>
+      <Suspense fallback={<Loading />}>
+        <div className=" w-full">{children}</div>
+      </Suspense>
     </section>
   );
 }

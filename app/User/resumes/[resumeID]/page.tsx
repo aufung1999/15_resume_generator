@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 
 import {
   Button,
@@ -11,6 +11,7 @@ import {
   TextArea,
 } from "@blueprintjs/core";
 import { useRouter } from "next/navigation";
+import Loading from "../../loading";
 
 export default function ResumeDetail({
   params,
@@ -20,10 +21,9 @@ export default function ResumeDetail({
   const router = useRouter();
 
   const [data_csr, setData] = useState<any>(null);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     //fetch from the database
     //Using Dynamic Route
     fetch(`/api/user/resume/${params.resumeID}`)
@@ -73,86 +73,94 @@ export default function ResumeDetail({
     //Jump to "/resume"
     router.push(`/resume/${params.resumeID}`);
   };
-
-  return (
-    <div>
-      <div className="flex">
-        <div className="w-1/2 border-2 ">
-          <img src={data_csr?.image.src} alt="" />
-        </div>
-
-        <div className="w-1/2 border-4 text-black">
-          <div className="border text-lg flex justify-between me-5">
-            {/* Calculate the % of the matches out of ALL  */}
-            <div className="text-4xl font-black text-gray-900 dark:text-white">
-              {(
-                (data_csr?.matches.length /
-                  (data_csr?.matches.length + data_csr?.unmatches.length)) *
-                100
-              ).toFixed(2)}
-              %
-            </div>
-            <p className="text-4xl font-black text-gray-900 dark:text-white">
-              {data_csr?.createdAt.substring(0, 10)}
-            </p>
+  if (isLoading === true) {
+    return <Loading />;
+  }
+  if (isLoading === false) {
+    return (
+      <div>
+        <div className="flex">
+          <div className="w-1/2 border-2 ">
+            <img src={data_csr?.image.src} alt="" />
           </div>
-          <div className="border">
-            <div className="text-xl font-black text-gray-900 ">Job Details</div>
 
-            <div className="grid grid-cols-10 w-full mb-2">
-              <div className=" col-span-2 border flex justify-center">
-                Company:
+          <div className="w-1/2 border-4 text-black">
+            <div className="border text-lg flex justify-between me-5">
+              {/* Calculate the % of the matches out of ALL  */}
+              <div className="text-4xl font-black text-gray-900 dark:text-white">
+                {(
+                  (data_csr?.matches.length /
+                    (data_csr?.matches.length + data_csr?.unmatches.length)) *
+                  100
+                ).toFixed(2)}
+                %
               </div>
-              <div className=" col-span-8 break-words">
-                {data_csr?.job_details?.company_name}
-              </div>
+              <p className="text-4xl font-black text-gray-900 dark:text-white">
+                {data_csr?.createdAt.substring(0, 10)}
+              </p>
             </div>
+            <div className="border">
+              <div className="text-xl font-black text-gray-900 ">
+                Job Details
+              </div>
 
-            <div className="grid grid-cols-10 w-full mb-2">
-              <div className=" col-span-2 border flex justify-center">
-                Position:
-              </div>
-              <div className=" col-span-8 break-words">
-                {data_csr?.job_details?.job_position}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-10 w-full mb-2">
-              <div className=" col-span-2 border flex justify-center">
-                Website:
-              </div>
-              <div className=" col-span-8 break-words">
-                {data_csr?.job_details?.website}
-              </div>
-            </div>
-          </div>
-          <div className="border">
-            <div className="text-xl font-black text-gray-900 ">Matches</div>
-            {data_csr?.matches?.map((each: string[], i: number) => (
-              <div key={i} className="grid grid-cols-10 w-full mb-2">
-                <div className=" col-span-1 border flex justify-center">
-                  {i + 1}
+              <div className="grid grid-cols-10 w-full mb-2">
+                <div className=" col-span-2 border flex justify-center">
+                  Company:
                 </div>
-                <div className=" col-span-9 break-words">{each}</div>
-              </div>
-            ))}
-          </div>
-          <div className="border">
-            <div className="text-xl font-black text-gray-900 ">Un-Matches</div>
-            {data_csr?.unmatches?.map((each: string[], i: number) => (
-              <div key={i} className="grid grid-cols-10 w-full mb-2">
-                <div className=" col-span-1 border flex justify-center">
-                  {i + 1}
+                <div className=" col-span-8 break-words">
+                  {data_csr?.job_details?.company_name}
                 </div>
-                <div className=" col-span-9 break-words">{each}</div>
               </div>
-            ))}
-          </div>
-          <div className="border">
-            <Button onClick={ClickHandler}>Edit</Button>
+
+              <div className="grid grid-cols-10 w-full mb-2">
+                <div className=" col-span-2 border flex justify-center">
+                  Position:
+                </div>
+                <div className=" col-span-8 break-words">
+                  {data_csr?.job_details?.job_position}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-10 w-full mb-2">
+                <div className=" col-span-2 border flex justify-center">
+                  Website:
+                </div>
+                <div className=" col-span-8 break-words">
+                  {data_csr?.job_details?.website}
+                </div>
+              </div>
+            </div>
+            <div className="border">
+              <div className="text-xl font-black text-gray-900 ">Matches</div>
+              {data_csr?.matches?.map((each: string[], i: number) => (
+                <div key={i} className="grid grid-cols-10 w-full mb-2">
+                  <div className=" col-span-1 border flex justify-center">
+                    {i + 1}
+                  </div>
+                  <div className=" col-span-9 break-words">{each}</div>
+                </div>
+              ))}
+            </div>
+            <div className="border">
+              <div className="text-xl font-black text-gray-900 ">
+                Un-Matches
+              </div>
+              {data_csr?.unmatches?.map((each: string[], i: number) => (
+                <div key={i} className="grid grid-cols-10 w-full mb-2">
+                  <div className=" col-span-1 border flex justify-center">
+                    {i + 1}
+                  </div>
+                  <div className=" col-span-9 break-words">{each}</div>
+                </div>
+              ))}
+            </div>
+            <div className="border">
+              <Button onClick={ClickHandler}>Edit</Button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
