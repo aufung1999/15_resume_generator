@@ -20,7 +20,7 @@ import toast, { Toaster } from "react-hot-toast";
 import DOMPurify from "dompurify";
 
 import * as htmlToImage from "html-to-image";
-import Revalidate from "./Match/Revalidate";
+import Revalidate from "./Revalidation/Revalidate";
 import Statistic from "./Match/Statistic";
 
 import { useSearchParams } from "next/navigation";

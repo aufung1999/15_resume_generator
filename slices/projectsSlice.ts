@@ -34,6 +34,7 @@ const projectsSlice = createSlice({
           const newObject: any = window.localStorage.getItem("stage_3");
           JSON.parse(newObject)?.map((each: any) => {
             each.match_index === index &&
+              // no:1
               match_index.push({ match_index_1st: index }),
               ProjectDescription?.map(
                 (item: { Row: string; rowIndex: string }) =>
@@ -54,21 +55,24 @@ const projectsSlice = createSlice({
             ProjectDescription: ProjectDescription,
             display_in_Resume: false,
           };
+          //-------------------------------------------------------------------------------
           //Condition add to array,
           //"unshift" is to add at the beginning:
           //"push" is to add at the end
 
-          match_index.includes(index) ? (Data.display_in_Resume = true) : null;
           // console.log(match_index);
           ProjectDescription?.map((each: { Row: string; rowIndex: string }) =>
             match_index.some(
               (item) =>
-                item?.match_index_1st === index &&
+                // no:1
+                // the reason to use "||" becuz it is "safe"
+                item?.match_index_1st === index ||
                 item?.match_index_2nd === each.rowIndex
             )
               ? (Data.display_in_Resume = true)
               : null
           );
+          //-------------------------------------------------------------------------------
           Data?.display_in_Resume === true
             ? state.unshift(Data)
             : state.push(Data);

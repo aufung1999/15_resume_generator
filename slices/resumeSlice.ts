@@ -50,7 +50,7 @@ const analyseSlice = createSlice({
       state.control_highlight_dsiplay = !select;
     },
     editResume_stage_4: (state, action) => {
-      const { index_1st, JobDescription, whichSection, index_2nd } =
+      const { index_1st, Description, whichSection, index_2nd } =
         action.payload;
 
       if (whichSection === "work") {
@@ -59,13 +59,29 @@ const analyseSlice = createSlice({
           (each) => each.index_1st === index_1st && each.index_2nd === index_2nd
         );
         if (check) {
-          check.JobDescription = JobDescription;
+          check.JobDescription = Description;
           return;
         }
         state.stage_4.work.push({
           index_1st: index_1st,
           index_2nd: index_2nd,
-          JobDescription: JobDescription,
+          JobDescription: Description,
+        });
+      }
+
+      if (whichSection === "project") {
+        //find the EXISTed target
+        const check = state.stage_4.project.find(
+          (each) => each.index_1st === index_1st && each.index_2nd === index_2nd
+        );
+        if (check) {
+          check.ProjectDescription = Description;
+          return;
+        }
+        state.stage_4.project.push({
+          index_1st: index_1st,
+          index_2nd: index_2nd,
+          ProjectDescription: Description,
         });
       }
     },
