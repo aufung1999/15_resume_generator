@@ -8,9 +8,7 @@ export default function ResumeLayout({
 }) {
   return (
     <div className=" flex flex-col border-8 border-yellow-300">
-      <Suspense fallback={<Loading />}>
-        <div className=" w-full">{children}</div>
-      </Suspense>
+      <div className=" w-full">{children}</div>
     </div>
   );
 }

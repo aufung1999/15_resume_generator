@@ -8,6 +8,7 @@ const resumeSchema = new mongoose.Schema(
     Matches: { type: String, required: false },
     Unmatches: { type: String, required: false },
     Job_Details: { type: String, required: false },
+    Response: { type: String, required: false },
   },
   { timestamps: true }
 );

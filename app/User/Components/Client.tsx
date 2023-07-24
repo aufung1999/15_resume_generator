@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { editAPI_KEY, switch_Components } from "@/slices/controlSlice";
 
 import { useSearchParams } from "next/navigation";
-import Resume from "./Resumes";
+import Resumes from "./Resumes";
 
 export default function UserClient({ data }: any) {
   const searchParams = useSearchParams();
@@ -36,7 +36,7 @@ export default function UserClient({ data }: any) {
         className=" w-full"
         onClick={() => dispatch(switch_Components({ select: "Resumes" }))}
       >
-        Resume
+        Resumes
       </Button>
       <div className="grid grid-cols-3">
         <Button
@@ -70,7 +70,7 @@ export default function UserClient({ data }: any) {
       </div>
       <div className="w-full h-full relative border-4">
         <div className={switch_tab === "Resumes" ? " w-full" : "hidden"}>
-          <Resume resumeData={data.resumeData} />
+          <Resumes resumeData={data.resumeData} />
         </div>
         <div className={switch_tab === "Contact" ? " w-full" : "hidden"}>
           <ContactClient data={data.contact} />

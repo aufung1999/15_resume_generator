@@ -51,7 +51,7 @@ export default async function Home() {
     });
     if (awardData) {
       // awardData = awardData.map((each) => db.convertDocToObj(each));
-      awardData = JSON.parse(JSON.stringify(awardData));
+      awardData = awardData.map((each) => db.convertDocToObj(each));
     }
     //fetch Objective
     objectiveData = await Objective.find({
@@ -59,7 +59,7 @@ export default async function Home() {
     });
     if (objectiveData) {
       // objectiveData = objectiveData.map((each) => db.convertDocToObj(each));
-      objectiveData = JSON.parse(JSON.stringify(objectiveData));
+      objectiveData = objectiveData.map((each) => db.convertDocToObj(each));
     }
     //fetch Skill
     skillData = await Skill.find({
@@ -67,7 +67,7 @@ export default async function Home() {
     });
     if (skillData) {
       // skillData = skillData.map((each) => db.convertDocToObj(each));
-      skillData = JSON.parse(JSON.stringify(skillData));
+      skillData = skillData.map((each) => db.convertDocToObj(each));
     }
 
     clientData = {
@@ -78,8 +78,6 @@ export default async function Home() {
       skill: skillData,
       objective: objectiveData,
     };
-
-    
   }
 
   return (

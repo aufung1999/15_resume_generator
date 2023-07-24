@@ -7,6 +7,10 @@ import { NextResponse } from "next/server";
 import Resume from "@/models/Resume";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+export interface IGetUserAuthInfoRequest extends NextApiRequest {
+  json: any; // or any other type
+}
+
 export async function GET(
   req: NextApiRequest,
   { params }: { params: string },
@@ -27,6 +31,35 @@ export async function GET(
 
     if (exist) {
       return NextResponse.json(exist);
+    }
+  } else {
+    // Not Signed in
+    res.status(401);
+  }
+  res.end();
+}
+
+export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    // Signed in
+    const body = await req.json();
+    // console.log(body);
+    const { resumeID, response } = body;
+
+    db.connect();
+    if (resumeID) {
+      console.log("resumeID: " + resumeID);
+      console.log("response: " + response);
+      const filter = { _id: resumeID };
+      const update = {
+        Response: response,
+      };
+
+      db.disconnect();
+      await Resume.findOneAndUpdate(filter, update);
+      return NextResponse.json({ message: "Response Value Updated" });
     }
   } else {
     // Not Signed in

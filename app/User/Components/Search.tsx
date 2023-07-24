@@ -8,10 +8,14 @@ import { RootState } from "@/store/store";
 import { addSearchBar_redux, editSearch } from "@/slices/controlSlice";
 import extractTerms from "@/app/analyse/Functions/extractTerms";
 
+import { Tooltip } from "@mui/material";
+
 var stringSimilarity = require("string-similarity");
 
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
+
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 export default function Search({
   resume_csr,
@@ -38,7 +42,12 @@ export default function Search({
               stringSimilarity.findBestMatch(
                 item.input?.toLowerCase(),
                 extractTerms(each.job_details.website, "search")
-              ).bestMatch.rating > 0.6)
+              ).bestMatch.rating > 0.6) ||
+            (item.input &&
+              stringSimilarity.findBestMatch(
+                item.input?.toLowerCase(),
+                extractTerms(each.response, "search")
+              ).bestMatch.rating > 0.9)
         )
       );
       //   console.log(filtered_array);
@@ -84,13 +93,20 @@ export default function Search({
           <div key={i}>{each}</div>
         ))}
       </div>
-      <Button
-        icon={<Icon icon="search" className="" style={{ color: "white" }} />}
-        onClick={searchHandler}
-        style={{
-          backgroundColor: "rgba(0,120,255,1)",
-        }}
-      />
+      <div className="relative flex flex-col">
+        <Button
+          icon={<Icon icon="search" className="" style={{ color: "white" }} />}
+          onClick={searchHandler}
+          style={{
+            backgroundColor: "rgba(0,120,255,1)",
+          }}
+        />
+        <div className=" absolute z-20 left-full">
+          <Tooltip title={<>if you want to find "Response" resume, type "true" or "false"</>}>
+            <ErrorOutlineIcon />
+          </Tooltip>
+        </div>
+      </div>
     </div>
   );
 }

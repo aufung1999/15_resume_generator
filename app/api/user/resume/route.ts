@@ -45,6 +45,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
         Matches: matches,
         Unmatches: unmatches,
         Job_Details: job_details,
+        Response: "false",
       });
       db.disconnect();
       await resume.save();
