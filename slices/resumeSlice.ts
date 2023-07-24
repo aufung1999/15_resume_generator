@@ -16,7 +16,7 @@ export interface resumeState {
   match_skill: any[];
   switch_Statistic: boolean;
   control_highlight_dsiplay: boolean;
-  stage_4: { work: any[]; project: any[] };
+  stage_4: { work: any[]; project: any[]; skill: any[] };
   force_to_update: any;
 }
 
@@ -25,7 +25,7 @@ const initialState: resumeState = {
   match_skill: [],
   switch_Statistic: false,
   control_highlight_dsiplay: true,
-  stage_4: { work: [], project: [] },
+  stage_4: { work: [], project: [], skill: [] },
   force_to_update: "",
 };
 
@@ -82,6 +82,21 @@ const analyseSlice = createSlice({
           index_1st: index_1st,
           index_2nd: index_2nd,
           ProjectDescription: Description,
+        });
+      }
+
+      if (whichSection === "skill") {
+        //find the EXISTed target
+        const check = state.stage_4.skill.find(
+          (each) => each.index_1st === index_1st && each.index_2nd === index_2nd
+        );
+        if (check) {
+          check.SkillDescription = Description;
+          return;
+        }
+        state.stage_4.skill.push({
+          index_1st: index_1st,
+          SkillDescription: Description,
         });
       }
     },

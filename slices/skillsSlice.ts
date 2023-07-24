@@ -13,7 +13,7 @@ const awardSlice = createSlice({
   name: "skills",
   initialState,
   reducers: {
-    cleanUp_Skill_redux:() => initialState,
+    cleanUp_Skill_redux: () => initialState,
     initialize_SkillData: (state, action: PayloadAction<string>) => {
       const { index, term, Skill_list }: any = action.payload;
       //if the "stage_3" data exists
@@ -29,8 +29,8 @@ const awardSlice = createSlice({
         if (typeof window !== "undefined") {
           if (localStorage.getItem("stage_3")) {
             stage_3_exist = true;
-            const newObject: any = window.localStorage.getItem("stage_3");
-            JSON.parse(newObject)?.map(
+            const stage_3_ls: any = window.localStorage.getItem("stage_3");
+            JSON.parse(stage_3_ls)?.map(
               (each: any) =>
                 each.match_index_2nd && match_index.push(each.match_index_2nd)
             );
@@ -49,6 +49,38 @@ const awardSlice = createSlice({
       };
       //push the tidied up data into state
       state.push(Data);
+    },
+    update_revalidation: (state, action: PayloadAction<string>) => {
+      const { index, term, Skill_list }: any = action.payload;
+      const Term: any = state.find((each) => each.index === index);
+      //if the "stage_3" data exists
+      let stage_3_exist = false;
+      //get the index from "stage_3"
+      let match_index: any[] = [];
+      //clone the data of ORIGINAL "Skill_list" data
+      let arrayForSort: any[] = [];
+      //REARRANGE of "Skill_list"
+      let rearrange_Skill_list;
+
+      if (Skill_list.length !== 0) {
+        if (typeof window !== "undefined") {
+          if (localStorage.getItem("stage_3")) {
+            stage_3_exist = true;
+            const stage_3_ls: any = window.localStorage.getItem("stage_3");
+            JSON.parse(stage_3_ls)?.map(
+              (each: any) =>
+                each.match_index_2nd && match_index.push(each.match_index_2nd)
+            );
+
+            rearrange_Skill_list = arrayForSort
+              .concat(Skill_list)
+              .sort((a, b) => (match_index.includes(a.skillIndex) ? -1 : 1));
+          }
+          if (Term) {
+            Term.Skill_list = rearrange_Skill_list;
+          }
+        }
+      }
     },
     addTerm: (state, action) => {
       state.push(action.payload);
@@ -116,6 +148,7 @@ const awardSlice = createSlice({
 export const {
   cleanUp_Skill_redux,
   initialize_SkillData,
+  update_revalidation,
   addTerm,
   deleteTerm,
   editTermName,
