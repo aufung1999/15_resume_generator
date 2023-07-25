@@ -66,7 +66,13 @@ export default function Resume({ resumeData }: { resumeData: any }) {
         {/* if the grid-cols-3 changes, Remember to change the show left or right */}
         <div className="grid grid-cols-3 gap-3 place-items-start relative">
           {resumes_csr?.map((each: any, i: number) => (
-            <EachResume each={each} i={i} key={i} resumes_csr={resumes_csr} />
+            <div key={i}>
+              <EachResume
+                each={each}
+                key={"resume-" + i}
+                resumes_csr={resumes_csr}
+              />
+            </div>
           ))}
         </div>
       </div>

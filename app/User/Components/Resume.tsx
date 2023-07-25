@@ -44,11 +44,9 @@ const CustomWidthTooltip = styled(
 
 export default function EachResume({
   each,
-  i,
   resumes_csr,
 }: {
   each: any;
-  i: number;
   resumes_csr: any;
 }) {
   const router = useRouter();
@@ -89,7 +87,7 @@ export default function EachResume({
       .catch(() => toast.error("Cannot Update Response Status!"));
   };
   return (
-    <div key={i} className="group/left relative">
+    <div className="group/left relative">
       <Toaster />
       {/* 1 */}
       {/* Job Description */}
@@ -225,7 +223,7 @@ export default function EachResume({
               <div className=" font-bold flex justify-center">Matches</div>
               <div className="break-words">
                 {each.matches?.map((item: string, ind: number) => (
-                  <div className="flex ">
+                  <div className="flex " key={"match" + ind}>
                     <div>{ind + 1}: </div>
                     <div className=" ">{item}</div>
                   </div>
@@ -234,7 +232,7 @@ export default function EachResume({
               <div className=" font-bold flex justify-center">Un-Matches</div>
               <div className="break-words">
                 {each.unmatches?.map((item: string, ind: number) => (
-                  <div className="flex break-words">
+                  <div className="flex break-words" key={"unmatch" + ind}>
                     <div>{ind + 1}: </div>
                     <div>{item}</div>
                   </div>

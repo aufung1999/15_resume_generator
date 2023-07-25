@@ -33,8 +33,8 @@ const contactSlice = createSlice({
   name: "contact",
   initialState,
   reducers: {
-    cleanUp_Contact_redux:() => initialState,
-    initialize_ClientData: (state, action: PayloadAction<string>) => {
+    cleanUp_Contact_redux: () => initialState,
+    initialize_ClientData: (state, action: PayloadAction<ContactState>) => {
       const {
         FirstName,
         LastName,

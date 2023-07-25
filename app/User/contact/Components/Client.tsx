@@ -40,14 +40,35 @@ export default function ContactClient({ data }: any) {
   const contact = useSelector((state: RootState) => state.contact);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(cleanUp_Contact_redux());
     if (data) {
       dispatch(initialize_ClientData(data));
     }
+    setDispatched(true);
   }, [data]);
 
+  //----------------------------------------------------------------------------------
+  const [dispatched, setDispatched] = useState(false);
+  const [copyData, setCopy] = useState(null);
+  const [remind, setRemind] = useState(false);
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (dispatched) {
+      setCopy(JSON.parse(JSON.stringify(contact)));
+    }
+  }, [dispatched]);
+
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (copyData) {
+      JSON.stringify(copyData) === JSON.stringify(contact)
+        ? setRemind(false)
+        : setRemind(true);
+    }
+  }, [contact]);
+
+  //----------------------------------------------------------------------------------
   // Save to server
   const SubmitHandler = () => {
     // console.log(contact);
@@ -63,10 +84,10 @@ export default function ContactClient({ data }: any) {
       .catch(() => toast.error("Cannot Update!"));
   };
   return (
-    <Card
-      className="border border-blue-600 flex-1"
-      interactive={false}
-      elevation={Elevation.TWO}
+    <div
+      className={`border border-blue-600 flex-1 ${
+        remind ? " bg-red-300" : " bg-green-200"
+      }`}
     >
       <Toaster />
       <h1>Contact</h1>
@@ -79,15 +100,15 @@ export default function ContactClient({ data }: any) {
             labelInfo="(required)"
             className="w-full border "
           >
-              <InputGroup
-                id="text-input"
-                placeholder=""
-                autoComplete="given-name"
-                onChange={(e) => dispatch(editFirstName(e.target.value))}
-                fill={true}
-                value={contact.FirstName}
-                className="w-full border overflow-hidden"
-              />
+            <InputGroup
+              id="text-input"
+              placeholder=""
+              autoComplete="given-name"
+              onChange={(e) => dispatch(editFirstName(e.target.value))}
+              fill={true}
+              value={contact.FirstName}
+              className="w-full border overflow-hidden"
+            />
           </FormGroup>
 
           <FormGroup
@@ -231,6 +252,6 @@ export default function ContactClient({ data }: any) {
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
       </Button>
-    </Card>
+    </div>
   );
 }
