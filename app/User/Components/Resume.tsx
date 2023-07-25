@@ -22,20 +22,39 @@ import toast, { Toaster } from "react-hot-toast";
 import { styled } from "@mui/material/styles";
 
 const CustomWidthTooltip = styled(
-  ({ className, ...props }: { className: string }) => (
-    <Tooltip {...props} classes={{ popper: className }} />
+  ({
+    title,
+    children,
+    className,
+    ...props
+  }: {
+    className: string;
+    title: React.ReactNode;
+    children: React.ReactElement;
+  }) => (
+    <Tooltip {...props} title={title} classes={{ popper: className }}>
+      {children}
+    </Tooltip>
   )
 )({
   [`& .${tooltipClasses.tooltip}`]: {
     maxWidth: 400,
   },
-});
+}) as typeof Tooltip;
 
-export default function EachResume({ each, i, resumes_csr }) {
+export default function EachResume({
+  each,
+  i,
+  resumes_csr,
+}: {
+  each: any;
+  i: number;
+  resumes_csr: any;
+}) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [responseValue, setResponseValue] = useState<string>(null);
+  const [responseValue, setResponseValue] = useState<string | null>(null);
 
   useEffect(() => {
     setResponseValue(each.response);
@@ -110,7 +129,9 @@ export default function EachResume({ each, i, resumes_csr }) {
           value="true"
           onClick={() => toggleButtonHandler(each._id, "true")}
           style={
-            responseValue === "true" ? { background: Colors.GREEN5 } : null
+            responseValue === "true"
+              ? { background: Colors.GREEN5 }
+              : { background: Colors.WHITE }
           }
         >
           <div>
@@ -122,7 +143,11 @@ export default function EachResume({ each, i, resumes_csr }) {
           className="w-full bg-red-400"
           value="false"
           onClick={() => toggleButtonHandler(each._id, "false")}
-          style={responseValue === "false" ? { background: Colors.RED5 } : null}
+          style={
+            responseValue === "false"
+              ? { background: Colors.RED5 }
+              : { background: Colors.WHITE }
+          }
         >
           <div>
             <CloseIcon style={{ fill: "red" }} />
@@ -132,7 +157,7 @@ export default function EachResume({ each, i, resumes_csr }) {
       {/* 2 */}
       {/* The image and the introduction */}
       <div
-        className=" border-4 flex hover:z-20 z-10"
+        className=" border-4 flex hover:z-20 z-10 hover:scale-[1.8] transition duration-300"
         onClick={() => ClickHandler(each._id)}
       >
         <CustomWidthTooltip
@@ -218,11 +243,10 @@ export default function EachResume({ each, i, resumes_csr }) {
             </div>
           }
           placement="right"
-          enterDelay={450}
-          // followCursor
+          enterDelay={550}
         >
           <img
-            className="hover:scale-[1.8] hover:absolute hover:z-20 transition duration-300"
+            className=""
             src={each.image.src}
             alt=""
             onMouseEnter={() =>

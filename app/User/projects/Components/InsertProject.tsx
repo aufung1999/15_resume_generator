@@ -36,10 +36,12 @@ import { ProjectState } from "@/slices/projectsSlice";
 
 import toast, { Toaster } from "react-hot-toast";
 
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type Props = {
   index: string;
@@ -80,7 +82,6 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
             })
           )
         }
-        
       />
     </div>
   );

@@ -50,7 +50,7 @@ const awardSlice = createSlice({
       //push the tidied up data into state
       state.push(Data);
     },
-    update_revalidation: (state, action: PayloadAction<string>) => {
+    update_revalidation: (state, action: PayloadAction<SkillsState>) => {
       const { index, term, Skill_list }: any = action.payload;
       const Term: any = state.find((each) => each.index === index);
       //if the "stage_3" data exists

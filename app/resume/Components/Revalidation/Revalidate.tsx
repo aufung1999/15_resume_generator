@@ -7,6 +7,7 @@ import { FORCE_to_UPDATE, editResume_stage_4 } from "@/slices/resumeSlice";
 import compare from "@/app/analyse/Functions/compare";
 import extractTerms from "@/app/analyse/Functions/extractTerms";
 import {
+  SkillsState,
   initialize_SkillData,
   update_revalidation,
 } from "@/slices/skillsSlice";
@@ -121,7 +122,7 @@ export default function Revalidate() {
       if (localStorage.getItem("unmatches")) {
         const unmatches_ls: any = window.localStorage.getItem("unmatches");
         let fetch_stage_2: any[] = [];
-        JSON.parse(unmatches_ls).map((each, index) =>
+        JSON.parse(unmatches_ls).map((each: string, index: number) =>
           fetch_stage_2.push({
             index: each,
             array: extractTerms(each, "input"),
@@ -175,8 +176,10 @@ export default function Revalidate() {
         JSON.stringify(unmatches_ls_revalidated)
       );
 
-      //Update the index of 
-      skills_redux?.map((each) => dispatch(update_revalidation(each)));
+      //Update the index of
+      skills_redux?.map((each: SkillsState) =>
+        dispatch(update_revalidation(each))
+      );
       //After everything update the Client side page
       dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     }

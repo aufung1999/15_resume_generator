@@ -26,7 +26,7 @@ export default async function Page() {
 
   return (
     <div>
-      <ContactClient data={contactData} />
+      <ContactClient data={JSON.parse(JSON.stringify(contactData))} />
     </div>
   );
 }

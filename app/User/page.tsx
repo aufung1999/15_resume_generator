@@ -13,7 +13,6 @@ import Skill from "@/models/Skill";
 import Project from "@/models/Project";
 import UserClient from "./Components/Client";
 
-
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
@@ -108,7 +107,7 @@ export default async function Page() {
     <div className=" w-full items-center justify-between font-mono text-sm lg:flex border-4">
       {/* h-screen */}
       <div className="w-full flex flex-row border-2">
-        <UserClient data={clientData} />
+        <UserClient data={JSON.parse(JSON.stringify(clientData))} />
       </div>
     </div>
   );
