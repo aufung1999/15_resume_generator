@@ -273,7 +273,9 @@ export default function InsertWorkExp({ data }: any) {
         dispatch(initialize_WorkData(each));
       });
     }
-  }, []);
+  }, [data]);
+
+  //----------------------------------------------------------------------------------
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -283,7 +285,7 @@ export default function InsertWorkExp({ data }: any) {
       });
       editWorkExps(temp_arr);
     }
-  }, [work]);
+  }, [work, data]);
 
   //---------------ADD/DELETE-------------------
   const addExp = () => {

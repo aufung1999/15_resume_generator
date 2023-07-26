@@ -268,6 +268,7 @@ export default function InsertProject({ data }: any) {
   }, [data]);
 
   //----------------------------------------------------------------------------------
+  
   useEffect(() => {
     let temp_arr: any[] = [];
     if (projects_redux.length !== 0) {
