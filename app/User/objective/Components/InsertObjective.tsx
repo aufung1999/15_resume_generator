@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   Button,
   Card,
@@ -36,13 +37,16 @@ type Props = {
 };
 
 const InputComp = ({ index, data }: Props) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  const objectives: ObjectiveState[] = useSelector(
+  const objectives_redux: ObjectiveState[] = useSelector(
     (state: RootState) => state.objectives
   );
-  const objective = objectives.find((each) => each.index === index);
+  const objective = objectives_redux.find((each) => each.index === index);
 
   useEffect(() => {
     //Copy the "initialized" data from the database
@@ -63,6 +67,26 @@ const InputComp = ({ index, data }: Props) => {
         : setRemind(true);
     }
   }, [objective]);
+
+  //---------------Save to Server-------------------
+  const SubmitHandler = () => {
+    fetch("/api/user/objective", {
+      //add this route later
+      method: "POST",
+      body: JSON.stringify(objective),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("User Projects Updated!"))
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
 
   return (
     <div
@@ -105,6 +129,11 @@ const InputComp = ({ index, data }: Props) => {
           fill
         />
       </FormGroup>
+      {remind && (
+        <Button className="" intent="warning" onClick={SubmitHandler}>
+          Submit
+        </Button>
+      )}
     </div>
   );
 };
