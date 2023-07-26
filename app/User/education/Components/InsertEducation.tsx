@@ -168,7 +168,7 @@ const InputComp = ({ index, data }: Props) => {
         {/* ---------------------------Time Related-------------------------- */}
       </FormGroup>
       {remind && (
-        <Button className="" intent="warning" onClick={SubmitHandler}>
+        <Button className=" w-full" intent="warning" onClick={SubmitHandler}>
           Submit
         </Button>
       )}
