@@ -42,6 +42,7 @@ type Props = {
 };
 
 const InputComp = ({ index }: Props) => {
+  const pathname = usePathname();
   const dispatch = useDispatch();
 
   const education_redux: EducationState[] = useSelector(
@@ -49,8 +50,39 @@ const InputComp = ({ index }: Props) => {
   );
   const education = education_redux.find((each) => each.index === index);
 
+  const [dispatched, setDispatched] = useState(false);
+
+  useEffect(() => {
+    setDispatched(true);
+  }, []);
+
+  //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
+  const [copyData, setCopy] = useState(null);
+  const [remind, setRemind] = useState(false);
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (dispatched) {
+      setCopy(JSON.parse(JSON.stringify(education)));
+    }
+  }, [dispatched]);
+
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
+      JSON.stringify(copyData) === JSON.stringify(education)
+        ? setRemind(false)
+        : setRemind(true);
+    }
+  }, [education]);
+
   return (
-    <Card interactive={false} style={{ background: "white", color: "black" }}>
+    <div
+      style={{ color: "black" }}
+      className={`w-full h-full
+    ${pathname.split("/").includes("user") ? "px-5" : ""}
+    ${remind ? " bg-red-300" : " bg-green-200"}`}
+    >
       {/* hide the index */}
       {/* <h3>Education {index}</h3> */}
 
@@ -116,7 +148,7 @@ const InputComp = ({ index }: Props) => {
         </div>
         {/* ---------------------------Time Related-------------------------- */}
       </FormGroup>
-    </Card>
+    </div>
   );
 };
 

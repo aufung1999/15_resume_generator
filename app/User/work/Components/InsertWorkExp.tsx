@@ -89,6 +89,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
 const InputComp = ({ index }: Props) => {
+  const pathname = usePathname();
   const dispatch = useDispatch();
 
   const works: WorkExpState[] = useSelector((state: RootState) => state.work);
@@ -152,7 +153,12 @@ const InputComp = ({ index }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "white", color: "black" }}>
+    <div
+      style={{ color: "black" }}
+      className={`w-full h-full
+    ${pathname.split("/").includes("user") ? "px-5" : ""}
+    ${remind ? " bg-red-300" : " bg-green-200"}`}
+    >
       {/* hide the index */}
       {/* <h3>Company {index}</h3> */}
 
@@ -211,7 +217,7 @@ const InputComp = ({ index }: Props) => {
         </div>
         {/* ---------------------------Dynamic-------------------------- */}
         Job Description:{" "}
-        <div className="w-full">
+        <div className="w-full flex flex-col justify-between h-full">
           {row?.map((each: any, i: number) => (
             <div key={i} className="border-2 relative">
               <Button
@@ -219,7 +225,7 @@ const InputComp = ({ index }: Props) => {
                   backgroundColor: "rgba(255,0,0,0.6)",
                   borderRadius: "25% 10%",
                 }}
-                className="absolute top-0 right-0 "
+                className="absolute top-0 right-0 z-10"
                 onClick={(e) => deleteRow(e, each.key)}
                 icon={
                   <Icon
@@ -246,7 +252,7 @@ const InputComp = ({ index }: Props) => {
           />
         </div>
       </FormGroup>
-    </Card>
+    </div>
   );
 };
 
@@ -330,7 +336,7 @@ export default function InsertWorkExp({ data }: any) {
         {workExps?.map((each: any, i: number) => (
           <div key={i} className="w-full border-2 relative">
             <Button
-              className="absolute top-0 right-0 "
+              className="absolute top-0 right-0 z-10"
               style={{
                 backgroundColor: "rgba(255,0,0,0.6)",
                 borderRadius: "25% 10%",

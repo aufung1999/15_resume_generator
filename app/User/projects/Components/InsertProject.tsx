@@ -113,7 +113,7 @@ const InputComp = ({ index }: Props) => {
 
     editRow(temp_arr);
     setDispatched(true);
-  }, []);
+  }, [target_project]);
 
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
   const [copyData, setCopy] = useState(null);
@@ -123,6 +123,7 @@ const InputComp = ({ index }: Props) => {
     if (dispatched) {
       setCopy(JSON.parse(JSON.stringify(target_project)));
     }
+    setDispatched(false);
   }, [dispatched]);
 
   //Copy the "initialized" data from the database
@@ -208,7 +209,7 @@ const InputComp = ({ index }: Props) => {
         />
         {/* ---------------------------Dynamic-------------------------- */}
         Project Description:{" "}
-        <div className="w-full">
+        <div className="w-full flex flex-col justify-between h-full">
           {row?.map((each: any, i: number) => (
             <div key={i} className="border-2 relative">
               <Button
@@ -275,7 +276,7 @@ export default function InsertProject({ data }: any) {
       });
       editProjects(temp_arr);
     }
-  }, [projects_redux]);
+  }, [projects_redux, data]);
 
   //---------------ADD/DELETE-------------------
   const addProj = () => {
@@ -311,7 +312,7 @@ export default function InsertProject({ data }: any) {
   };
   //***/
   return (
-    <div className="flex flex-col justify-between h-full">
+    <div className="">
       <div
         className={`
           grid grid-cols-1 border border-green-300 ${

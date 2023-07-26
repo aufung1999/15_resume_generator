@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useTransition } from "react";
 import {
   Button,
   Card,
@@ -13,8 +13,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import InsertProject from "./InsertProject";
+import { useRouter } from "next/navigation";
 
 export default function ProjectClient({ data }: any) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const projects_redux = useSelector((state: RootState) => state.projects);
 
   // Save to server
@@ -29,6 +33,12 @@ export default function ProjectClient({ data }: any) {
     })
       .then(() => toast.success("User Projects Updated!"))
       .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
   };
   return (
     <div className="border border-blue-600 flex-1 ">
