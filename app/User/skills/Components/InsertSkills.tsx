@@ -1,5 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -43,6 +46,9 @@ type Props = {
 // Child Component: X
 //Parent Component: InsertSkills
 const TermComp = ({ index, data }: Props) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -92,6 +98,26 @@ const TermComp = ({ index, data }: Props) => {
     // editRow(after_remove);
   };
   //***/
+
+  //---------------Save to Server-------------------
+  const SubmitHandler = () => {
+    fetch("/api/user/skill", {
+      //add this route later
+      method: "POST",
+      body: JSON.stringify(skill),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("User Projects Updated!"))
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
 
   return (
     <div
@@ -158,7 +184,7 @@ const TermComp = ({ index, data }: Props) => {
           </div>
         </div>
       ))}
-      <div className="flex mt-5 ">
+      <div className="flex mt-5 flex-col w-full">
         <InputGroup
           fill
           onChange={(e) => setSkillName(e.target.value)}
@@ -172,6 +198,11 @@ const TermComp = ({ index, data }: Props) => {
           }}
           small
         />
+        {remind && (
+          <Button className="" intent="warning" onClick={SubmitHandler}>
+            Submit
+          </Button>
+        )}
       </div>
     </div>
   );
