@@ -1,5 +1,8 @@
 "use client";
-import React from "react";
+
+import React, { useTransition } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -14,7 +17,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import InsertObjective from "./InsertObjective";
 
-export default function ObjectiveClient({ data }) {
+export default function ObjectiveClient({ data }: any) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const objectives = useSelector((state: RootState) => state.objectives);
   // Save to server
   const SubmitHandler = () => {
@@ -27,6 +33,12 @@ export default function ObjectiveClient({ data }) {
     })
       .then(() => toast.success("User Objective Updated!"))
       .catch(() => toast.error("Cannot Update!"));
+
+      startTransition(() => {
+        // Refresh the current route and fetch new data from the server without
+        // losing client-side browser or React state.
+        router.refresh();
+      });
   };
   return (
     <div className="border border-blue-600 flex-1 ">

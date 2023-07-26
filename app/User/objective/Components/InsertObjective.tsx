@@ -32,9 +32,10 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
+  data: any;
 };
 
-const InputComp = ({ index }: Props) => {
+const InputComp = ({ index, data }: Props) => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -42,6 +43,26 @@ const InputComp = ({ index }: Props) => {
     (state: RootState) => state.objectives
   );
   const objective = objectives.find((each) => each.index === index);
+
+  useEffect(() => {
+    //Copy the "initialized" data from the database
+    setCopy(objective);
+    setRemind(false);
+  }, [data]);
+
+  //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
+  const [copyData, setCopy] = useState<any | null>(null);
+  const [remind, setRemind] = useState(false);
+
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
+      JSON.stringify(copyData) === JSON.stringify(objective)
+        ? setRemind(false)
+        : setRemind(true);
+    }
+  }, [objective]);
 
   return (
     <div className="w-full " style={{ background: "white", color: "black" }}>
@@ -94,17 +115,19 @@ export default function InsertObjective({ data }: any) {
         dispatch(initialize_ObjectiveData(each));
       });
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     let temp_arr: any[] = [];
     if (objective_redux.length !== 0) {
       objective_redux.map((each) => {
-        temp_arr.push(<InputComp key={each.index} index={each.index} />);
+        temp_arr.push(
+          <InputComp key={each.index} index={each.index} data={data} />
+        );
       });
       editobjectives(temp_arr);
     }
-  }, [objective_redux]);
+  }, [objective_redux, data]);
 
   //---------------ADD/DELETE-------------------
   const addObj = () => {
@@ -115,7 +138,9 @@ export default function InsertObjective({ data }: any) {
     dispatch(addObjective({ index: short_id }));
     //update the useState of "educations"
     editobjectives(
-      objectives.concat(<InputComp key={short_id} index={short_id} />)
+      objectives.concat(
+        <InputComp key={short_id} index={short_id} data={data} />
+      )
     );
   };
 
