@@ -1,5 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+
+import { useRouter } from "next/navigation";
 
 import {
   Button,
@@ -37,8 +39,10 @@ import toast, { Toaster } from "react-hot-toast";
 import useSWR from "swr";
 
 export default function ContactClient({ data }: any) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const contact = useSelector((state: RootState) => state.contact);
-  const [dispatched, setDispatched] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,18 +50,14 @@ export default function ContactClient({ data }: any) {
     if (data) {
       dispatch(initialize_ClientData(data));
     }
-    setDispatched(true);
+    //Copy the "initialized" data from the database
+    setCopy(contact);
+    setRemind(false);
   }, [data]);
 
   //----------------------------------------------------------------------------------
-  const [copyData, setCopy] = useState(null);
+  const [copyData, setCopy] = useState<any | null>(null);
   const [remind, setRemind] = useState(false);
-  //Copy the "initialized" data from the database
-  useEffect(() => {
-    if (dispatched) {
-      setCopy(JSON.parse(JSON.stringify(contact)));
-    }
-  }, [dispatched]);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
@@ -83,6 +83,12 @@ export default function ContactClient({ data }: any) {
     })
       .then(() => toast.success("User Contact Info Updated!"))
       .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
   };
   return (
     <div

@@ -1,5 +1,7 @@
 "use client";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -92,6 +94,8 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
 const InputComp = ({ index, data }: Props) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -157,6 +161,25 @@ const InputComp = ({ index, data }: Props) => {
   };
   //***/
 
+  //---------------Save to Server-------------------
+  const SubmitHandler = () => {
+    fetch("/api/user/project", {
+      //add this route later
+      method: "POST",
+      body: JSON.stringify(projects_redux),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("User Projects Updated!"))
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
   return (
     <div
       style={{ color: "black" }}
@@ -236,6 +259,11 @@ const InputComp = ({ index, data }: Props) => {
             }}
             small
           />
+          {remind && (
+            <Button className="" intent="warning" onClick={SubmitHandler}>
+              Submit
+            </Button>
+          )}
         </div>
       </FormGroup>
     </div>
