@@ -65,7 +65,15 @@ const InputComp = ({ index, data }: Props) => {
   }, [objective]);
 
   return (
-    <div className="w-full " style={{ background: "white", color: "black" }}>
+    <div
+      className={`
+    w-full border
+    ${pathname.split("/").includes("user") ? "  px-5 " : ""}
+    ${pathname.split("/").includes("resume") ? " " : ""}
+    ${remind ? " bg-red-300" : " bg-green-200"}
+      `}
+      style={{ color: "black" }}
+    >
       <div className="flex-row">
         {/* hide the index */}
         {/* <h3>Objective {index}</h3> */}
