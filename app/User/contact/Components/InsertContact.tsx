@@ -48,6 +48,11 @@ export default function InsertContact({ data }: { data: any }) {
   const [remind, setRemind] = useState(false);
 
   //----------------------------------------------------------------------------------
+  useEffect(() => {
+    //Copy the "initialized" data from the database
+    setRemind(false);
+    setCopy(contact_redux);
+  }, [data]);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
