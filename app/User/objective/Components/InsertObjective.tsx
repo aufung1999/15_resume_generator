@@ -73,7 +73,7 @@ const InputComp = ({ index, data }: Props) => {
     fetch("/api/user/objective", {
       //add this route later
       method: "POST",
-      body: JSON.stringify(objective),
+      body: JSON.stringify(objectives_redux),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },

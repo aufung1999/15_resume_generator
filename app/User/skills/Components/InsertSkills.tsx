@@ -104,7 +104,7 @@ const TermComp = ({ index, data }: Props) => {
     fetch("/api/user/skill", {
       //add this route later
       method: "POST",
-      body: JSON.stringify(skill),
+      body: JSON.stringify(skills_redux),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
