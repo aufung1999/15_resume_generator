@@ -43,16 +43,31 @@ export default function Result({
     switch (whatToGet) {
       case "unmatches":
         const move_to_matches = get[deleteIndex];
-        const filtered_array = get.filter((each) => each !== move_to_matches);
+        const filtered_unmatches = get.filter(
+          (each) => each !== move_to_matches
+        );
         // console.log(filtered_array)
         //update localStorage "unmatches"
-        localStorage.setItem("unmatches", JSON.stringify(filtered_array));
+        localStorage.setItem("unmatches", JSON.stringify(filtered_unmatches));
         //update localStorage "matches"
-        const newObject: any = window.localStorage.getItem("matches");
-        const new_matches: any[] = [...JSON.parse(newObject), move_to_matches];
+        const matches_ls: any = window.localStorage.getItem("matches");
+        const new_matches: any[] = [...JSON.parse(matches_ls), move_to_matches];
         localStorage.setItem("matches", JSON.stringify(new_matches));
         return;
       case "matches":
+        const move_to_unmatches = get[deleteIndex];
+        const filtered_matches = get.filter(
+          (each) => each !== move_to_unmatches
+        );
+        //update localStorage "matches"
+        localStorage.setItem("matches", JSON.stringify(filtered_matches));
+        //update localStorage "matches"
+        const unmatches_ls: any = window.localStorage.getItem("unmatches");
+        const new_unmatches: any[] = [
+          ...JSON.parse(unmatches_ls),
+          move_to_unmatches,
+        ];
+        localStorage.setItem("unmatches", JSON.stringify(new_unmatches));
         return;
     }
   };
@@ -73,11 +88,19 @@ export default function Result({
             <div className=" text-xs break-words">{each}</div>
           </div>
           <div
-            className={
+            className={`
+            ${
               whatToGet === "unmatches"
                 ? " hover:border-2 hover:border-green-400 "
-                : "hidden"
+                : " "
             }
+            ${
+              whatToGet === "matches"
+                ? " hover:border-2 hover:border-green-400 "
+                : " "
+            }
+
+            `}
           >
             <Button
               icon={
