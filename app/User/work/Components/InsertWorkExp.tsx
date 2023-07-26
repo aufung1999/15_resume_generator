@@ -1,5 +1,7 @@
 "use client";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -57,8 +59,10 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   const dispatch = useDispatch();
 
   // get the dynamic variable of "row" from the redux store
-  const works: WorkExpState[] = useSelector((state: RootState) => state.work);
-  const work = works.find((each) => each.index === index);
+  const works_redux: WorkExpState[] = useSelector(
+    (state: RootState) => state.work
+  );
+  const work = works_redux.find((each) => each.index === index);
   const row = work?.JobDescription.find((each) => each.rowIndex === rowIndex);
   //***/
 
@@ -71,6 +75,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
         large={true}
         fill={true}
         growVertically={true}
+        
         onChange={(e) =>
           dispatch(
             editJobDescription({
@@ -90,11 +95,16 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
 const InputComp = ({ index, data }: Props) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const pathname = usePathname();
   const dispatch = useDispatch();
 
-  const works: WorkExpState[] = useSelector((state: RootState) => state.work);
-  const work = works.find((each) => each.index === index);
+  const works_redux: WorkExpState[] = useSelector(
+    (state: RootState) => state.work
+  );
+  const work = works_redux.find((each) => each.index === index);
 
   const [row, editRow] = useState<any>([]);
 
@@ -146,6 +156,26 @@ const InputComp = ({ index, data }: Props) => {
     editRow(after_remove);
   };
   //***/
+
+  //---------------Save to Server-------------------
+  const SubmitHandler = () => {
+    fetch("/api/user/project", {
+      //add this route later
+      method: "POST",
+      body: JSON.stringify(works_redux),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("User Projects Updated!"))
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
 
   return (
     <div
@@ -245,6 +275,11 @@ const InputComp = ({ index, data }: Props) => {
             }}
             small
           />
+          {remind && (
+            <Button className="" intent="warning" onClick={SubmitHandler}>
+              Submit
+            </Button>
+          )}
         </div>
       </FormGroup>
     </div>
