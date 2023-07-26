@@ -167,7 +167,9 @@ export default function InsertEducation({ data }: any) {
         dispatch(initialize_EducationData(each));
       });
     }
-  }, []);
+  }, [data]);
+
+  //----------------------------------------------------------------------------------
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -177,7 +179,7 @@ export default function InsertEducation({ data }: any) {
       });
       editEducations(temp_arr);
     }
-  }, [education_redux]);
+  }, [education_redux, data]);
 
   //---------------ADD/DELETE-------------------
   const addEdu = () => {

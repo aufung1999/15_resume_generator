@@ -1,5 +1,8 @@
 "use client";
-import React from "react";
+
+import React, { useTransition } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -15,6 +18,9 @@ import { RootState } from "@/store/store";
 import InsertEducation from "./InsertEducation";
 
 export default function EducationClient({ data }: any) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const educations = useSelector((state: RootState) => state.education);
 
   // Save to server
@@ -30,6 +36,12 @@ export default function EducationClient({ data }: any) {
     })
       .then(() => toast.success("User Education Updated!"))
       .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
   };
   return (
     <div className="border border-blue-600 flex-1">
