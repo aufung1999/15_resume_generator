@@ -75,7 +75,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
         large={true}
         fill={true}
         growVertically={true}
-        
+
         onChange={(e) =>
           dispatch(
             editJobDescription({
@@ -159,7 +159,7 @@ const InputComp = ({ index, data }: Props) => {
 
   //---------------Save to Server-------------------
   const SubmitHandler = () => {
-    fetch("/api/user/project", {
+    fetch("/api/user/work", {
       //add this route later
       method: "POST",
       body: JSON.stringify(works_redux),
@@ -167,7 +167,7 @@ const InputComp = ({ index, data }: Props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Projects Updated!"))
+      .then(() => toast.success("User Works Updated!"))
       .catch(() => toast.error("Cannot Update!"));
 
     startTransition(() => {
