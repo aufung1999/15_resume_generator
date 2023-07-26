@@ -78,7 +78,7 @@ const InputComp = ({ index, data }: Props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Projects Updated!"))
+      .then(() => toast.success("User Objectives Updated!"))
       .catch(() => toast.error("Cannot Update!"));
 
     startTransition(() => {
