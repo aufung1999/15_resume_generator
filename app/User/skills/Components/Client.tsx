@@ -1,5 +1,8 @@
 "use client";
-import React from "react";
+
+import React, { useTransition } from "react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Card,
@@ -15,6 +18,9 @@ import { RootState } from "@/store/store";
 import InsertSkills from "./InsertSkills";
 
 export default function SkillClient({ data }: any) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const skills = useSelector((state: RootState) => state.skills);
 
   // Save to server

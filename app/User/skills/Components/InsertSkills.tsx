@@ -51,7 +51,34 @@ const TermComp = ({ index, term }: Props) => {
   );
   const skill = skills_redux.find((each) => each.index === index);
 
+  const [dispatched, setDispatched] = useState(false);
+
   const [skillName, setSkillName] = useState("");
+
+  useEffect(() => {
+    setDispatched(true);
+  }, []);
+
+  //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
+  const [copyData, setCopy] = useState(null);
+  const [remind, setRemind] = useState(false);
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (dispatched) {
+      setCopy(JSON.parse(JSON.stringify(skill)));
+    }
+    setDispatched(false);
+  }, [dispatched]);
+
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
+      JSON.stringify(copyData) === JSON.stringify(skill)
+        ? setRemind(false)
+        : setRemind(true);
+    }
+  }, [skill]);
 
   //---------------ADD/DELETE-------------------
   const addskill = () => {

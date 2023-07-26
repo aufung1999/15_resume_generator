@@ -119,6 +119,7 @@ const InputComp = ({ index }: Props) => {
     if (dispatched) {
       setCopy(JSON.parse(JSON.stringify(work)));
     }
+    setDispatched(false);
   }, [dispatched]);
 
   //Copy the "initialized" data from the database

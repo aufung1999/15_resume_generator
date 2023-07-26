@@ -54,7 +54,7 @@ const InputComp = ({ index }: Props) => {
 
   useEffect(() => {
     setDispatched(true);
-  }, []);
+  }, [education]);
 
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
   const [copyData, setCopy] = useState(null);
@@ -64,6 +64,7 @@ const InputComp = ({ index }: Props) => {
     if (dispatched) {
       setCopy(JSON.parse(JSON.stringify(education)));
     }
+    setDispatched(false);
   }, [dispatched]);
 
   //Copy the "initialized" data from the database
