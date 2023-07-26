@@ -24,8 +24,7 @@ export default function SkillClient({ data }: any) {
   const skills = useSelector((state: RootState) => state.skills);
 
   // Save to server
-  const SubmitHandler = (e: any) => {
-    e.preventDefault();
+  const SubmitHandler = () => {
     fetch("/api/user/skill", {
       method: "POST",
       body: JSON.stringify(skills),
@@ -35,13 +34,15 @@ export default function SkillClient({ data }: any) {
     })
       .then(() => toast.success("User Skill Updated!"))
       .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
   };
   return (
-    <Card
-      className="border border-blue-600 flex-1"
-      interactive={false}
-      elevation={Elevation.TWO}
-    >
+    <div className="border border-blue-600 flex-1">
       <Toaster />
       <h1>Skills</h1>
 
@@ -52,6 +53,6 @@ export default function SkillClient({ data }: any) {
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
       </Button>
-    </Card>
+    </div>
   );
 }

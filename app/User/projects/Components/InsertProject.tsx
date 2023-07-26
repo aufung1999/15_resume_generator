@@ -283,7 +283,9 @@ export default function InsertProject({ data }: any) {
     dispatch(addProject({ index: uuid }));
     //update the useState of "projects_csr"
     editProjects(
-      projects_csr.concat(<InputComp key={projects_csr.length} index={uuid} />)
+      projects_csr.concat(
+        <InputComp key={projects_csr.length} index={uuid} data={data} />
+      )
     );
   };
 

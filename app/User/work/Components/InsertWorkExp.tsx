@@ -43,6 +43,7 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
+  data: any;
 };
 type rowProps = {
   index: string;
@@ -88,7 +89,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 //*         Important Info.       */
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
-const InputComp = ({ index }: Props) => {
+const InputComp = ({ index, data }: Props) => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -108,27 +109,20 @@ const InputComp = ({ index }: Props) => {
     });
 
     editRow(temp_arr);
-    setDispatched(true);
-  }, []);
+    //Copy the "initialized" data from the database
+    setCopy(JSON.stringify(work));
+    setRemind(false);
+  }, [data]);
 
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
-  const [copyData, setCopy] = useState(null);
+  const [copyData, setCopy] = useState<string | null>(null);
   const [remind, setRemind] = useState(false);
-  //Copy the "initialized" data from the database
-  useEffect(() => {
-    if (dispatched) {
-      setCopy(JSON.parse(JSON.stringify(work)));
-    }
-    setDispatched(false);
-  }, [dispatched]);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
     if (copyData) {
       //if LEFT and RIGHT sides are equal -> no NEED to update data in database
-      JSON.stringify(copyData) === JSON.stringify(work)
-        ? setRemind(false)
-        : setRemind(true);
+      copyData === JSON.stringify(work) ? setRemind(false) : setRemind(true);
     }
   }, [work]);
 
@@ -282,7 +276,9 @@ export default function InsertWorkExp({ data }: any) {
     let temp_arr: any[] = [];
     if (work.length !== 0) {
       work.map((each) => {
-        temp_arr.push(<InputComp key={each.index} index={each.index} />);
+        temp_arr.push(
+          <InputComp key={each.index} index={each.index} data={data} />
+        );
       });
       editWorkExps(temp_arr);
     }
@@ -296,7 +292,9 @@ export default function InsertWorkExp({ data }: any) {
     dispatch(addWorkExp({ index: uuid }));
     //update the useState of "workExps"
     editWorkExps(
-      workExps.concat(<InputComp key={workExps.length} index={uuid} />)
+      workExps.concat(
+        <InputComp key={workExps.length} index={uuid} data={data} />
+      )
     );
   };
 

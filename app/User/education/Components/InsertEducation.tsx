@@ -39,9 +39,10 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
+  data: any;
 };
 
-const InputComp = ({ index }: Props) => {
+const InputComp = ({ index, data }: Props) => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -50,22 +51,15 @@ const InputComp = ({ index }: Props) => {
   );
   const education = education_redux.find((each) => each.index === index);
 
-  const [dispatched, setDispatched] = useState(false);
-
   useEffect(() => {
-    setDispatched(true);
-  }, [education]);
+    //Copy the "initialized" data from the database
+    setCopy(education);
+    setRemind(false);
+  }, [data]);
 
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
-  const [copyData, setCopy] = useState(null);
+  const [copyData, setCopy] = useState<any | null>(null);
   const [remind, setRemind] = useState(false);
-  //Copy the "initialized" data from the database
-  useEffect(() => {
-    if (dispatched) {
-      setCopy(JSON.parse(JSON.stringify(education)));
-    }
-    setDispatched(false);
-  }, [dispatched]);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
@@ -82,7 +76,7 @@ const InputComp = ({ index }: Props) => {
       style={{ color: "black" }}
       className={`w-full h-full
     ${pathname.split("/").includes("user") ? "px-5" : ""}
-    ${remind ? " bg-red-300" : " bg-green-200"}`}
+    ${remind ? " bg-red-300" : " bg-green-200"}`} 
     >
       {/* hide the index */}
       {/* <h3>Education {index}</h3> */}
@@ -176,7 +170,9 @@ export default function InsertEducation({ data }: any) {
     let temp_arr: any[] = [];
     if (education_redux.length !== 0) {
       education_redux.map((each) => {
-        temp_arr.push(<InputComp key={each.index} index={each.index} />);
+        temp_arr.push(
+          <InputComp key={each.index} index={each.index} data={data} />
+        );
       });
       editEducations(temp_arr);
     }
@@ -190,7 +186,9 @@ export default function InsertEducation({ data }: any) {
     // update the Redux Store
     dispatch(addEducation({ index: uuid }));
     //update the useState of "educations"
-    editEducations(educations.concat(<InputComp key={uuid} index={uuid} />));
+    editEducations(
+      educations.concat(<InputComp key={uuid} index={uuid} data={data} />)
+    );
   };
 
   const deleteEdu = async (e: React.ChangeEvent<any>, received: string) => {

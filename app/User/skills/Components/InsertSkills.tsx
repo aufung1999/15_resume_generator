@@ -36,13 +36,13 @@ import { usePathname } from "next/navigation";
 
 type Props = {
   index: string;
-  term?: string;
+  data: any;
 };
 
 //*         Important Info.       */
 // Child Component: X
 //Parent Component: InsertSkills
-const TermComp = ({ index, term }: Props) => {
+const TermComp = ({ index, data }: Props) => {
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -51,24 +51,16 @@ const TermComp = ({ index, term }: Props) => {
   );
   const skill = skills_redux.find((each) => each.index === index);
 
-  const [dispatched, setDispatched] = useState(false);
-
   const [skillName, setSkillName] = useState("");
 
   useEffect(() => {
-    setDispatched(true);
-  }, []);
-
+    //Copy the "initialized" data from the database
+    setCopy(skill);
+    setRemind(false);
+  }, [data]);
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
-  const [copyData, setCopy] = useState(null);
+  const [copyData, setCopy] = useState<any | null>(null);
   const [remind, setRemind] = useState(false);
-  //Copy the "initialized" data from the database
-  useEffect(() => {
-    if (dispatched) {
-      setCopy(JSON.parse(JSON.stringify(skill)));
-    }
-    setDispatched(false);
-  }, [dispatched]);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
@@ -104,15 +96,12 @@ const TermComp = ({ index, term }: Props) => {
   return (
     <div
       className={`
-      w-full border  ${
-        pathname.split("/").includes("user")
-          ? "  px-5 "
-          : "" + pathname.split("/").includes("resume")
-          ? " "
-          : ""
-      }
+      w-full border
+      ${pathname.split("/").includes("user") ? "  px-5 " : ""}
+      ${pathname.split("/").includes("resume") ? " " : ""}
+      ${remind ? " bg-red-300" : " bg-green-200"}
         `}
-      style={{ background: "white", color: "black" }}
+      style={{ color: "black" }}
     >
       {/* hide the index */}
       <h3>
@@ -211,19 +200,19 @@ export default function InsertSkills({ data }: any) {
         dispatch(initialize_SkillData(each));
       });
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     let temp_arr: any[] = [];
     if (skills_redux.length !== 0) {
       skills_redux.map((each) => {
         temp_arr.push(
-          <TermComp key={each.index} index={each.index} term={each.term} />
+          <TermComp key={each.index} index={each.index} data={data} />
         );
       });
       editTerms(temp_arr);
     }
-  }, [skills_redux]);
+  }, [skills_redux, data]);
 
   //---------------ADD/DELETE-------------------
   const addterm = () => {
@@ -234,7 +223,7 @@ export default function InsertSkills({ data }: any) {
     dispatch(addTerm({ index: short_id, term: term }));
     //update the useState of "terms"
     editTerms(
-      terms.concat(<TermComp key={short_id} index={short_id} term={term} />)
+      terms.concat(<TermComp key={short_id} index={short_id} data={data} />)
     );
     setTerm("");
   };
