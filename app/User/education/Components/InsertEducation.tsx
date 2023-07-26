@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   Button,
   Card,
@@ -43,6 +44,9 @@ type Props = {
 };
 
 const InputComp = ({ index, data }: Props) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
   const pathname = usePathname();
   const dispatch = useDispatch();
 
@@ -71,12 +75,32 @@ const InputComp = ({ index, data }: Props) => {
     }
   }, [education]);
 
+  //---------------Save to Server-------------------
+  const SubmitHandler = () => {
+    fetch("/api/user/education", {
+      //add this route later
+      method: "POST",
+      body: JSON.stringify(education_redux),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => toast.success("User Projects Updated!"))
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
+
   return (
     <div
       style={{ color: "black" }}
       className={`w-full h-full
     ${pathname.split("/").includes("user") ? "px-5" : ""}
-    ${remind ? " bg-red-300" : " bg-green-200"}`} 
+    ${remind ? " bg-red-300" : " bg-green-200"}`}
     >
       {/* hide the index */}
       {/* <h3>Education {index}</h3> */}
@@ -143,6 +167,11 @@ const InputComp = ({ index, data }: Props) => {
         </div>
         {/* ---------------------------Time Related-------------------------- */}
       </FormGroup>
+      {remind && (
+        <Button className="" intent="warning" onClick={SubmitHandler}>
+          Submit
+        </Button>
+      )}
     </div>
   );
 };
