@@ -101,6 +101,8 @@ const InputComp = ({ index }: Props) => {
 
   const [row, editRow] = useState<any>([]);
 
+  const [dispatched, setDispatched] = useState(false);
+
   useEffect(() => {
     let temp_arr: any[] = [];
     target_project?.ProjectDescription?.map((each: any) => {
@@ -110,7 +112,28 @@ const InputComp = ({ index }: Props) => {
     });
 
     editRow(temp_arr);
+    setDispatched(true);
   }, []);
+
+  //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
+  const [copyData, setCopy] = useState(null);
+  const [remind, setRemind] = useState(false);
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (dispatched) {
+      setCopy(JSON.parse(JSON.stringify(target_project)));
+    }
+  }, [dispatched]);
+
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
+      JSON.stringify(copyData) === JSON.stringify(target_project)
+        ? setRemind(false)
+        : setRemind(true);
+    }
+  }, [target_project]);
 
   //---------------ADD/DELETE-------------------
   const addRow = () => {
@@ -140,7 +163,12 @@ const InputComp = ({ index }: Props) => {
   //***/
 
   return (
-    <Card interactive={false} style={{ background: "white", color: "black" }}>
+    <div
+      style={{ color: "black" }}
+      className={`w-full h-full
+      ${pathname.split("/").includes("user") ? "px-5" : ""}
+      ${remind ? " bg-red-300" : " bg-green-200"}`}
+    >
       <div className="flex-row">
         {/* hide the index */}
         {/* <h3>Project {index}</h3> */}
@@ -215,7 +243,7 @@ const InputComp = ({ index }: Props) => {
           />
         </div>
       </FormGroup>
-    </Card>
+    </div>
   );
 };
 
@@ -236,8 +264,9 @@ export default function InsertProject({ data }: any) {
         dispatch(initialize_ProjectData(each));
       });
     }
-  }, []);
+  }, [data]);
 
+  //----------------------------------------------------------------------------------
   useEffect(() => {
     let temp_arr: any[] = [];
     if (projects_redux.length !== 0) {
@@ -282,7 +311,7 @@ export default function InsertProject({ data }: any) {
   };
   //***/
   return (
-    <div className="w-full">
+    <div className="flex flex-col justify-between h-full">
       <div
         className={`
           grid grid-cols-1 border border-green-300 ${
@@ -295,20 +324,18 @@ export default function InsertProject({ data }: any) {
         `}
       >
         {projects_csr?.map((each: any, i: number) => (
-          <div key={i} className="w-full border-2">
-            <div className="relative">
-              {each}
-              <Button
-                className="absolute top-0 right-0 "
-                style={{
-                  backgroundColor: "rgba(255,0,0,0.6)",
-                  borderRadius: "25% 10%",
-                }}
-                onClick={(e) => deleteProj(e, each.props.index)}
-              >
-                <Icon icon="delete" className="" style={{ color: "white" }} />
-              </Button>
-            </div>
+          <div key={i} className="w-full border-2 relative ">
+            {each}
+            <Button
+              className="absolute top-0 right-0 "
+              style={{
+                backgroundColor: "rgba(255,0,0,0.6)",
+                borderRadius: "25% 10%",
+              }}
+              onClick={(e) => deleteProj(e, each.props.index)}
+            >
+              <Icon icon="delete" className="" style={{ color: "white" }} />
+            </Button>
           </div>
         ))}
       </div>

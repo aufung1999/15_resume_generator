@@ -96,6 +96,8 @@ const InputComp = ({ index }: Props) => {
 
   const [row, editRow] = useState<any>([]);
 
+  const [dispatched, setDispatched] = useState(false);
+
   useEffect(() => {
     let temp_arr: any[] = [];
     work?.JobDescription?.map((each: any) => {
@@ -105,7 +107,28 @@ const InputComp = ({ index }: Props) => {
     });
 
     editRow(temp_arr);
+    setDispatched(true);
   }, []);
+
+  //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
+  const [copyData, setCopy] = useState(null);
+  const [remind, setRemind] = useState(false);
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (dispatched) {
+      setCopy(JSON.parse(JSON.stringify(work)));
+    }
+  }, [dispatched]);
+
+  //Copy the "initialized" data from the database
+  useEffect(() => {
+    if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
+      JSON.stringify(copyData) === JSON.stringify(work)
+        ? setRemind(false)
+        : setRemind(true);
+    }
+  }, [work]);
 
   //---------------ADD/DELETE-------------------
   const addRow = () => {

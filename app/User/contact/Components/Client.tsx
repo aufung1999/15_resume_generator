@@ -38,6 +38,7 @@ import useSWR from "swr";
 
 export default function ContactClient({ data }: any) {
   const contact = useSelector((state: RootState) => state.contact);
+  const [dispatched, setDispatched] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -49,7 +50,6 @@ export default function ContactClient({ data }: any) {
   }, [data]);
 
   //----------------------------------------------------------------------------------
-  const [dispatched, setDispatched] = useState(false);
   const [copyData, setCopy] = useState(null);
   const [remind, setRemind] = useState(false);
   //Copy the "initialized" data from the database
@@ -62,6 +62,7 @@ export default function ContactClient({ data }: any) {
   //Copy the "initialized" data from the database
   useEffect(() => {
     if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
       JSON.stringify(copyData) === JSON.stringify(contact)
         ? setRemind(false)
         : setRemind(true);
