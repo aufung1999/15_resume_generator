@@ -7,7 +7,6 @@ import { SectionSubtitle } from "../../atoms/SectionSubtitle";
 import { SectionTitle } from "../../atoms/SectionTitle";
 import { timeConverter } from "../../Functions/timeConvertor";
 import CustomedTooltip from "../Match/Tooltip";
-import Revalidation from "../Unmatch/Revalidation";
 
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
   // Revalidation(experience)
@@ -31,7 +30,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                   {timeConverter(Date.parse(item.StartDate))} -
                   {item.current
                     ? "present"
-                    : timeConverter(Date.parse(item?.EndDate))}
+                    : item?.EndDate && timeConverter(Date.parse(item?.EndDate))}
                 </p>
               </div>
             </div>

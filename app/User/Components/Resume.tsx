@@ -87,7 +87,7 @@ export default function EachResume({
       .catch(() => toast.error("Cannot Update Response Status!"));
   };
   return (
-    <div className="group/left relative">
+    <div className="  ">
       <Toaster />
       {/* 1 */}
       {/* Job Description */}
@@ -155,7 +155,7 @@ export default function EachResume({
       {/* 2 */}
       {/* The image and the introduction */}
       <div
-        className=" border-4 flex hover:z-20 z-10 hover:scale-[1.8] transition duration-300"
+        className=" border-4 flex  hover:scale-[1.8] transition duration-300"
         onClick={() => ClickHandler(each._id)}
       >
         <CustomWidthTooltip
@@ -244,7 +244,7 @@ export default function EachResume({
           enterDelay={550}
         >
           <img
-            className=""
+            className=" hover:z-20 "
             src={each.image.src}
             alt=""
             onMouseEnter={() =>
