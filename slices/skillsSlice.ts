@@ -14,7 +14,7 @@ const awardSlice = createSlice({
   initialState,
   reducers: {
     cleanUp_Skill_redux: () => initialState,
-    initialize_SkillData: (state, action: PayloadAction<string>) => {
+    initialize_SkillData: (state, action: PayloadAction<SkillsState>) => {
       const { index, term, Skill_list }: any = action.payload;
       //if the "stage_3" data exists
       let stage_3_exist = false;

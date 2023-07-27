@@ -109,7 +109,18 @@ const TermComp = ({ index, data }: Props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Skills Updated!"))
+      .then(() => {
+        toast.success("User Skills Updated!"),
+          //After Submit Btn pressed
+          //1. update client side
+          setCopy(skill),
+          setRemind(false);
+        //2. update redux side
+        dispatch(cleanUp_Skill_redux());
+        skills_redux.map((each: SkillsState) => {
+          dispatch(initialize_SkillData(each));
+        });
+      })
       .catch(() => toast.error("Cannot Update!"));
 
     startTransition(() => {
@@ -227,7 +238,7 @@ export default function InsertSkills({ data }: any) {
     dispatch(cleanUp_Skill_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
-      data.map((each: any) => {
+      data.map((each: SkillsState) => {
         dispatch(initialize_SkillData(each));
       });
     }

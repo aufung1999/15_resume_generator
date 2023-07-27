@@ -16,8 +16,8 @@ const projectsSlice = createSlice({
   initialState,
   reducers: {
     cleanUp_Project_redux: () => initialState,
-    initialize_ProjectData: (state, action: PayloadAction<string>) => {
-      const { index, ProjectName, Techniques, ProjectDescription }: any =
+    initialize_ProjectData: (state, action: PayloadAction<ProjectState>) => {
+      const { index, ProjectName, Techniques, ProjectDescription } =
         action.payload;
       //if the "stage_3" data exists
       let stage_3_exist = false;

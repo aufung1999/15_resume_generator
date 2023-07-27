@@ -75,7 +75,6 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
         large={true}
         fill={true}
         growVertically={true}
-
         onChange={(e) =>
           dispatch(
             editJobDescription({
@@ -90,6 +89,9 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
     </div>
   );
 };
+//===================================================================================================================================================================================
+//===================================================================================================================================================================================
+//===================================================================================================================================================================================
 
 //*         Important Info.       */
 // Child Component: RowComp
@@ -120,19 +122,21 @@ const InputComp = ({ index, data }: Props) => {
 
     editRow(temp_arr);
     //Copy the "initialized" data from the database
-    setCopy(JSON.stringify(work));
+    setCopy(work);
     setRemind(false);
   }, [data]);
 
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
-  const [copyData, setCopy] = useState<string | null>(null);
+  const [copyData, setCopy] = useState<WorkExpState | null>(null);
   const [remind, setRemind] = useState(false);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
     if (copyData) {
       //if LEFT and RIGHT sides are equal -> no NEED to update data in database
-      copyData === JSON.stringify(work) ? setRemind(false) : setRemind(true);
+      JSON.stringify(copyData) === JSON.stringify(work)
+        ? setRemind(false)
+        : setRemind(true);
     }
   }, [work]);
 
@@ -167,7 +171,18 @@ const InputComp = ({ index, data }: Props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Works Updated!"))
+      .then(() => {
+        toast.success("User Works Updated!");
+        //After Submit Btn pressed
+        //1. update client side
+        setCopy(work);
+        setRemind(false);
+        //2. update redux side
+        dispatch(cleanUp_Work_redux());
+        works_redux.map((each: WorkExpState) => {
+          dispatch(initialize_WorkData(each));
+        });
+      })
       .catch(() => toast.error("Cannot Update!"));
 
     startTransition(() => {
@@ -285,6 +300,9 @@ const InputComp = ({ index, data }: Props) => {
     </div>
   );
 };
+//===================================================================================================================================================================================
+//===================================================================================================================================================================================
+//===================================================================================================================================================================================
 
 //*         Important Info.       */
 // Child Component: InputComp
@@ -299,7 +317,7 @@ export default function InsertWorkExp({ data }: any) {
     dispatch(cleanUp_Work_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
-      data.map((each: any) => {
+      data.map((each: WorkExpState) => {
         dispatch(initialize_WorkData(each));
       });
     }

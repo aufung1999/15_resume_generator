@@ -65,7 +65,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
     (state: RootState) => state.projects
   );
   const target_project = projects_redux.find((each) => each.index === index);
-  const row = target_project?.ProjectDescription.find(
+  const row = target_project?.ProjectDescription?.find(
     (each) => each.rowIndex === rowIndex
   );
   //***/
@@ -171,7 +171,17 @@ const InputComp = ({ index, data }: Props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Projects Updated!"))
+      .then(() => {
+        toast.success("User Projects Updated!"), //After Submit Btn pressed
+          //1. update client side
+          setCopy(JSON.stringify(target_project));
+        setRemind(false);
+        //2. update redux side
+        dispatch(cleanUp_Project_redux());
+        projects_redux.map((each: ProjectState) => {
+          dispatch(initialize_ProjectData(each));
+        });
+      })
       .catch(() => toast.error("Cannot Update!"));
 
     startTransition(() => {
@@ -283,7 +293,7 @@ export default function InsertProject({ data }: any) {
     dispatch(cleanUp_Project_redux());
     if (data) {
       // console.log("data: " + JSON.stringify(data, null, 1));
-      data.map((each: any) => {
+      data.map((each: ProjectState) => {
         dispatch(initialize_ProjectData(each));
       });
     }

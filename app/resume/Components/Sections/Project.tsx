@@ -53,7 +53,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                           />
                         </div>
                         <div className="px-3">
-                          {item?.ProjectDescription.map(
+                          {item?.ProjectDescription?.map(
                             (each: any, ind: number) => (
                               <SectionList key={ind}>
                                 <CustomedTooltip

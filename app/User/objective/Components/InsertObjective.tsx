@@ -78,7 +78,18 @@ const InputComp = ({ index, data }: Props) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.success("User Objectives Updated!"))
+      .then(() => {
+        toast.success("User Objectives Updated!"),
+          //After Submit Btn pressed
+          //1. update client side
+          setCopy(objective),
+          setRemind(false),
+          //2. update redux side
+          dispatch(cleanUp_Objective_redux());
+        objectives_redux?.map((each: ObjectiveState) =>
+          dispatch(initialize_ObjectiveData(each))
+        );
+      })
       .catch(() => toast.error("Cannot Update!"));
 
     startTransition(() => {

@@ -36,7 +36,13 @@ import type { RootState } from "@/store/store";
 
 import toast, { Toaster } from "react-hot-toast";
 
-export default function InsertContact({ data }: { data: any }) {
+export default function InsertContact({
+  data,
+  dispatched,
+}: {
+  data: any;
+  dispatched: boolean;
+}) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -49,18 +55,23 @@ export default function InsertContact({ data }: { data: any }) {
 
   //----------------------------------------------------------------------------------
   useEffect(() => {
-    //Copy the "initialized" data from the database
-    setRemind(false);
-    setCopy(contact_redux);
-  }, [data]);
+    console.log("hi");
+    if (dispatched) {
+      //Copy the "initialized" data from the database
+      setRemind(false);
+      setCopy(contact_redux);
+    }
+  }, [data, dispatched]);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
     console.log(copyData);
-    //if LEFT and RIGHT sides are equal -> no NEED to update data in database
-    JSON.stringify(copyData) === JSON.stringify(contact_redux)
-      ? setRemind(false)
-      : setRemind(true);
+    if (copyData) {
+      //if LEFT and RIGHT sides are equal -> no NEED to update data in database
+      JSON.stringify(copyData) === JSON.stringify(contact_redux)
+        ? setRemind(false)
+        : setRemind(true);
+    }
   }, [contact_redux]);
 
   //----------------------------------------------------------------------------------
@@ -79,6 +90,8 @@ export default function InsertContact({ data }: { data: any }) {
         toast.success("User Contact Info Updated!"),
           setRemind(false),
           setCopy(contact_redux);
+        dispatch(cleanUp_Contact_redux());
+        dispatch(initialize_ClientData(contact_redux));
       })
       .catch(() => toast.error("Cannot Update!"));
 

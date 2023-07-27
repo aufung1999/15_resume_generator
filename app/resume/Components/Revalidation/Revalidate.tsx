@@ -34,7 +34,7 @@ export default function Revalidate() {
       if (localStorage.getItem("unmatches")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
         work_redux.map((each) =>
-          each.JobDescription.map((each_2) =>
+          each.JobDescription?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
                 each.index === item.match_index_1st &&
@@ -60,7 +60,7 @@ export default function Revalidate() {
       if (localStorage.getItem("unmatches")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
         projects_redux.map((each) =>
-          each.ProjectDescription.map((each_2) =>
+          each.ProjectDescription?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
                 each.index === item.match_index_1st &&
@@ -85,8 +85,8 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
-        skills_redux.map((each) =>
-          each.Skill_list.map((each_2) =>
+        skills_redux?.map((each) =>
+          each?.Skill_list?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
                 each.index === item.match_index_1st &&

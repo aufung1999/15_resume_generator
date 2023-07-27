@@ -39,23 +39,21 @@ import toast, { Toaster } from "react-hot-toast";
 import InsertContact from "./InsertContact";
 
 export default function ContactClient({ data }: { data: any }) {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-
-  const contact_redux = useSelector((state: RootState) => state.contact);
-
   const dispatch = useDispatch();
+
+  const [dispatched, setDispatched] = useState(false);
 
   useEffect(() => {
     dispatch(cleanUp_Contact_redux());
     if (data) {
       dispatch(initialize_ClientData(data));
+      setDispatched(true)
     }
   }, [data]);
 
   return (
     <div>
-      <InsertContact data={data} />
+      <InsertContact data={data} dispatched={dispatched} />
     </div>
   );
 }
