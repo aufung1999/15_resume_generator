@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 
 import { useRouter } from "next/navigation";
 // import { Tooltip } from "@mui/material";
@@ -49,6 +49,7 @@ export default function EachResume({
   each: any;
   resumes_csr: any;
 }) {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -85,6 +86,10 @@ export default function EachResume({
       .then((data) => toast.success(data?.message))
       // .then((res) => toast.success(res?.json().message))
       .catch(() => toast.error("Cannot Update Response Status!"));
+
+    startTransition(() => {
+      router.refresh();
+    });
   };
   return (
     <div className="  ">

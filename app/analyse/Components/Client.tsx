@@ -98,6 +98,9 @@ export default function AnalyseClient({ data }: any) {
         dispatch(editAPI_KEY(data.api_key.api_key));
       }
     }
+    if (localStorage.getItem("last_website")) {
+      dispatch(editAnalyse_website(localStorage.getItem("last_website")));
+    }
   }, []);
 
   const handleSubmit = (e: any) => {

@@ -23,6 +23,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
   }, [search_redux]);
 
   useEffect(() => {
+    console.log( resumeData)
     let resumes_db: any[] = [];
     resumeData?.map(async (each: any) => {
       const img = new Image();
@@ -41,20 +42,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
     setResumes(resumes_db);
     //for the copy after search
     setResumes_copy(resumes_db);
-  }, []);
-
-  //==========================================================================
-
-  const [showDiv, setShowDiv] = useState(false);
-
-  // Delay the display of the div after a certain delay
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowDiv(true);
-    }, 1000); // Delay of 1 second (adjust as needed)
-
-    return () => clearTimeout(timer);
-  }, []);
+  }, [resumeData]);
 
   //==========================================================================
 
