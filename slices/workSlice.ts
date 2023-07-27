@@ -9,6 +9,7 @@ export interface WorkExpState {
   StartDate: string;
   EndDate?: string;
   JobDescription: { rowIndex: string; Row?: string }[];
+  display_in_Resume?: boolean;
 }
 
 const initialState: WorkExpState[] = [];
@@ -28,18 +29,70 @@ const workSlice = createSlice({
         EndDate,
         JobDescription,
       }: any = action.payload;
-      //set the data format
-      let Data = {
-        index: index,
-        CompanyName: CompanyName,
-        Position: Position,
-        current: current,
-        StartDate: StartDate,
-        EndDate: EndDate,
-        JobDescription: JobDescription,
-      };
-      //push the tidied up data into state
-      state.push(Data);
+
+      //if the "stage_3" data exists
+      let stage_3_exist = false;
+      //get the index from "stage_3"
+      let match_index: any[] = [];
+
+      if (typeof window !== "undefined") {
+        if (localStorage.getItem("stage_3")) {
+          stage_3_exist = true;
+          const stage_3_ls: any = window.localStorage.getItem("stage_3");
+          JSON.parse(stage_3_ls)?.map((each: any) => {
+            each.match_index === index &&
+              // no:1
+              match_index.push({ match_index_1st: index }),
+              JobDescription?.map(
+                (item: { Row?: string | undefined; rowIndex: string }) =>
+                  each.match_index_1st === index &&
+                  each.match_index_2nd === item.rowIndex &&
+                  match_index.push({
+                    match_index_1st: index,
+                    match_index_2nd: item.rowIndex,
+                  })
+              );
+          });
+
+          //set the data format
+          let Data = {
+            index: index,
+            CompanyName: CompanyName,
+            Position: Position,
+            current: current,
+            StartDate: StartDate,
+            EndDate: EndDate,
+            JobDescription: JobDescription,
+            display_in_Resume: false,
+          };
+          //-------------------------------------------------------------------------------
+          //Condition add to array,
+          //"unshift" is to add at the beginning:
+          //"push" is to add at the end
+
+          // console.log(match_index);
+          JobDescription?.map(
+            (each: { Row?: string | undefined; rowIndex: string }) =>
+              match_index?.some(
+                (item: {
+                  match_index?: string;
+                  match_index_1st?: string;
+                  match_index_2nd?: string;
+                }) =>
+                  // no:1
+                  // the reason to use "||" becuz it is "safe"
+                  item?.match_index_1st === index ||
+                  item?.match_index_2nd === each.rowIndex
+              )
+                ? (Data.display_in_Resume = true)
+                : null
+          );
+          //-------------------------------------------------------------------------------
+          Data?.display_in_Resume === true
+            ? state.unshift(Data)
+            : state.push(Data);
+        }
+      }
     },
     addWorkExp: (state, action) => {
       const { index } = action.payload;
@@ -132,6 +185,13 @@ const workSlice = createSlice({
         }
       }
     },
+    switch_display_in_Resume: (state, action) => {
+      const { index, display_in_Resume } = action.payload;
+      const WorkExp = state.find((each) => each.index === index);
+      if (WorkExp) {
+        WorkExp.display_in_Resume = display_in_Resume;
+      }
+    },
   },
 });
 
@@ -148,5 +208,6 @@ export const {
   addrow,
   deleterow,
   editJobDescription,
+  switch_display_in_Resume
 } = workSlice.actions;
 export default workSlice.reducer;

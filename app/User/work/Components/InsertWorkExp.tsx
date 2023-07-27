@@ -29,6 +29,7 @@ import {
   WorkExpState,
   initialize_WorkData,
   cleanUp_Work_redux,
+  switch_display_in_Resume,
 } from "@/slices/workSlice";
 
 import DatePicker from "react-date-picker";
@@ -62,8 +63,10 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   const works_redux: WorkExpState[] = useSelector(
     (state: RootState) => state.work
   );
-  const work = works_redux.find((each) => each.index === index);
-  const row = work?.JobDescription.find((each) => each.rowIndex === rowIndex);
+  const target_work = works_redux.find((each) => each.index === index);
+  const row = target_work?.JobDescription.find(
+    (each) => each.rowIndex === rowIndex
+  );
   //***/
 
   return (
@@ -106,15 +109,16 @@ const InputComp = ({ index, data }: Props) => {
   const works_redux: WorkExpState[] = useSelector(
     (state: RootState) => state.work
   );
-  const work = works_redux.find((each) => each.index === index);
+  const target_work: WorkExpState | any = works_redux.find(
+    (each) => each.index === index
+  );
+  const { display_in_Resume, ...rest } = target_work;
 
   const [row, editRow] = useState<any>([]);
 
-  const [dispatched, setDispatched] = useState(false);
-
   useEffect(() => {
     let temp_arr: any[] = [];
-    work?.JobDescription?.map((each: any) => {
+    target_work?.JobDescription?.map((each: any) => {
       temp_arr.push(
         <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
       );
@@ -122,7 +126,7 @@ const InputComp = ({ index, data }: Props) => {
 
     editRow(temp_arr);
     //Copy the "initialized" data from the database
-    setCopy(work);
+    setCopy(rest);
     setRemind(false);
   }, [data]);
 
@@ -134,11 +138,11 @@ const InputComp = ({ index, data }: Props) => {
   useEffect(() => {
     if (copyData) {
       //if LEFT and RIGHT sides are equal -> no NEED to update data in database
-      JSON.stringify(copyData) === JSON.stringify(work)
+      JSON.stringify(copyData) === JSON.stringify(rest)
         ? setRemind(false)
         : setRemind(true);
     }
-  }, [work]);
+  }, [target_work]);
 
   //---------------ADD/DELETE-------------------
   const addRow = () => {
@@ -175,7 +179,7 @@ const InputComp = ({ index, data }: Props) => {
         toast.success("User Works Updated!");
         //After Submit Btn pressed
         //1. update client side
-        setCopy(work);
+        setCopy(rest);
         setRemind(false);
         //2. update redux side
         dispatch(cleanUp_Work_redux());
@@ -199,13 +203,28 @@ const InputComp = ({ index, data }: Props) => {
     ${pathname.split("/").includes("user") ? "px-5" : ""}
     ${remind ? " bg-red-300" : " bg-green-200"}`}
     >
-      {/* hide the index */}
-      {/* <h3>Company {index}</h3> */}
+      <div className="flex-row">
+        {/* hide the index */}
+        {/* <h3>Company {index}</h3> */}
+        {pathname.split("/").includes("resume") && (
+          <Switch
+            checked={target_work?.display_in_Resume}
+            onChange={() =>
+              dispatch(
+                switch_display_in_Resume({
+                  index: index,
+                  display_in_Resume: !target_work?.display_in_Resume,
+                })
+              )
+            }
+          />
+        )}
+      </div>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
         Company Name:
         <InputGroup
-          value={work ? work?.CompanyName : ""}
+          value={target_work ? target_work?.CompanyName : ""}
           onChange={(e) =>
             dispatch(
               editCompanyName({ index: index, CompanyName: e.target.value })
@@ -214,44 +233,48 @@ const InputComp = ({ index, data }: Props) => {
         />
         Position:{" "}
         <InputGroup
-          value={work ? work?.Position : ""}
+          value={target_work ? target_work?.Position : ""}
           onChange={(e) =>
             dispatch(editPosition({ index: index, Position: e.target.value }))
           }
         />
         {/* ---------------------------Time Related-------------------------- */}
         <Switch
-          checked={work?.current}
+          checked={target_work?.current}
           onChange={() =>
-            work?.current
+            target_work?.current
               ? dispatch(
                   currentWorking({
                     index: index,
-                    current: !work.current,
+                    current: !target_work.current,
                   })
                 )
               : dispatch(currentWorking({ index: index, current: true }))
           }
           label=" Currently Working"
         />
-        <div className=" flex-col ">
-          Start Date:{" "}
+        <div
+          className={`flex ${
+            pathname.split("/").includes("resume") ? "" : " flex-col "
+          }`}
+        >
           <div className=" text-black ">
+            Start Date:{" "}
             <DatePicker
               onChange={(value) =>
                 dispatch(editStartDate({ index: index, StartDate: value }))
               }
-              value={work?.StartDate ? work.StartDate : null}
+              value={target_work?.StartDate ? target_work.StartDate : null}
             />
           </div>
-          End Date:
           <div className=" text-black">
+            End Date:
             <DatePicker
               onChange={(value) =>
                 dispatch(editEndDate({ index: index, EndDate: value }))
               }
-              value={work?.EndDate ? work.EndDate : null}
-              disabled={work?.current ? work.current : false}
+              value={target_work?.EndDate ? target_work.EndDate : null}
+              disabled={target_work?.current ? target_work.current : false}
             />
           </div>
         </div>

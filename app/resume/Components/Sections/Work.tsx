@@ -17,7 +17,10 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
 
       {experience.map((item: WorkExpState, i: number) => {
         return (
-          <div key={i} className="py-1">
+          <div
+            key={i}
+            className={`py-1 ${item.display_in_Resume ? "" : "hidden"}`}
+          >
             <div className="flex justify-between items-center">
               <div className="flex flex-col">
                 <SectionTitle label={item.Position} />

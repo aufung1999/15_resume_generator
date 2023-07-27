@@ -133,7 +133,7 @@ const TermComp = ({ index, data }: Props) => {
   return (
     <div
       className={`
-      w-full border
+      w-full border 
       ${pathname.split("/").includes("user") ? "  px-5 " : ""}
       ${pathname.split("/").includes("resume") ? " " : ""}
       ${remind ? " bg-red-300" : " bg-green-200"}
@@ -141,22 +141,23 @@ const TermComp = ({ index, data }: Props) => {
       style={{ color: "black" }}
     >
       {/* hide the index */}
-      <h3>
+      {/* <h3>
         {skill?.term}
-        {/* {index} */}
-      </h3>
+      </h3> */}
+      {/* {index} */}
 
       <div className="mb-3">
         <InputGroup
           onChange={(e) =>
             dispatch(editTermName({ index: index, term: e.target.value }))
           }
+          value={skill ? skill?.term : ""}
         />
       </div>
 
       {skill?.Skill_list?.map((each: any, i: number) => (
         <div key={i}>
-          <div>{each.skill}</div>
+          {/* <div>{each.skill}</div> */}
           {/* hide the index */}
           {/* <div>{each.skillIndex}</div> */}
 

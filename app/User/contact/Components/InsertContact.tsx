@@ -161,7 +161,7 @@ export default function InsertContact({
           <FormGroup
             label="Country"
             labelFor="text-input"
-            labelInfo="(required)"
+            // labelInfo="(required)"
           >
             <InputGroup
               id="text-input"
@@ -173,7 +173,7 @@ export default function InsertContact({
             />
           </FormGroup>
 
-          <FormGroup label="City" labelFor="text-input" labelInfo="(required)">
+          <FormGroup label="City" labelFor="text-input" >
             <InputGroup
               id="text-input"
               placeholder=""
@@ -186,7 +186,7 @@ export default function InsertContact({
         </div>
         {/* ................................................ */}
         <div className="grid grid-cols-2 w-full md:w-8/12">
-          <FormGroup label="State" labelFor="text-input" labelInfo="(required)">
+          <FormGroup label="State" labelFor="text-input">
             <InputGroup
               id="text-input"
               placeholder=""
@@ -199,7 +199,7 @@ export default function InsertContact({
           <FormGroup
             label="Zip Code"
             labelFor="text-input"
-            labelInfo="(required)"
+            // labelInfo="(required)"
           >
             <InputGroup
               id="text-input"
@@ -228,7 +228,7 @@ export default function InsertContact({
           <FormGroup
             label="Portfolio"
             labelFor="Portfolio"
-            labelInfo="(required)"
+            // labelInfo="(required)"
           >
             <InputGroup
               id="text-input"

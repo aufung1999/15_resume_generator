@@ -23,10 +23,6 @@ const projectsSlice = createSlice({
       let stage_3_exist = false;
       //get the index from "stage_3"
       let match_index: any[] = [];
-      //clone the data of ORIGINAL "Skill_list" data
-      let arrayForSort: any[] = [];
-      //REARRANGE of "Skill_list"
-      let rearrange_State;
 
       if (typeof window !== "undefined") {
         if (localStorage.getItem("stage_3")) {
@@ -37,7 +33,7 @@ const projectsSlice = createSlice({
               // no:1
               match_index.push({ match_index_1st: index }),
               ProjectDescription?.map(
-                (item: { Row: string; rowIndex: string }) =>
+                (item: { Row?: string | undefined; rowIndex: string }) =>
                   each.match_index_1st === index &&
                   each.match_index_2nd === item.rowIndex &&
                   match_index.push({
@@ -61,16 +57,21 @@ const projectsSlice = createSlice({
           //"push" is to add at the end
 
           // console.log(match_index);
-          ProjectDescription?.map((each: { Row: string; rowIndex: string }) =>
-            match_index.some(
-              (item) =>
-                // no:1
-                // the reason to use "||" becuz it is "safe"
-                item?.match_index_1st === index ||
-                item?.match_index_2nd === each.rowIndex
-            )
-              ? (Data.display_in_Resume = true)
-              : null
+          ProjectDescription?.map(
+            (each: { Row?: string | undefined; rowIndex: string }) =>
+              match_index?.some(
+                (item: {
+                  match_index?: string;
+                  match_index_1st?: string;
+                  match_index_2nd?: string;
+                }) =>
+                  // no:1
+                  // the reason to use "||" becuz it is "safe"
+                  item?.match_index_1st === index ||
+                  item?.match_index_2nd === each.rowIndex
+              )
+                ? (Data.display_in_Resume = true)
+                : null
           );
           //-------------------------------------------------------------------------------
           Data?.display_in_Resume === true
