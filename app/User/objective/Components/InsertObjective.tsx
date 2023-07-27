@@ -46,11 +46,14 @@ const InputComp = ({ index, data }: Props) => {
   const objectives_redux: ObjectiveState[] = useSelector(
     (state: RootState) => state.objectives
   );
-  const objective = objectives_redux.find((each) => each.index === index);
+  const target_objective: ObjectiveState | any = objectives_redux.find(
+    (each) => each.index === index
+  );
+  const { display_in_Resume, ...rest } = target_objective;
 
   useEffect(() => {
     //Copy the "initialized" data from the database
-    setCopy(objective);
+    setCopy(rest);
     setRemind(false);
   }, [data]);
 
@@ -62,11 +65,11 @@ const InputComp = ({ index, data }: Props) => {
   useEffect(() => {
     if (copyData) {
       //if LEFT and RIGHT sides are equal -> no NEED to update data in database
-      JSON.stringify(copyData) === JSON.stringify(objective)
+      JSON.stringify(copyData) === JSON.stringify(rest)
         ? setRemind(false)
         : setRemind(true);
     }
-  }, [objective]);
+  }, [target_objective]);
 
   //---------------Save to Server-------------------
   const SubmitHandler = () => {
@@ -82,7 +85,7 @@ const InputComp = ({ index, data }: Props) => {
         toast.success("User Objectives Updated!"),
           //After Submit Btn pressed
           //1. update client side
-          setCopy(objective),
+          setCopy(rest),
           setRemind(false),
           //2. update redux side
           dispatch(cleanUp_Objective_redux());
@@ -114,12 +117,12 @@ const InputComp = ({ index, data }: Props) => {
         {/* <h3>Objective {index}</h3> */}
         {pathname.split("/").includes("resume") && (
           <Switch
-            checked={objective?.display_in_Resume}
+            checked={target_objective?.display_in_Resume}
             onChange={() =>
               dispatch(
                 switch_display_in_Resume({
                   index: index,
-                  display_in_Resume: !objective?.display_in_Resume,
+                  display_in_Resume: !target_objective?.display_in_Resume,
                 })
               )
             }
@@ -135,7 +138,7 @@ const InputComp = ({ index, data }: Props) => {
               editObjective({ index: index, ObjectiveDes: e.target.value })
             )
           }
-          value={objective ? objective?.ObjectiveDes : ""}
+          value={target_objective ? target_objective?.ObjectiveDes : ""}
           growVertically={true}
           fill
         />

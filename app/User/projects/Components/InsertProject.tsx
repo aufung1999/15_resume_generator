@@ -102,7 +102,10 @@ const InputComp = ({ index, data }: Props) => {
   const projects_redux: ProjectState[] = useSelector(
     (state: RootState) => state.projects
   );
-  const target_project = projects_redux.find((each) => each.index === index);
+  const target_project: ProjectState | any = projects_redux.find(
+    (each) => each.index === index
+  );
+  const { display_in_Resume, ...rest } = target_project;
 
   const [row, editRow] = useState<any>([]);
 
@@ -116,19 +119,20 @@ const InputComp = ({ index, data }: Props) => {
 
     editRow(temp_arr);
     //Copy the "initialized" data from the database
-    setCopy(JSON.stringify(target_project));
+    setCopy(rest);
     setRemind(false);
   }, [data]);
 
   //---------------------------To check if it equals to the data fetched from the database, if not UPDATE-------------------------------------------------------
-  const [copyData, setCopy] = useState<string | null>(null);
+  const [copyData, setCopy] = useState<ProjectState | null>(null);
   const [remind, setRemind] = useState(false);
 
   //Copy the "initialized" data from the database
   useEffect(() => {
     if (copyData) {
       //if LEFT and RIGHT sides are equal -> no NEED to update data in database
-      copyData === JSON.stringify(target_project)
+
+      JSON.stringify(copyData) === JSON.stringify(rest)
         ? setRemind(false)
         : setRemind(true);
     }
@@ -172,9 +176,10 @@ const InputComp = ({ index, data }: Props) => {
       },
     })
       .then(() => {
-        toast.success("User Projects Updated!"), //After Submit Btn pressed
+        toast.success("User Projects Updated!"),
+          //After Submit Btn pressed
           //1. update client side
-          setCopy(JSON.stringify(target_project));
+          setCopy(rest);
         setRemind(false);
         //2. update redux side
         dispatch(cleanUp_Project_redux());
