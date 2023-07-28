@@ -55,15 +55,18 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
           // input_data.slice(0,1).map(async (each_input: string) => {
           input_data.map(async (each_input: string) => {
             //result here
-            chatCompletion = await openai.createChatCompletion({
-              model: "gpt-3.5-turbo",
-              messages: [
-                {
-                  role: "user",
-                  content: `Are "${each.ProjectDescription}" and "${each_input}" similar. Please think twice and Answer in Yes or No Only`,
-                },
-              ],
-            });
+            chatCompletion = await openai.createChatCompletion(
+              {
+                model: "gpt-3.5-turbo",
+                messages: [
+                  {
+                    role: "user",
+                    content: `Are "${each.ProjectDescription}" and "${each_input}" similar. Please think carefully and Answer in Yes or No Only`,
+                  },
+                ],
+              },
+              { timeout: 1000 }
+            );
 
             console.log(chatCompletion?.data.choices[0].message.content);
 
@@ -90,12 +93,25 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
               (Number(chatCompletion?.data.usage.prompt_tokens) * 0.0015 +
                 Number(chatCompletion?.data.usage.completion_tokens) * 0.002) /
                 1000;
+
+            // console.log(total_usage, temp_arr);
           })
         )
       )
-    ).then((values) => {
-      console.log(temp_arr);
-      return NextResponse.json({ data: temp_arr, total_usage: total_usage });
-    });
+    )
+      .then((values) => {
+        console.log(temp_arr);
+        console.log("Work");
+        return NextResponse.json({
+          data_project: temp_arr,
+          total_usage_project: total_usage,
+        });
+      })
+      .catch((values) => {
+        return NextResponse.json({
+          data_project: temp_arr,
+          total_usage_project: total_usage,
+        });
+      });
   }
 }

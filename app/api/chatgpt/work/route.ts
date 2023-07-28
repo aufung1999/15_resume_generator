@@ -48,15 +48,18 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
           // input_data.slice(0,1).map(async (each_input: string) => {
           input_data.map(async (each_input: string) => {
             //result here
-            chatCompletion = await openai.createChatCompletion({
-              model: "gpt-3.5-turbo",
-              messages: [
-                {
-                  role: "user",
-                  content: `Are "${each.JobDescription}" and "${each_input}" similar. Please think twice and Answer in Yes or No Only`,
-                },
-              ],
-            });
+            chatCompletion = await openai.createChatCompletion(
+              {
+                model: "gpt-3.5-turbo",
+                messages: [
+                  {
+                    role: "user",
+                    content: `Are "${each.JobDescription}" and "${each_input}" similar. Please think carefully and Answer in Yes or No Only`,
+                  },
+                ],
+              },
+              { timeout: 1000 }
+            );
 
             console.log(chatCompletion?.data.choices[0].message.content);
 
@@ -66,6 +69,7 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
                 "cleanup"
               ) === "Yes"
             ) {
+              // console.log(total_usage, temp_arr);
               temp_arr.push({
                 match_index_1st: each.index_1st,
                 match_index_2nd: each.index_2nd,
@@ -86,10 +90,15 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
           })
         )
       )
-    ).then((values) => {
-      console.log(temp_arr);
-      return NextResponse.json({ data: temp_arr, total_usage: total_usage });
-    });
+    )
+      .then((values) => {
+        console.log(temp_arr);
+        console.log("Project");
+        return NextResponse.json({ data: temp_arr, total_usage: total_usage });
+      })
+      .catch((values) => {
+        return NextResponse.json({ data: temp_arr, total_usage: total_usage });
+      });
 
     // console.log(temp_arr);
     // try {

@@ -12,7 +12,7 @@ export interface ControlState {
 
 const initialState: ControlState = {
   Layout: "user",
-  switch: "Contact",
+  switch: "Resumes",
   API_KEY: "",
   preview: { matches: [], unmatches: [], img: "" },
   job_details: { job_position: "", company_name: "", website: "" },

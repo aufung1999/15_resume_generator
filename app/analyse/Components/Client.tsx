@@ -107,10 +107,14 @@ export default function AnalyseClient({ data }: any) {
     e.preventDefault();
 
     const pre_stage_2 = stage_1.split("\n");
-    console.log(stage_2);
+
+    const clean_up_pre_stage_2 = pre_stage_2.filter(
+      (each) => each.length !== 0
+    );
+    console.log(clean_up_pre_stage_2);
     if (pre_stage_2) {
       //send to "redux store"
-      dispatch(editAnalyse_stage_2(pre_stage_2));
+      dispatch(editAnalyse_stage_2(clean_up_pre_stage_2));
       //remove the stage_1 after split func.
       dispatch(removeAnalyse_stage_1());
     }

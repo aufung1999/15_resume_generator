@@ -91,8 +91,9 @@ export default function Compare() {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      const { data: data_project, total_usage: total_usage_project } =
-        await res_project.json();
+
+      const { data_project, total_usage_project } = await res_project.json();
+      console.log(data_project);
       // localStorage.setItem("total_usage", total_usage);
 
       //=====Pre-process Work=====            NOT USED

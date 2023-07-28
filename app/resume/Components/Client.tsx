@@ -27,7 +27,7 @@ import { useSearchParams } from "next/navigation";
 
 const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   const searchParams = useSearchParams();
-  const search = searchParams.get('search')
+  const search = searchParams.get("search");
   const dispatch = useDispatch();
 
   const componentRef = useRef<any>(null);
@@ -52,52 +52,56 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
         <div className=" flex flex-col">
           <Toaster />
-          <ReactToPrint
-            onBeforePrint={() =>
-              //because there is a "!" in the reducer, so set the "true" here
+          <div
+          className="w-full"
+            onMouseEnter={() =>
               dispatch(control_Highlight_Dsiplay({ select: true }))
             }
-            onAfterPrint={async () => {
-              //1. convert the html-to-image
-              htmlToImage
-                .toPng(componentRef.current)
-                .then(async (dataUrl) => {
-                  //2. after getting the string of result, fetch it to mongoDB
-                  await fetch(`/api/user/resume`, {
-                    method: "POST",
-                    //need to stringify all the thing BEFORE send to API
-                    body: JSON.stringify({
-                      image: dataUrl,
-                      stage_3: stage_3_ls,
-                      matches: matches_ls,
-                      unmatches: unmatches_ls,
-                      job_details: job_details_ls,
-                      resumeID: resumeID,
-                    }),
-                    headers: {
-                      "Content-type": "application/json; charset=UTF-8",
-                    },
+          >
+            <ReactToPrint
+
+              onAfterPrint={async () => {
+                //1. convert the html-to-image
+                htmlToImage
+                  .toPng(componentRef.current)
+                  .then(async (dataUrl) => {
+                    //2. after getting the string of result, fetch it to mongoDB
+                    await fetch(`/api/user/resume`, {
+                      method: "POST",
+                      //need to stringify all the thing BEFORE send to API
+                      body: JSON.stringify({
+                        image: dataUrl,
+                        stage_3: stage_3_ls,
+                        matches: matches_ls,
+                        unmatches: unmatches_ls,
+                        job_details: job_details_ls,
+                        resumeID: resumeID,
+                      }),
+                      headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                      },
+                    })
+                      .then((res) => res.json())
+                      .then((data) => toast.success(data?.message))
+                      // .then((res) => toast.success(res?.json().message))
+                      .catch(() => toast.error("Cannot Delete!"));
                   })
-                    .then((res) => res.json())
-                    .then((data) => toast.success(data?.message))
-                    // .then((res) => toast.success(res?.json().message))
-                    .catch(() => toast.error("Cannot Delete!"));
-                })
-                .catch((error) => {
-                  console.error("oops, something went wrong!", error);
-                });
-            }}
-            // removeAfterPrint={true}
-            trigger={() => (
-              <ButtonGroup
-                aria-label="Disabled elevation buttons"
-                className="bg-white inline-block"
-              >
-                <Button className="w-full">Print this out!</Button>
-              </ButtonGroup>
-            )}
-            content={() => componentRef.current}
-          />
+                  .catch((error) => {
+                    console.error("oops, something went wrong!", error);
+                  });
+              }}
+              // removeAfterPrint={true}
+              trigger={() => (
+                <ButtonGroup
+                  aria-label="Disabled elevation buttons"
+                  className="bg-white inline-block"
+                >
+                  <Button className="w-full">Print this out!</Button>
+                </ButtonGroup>
+              )}
+              content={() => componentRef.current}
+            />
+          </div>
           <StatisticBoard />
           <DisplayResultBoard />
           <Revalidate />
