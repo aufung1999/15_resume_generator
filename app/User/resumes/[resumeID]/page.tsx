@@ -95,9 +95,9 @@ export default function ResumeDetail({
                 ).toFixed(2)}
                 %
               </div>
-              <p className="text-4xl font-black text-gray-900 dark:text-white">
+              <div className="text-4xl font-black text-gray-900 dark:text-white">
                 {data_csr?.createdAt.substring(0, 10)}
-              </p>
+              </div>
             </div>
             <div className="border">
               <div className="text-xl font-black text-gray-900 ">

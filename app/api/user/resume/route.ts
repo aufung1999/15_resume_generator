@@ -38,18 +38,42 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     }
 
     if (!resumeID) {
-      const resume = await new Resume({
+      const exist: any = Resume.findOne({
         email: session?.user?.email,
-        HTMLDIVElement: image,
-        Stage_3: stage_3,
-        Matches: matches,
-        Unmatches: unmatches,
         Job_Details: job_details,
-        Response: "false",
       });
-      db.disconnect();
-      await resume.save();
-      return NextResponse.json({ message: "Resume Saved" });
+
+      if (exist) {
+        const filter = {
+          email: session?.user?.email,
+          Job_Details: job_details,
+        };
+        const update = {
+          HTMLDIVElement: image,
+          Stage_3: stage_3,
+          Matches: matches,
+          Unmatches: unmatches,
+        };
+
+        db.disconnect();
+        await Resume.findOneAndUpdate(filter, update);
+        return NextResponse.json({ message: "Resume Updated" });
+      }
+
+      if (!exist) {
+        const resume = await new Resume({
+          email: session?.user?.email,
+          HTMLDIVElement: image,
+          Stage_3: stage_3,
+          Matches: matches,
+          Unmatches: unmatches,
+          Job_Details: job_details,
+          Response: "false",
+        });
+        db.disconnect();
+        await resume.save();
+        return NextResponse.json({ message: "Resume Saved" });
+      }
     }
   } else {
     // Not Signed in
