@@ -54,6 +54,9 @@ import Stage_2 from "./Stage_2";
 import Compare from "./Compare";
 import { editAPI_KEY } from "@/slices/controlSlice";
 
+import { Tooltip } from "@mui/material";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+
 export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
   const stage_1 = useSelector((state: RootState) => state.analyse.stage_1);
@@ -99,7 +102,9 @@ export default function AnalyseClient({ data }: any) {
       }
     }
     if (localStorage.getItem("last_website")) {
-      dispatch(editAnalyse_website(localStorage.getItem("last_website")));
+      dispatch(
+        editAnalyse_website(JSON.parse(localStorage.getItem("last_website")))
+      );
     }
   }, []);
 
@@ -184,7 +189,13 @@ export default function AnalyseClient({ data }: any) {
           </div>
           <div>
             <div className="flex">
-              <h1 className=" font-semibold italic underline ">Website</h1>
+              <h1 className=" font-semibold italic underline ">
+                <Tooltip title={<>It will automatically record the last website you input</>}>
+                  <div>
+                    Website
+                  </div>
+                </Tooltip>
+              </h1>
               <span className="ms-1 text-xs">(Required)</span>
             </div>
             <div>
