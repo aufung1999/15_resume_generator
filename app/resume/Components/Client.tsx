@@ -52,56 +52,59 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
         <div className=" flex flex-col">
           <Toaster />
-          <div
-          className="w-full"
-            onMouseEnter={() =>
-              dispatch(control_Highlight_Dsiplay({ select: true }))
-            }
-          >
-            <ReactToPrint
 
-              onAfterPrint={async () => {
-                //1. convert the html-to-image
-                htmlToImage
-                  .toPng(componentRef.current)
-                  .then(async (dataUrl) => {
-                    //2. after getting the string of result, fetch it to mongoDB
-                    await fetch(`/api/user/resume`, {
-                      method: "POST",
-                      //need to stringify all the thing BEFORE send to API
-                      body: JSON.stringify({
-                        image: dataUrl,
-                        stage_3: stage_3_ls,
-                        matches: matches_ls,
-                        unmatches: unmatches_ls,
-                        job_details: job_details_ls,
-                        resumeID: resumeID,
-                      }),
-                      headers: {
-                        "Content-type": "application/json; charset=UTF-8",
-                      },
-                    })
-                      .then((res) => res.json())
-                      .then((data) => toast.success(data?.message))
-                      // .then((res) => toast.success(res?.json().message))
-                      .catch(() => toast.error("Cannot Delete!"));
+          <ReactToPrint
+            onAfterPrint={async () => {
+              //1. convert the html-to-image
+              htmlToImage
+                .toPng(componentRef.current)
+                .then(async (dataUrl) => {
+                  //2. after getting the string of result, fetch it to mongoDB
+                  await fetch(`/api/user/resume`, {
+                    method: "POST",
+                    //need to stringify all the thing BEFORE send to API
+                    body: JSON.stringify({
+                      image: dataUrl,
+                      stage_3: stage_3_ls,
+                      matches: matches_ls,
+                      unmatches: unmatches_ls,
+                      job_details: job_details_ls,
+                      resumeID: resumeID,
+                    }),
+                    headers: {
+                      "Content-type": "application/json; charset=UTF-8",
+                    },
                   })
-                  .catch((error) => {
-                    console.error("oops, something went wrong!", error);
-                  });
-              }}
-              // removeAfterPrint={true}
-              trigger={() => (
-                <ButtonGroup
-                  aria-label="Disabled elevation buttons"
-                  className="bg-white inline-block"
+                    .then((res) => res.json())
+                    .then((data) => toast.success(data?.message))
+                    // .then((res) => toast.success(res?.json().message))
+                    .catch(() => toast.error("Cannot Delete!"));
+                })
+                .catch((error) => {
+                  console.error("oops, something went wrong!", error);
+                });
+            }}
+            // removeAfterPrint={true}
+            trigger={() => (
+              <ButtonGroup
+                aria-label="Disabled elevation buttons"
+                className="bg-white w-full"
+              >
+                <Button
+                  className="w-full"
+                  onMouseEnter={() =>
+                    dispatch(control_Highlight_Dsiplay({ select: true }))
+                  }
+                  onMouseLeave={() =>
+                    dispatch(control_Highlight_Dsiplay({ select: false }))
+                  }
                 >
-                  <Button className="w-full">Print this out!</Button>
-                </ButtonGroup>
-              )}
-              content={() => componentRef.current}
-            />
-          </div>
+                  Print this out!
+                </Button>
+              </ButtonGroup>
+            )}
+            content={() => componentRef.current}
+          />
           <StatisticBoard />
           <DisplayResultBoard />
           <Revalidate />

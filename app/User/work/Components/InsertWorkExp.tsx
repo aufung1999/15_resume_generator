@@ -69,27 +69,29 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   );
   //***/
 
-  return (
-    <div key={rowIndex}>
-      {/* hide the index */}
-      {/* <div>{rowIndex}</div> */}
+  const [dynamicGrow, setDynamicGrow] = useState(false);
 
-      <TextArea
-        large={true}
-        fill={true}
-        growVertically={true}
-        onChange={(e) =>
-          dispatch(
-            editJobDescription({
-              index: index,
-              rowIndex: rowIndex,
-              Row: e.target.value,
-            })
-          )
-        }
-        value={row ? row.Row : ""}
-      />
-    </div>
+  useEffect(() => {
+    setDynamicGrow(true);
+  }, [row]);
+
+  return (
+    <TextArea
+      key={rowIndex}
+      // large={true}
+      fill={true}
+      growVertically={dynamicGrow}
+      onChange={(e) =>
+        dispatch(
+          editJobDescription({
+            index: index,
+            rowIndex: rowIndex,
+            Row: e.target.value,
+          })
+        )
+      }
+      value={row ? row.Row : ""}
+    />
   );
 };
 //===================================================================================================================================================================================
