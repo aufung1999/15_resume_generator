@@ -21,8 +21,6 @@ export default function CustomedTooltip({
   text: string | any;
   whichSection: string | any;
 }) {
-
-
   const control_highlight_dsiplay = useSelector(
     (state: RootState) => state.resume.control_highlight_dsiplay
   );
@@ -31,18 +29,19 @@ export default function CustomedTooltip({
   );
 
   const [on, setOn] = useState<any>(false);
-  const [target, setTarget] = useState<any>([]);
+  const [target, setTarget] = useState<any>(null);
   const [matches, setMatches] = useState<any>(null);
+  const [years, setYears] = useState<any>(null);
 
   useEffect(() => {
     let temp_array: any[] = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
-        const newObject: any = window.localStorage.getItem("stage_3");
+        const stage_3_ls: any = window.localStorage.getItem("stage_3");
         // Conditional-case based on if the index_2nd exists or not
         // *****NOT exist*****
         if (index_2nd === undefined || index_2nd === null) {
-          JSON.parse(newObject).map((each: any) =>
+          JSON.parse(stage_3_ls).map((each: any) =>
             each.match_index === index_1st &&
             //To avoid duplication
             temp_array.includes(each.match_sentence) === false
@@ -53,7 +52,7 @@ export default function CustomedTooltip({
         }
         // *****Exist*****
         if (index_2nd) {
-          JSON.parse(newObject).map((each: any) => {
+          JSON.parse(stage_3_ls).map((each: any) => {
             each.match_index_1st === index_1st &&
             each.match_index_2nd === index_2nd &&
             //To avoid duplication
@@ -66,15 +65,15 @@ export default function CustomedTooltip({
       }
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {
-        const newObject: any = window.localStorage.getItem("matches");
+        const stage_3_ls: any = window.localStorage.getItem("matches");
         //sorting for "temp_array"
         temp_array.sort((a, b) =>
-          JSON.parse(newObject).indexOf(a) > JSON.parse(newObject).indexOf(b)
+          JSON.parse(stage_3_ls).indexOf(a) > JSON.parse(stage_3_ls).indexOf(b)
             ? 1
             : -1
         );
         //pass the synchronous "temp_array" variable to a asynchronous state "matches"
-        setMatches(JSON.parse(newObject));
+        setMatches(JSON.parse(stage_3_ls));
       }
       //pass the synchronous "temp_array" variable to a asynchronous state "target"
       setTarget(temp_array);
@@ -84,6 +83,39 @@ export default function CustomedTooltip({
       setOn(false);
     };
   }, [force_to_update_redux, index_1st, index_2nd]);
+
+  useEffect(() => {
+    if (matches && target) {
+      const find_res = matches?.find((each: string, i: number) =>
+        target?.includes(each)
+      );
+
+      if (
+        find_res
+          ?.split(" ")
+          .map((each: string) => each.toLowerCase())
+          .includes("years") ||
+        find_res
+          ?.split(" ")
+          .map((each: string) => each.toLowerCase())
+          .includes("year")
+      ) {
+        // console.log("**********************************");
+        let i = find_res.indexOf("year");
+        while (0 <= i) {
+          if (
+            Number.isInteger(Number(find_res[i])) &&
+            Number(find_res[i]) >= 1
+          ) {
+            // console.log("hi: ");
+            setYears(Number(find_res[i]));
+          }
+          i--;
+        }
+        // console.log("**********************************");
+      }
+    }
+  }, [target, matches]);
 
   return (
     <div className={on && control_highlight_dsiplay ? " bg-yellow-300" : ""}>
@@ -95,22 +127,23 @@ export default function CustomedTooltip({
                 <div
                   key={i}
                   className={
-                    target.includes(each) ? " font-semibold" : "text-gray-300"
+                    target?.includes(each) ? " font-semibold" : "text-gray-300"
                   }
                 >
-                  {target.includes(each) && <span>✔️</span>}
-                  {matches.indexOf(each)}:{each}
+                  {target?.includes(each) && <span>✔️</span>}
+                  {matches?.indexOf(each)}:{each}
                 </div>
               ))}
             </>
           }
         >
           {text}
+          {whichSection === "skill" && years && <> ({years}+)</>}
         </Tooltip>
       ) : (
         <div>
           {text}
-          {/* dispatch the thing to Redux */}
+          {whichSection === "skill" && years && <> ({years}+)</>}
         </div>
       )}
     </div>
