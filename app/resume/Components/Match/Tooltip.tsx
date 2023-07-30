@@ -122,7 +122,19 @@ export default function CustomedTooltip({
       {on && control_highlight_dsiplay ? (
         <Tooltip
           title={
-            <>
+            <div>
+              <div className=" flex justify-end">
+                {whichSection === "skill" && Number.isInteger(years) && (
+                  <Button onClick={() => setYears((prev: number) => prev + 1)}>
+                    +
+                  </Button>
+                )}
+                {whichSection === "skill" && Number.isInteger(years) && (
+                  <Button onClick={() => setYears((prev: number) => prev - 1)}>
+                    -
+                  </Button>
+                )}
+              </div>
               {matches?.map((each: string, i: number) => (
                 <div
                   key={i}
@@ -134,7 +146,7 @@ export default function CustomedTooltip({
                   {matches?.indexOf(each)}:{each}
                 </div>
               ))}
-            </>
+            </div>
           }
         >
           {text}
