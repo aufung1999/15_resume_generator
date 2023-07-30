@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { Button, mergeRefs, Popover, Tag } from "@blueprintjs/core";
 import { Tooltip } from "@mui/material";
@@ -123,17 +123,28 @@ export default function CustomedTooltip({
         <Tooltip
           title={
             <div>
-              <div className=" flex justify-end">
-                {whichSection === "skill" && Number.isInteger(years) && (
-                  <Button onClick={() => setYears((prev: number) => prev + 1)}>
-                    +
-                  </Button>
-                )}
-                {whichSection === "skill" && Number.isInteger(years) && (
-                  <Button onClick={() => setYears((prev: number) => prev - 1)}>
-                    -
-                  </Button>
-                )}
+              <div className=" flex justify-end border h-full">
+                <div>
+                  {whichSection === "skill" && Number.isInteger(years) && (
+                    <Button
+                      onClick={() => setYears((prev: number) => prev + 1)}
+                    >
+                      +
+                    </Button>
+                  )}
+                </div>
+                <div className="h-full flex flex-col items-center justify-center border text-xl px-5">
+                  {years}
+                </div>
+                <div>
+                  {whichSection === "skill" && Number.isInteger(years) && (
+                    <Button
+                      onClick={() => setYears((prev: number) => prev - 1)}
+                    >
+                      -
+                    </Button>
+                  )}
+                </div>
               </div>
               {matches?.map((each: string, i: number) => (
                 <div
