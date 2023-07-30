@@ -3,15 +3,20 @@ import React, { useState, useEffect, useRef, Suspense } from "react";
 
 import {
   Button,
+  ButtonGroup,
   Card,
   Elevation,
   FormGroup,
+  Icon,
   InputGroup,
   Switch,
   TextArea,
 } from "@blueprintjs/core";
 import { useRouter } from "next/navigation";
 import Loading from "../../loading";
+import data from "@/utils/data";
+
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ResumeDetail({
   params,
@@ -73,12 +78,34 @@ export default function ResumeDetail({
     //Jump to "/resume"
     router.push(`/resume/${params.resumeID}`);
   };
+
+  const updateHandler = async () => {
+    console.log(data_csr);
+
+    await fetch(`/api/user/resume/${params.resumeID}/edit`, {
+      method: "POST",
+      //need to stringify all the thing BEFORE send to API
+      body: JSON.stringify({
+        resumeID: params.resumeID,
+        job_details: data_csr.job_details,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => toast.success(data?.message))
+      // .then((res) => toast.success(res?.json().message))
+      .catch(() => toast.error("Cannot Edit Job Details!"));
+  };
+
   if (isLoading === true) {
     return <Loading />;
   }
   if (isLoading === false) {
     return (
       <div>
+        <Toaster />
         <div className="flex">
           <div className="w-1/2 border-2 ">
             <img src={data_csr?.image.src} alt="" />
@@ -109,7 +136,23 @@ export default function ResumeDetail({
                   Company:
                 </div>
                 <div className=" col-span-8 break-words">
-                  {data_csr?.job_details?.company_name}
+                  <InputGroup
+                    onChange={(e) =>
+                      setData({
+                        ...data_csr,
+                        job_details: {
+                          ...data_csr.job_details,
+                          company_name: e.target.value,
+                        },
+                      })
+                    }
+                    value={
+                      data_csr?.job_details?.company_name
+                        ? data_csr?.job_details?.company_name
+                        : ""
+                    }
+                    fill
+                  />
                 </div>
               </div>
 
@@ -118,7 +161,23 @@ export default function ResumeDetail({
                   Position:
                 </div>
                 <div className=" col-span-8 break-words">
-                  {data_csr?.job_details?.job_position}
+                  <InputGroup
+                    onChange={(e) =>
+                      setData({
+                        ...data_csr,
+                        job_details: {
+                          ...data_csr.job_details,
+                          job_position: e.target.value,
+                        },
+                      })
+                    }
+                    value={
+                      data_csr?.job_details?.job_position
+                        ? data_csr?.job_details?.job_position
+                        : ""
+                    }
+                    fill
+                  />
                 </div>
               </div>
 
@@ -127,8 +186,44 @@ export default function ResumeDetail({
                   Website:
                 </div>
                 <div className=" col-span-8 break-words">
-                  {data_csr?.job_details?.website}
+                  <InputGroup
+                    onChange={(e) =>
+                      setData({
+                        ...data_csr,
+                        job_details: {
+                          ...data_csr.job_details,
+                          website: e.target.value,
+                        },
+                      })
+                    }
+                    value={
+                      data_csr?.job_details?.website
+                        ? data_csr?.job_details?.website
+                        : ""
+                    }
+                    fill
+                  />
                 </div>
+              </div>
+
+              <div>
+                <Button
+                  style={{
+                    backgroundColor: "rgba(255,0,0,0.6)",
+                    borderRadius: "25% 10%",
+                  }}
+                  className=" "
+                  onClick={updateHandler}
+                  icon={
+                    <Icon
+                      icon="updated"
+                      className=""
+                      style={{ color: "white" }}
+                      size={10}
+                    />
+                  }
+                  small
+                />
               </div>
             </div>
             <div className="border">

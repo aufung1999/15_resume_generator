@@ -23,13 +23,13 @@ export default function extractTerms(input: any, mode: string) {
       cleaned_input = input.replace(/[^A-Za-z/]/g, "");
 
       return cleaned_input;
-      case "search":
-        splited_input = input.split(" ");
+    case "search":
+      splited_input = input.split(/[/\s_]+/);
 
-        cleaned_input = splited_input.map((each: any) =>
-          each.replace(/[^A-Za-z0-9/]/g, "").toLowerCase()
-        );
+      cleaned_input = splited_input.map((each: any) =>
+        each.replace(/[^A-Za-z0-9/]/g, "").toLowerCase()
+      );
 
-        return cleaned_input;
+      return cleaned_input;
   }
 }
