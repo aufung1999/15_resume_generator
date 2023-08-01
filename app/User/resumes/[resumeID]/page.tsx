@@ -12,6 +12,8 @@ import {
   Switch,
   TextArea,
 } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+
 import { useRouter } from "next/navigation";
 import Loading from "../../loading";
 import data from "@/utils/data";
@@ -111,7 +113,7 @@ export default function ResumeDetail({
             <img src={data_csr?.image.src} alt="" />
           </div>
 
-          <div className="w-1/2 border-4 text-black">
+          <div className="w-1/2 border-4 text-black ">
             <div className="border text-lg flex justify-between me-5">
               {/* Calculate the % of the matches out of ALL  */}
               <div className="text-4xl font-black text-gray-900 dark:text-white">
@@ -127,15 +129,33 @@ export default function ResumeDetail({
               </div>
             </div>
             <div className="border">
-              <div className="text-xl font-black text-gray-900 ">
-                Job Details
+              <div className="text-xl font-black text-gray-900 flex justify-between">
+                <div>Job Details</div>
+                <Button
+                  style={{
+                    backgroundColor: "rgba(255,0,0,0.6)",
+                    borderRadius: "25% 10%",
+                  }}
+                  className=" "
+                  onClick={updateHandler}
+                  icon={
+                    <Icon
+                      icon="updated"
+                      className=""
+                      style={{ color: "white" }}
+                      size={10}
+                    />
+                  }
+                  small
+                  text="Update"
+                />
               </div>
 
               <div className="grid grid-cols-10 w-full mb-2">
                 <div className=" col-span-2 border flex justify-center">
                   Company:
                 </div>
-                <div className=" col-span-8 break-words">
+                <div className=" col-span-8 break-words border">
                   <InputGroup
                     onChange={(e) =>
                       setData({
@@ -205,26 +225,6 @@ export default function ResumeDetail({
                   />
                 </div>
               </div>
-
-              <div>
-                <Button
-                  style={{
-                    backgroundColor: "rgba(255,0,0,0.6)",
-                    borderRadius: "25% 10%",
-                  }}
-                  className=" "
-                  onClick={updateHandler}
-                  icon={
-                    <Icon
-                      icon="updated"
-                      className=""
-                      style={{ color: "white" }}
-                      size={10}
-                    />
-                  }
-                  small
-                />
-              </div>
             </div>
             <div className="border">
               <div className="text-xl font-black text-gray-900 ">Matches</div>
@@ -250,8 +250,24 @@ export default function ResumeDetail({
                 </div>
               ))}
             </div>
-            <div className="border">
-              <Button onClick={ClickHandler}>Edit</Button>
+            <div className="border py-5 flex justify-center items-center">
+              <Button
+                className="font-semibold"
+                style={{
+                  backgroundColor: "rgba(0,0,255,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                onClick={ClickHandler}
+                icon={
+                  <Icon
+                    icon="edit"
+                    className=" "
+                    style={{ color: "white" }}
+                    size={10}
+                  />
+                }
+                text="Edit"
+              />
             </div>
           </div>
         </div>

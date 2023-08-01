@@ -26,6 +26,7 @@ export default function Result({
   const force_to_update_redux = useSelector(
     (state: RootState) => state.resume.force_to_update
   );
+  const display_redux = useSelector((state: RootState) => state.resume.display);
 
   const [get, setGet] = useState<any[]>([]);
 
@@ -37,6 +38,17 @@ export default function Result({
       }
     }
   }, [force_to_update_redux, whatToGet]);
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     if (localStorage.getItem("unmatches")) {
+  //       const unmatches_ls: any = window.localStorage.getItem("unmatches");
+  //       JSON.parse(unmatches_ls)?.map((each) =>
+  //         console.log(display_redux?.includes(each.user_data))
+  //       );
+  //     }
+  //   }
+  // }, [whatToGet, display_redux]);
 
   const ClickHandler = (deleteIndex: number) => {
     dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));

@@ -16,7 +16,7 @@ export default async function Page() {
       JSON.stringify(
         await Work.find({
           email: session?.user?.email,
-        })
+        }).sort({ StartDate: 1 })
       )
     );
     if (workData) {

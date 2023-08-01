@@ -1,11 +1,15 @@
 "use client";
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { Button, mergeRefs, Popover, Tag } from "@blueprintjs/core";
 import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { add_skill_match, editResume_stage_4 } from "@/slices/resumeSlice";
+import {
+  add_display,
+  add_skill_match,
+  editResume_stage_4,
+} from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 
 export default function CustomedTooltip({
@@ -33,47 +37,95 @@ export default function CustomedTooltip({
   const [matches, setMatches] = useState<any>(null);
   const [years, setYears] = useState<any>(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     let temp_array: any[] = [];
+    let Not_exist: any[] = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
-        // Conditional-case based on if the index_2nd exists or not
-        // *****NOT exist*****
-        if (index_2nd === undefined || index_2nd === null) {
-          JSON.parse(stage_3_ls).map((each: any) =>
-            each.match_index === index_1st &&
-            //To avoid duplication
-            temp_array.includes(each.match_sentence) === false
-              ? (setOn(true), temp_array.push(each.match_sentence))
-              : //This means that the row description is not included in the "stage_3" ----v
-                null
-          );
-        }
-        // *****Exist*****
-        if (index_2nd) {
-          JSON.parse(stage_3_ls).map((each: any) => {
-            each.match_index_1st === index_1st &&
-            each.match_index_2nd === index_2nd &&
-            //To avoid duplication
-            temp_array.includes(each.match_sentence) === false
-              ? (setOn(true), temp_array.push(each.match_sentence))
-              : //This means that the row description is not included in the "stage_3" ----^
-                null;
-          });
+
+        switch (whichSection) {
+          case "skill":
+            JSON.parse(stage_3_ls).map((each: any) => {
+              //index
+              // each.match_index_1st === index_1st &&
+              // each.match_index_2nd === index_2nd &&
+              //or only text
+              each.technique === description &&
+              //To avoid duplication
+              temp_array.includes(each.match_sentence) === false
+                ? (setOn(true),
+                  temp_array.push(each.match_sentence),
+                  dispatch(add_display(description)))
+                : //This means that the row description is not included in the "stage_3" ----^
+                  null;
+            });
+          case "work":
+            JSON.parse(stage_3_ls).map((each: any) => {
+              //index
+              // each.match_index_1st === index_1st &&
+              // each.match_index_2nd === index_2nd &&
+              //or only text
+              each.user_data === description &&
+              //To avoid duplication
+              temp_array.includes(each.match_sentence) === false
+                ? (setOn(true),
+                  temp_array.push(each.match_sentence),
+                  dispatch(add_display(description)))
+                : //This means that the row description is not included in the "stage_3" ----^
+                  null;
+            });
+
+          case "project":
+            // Conditional-case based on if the index_2nd exists or not
+            // *****NOT exist*****
+            if (index_2nd === undefined || index_2nd === null) {
+              JSON.parse(stage_3_ls).map((each: any) =>
+                //index
+                each.match_index === index_1st &&
+                //or only text
+                each.user_data === description &&
+                //To avoid duplication
+                temp_array.includes(each.match_sentence) === false
+                  ? (setOn(true),
+                    temp_array.push(each.match_sentence),
+                    dispatch(add_display(description)))
+                  : //This means that the row description is not included in the "stage_3" ----v
+                    null
+              );
+            }
+            // *****Exist*****
+            if (index_2nd) {
+              JSON.parse(stage_3_ls).map((each: any) => {
+                //index
+                // each.match_index_1st === index_1st &&
+                // each.match_index_2nd === index_2nd &&
+                //or only text
+                each.user_data === description &&
+                //To avoid duplication
+                temp_array.includes(each.match_sentence) === false
+                  ? (setOn(true),
+                    temp_array.push(each.match_sentence),
+                    dispatch(add_display(description)))
+                  : //This means that the row description is not included in the "stage_3" ----^
+                    null;
+              });
+            }
         }
       }
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {
-        const stage_3_ls: any = window.localStorage.getItem("matches");
+        const matches_ls: any = window.localStorage.getItem("matches");
         //sorting for "temp_array"
         temp_array.sort((a, b) =>
-          JSON.parse(stage_3_ls).indexOf(a) > JSON.parse(stage_3_ls).indexOf(b)
+          JSON.parse(matches_ls).indexOf(a) > JSON.parse(matches_ls).indexOf(b)
             ? 1
             : -1
         );
         //pass the synchronous "temp_array" variable to a asynchronous state "matches"
-        setMatches(JSON.parse(stage_3_ls));
+        setMatches(JSON.parse(matches_ls));
       }
       //pass the synchronous "temp_array" variable to a asynchronous state "target"
       setTarget(temp_array);
@@ -82,7 +134,7 @@ export default function CustomedTooltip({
     return () => {
       setOn(false);
     };
-  }, [force_to_update_redux, index_1st, index_2nd]);
+  }, [force_to_update_redux, index_1st, index_2nd, description]);
 
   useEffect(() => {
     if (matches && target) {

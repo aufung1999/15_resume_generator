@@ -17,6 +17,7 @@ export interface resumeState {
   switch_Statistic: boolean;
   control_highlight_dsiplay: boolean;
   stage_4: { work: any[]; project: any[]; skill: any[] };
+  display: string[];
   force_to_update: any;
 }
 
@@ -26,6 +27,7 @@ const initialState: resumeState = {
   switch_Statistic: false,
   control_highlight_dsiplay: true,
   stage_4: { work: [], project: [], skill: [] },
+  display: [],
   force_to_update: "",
 };
 
@@ -100,6 +102,11 @@ const analyseSlice = createSlice({
         });
       }
     },
+    add_display: (state, action) => {
+      state.display.includes(action.payload) === false
+        ? state.display.push(action.payload)
+        : null;
+    },
     FORCE_to_UPDATE: (state, action) => {
       state.force_to_update = action.payload;
     },
@@ -112,6 +119,7 @@ export const {
   switch_Statistic,
   control_Highlight_Dsiplay,
   editResume_stage_4,
+  add_display,
   FORCE_to_UPDATE,
 } = analyseSlice.actions;
 export default analyseSlice.reducer;

@@ -31,6 +31,7 @@ export default function SkillSection({ skill }: SkillsState[] | any) {
                     key={search}
                     index_1st={item.index}
                     index_2nd={each.skillIndex}
+                    description={each.skill}
                     text={each.skill}
                     whichSection="skill"
                   />

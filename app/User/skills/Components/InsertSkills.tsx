@@ -13,8 +13,8 @@ import {
   Switch,
   TextArea,
 } from "@blueprintjs/core";
-
 import "@blueprintjs/core/lib/css/blueprint.css";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   SkillsState,
@@ -133,7 +133,7 @@ const TermComp = ({ index, data }: Props) => {
   return (
     <div
       className={`
-      w-full border 
+      w-full border
       ${pathname.split("/").includes("user") ? "  px-5 " : ""}
       ${pathname.split("/").includes("resume") ? " " : ""}
       ${remind ? " bg-red-300" : " bg-green-200"}
