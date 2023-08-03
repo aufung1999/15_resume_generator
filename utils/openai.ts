@@ -1,6 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import APIKey from "@/models/APIKey";
-import { getServerSession } from "next-auth";
+
 import { Configuration, OpenAIApi } from "openai";
 
 const OPENAI_API_KEY: string = process.env.OPENAI_API_KEY as string;
