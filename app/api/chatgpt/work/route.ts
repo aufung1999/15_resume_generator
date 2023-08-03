@@ -93,7 +93,6 @@ export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
     )
       .then((values) => {
         console.log(temp_arr);
-        console.log("Project");
         return NextResponse.json({ data: temp_arr, total_usage: total_usage });
       })
       .catch((values) => {

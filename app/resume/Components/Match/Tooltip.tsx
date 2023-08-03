@@ -7,8 +7,6 @@ import { Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import {
   add_display,
-  add_skill_match,
-  editResume_stage_4,
 } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 
@@ -58,7 +56,7 @@ export default function CustomedTooltip({
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
                   temp_array.push(each.match_sentence),
-                  dispatch(add_display(description)))
+                  dispatch(add_display(each.match_sentence)))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
@@ -73,7 +71,7 @@ export default function CustomedTooltip({
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
                   temp_array.push(each.match_sentence),
-                  dispatch(add_display(description)))
+                  dispatch(add_display(each.match_sentence)))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
@@ -91,7 +89,7 @@ export default function CustomedTooltip({
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
                     temp_array.push(each.match_sentence),
-                    dispatch(add_display(description)))
+                    dispatch(add_display(each.match_sentence)))
                   : //This means that the row description is not included in the "stage_3" ----v
                     null
               );
@@ -108,7 +106,7 @@ export default function CustomedTooltip({
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
                     temp_array.push(each.match_sentence),
-                    dispatch(add_display(description)))
+                    dispatch(add_display(each.match_sentence)))
                   : //This means that the row description is not included in the "stage_3" ----^
                     null;
               });

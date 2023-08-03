@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 import ReactToPrint from "react-to-print";
 import { Button } from "@blueprintjs/core";
@@ -42,6 +42,19 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   const select = useSelector(
     (state: RootState) => state.resume.switch_Statistic
   );
+  const display_redux = useSelector((state: RootState) => state.resume.display);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("unmatches")) {
+        const stage_3_ls: any = window.localStorage.getItem("stage_3");
+        const target = JSON.parse(stage_3_ls)?.find(
+          (each) => display_redux?.includes(each.match_sentence) === false
+        );
+        console.log(target);
+      }
+    }
+  }, [display_redux]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>

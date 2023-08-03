@@ -37,8 +37,11 @@ export default function Revalidate() {
           each.JobDescription?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
-                each.index === item.match_index_1st &&
-                each_2.rowIndex === item.match_index_2nd
+                //index
+                // each.index === item.match_index_1st &&
+                // each_2.rowIndex === item.match_index_2nd
+                //or only text
+                each_2.Row === item.user_data
             )
               ? null
               : dispatch(
@@ -63,8 +66,11 @@ export default function Revalidate() {
           each.ProjectDescription?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
-                each.index === item.match_index_1st &&
-                each_2.rowIndex === item.match_index_2nd
+                //index
+                // each.index === item.match_index_1st &&
+                // each_2.rowIndex === item.match_index_2nd
+                //or only text
+                each_2.Row === item.user_data
             )
               ? null
               : dispatch(
@@ -190,11 +196,12 @@ export default function Revalidate() {
       // get the "unmatches" from the localStorage
       if (localStorage.getItem("unmatches")) {
         const unmatches_ls: any = window.localStorage.getItem("unmatches");
+        const matches_ls: any = window.localStorage.getItem("matches");
 
         // Define the input object for fetching
         const fetch_data = {
           user_data: work_unmatches,
-          input_data: JSON.parse(unmatches_ls),
+          input_data: [...JSON.parse(unmatches_ls), ...JSON.parse(matches_ls)],
           API_KEY: API_KEY,
         };
         // ----result from the chatgpt API
@@ -208,7 +215,6 @@ export default function Revalidate() {
         const { data, total_usage } = await res.json();
         // Update the localStorage after revalidation
         if (data) {
-          const matches_ls: any = window.localStorage.getItem("matches");
           const stage_3_ls: any = window.localStorage.getItem("stage_3");
 
           //Process
