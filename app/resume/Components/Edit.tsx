@@ -2,12 +2,12 @@
 
 import React, { useEffect } from "react";
 
-import ContactClient from "../../../app/user/contact/Components/Client";
-import EducationClient from "../../../app/user/education/Components/Client";
-import ObjectiveClient from "../../../app/user/objective/Components/Client";
-import ProjectClient from "../../../app/user/projects/Components/Client";
-import SkillClient from "../../../app/user/skills/Components/Client";
-import WorkClient from "../../../app/user/work/Components/Client";
+import ContactClient from "../../user/contact/Components/Client";
+import EducationClient from "../../user/education/Components/Client";
+import ObjectiveClient from "../../user/objective/Components/Client";
+import ProjectClient from "../../user/projects/Components/Client";
+import SkillClient from "../../user/skills/Components/Client";
+import WorkClient from "../../user/work/Components/Client";
 
 import { switch_resumeComponents } from "@/slices/resumeSlice";
 
