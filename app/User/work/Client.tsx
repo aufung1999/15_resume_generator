@@ -15,7 +15,7 @@ import InsertWorkExp from "./InsertWorkExp";
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 
 export default function WorkClient({ data }: any) {
   const router = useRouter();

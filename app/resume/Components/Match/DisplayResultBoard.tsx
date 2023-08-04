@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, ButtonGroup, Button } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 import { control_Highlight_Dsiplay } from "@/slices/resumeSlice";
 
 export default function DisplayResultBoard() {

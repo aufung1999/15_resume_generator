@@ -54,7 +54,7 @@ import {
   editAnalyse_website,
   removeAnalyse_stage_1,
 } from "../../../slices/analyseSlice";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 
 export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();

@@ -9,7 +9,7 @@ import ProjectClient from "../projects/Client";
 import SkillClient from "../skills/Client";
 import WorkClient from "../work/Client";
 
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
 
 import { useSelector, useDispatch } from "react-redux";

@@ -6,7 +6,7 @@ import { SectionSubtitle } from "../../atoms/SectionSubtitle";
 import { SectionTitle } from "../../atoms/SectionTitle";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 export default function ObjectiveSection({
   objective,
 }: ObjectiveState[] | any) {

@@ -4,7 +4,7 @@ import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 import { addSearchBar_redux, editSearch } from "@/slices/controlSlice";
 import extractTerms from "../../analyse/Functions/extractTerms";
 

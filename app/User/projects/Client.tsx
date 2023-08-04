@@ -14,7 +14,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 import InsertProject from "./InsertProject";
 
 export default function ProjectClient({ data }: any) {

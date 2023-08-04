@@ -3,7 +3,7 @@ import { Paper, ButtonGroup, Button } from "@mui/material";
 import { switch_Statistic } from "@/slices/resumeSlice";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 import Statistic from "./Statistic";
 
 export default function StatisticBoard() {

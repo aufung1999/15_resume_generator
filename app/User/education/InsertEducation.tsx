@@ -30,7 +30,7 @@ import {
   initialize_EducationData,
   cleanUp_Education_redux,
 } from "@/slices/educationSlice";
-import { RootState } from "../../../store/store";
+import { RootState } from "@/store/store";
 
 import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
