@@ -10,7 +10,7 @@ import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
 import Project from "@/models/Project";
 import Resume from "@/models/Resume";
-import EditResume from "../Components/Edit";
+import EditResume from "../Components/EditResume";
 import ResumeClient from "../Components/Client";
 import APIKey from "@/models/APIKey";
 

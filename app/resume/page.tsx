@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ResumeClient from "./Components/Client";
-import EditResume from "./Components/Edit";
+import EditResume from "./Components/EditResume";
 import db from "@/utils/db";
 import Contact from "@/models/Contact";
 import Work from "@/models/Work";
