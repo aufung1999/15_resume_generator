@@ -89,7 +89,7 @@ export default function Search({
         }}
       />
       <div className="flex">
-        {searchBar_csr?.map((each, i: number) => (
+        {searchBar_csr?.map((each: any, i: number) => (
           <div key={i}>{each}</div>
         ))}
       </div>
