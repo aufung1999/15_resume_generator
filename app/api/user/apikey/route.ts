@@ -9,7 +9,7 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
 
-// export async function GET(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
+// export async function GET(req: NextApiRequest, res: NextApiResponse) {
 //   const session = await getServerSession(authOptions);
 //   if (session) {
 //     // Signed in
@@ -31,7 +31,7 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
 //   res.end();
 // }
 
-export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
   if (session) {
     const body = await req.json();
