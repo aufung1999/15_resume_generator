@@ -33,8 +33,8 @@ export default function compare(user: any, input: any, mode: string) {
       return test;
     case "skill":
       console.log(user, input);
-      user.map((each:any) =>
-        each.array.map((skill) => {
+      user.map((each: any) =>
+        each.array.map((skill: any) => {
           console.log("skill: " + JSON.stringify(skill, null, 1));
           if (skill.length !== 0) {
             input.map((array: any) => {
