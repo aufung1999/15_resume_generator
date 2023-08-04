@@ -48,7 +48,7 @@ export default function Compare() {
       //=====Skill=====
       let temp_skill: any[] = [];
 
-      skills_redux.map(each:any) =>
+      skills_redux.map((each:any) =>
         temp_skill.push({
           index: each.index,
           array: each.Skill_list,
@@ -58,7 +58,7 @@ export default function Compare() {
 
       //=====Project===== --------------------- 1
       let temp_project: any[] = [];
-      project_redux.map(each:any) =>
+      project_redux.map((each:any) =>
         temp_project.push({
           index: each.index,
           array: extractTerms(each?.Techniques, "project_redux"),
@@ -69,7 +69,7 @@ export default function Compare() {
 
       //=====Project===== --------------------- 2
       let temp_project_2: any[] = [];
-      project_redux.map(each:any) =>
+      project_redux.map((each:any) =>
         each.ProjectDescription.map((element) =>
           temp_project_2.push({
             index_1st: each.index,
@@ -110,7 +110,7 @@ export default function Compare() {
       //=====Work=====
       let temp_work: any[] = [];
 
-      work_redux.map(each:any) =>
+      work_redux.map((each:any) =>
         each.JobDescription.map((element) =>
           temp_work.push({
             index_1st: each.index,

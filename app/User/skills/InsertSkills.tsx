@@ -248,7 +248,7 @@ export default function InsertSkills({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (skills_redux.length !== 0) {
-      skills_redux.map(each:any) => {
+      skills_redux.map((each:any) => {
         temp_arr.push(
           <TermComp key={each.index} index={each.index} data={data} />
         );

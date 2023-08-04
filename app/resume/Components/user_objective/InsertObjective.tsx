@@ -171,7 +171,7 @@ export default function InsertObjective({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (objective_redux.length !== 0) {
-      objective_redux.map(each:any) => {
+      objective_redux.map((each:any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );

@@ -33,7 +33,7 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
-        work_redux.map(each:any) =>
+        work_redux.map((each:any) =>
           each.JobDescription?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
@@ -62,7 +62,7 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
-        projects_redux.map(each:any) =>
+        projects_redux.map((each:any) =>
           each.ProjectDescription?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
@@ -91,7 +91,7 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
-        skills_redux?.map(each:any) =>
+        skills_redux?.map((each:any) =>
           each?.Skill_list?.map((each_2) =>
             JSON.parse(stage_3_ls)?.some(
               (item: any) =>
@@ -117,7 +117,7 @@ export default function Revalidate() {
     let temp_skill: any[] = [];
     let data: any;
 
-    skills_redux.map(each:any) =>
+    skills_redux.map((each:any) =>
       temp_skill.push({
         index: each.index,
         array: each.Skill_list,
