@@ -4,8 +4,8 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
   const [get, setGet] = useState<any[]>([]);
   const [usage, setTotalUsage] = useState<any>(0);
   const [job_details_csr, set_job_details_csr] = useState<any>(0);
-  const [matches_csr, setMatches] = useState<string[]>(null);
-  const [unmatches_csr, setUnMatches] = useState<string[]>(null);
+  const [matches_csr, setMatches] = useState<string[] | null>(null);
+  const [unmatches_csr, setUnMatches] = useState<string[] | null>(null);
 
   const check_usage_ls = localStorage.getItem("total_usage");
   const check_job_details_ls = localStorage.getItem("job_details");
@@ -85,11 +85,12 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
         <div className="grid grid-cols-10 w-full mb-2">
           <div className=" col-span-2 flex justify-center">Match:</div>
           <div className=" col-span-8 break-words">
-            {(
-              (matches_csr?.length /
-                (matches_csr?.length + unmatches_csr?.length)) *
-              100
-            ).toFixed(2)}
+            {matches_csr &&unmatches_csr&&
+              (
+                (matches_csr?.length /
+                  (matches_csr?.length + unmatches_csr?.length)) *
+                100
+              ).toFixed(2)}
           </div>
         </div>
 
