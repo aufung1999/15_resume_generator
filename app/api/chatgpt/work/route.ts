@@ -10,7 +10,7 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
 
-export async function POST(req: IGetUserAuthInfoRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
 
   if (session) {
