@@ -8,7 +8,6 @@ import Education from "@/models/Education";
 import Award from "@/models/Award";
 import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
-import Root_fetchData from "@/components/Root_fetchData";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
