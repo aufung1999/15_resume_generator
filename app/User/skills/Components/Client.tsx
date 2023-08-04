@@ -14,7 +14,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import InsertSkills from "./InsertSkills";
 
 export default function SkillClient({ data }: any) {

@@ -14,8 +14,9 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+
 import InsertEducation from "./InsertEducation";
+import { RootState } from "../../../store/store";
 
 export default function EducationClient({ data }: any) {
   const router = useRouter();

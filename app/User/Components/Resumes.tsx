@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 
 import "@blueprintjs/core/lib/css/blueprint.css";
 

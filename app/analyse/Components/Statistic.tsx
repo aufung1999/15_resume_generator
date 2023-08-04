@@ -1,5 +1,5 @@
 import { editAnalyse_stage_3 } from "@/slices/analyseSlice";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import { Button } from "@blueprintjs/core";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";

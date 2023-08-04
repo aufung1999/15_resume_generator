@@ -9,14 +9,14 @@ import ProjectClient from "../projects/Components/Client";
 import SkillClient from "../skills/Components/Client";
 import WorkClient from "../work/Components/Client";
 
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import { Button } from "@blueprintjs/core";
 
 import { useSelector, useDispatch } from "react-redux";
-import { editAPI_KEY, switch_Components } from "@/slices/controlSlice";
 
 import { useSearchParams } from "next/navigation";
 import Resumes from "./Resumes";
+import { switch_Components } from "../../../slices/controlSlice";
 
 export default function UserClient({ data }: any) {
   const searchParams = useSearchParams();

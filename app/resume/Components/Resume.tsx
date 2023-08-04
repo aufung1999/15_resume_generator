@@ -1,5 +1,5 @@
 "use client";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Contact from "./Sections/Contact";

@@ -14,7 +14,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import InsertObjective from "./InsertObjective";
 
 export default function ObjectiveClient({ data }: any) {

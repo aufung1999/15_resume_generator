@@ -26,7 +26,7 @@ import {
   initialize_ObjectiveData,
   switch_display_in_Resume,
 } from "@/slices/objectiveSlice";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 
 import toast, { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";

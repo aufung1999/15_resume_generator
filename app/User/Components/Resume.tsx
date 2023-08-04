@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { editPreview, editSearch } from "@/slices/controlSlice";
 
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 
 import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";

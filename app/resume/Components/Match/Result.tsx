@@ -11,7 +11,7 @@ import {
 } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import { FORCE_to_UPDATE } from "@/slices/resumeSlice";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 
 export default function Result({
   id,

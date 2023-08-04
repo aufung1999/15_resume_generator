@@ -6,7 +6,7 @@ import { SectionSubtitle } from "../../atoms/SectionSubtitle";
 import { SectionTitle } from "../../atoms/SectionTitle";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import CustomedTooltip from "../Match/Tooltip";
 
 import { useSearchParams } from "next/navigation";

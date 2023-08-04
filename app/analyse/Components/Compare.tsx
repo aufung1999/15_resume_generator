@@ -11,7 +11,7 @@ import {
 } from "@blueprintjs/core";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import extractTerms from "../Functions/extractTerms";
 import compare from "../Functions/compare";
 import Statistic from "./Statistic";

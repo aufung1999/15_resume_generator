@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   add_display,
 } from "@/slices/resumeSlice";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 
 export default function CustomedTooltip({
   index_1st,

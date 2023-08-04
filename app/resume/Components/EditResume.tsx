@@ -2,22 +2,22 @@
 
 import React, { useEffect } from "react";
 
-import ContactClient from "@/app/user/contact/ContactClient.tsx";
-import EducationClient from "@/app/user/education/Client";
-import ObjectiveClient from "@/app/user/objective/Components/Client";
-import ProjectClient from "@/app/user/projects/Components/Client";
-import SkillClient from "@/app/user/skills/Components/Client";
-import WorkClient from "@/app/user/work/Components/Client";
+import ContactClient from "../../user/contact/ContactClient";
+import EducationClient from "../../user/education/Client";
+import ObjectiveClient from "../../user/objective/Components/Client";
+import ProjectClient from "../../user/projects/Components/Client";
+import SkillClient from "../../user/skills/Components/Client";
+import WorkClient from "../../user/work/Components/Client";
 
-import { switch_resumeComponents } from "@/slices/resumeSlice";
 
-import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
 
 import { useSelector, useDispatch } from "react-redux";
-import { editAPI_KEY } from "@/slices/controlSlice";
 
 import { useSearchParams } from "next/navigation";
+import { switch_resumeComponents } from "../../../slices/resumeSlice";
+import { editAPI_KEY } from "../../../slices/controlSlice";
+import { RootState } from "../../../store/store";
 
 export default function EditResume({ data }: any) {
   const searchParams = useSearchParams();

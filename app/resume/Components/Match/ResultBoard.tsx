@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Result from "./Result";
 import useDragger from "./useDragger";
 import { Paper, ButtonGroup, Button } from "@mui/material";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
 
 export default function ResultBoard() {

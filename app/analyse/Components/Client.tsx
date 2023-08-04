@@ -13,8 +13,39 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { RootState } from "@/store/store";
 
+import {
+  cleanUp_Contact_redux,
+  initialize_ClientData,
+} from "../../../slices/contactSlice";
+import {
+  WorkExpState,
+  cleanUp_Work_redux,
+  initialize_WorkData,
+} from "../../../slices/workSlice";
+import {
+  EducationState,
+  cleanUp_Education_redux,
+  initialize_EducationData,
+} from "../../../slices/educationSlice";
+import { cleanUp_Award_redux, initialize_AwardData } from "../../../slices/awardSlice";
+import {
+  cleanUp_Skill_redux,
+  initialize_SkillData,
+} from "../../../slices/skillsSlice";
+import {
+  cleanUp_Objective_redux,
+  initialize_ObjectiveData,
+} from "../../../slices/objectiveSlice";
+import {
+  cleanUp_Project_redux,
+  initialize_ProjectData,
+} from "../../../slices/projectsSlice";
+import Stage_2 from "./Stage_2";
+import Compare from "./Compare";
+import { editAPI_KEY } from "../../../slices/controlSlice";
+
+import { Tooltip } from "@mui/material";
 import {
   editAnalyse_company_name,
   editAnalyse_job_position,
@@ -22,40 +53,8 @@ import {
   editAnalyse_stage_2,
   editAnalyse_website,
   removeAnalyse_stage_1,
-} from "@/slices/analyseSlice";
-import {
-  cleanUp_Contact_redux,
-  initialize_ClientData,
-} from "@/slices/contactSlice";
-import {
-  WorkExpState,
-  cleanUp_Work_redux,
-  initialize_WorkData,
-} from "@/slices/workSlice";
-import {
-  EducationState,
-  cleanUp_Education_redux,
-  initialize_EducationData,
-} from "@/slices/educationSlice";
-import { cleanUp_Award_redux, initialize_AwardData } from "@/slices/awardSlice";
-import {
-  cleanUp_Skill_redux,
-  initialize_SkillData,
-} from "@/slices/skillsSlice";
-import {
-  cleanUp_Objective_redux,
-  initialize_ObjectiveData,
-} from "@/slices/objectiveSlice";
-import {
-  cleanUp_Project_redux,
-  initialize_ProjectData,
-} from "@/slices/projectsSlice";
-import Stage_2 from "./Stage_2";
-import Compare from "./Compare";
-import { editAPI_KEY } from "@/slices/controlSlice";
-
-import { Tooltip } from "@mui/material";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+} from "../../../slices/analyseSlice";
+import { RootState } from "../../../store/store";
 
 export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
@@ -190,10 +189,12 @@ export default function AnalyseClient({ data }: any) {
           <div>
             <div className="flex">
               <h1 className=" font-semibold italic underline ">
-                <Tooltip title={<>It will automatically record the last website you input</>}>
-                  <div>
-                    Website
-                  </div>
+                <Tooltip
+                  title={
+                    <>It will automatically record the last website you input</>
+                  }
+                >
+                  <div>Website</div>
                 </Tooltip>
               </h1>
               <span className="ms-1 text-xs">(Required)</span>

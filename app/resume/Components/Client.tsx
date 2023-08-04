@@ -7,7 +7,7 @@ import Resume from "./Resume";
 import useDragger from "./Match/useDragger";
 import ResultBoard from "./Match/ResultBoard";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "../../../store/store";
 import StatisticBoard from "./Match/StatisticBoard";
 import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
