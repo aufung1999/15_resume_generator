@@ -104,7 +104,7 @@ export default function Search({
         <div className=" absolute z-20 left-full">
           <Tooltip
             title={
-              <>if you want to find "Response" resume, type "true" or "false"</>
+              <>if you want to find `&quot;Response`&quot; resume, type `&quot;true`&quot; or `&quot;false`&quot;</>
             }
           >
             <ErrorOutlineIcon />
