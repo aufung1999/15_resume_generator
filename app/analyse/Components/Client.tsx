@@ -206,7 +206,7 @@ export default function AnalyseClient({ data }: any) {
             <div>
               <InputGroup
                 onChange={(e) => dispatch(editAnalyse_website(e.target.value))}
-                value={website && website}
+                value={website !== null ? website : ""}
                 maxLength={100}
                 placeholder="e.g. indeed"
                 className="w-full flex flex-col "
