@@ -17,7 +17,7 @@ export interface AnalyseState {
   stage_3: string[];
   job_position?: string;
   company_name?: string;
-  website?: string;
+  website?: string | null;
 }
 
 const initialState: AnalyseState = {
