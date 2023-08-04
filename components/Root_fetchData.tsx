@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-export default function Root_fetchData({ data }) {
+export default function Root_fetchData({ data }: any) {
   const dispatch = useDispatch();
 
   useEffect(() => {
