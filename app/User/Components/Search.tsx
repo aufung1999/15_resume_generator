@@ -30,7 +30,7 @@ export default function Search({
 
   const searchHandler = () => {
     if (resume_csr.length > 0 && search_redux.length !== 0) {
-      const filtered_array = resume_csr.filter((each) =>
+      const filtered_array = resume_csr.filter((each: any) =>
         search_redux.find(
           (item: { index: string; input: string | null }) =>
             (item.input &&
@@ -104,7 +104,10 @@ export default function Search({
         <div className=" absolute z-20 left-full">
           <Tooltip
             title={
-              <>if you want to find `&quot;Response`&quot; resume, type `&quot;true`&quot; or `&quot;false`&quot;</>
+              <>
+                if you want to find `&quot;Response`&quot; resume, type
+                `&quot;true`&quot; or `&quot;false`&quot;
+              </>
             }
           >
             <ErrorOutlineIcon />
