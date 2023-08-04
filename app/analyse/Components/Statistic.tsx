@@ -116,7 +116,10 @@ export default function Statistic({ res }: any) {
             <div className="flex">
               <b className=" w-1/4 flex hover:justify-end">Percentage</b>
               <b>:</b>
-              <div className=" w-3/4">{(matches?.length / stage_2?.length).toFixed(2)}</div>
+              <div className=" w-3/4">
+                {stage_2?.length &&
+                  (matches?.length / stage_2?.length).toFixed(2)}
+              </div>
             </div>
           </div>
           <div className=" border flex justify-center hover:text-2xl">
