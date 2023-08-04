@@ -8,21 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { add_display } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 
-const CustomWidthTooltip = ({
-  title,
-  children,
-  className,
-  ...props
-}: {
-  className: string;
-  title: React.ReactNode;
-  children: React.ReactElement;
-}) => (
-  <Tooltip {...props} title={title} classes={{ popper: className }}>
-    {children}
-  </Tooltip>
-);
-
 export default function CustomedTooltip({
   index_1st,
   index_2nd,
