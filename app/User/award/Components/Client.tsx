@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import InsertAchievement from "./InsertAchievement";
 
-export default function AwardClient({ data }) {
+export default function AwardClient({ data }: any) {
   const awards = useSelector((state: RootState) => state.award);
 
   // Save to server
