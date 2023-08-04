@@ -1,7 +1,7 @@
 import User from "@/models/User";
 import data from "@/utils/data";
 import db from "@/utils/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   await db.connect();

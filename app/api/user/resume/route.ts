@@ -3,7 +3,7 @@ import db from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import Resume from "@/models/Resume";
 
@@ -11,7 +11,7 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
 
   if (session) {

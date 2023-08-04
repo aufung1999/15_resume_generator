@@ -3,13 +3,13 @@ import db from "@/utils/db";
 
 import bcrypt from "bcryptjs";
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextApiResponse) {
   const body = await req.json();
   const { name, email, password } = body;
 

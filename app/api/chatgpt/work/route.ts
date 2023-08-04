@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 // import { openai } from "../../../../utils/openai";
 import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "../../auth/[...nextauth]/route";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import extractTerms from "../../../analyse/Functions/extractTerms";
 import { Configuration, OpenAIApi } from "openai";
 

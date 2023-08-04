@@ -2,7 +2,7 @@ import db from "@/utils/db";
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Resume from "@/models/Resume";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
@@ -11,7 +11,7 @@ export interface IGetUserAuthInfoRequest extends NextApiRequest {
 }
 
 export async function GET(
-  req: NextApiRequest,
+  req: NextRequest,
   { params }: { params: { resumeID: string } },
   res: NextApiResponse
 ) {
@@ -38,7 +38,7 @@ export async function GET(
   res.end();
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
 
   if (session) {
