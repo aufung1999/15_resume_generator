@@ -5,10 +5,23 @@ import { Button, mergeRefs, Popover, Tag } from "@blueprintjs/core";
 import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  add_display,
-} from "@/slices/resumeSlice";
+import { add_display } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
+
+const CustomWidthTooltip = ({
+  title,
+  children,
+  className,
+  ...props
+}: {
+  className: string;
+  title: React.ReactNode;
+  children: React.ReactElement;
+}) => (
+  <Tooltip {...props} title={title} classes={{ popper: className }}>
+    {children}
+  </Tooltip>
+);
 
 export default function CustomedTooltip({
   index_1st,
@@ -172,7 +185,7 @@ export default function CustomedTooltip({
       {on && control_highlight_dsiplay ? (
         <Tooltip
           title={
-            <div>
+            <>
               <div className=" flex justify-end border h-full">
                 <div>
                   {whichSection === "skill" && Number.isInteger(years) && (
@@ -207,11 +220,13 @@ export default function CustomedTooltip({
                   {matches?.indexOf(each)}:{each}
                 </div>
               ))}
-            </div>
+            </>
           }
         >
-          {text}
-          {whichSection === "skill" && years && <> ({years}+)</>}
+          <>
+            {text}
+            {whichSection === "skill" && years && <> ({years}+)</>}
+          </>
         </Tooltip>
       ) : (
         <div>
