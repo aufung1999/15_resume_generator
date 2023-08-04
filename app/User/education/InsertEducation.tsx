@@ -210,7 +210,7 @@ export default function InsertEducation({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (education_redux.length !== 0) {
-      education_redux.map((each) => {
+      education_redux.map(each:any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );

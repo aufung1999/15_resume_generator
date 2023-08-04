@@ -48,42 +48,42 @@ export default async function Page({
       email: session?.user?.email,
     });
     if (workData) {
-      workData = workData.map((each) => db.convertDocToObj(each));
+      workData = workData.map(each:any) => db.convertDocToObj(each));
     }
     //fetch Education
     educationData = await Education.find({
       email: session?.user?.email,
     });
     if (educationData) {
-      educationData = educationData.map((each) => db.convertDocToObj(each));
+      educationData = educationData.map(each:any) => db.convertDocToObj(each));
     }
     //fetch Award
     awardData = await Award.find({
       email: session?.user?.email,
     });
     if (awardData) {
-      awardData = awardData.map((each) => db.convertDocToObj(each));
+      awardData = awardData.map(each:any) => db.convertDocToObj(each));
     }
     //fetch Objective
     objectiveData = await Objective.find({
       email: session?.user?.email,
     });
     if (objectiveData) {
-      objectiveData = objectiveData.map((each) => db.convertDocToObj(each));
+      objectiveData = objectiveData.map(each:any) => db.convertDocToObj(each));
     }
     //fetch Skill
     skillData = await Skill.find({
       email: session?.user?.email,
     });
     if (skillData) {
-      skillData = skillData.map((each) => db.convertDocToObj(each));
+      skillData = skillData.map(each:any) => db.convertDocToObj(each));
     }
     //fetch Project
     projectData = await Project.find({
       email: session?.user?.email,
     });
     if (projectData) {
-      projectData = projectData.map((each) => db.convertDocToObj(each));
+      projectData = projectData.map(each:any) => db.convertDocToObj(each));
     }
 
     //fetch APIKey

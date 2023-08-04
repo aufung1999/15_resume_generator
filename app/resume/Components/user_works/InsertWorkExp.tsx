@@ -353,7 +353,7 @@ export default function InsertWorkExp({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (work.length !== 0) {
-      work.map((each) => {
+      work.map(each:any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );

@@ -317,7 +317,7 @@ export default function InsertProject({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (projects_redux.length !== 0) {
-      projects_redux.map((each) => {
+      projects_redux.map(each:any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );

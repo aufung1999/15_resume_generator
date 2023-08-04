@@ -21,7 +21,7 @@ export default async function Page() {
     );
 
     if (awardData) {
-      // awardData = awardData.map((each) => db.convertDocToObj(each));
+      // awardData = awardData.map(each:any) => db.convertDocToObj(each));
       awardData = JSON.parse(JSON.stringify(awardData));
     }
   }
