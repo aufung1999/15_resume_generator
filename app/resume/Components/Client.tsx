@@ -44,17 +44,17 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   );
   const display_redux = useSelector((state: RootState) => state.resume.display);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("unmatches")) {
-        const stage_3_ls: any = window.localStorage.getItem("stage_3");
-        const target = JSON.parse(stage_3_ls)?.find(
-          (each) => display_redux?.includes(each.match_sentence) === false
-        );
-        console.log(target);
-      }
-    }
-  }, [display_redux]);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     if (localStorage.getItem("unmatches")) {
+  //       const stage_3_ls: any = window.localStorage.getItem("stage_3");
+  //       const target = JSON.parse(stage_3_ls)?.find(
+  //         (each) => display_redux?.includes(each.match_sentence) === false
+  //       );
+  //       console.log(target);
+  //     }
+  //   }
+  // }, [display_redux]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>
