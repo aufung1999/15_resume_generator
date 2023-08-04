@@ -28,7 +28,10 @@ import {
   cleanUp_Education_redux,
   initialize_EducationData,
 } from "../../../slices/educationSlice";
-import { cleanUp_Award_redux, initialize_AwardData } from "../../../slices/awardSlice";
+import {
+  cleanUp_Award_redux,
+  initialize_AwardData,
+} from "../../../slices/awardSlice";
 import {
   cleanUp_Skill_redux,
   initialize_SkillData,
@@ -100,10 +103,11 @@ export default function AnalyseClient({ data }: any) {
         dispatch(editAPI_KEY(data.api_key.api_key));
       }
     }
-    if (localStorage.getItem("last_website")) {
-      dispatch(
-        editAnalyse_website(JSON.parse(localStorage.getItem("last_website")))
-      );
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("last_website")) {
+        const last_website_ls = localStorage.getItem("last_website");
+        dispatch(editAnalyse_website(last_website_ls));
+      }
     }
   }, []);
 
