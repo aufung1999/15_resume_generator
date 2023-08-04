@@ -2,13 +2,12 @@
 
 import React, { useEffect } from "react";
 
-import ContactClient from "./User_Contact/ContactClient";
-import EducationClient from "../../user/education/Client";
-import ObjectiveClient from "../../user/objective/Components/Client";
-import ProjectClient from "../../user/projects/Components/Client";
-import SkillClient from "../../user/skills/Components/Client";
-import WorkClient from "../../user/work/Components/Client";
-
+import ContactClient from "./user_contact/ContactClient";
+import EducationClient from "./user_education/Client";
+import ObjectiveClient from "./user_objective/Client";
+import ProjectClient from "./user_projects/Client";
+import SkillClient from "./user_skills/Client";
+import WorkClient from "./user_works/Client";
 
 import { Button } from "@blueprintjs/core";
 

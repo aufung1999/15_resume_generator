@@ -4,10 +4,10 @@ import React, { useEffect } from "react";
 
 import ContactClient from "../contact/ContactClient";
 import EducationClient from "../education/Client";
-import ObjectiveClient from "../objective/Components/Client";
-import ProjectClient from "../projects/Components/Client";
-import SkillClient from "../skills/Components/Client";
-import WorkClient from "../work/Components/Client";
+import ObjectiveClient from "../objective/Client";
+import ProjectClient from "../projects/Client";
+import SkillClient from "../skills/Client";
+import WorkClient from "../work/Client";
 
 import { RootState } from "../../../store/store";
 import { Button } from "@blueprintjs/core";

@@ -4,8 +4,10 @@ import React, { useEffect, useState, useTransition } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import InsertContact from "./InsertContact";
-import { cleanUp_Contact_redux, initialize_ClientData } from "@/slices/contactSlice";
-
+import {
+  cleanUp_Contact_redux,
+  initialize_ClientData,
+} from "@/slices/contactSlice";
 
 export default function ContactClient({ data }: { data: any }) {
   const dispatch = useDispatch();
