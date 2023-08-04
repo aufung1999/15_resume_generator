@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 
-import ContactClient from "./user_contact/Client";
+import ContactClient from "./User_Contact/Client";
 import EducationClient from "./user_education/Client";
 import ObjectiveClient from "./user_objective/Client";
 import ProjectClient from "./user_projects/Client";
