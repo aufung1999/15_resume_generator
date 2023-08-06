@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useSearchParams } from "next/navigation";
 import Resumes from "./Resumes";
-import { switch_Components } from "../../../slices/controlSlice";
+import { switch_Components } from "@/slices/controlSlice";
 
 export default function UserClient({ data }: any) {
   const searchParams = useSearchParams();
