@@ -8,6 +8,10 @@ import Education from "@/models/Education";
 import Award from "@/models/Award";
 import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
+import Login from "@/components/RootPage/Login";
+import Register from "@/components/RootPage/Register";
+import Description from "@/components/RootPage/Description";
+import Introduction from "@/components/RootPage/Introduction";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -35,14 +39,16 @@ export default async function Home() {
       email: session?.user?.email,
     });
     if (workData) {
-      workData = workData.map((each:any) => db.convertDocToObj(each));
+      workData = workData.map((each: any) => db.convertDocToObj(each));
     }
     //fetch Education
     educationData = await Education.find({
       email: session?.user?.email,
     });
     if (educationData) {
-      educationData = educationData.map((each:any) => db.convertDocToObj(each));
+      educationData = educationData.map((each: any) =>
+        db.convertDocToObj(each)
+      );
     }
     //fetch Award
     awardData = await Award.find({
@@ -50,7 +56,7 @@ export default async function Home() {
     });
     if (awardData) {
       // awardData = awardData.map((each:any) => db.convertDocToObj(each));
-      awardData = awardData.map((each:any) => db.convertDocToObj(each));
+      awardData = awardData.map((each: any) => db.convertDocToObj(each));
     }
     //fetch Objective
     objectiveData = await Objective.find({
@@ -58,7 +64,9 @@ export default async function Home() {
     });
     if (objectiveData) {
       // objectiveData = objectiveData.map((each:any) => db.convertDocToObj(each));
-      objectiveData = objectiveData.map((each:any) => db.convertDocToObj(each));
+      objectiveData = objectiveData.map((each: any) =>
+        db.convertDocToObj(each)
+      );
     }
     //fetch Skill
     skillData = await Skill.find({
@@ -66,7 +74,7 @@ export default async function Home() {
     });
     if (skillData) {
       // skillData = skillData.map((each:any) => db.convertDocToObj(each));
-      skillData = skillData.map((each:any) => db.convertDocToObj(each));
+      skillData = skillData.map((each: any) => db.convertDocToObj(each));
     }
 
     clientData = {
@@ -80,9 +88,16 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex border-4">
-        <div>hi</div>
+    <main className="flex min-h-screen flex-col items-center ">
+      <div className="mx-24 z-10 w-full items-center justify-between font-mono text-sm lg:flex border ">
+        <Login />
+        <Register />
+      </div>
+      <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
+        <Description />
+      </div>
+      <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
+        <Introduction />
       </div>
     </main>
   );

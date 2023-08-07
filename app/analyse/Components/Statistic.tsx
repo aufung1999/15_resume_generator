@@ -65,7 +65,7 @@ export default function Statistic({ res }: any) {
       })
     );
     //store the "job related"
-    window.localStorage.setItem("last_website", JSON.stringify(website));
+    window.localStorage.setItem("last_website", website);
 
     //Jump to another tab
     router.push("/resume");

@@ -4,6 +4,8 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { editLayout } from "@/slices/controlSlice";
+import Login from "../RootPage/Login";
+import Register from "../RootPage/Register";
 
 export default function Header() {
   const { data: session, status } = useSession();
@@ -32,7 +34,12 @@ export default function Header() {
       </div>
 
       {/* {console.log(JSON.stringify(session?.user._doc.address, null, 1))} */}
-      <button onClick={() => signOut()}>SignOut</button>
+      <div>
+        {session?.user && <button onClick={() => signOut()}>SignOut</button>}
+        {session?.user === null || (session?.user === undefined && <Login />)}
+        {session?.user === null ||
+          (session?.user === undefined && <Register />)}
+      </div>
     </div>
   );
 }
