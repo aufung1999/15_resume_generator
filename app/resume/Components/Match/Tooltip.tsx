@@ -28,7 +28,9 @@ export default function CustomedTooltip({
     (state: RootState) => state.resume.force_to_update
   );
 
-  const [on, setOn] = useState<any>(false);
+  const [on, setOn] = useState<boolean>(false);
+  const [outline, setOutline] = useState<boolean>(false);
+
   const [target, setTarget] = useState<any>(null);
   const [matches, setMatches] = useState<any>(null);
   const [years, setYears] = useState<any>(null);
@@ -37,7 +39,6 @@ export default function CustomedTooltip({
 
   useEffect(() => {
     let temp_array: any[] = [];
-    let Not_exist: any[] = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
         const stage_3_ls: any = window.localStorage.getItem("stage_3");
@@ -53,6 +54,7 @@ export default function CustomedTooltip({
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
+                  setOutline(true),
                   temp_array.push(each.match_sentence),
                   dispatch(add_display(each.match_sentence)))
                 : //This means that the row description is not included in the "stage_3" ----^
@@ -68,6 +70,7 @@ export default function CustomedTooltip({
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
+                  setOutline(true),
                   temp_array.push(each.match_sentence),
                   dispatch(add_display(each.match_sentence)))
                 : //This means that the row description is not included in the "stage_3" ----^
@@ -86,6 +89,7 @@ export default function CustomedTooltip({
                 //To avoid duplication
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
+                    setOutline(true),
                     temp_array.push(each.match_sentence),
                     dispatch(add_display(each.match_sentence)))
                   : //This means that the row description is not included in the "stage_3" ----v
@@ -103,6 +107,7 @@ export default function CustomedTooltip({
                 //To avoid duplication
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
+                    setOutline(true),
                     temp_array.push(each.match_sentence),
                     dispatch(add_display(each.match_sentence)))
                   : //This means that the row description is not included in the "stage_3" ----^
@@ -130,7 +135,14 @@ export default function CustomedTooltip({
     return () => {
       setOn(false);
     };
-  }, [force_to_update_redux, index_1st, index_2nd, description]);
+  }, [
+    force_to_update_redux,
+    whichSection,
+    dispatch,
+    index_1st,
+    index_2nd,
+    description,
+  ]);
 
   useEffect(() => {
     if (matches && target) {
@@ -166,34 +178,49 @@ export default function CustomedTooltip({
   }, [target, matches]);
 
   return (
-    <div className={on && control_highlight_dsiplay ? " bg-yellow-300" : ""}>
+    <div
+      className={`${on && control_highlight_dsiplay ? " bg-yellow-300" : ""} ${
+        whichSection === "skill" && outline
+          ? " border-b-2 border-color-[##a9a9a9]"
+          : ""
+      }`}
+    >
       {on && control_highlight_dsiplay ? (
         <Tooltip
           title={
-            <>
-              <div className=" flex justify-end border h-full">
-                <div>
-                  {whichSection === "skill" && Number.isInteger(years) && (
-                    <Button
-                      onClick={() => setYears((prev: number) => prev + 1)}
-                    >
-                      +
+            <div>
+              {whichSection === "skill" && (
+                <div className="flex justify-between">
+                  <div className="">
+                    <Button onClick={() => setOutline(!outline)}>
+                      Underline
                     </Button>
-                  )}
+                  </div>
+                  <div className="flex border h-full z-20">
+                    <div>
+                      {Number.isInteger(years) && (
+                        <Button
+                          onClick={() => setYears((prev: number) => prev + 1)}
+                        >
+                          +
+                        </Button>
+                      )}
+                    </div>
+                    <div className="h-full flex flex-col items-center justify-center border text-xl px-5">
+                      {years}
+                    </div>
+                    <div>
+                      {Number.isInteger(years) && (
+                        <Button
+                          onClick={() => setYears((prev: number) => prev - 1)}
+                        >
+                          -
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="h-full flex flex-col items-center justify-center border text-xl px-5">
-                  {years}
-                </div>
-                <div>
-                  {whichSection === "skill" && Number.isInteger(years) && (
-                    <Button
-                      onClick={() => setYears((prev: number) => prev - 1)}
-                    >
-                      -
-                    </Button>
-                  )}
-                </div>
-              </div>
+              )}
               {matches?.map((each: string, i: number) => (
                 <div
                   key={i}
@@ -205,15 +232,16 @@ export default function CustomedTooltip({
                   {matches?.indexOf(each)}:{each}
                 </div>
               ))}
-            </>
+            </div>
           }
         >
-          <>
+          <div>
             {text}
             {whichSection === "skill" && years && <> ({years}+)</>}
-          </>
+          </div>
         </Tooltip>
       ) : (
+        // border-b-2 border-color-[##a9a9a9]
         <div>
           {text}
           {whichSection === "skill" && years && <> ({years}+)</>}

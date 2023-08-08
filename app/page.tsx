@@ -12,6 +12,7 @@ import Login from "@/components/RootPage/Login";
 import Register from "@/components/RootPage/Register";
 import Description from "@/components/RootPage/Description";
 import Introduction from "@/components/RootPage/Introduction";
+import Intro_Resumes_parts from "@/components/RootPage/Intro_Resumes_parts";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -89,15 +90,12 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center ">
-      <div className="mx-24 z-10 w-full items-center justify-between font-mono text-sm lg:flex border ">
-        <Login />
-        <Register />
-      </div>
       <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
         <Description />
       </div>
       <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
         <Introduction />
+        {/* <Intro_Resumes_parts /> */}
       </div>
     </main>
   );

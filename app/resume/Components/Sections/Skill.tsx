@@ -7,9 +7,9 @@ import { SectionTitle } from "../../atoms/SectionTitle";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import CustomedTooltip from "../Match/Tooltip";
 
 import { useSearchParams } from "next/navigation";
+import CustomedTooltip from "../Match/Tooltip";
 
 export default function SkillSection({ skill }: SkillsState[] | any) {
   const searchParams = useSearchParams();
@@ -25,7 +25,7 @@ export default function SkillSection({ skill }: SkillsState[] | any) {
               {item.Skill_list.map((each: any, ind: number) => (
                 <div
                   key={ind}
-                  className="relative px-1 text-xs font-medium border-b-2 border-color-[##a9a9a9]"
+                  className="relative px-1 text-xs font-medium "
                 >
                   <CustomedTooltip
                     key={search}
