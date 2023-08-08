@@ -58,6 +58,7 @@ import {
   removeAnalyse_stage_1,
 } from "../../../slices/analyseSlice";
 import { RootState } from "@/store/store";
+import extractTerms from "../Functions/extractTerms";
 
 export default function AnalyseClient({ data }: any) {
   const dispatch = useDispatch();
@@ -106,7 +107,7 @@ export default function AnalyseClient({ data }: any) {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("last_website")) {
         const last_website_ls = localStorage.getItem("last_website");
-        dispatch(editAnalyse_website(JSON.parse(last_website_ls)));
+        dispatch(editAnalyse_website(extractTerms(last_website_ls, "cleanup")));
       }
     }
   }, []);
