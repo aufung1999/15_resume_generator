@@ -11,8 +11,9 @@ import Skill from "@/models/Skill";
 import Login from "@/components/RootPage/Login";
 import Register from "@/components/RootPage/Register";
 import Description from "@/components/RootPage/Description";
-import Introduction from "@/components/RootPage/Introduction";
-import Intro_Resumes_parts from "@/components/RootPage/Intro_Resumes_parts";
+import Intro_1_Comparison from "@/components/RootPage/Intro_1_Comparison";
+import Intro_2_Resumes_parts from "@/components/RootPage/Intro_2_Resumes_parts";
+import Banner from "@/components/RootPage/Banner";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -94,8 +95,9 @@ export default async function Home() {
         <Description />
       </div>
       <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
-        <Introduction />
-        {/* <Intro_Resumes_parts /> */}
+        <Banner />
+        <Intro_1_Comparison />
+        <Intro_2_Resumes_parts />
       </div>
     </main>
   );
