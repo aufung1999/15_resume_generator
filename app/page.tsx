@@ -91,9 +91,9 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center ">
-      <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
+      {/* <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
         <Description />
-      </div>
+      </div> */}
       <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
         <Banner />
         <Intro_1_Comparison />

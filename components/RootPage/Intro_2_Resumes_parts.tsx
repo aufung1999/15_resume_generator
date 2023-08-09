@@ -1,9 +1,4 @@
 import React from "react";
-import Technical_Skills from "../../public/Technical_Skills.png";
-import Example_Work_Exp_1 from "../../public/Example_Work_Exp_1.png";
-import Example_Work_Exp_2 from "../../public/Example_Work_Exp_2.png";
-import Example_Projects from "../../public/Example_Projects.png";
-import Example_Process from "../../public/Example_Process.png";
 
 import resume_image from "../../public/resume_image.png";
 
@@ -13,6 +8,9 @@ import ShowMany from "@/utils/ShowMany";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { Icon, IconSize } from "@blueprintjs/core";
 import Intro_2_Resume_parts_resume from "./Intro_2_Resume_parts_resume";
+import Intro_2_Resume_parts_main_parts from "./Intro_2_Resume_parts_main_parts";
+import Intro_2_Resume_parts_what_else from "./Intro_2_Resume_parts_what_else";
+import Intro_2_Resume_parts_process from "./Intro_2_Resume_parts_process";
 
 export default function Intro_Resumes_parts() {
   return (
@@ -55,148 +53,17 @@ export default function Intro_Resumes_parts() {
           </div>
         </div>
       </div>
-      <div className="px-48 py-10">
-        <div className="border grid grid-cols-10">
-          <div className="border col-span-10 text-lg">
-            <div>Technical Skills</div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div>
-              ResumeAi re-orders the Skills according to the Job Description
-            </div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div className="  w-full aspect-video  right-8 z-20">
-              <Image
-                src={Technical_Skills}
-                alt="Technical_Skills"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                // width={500}
-                // width={500} automatically provided
-                // height={500} automatically provided
-                // blurDataURL="data:..." automatically provided
-                // placeholder="blur" // Optional blur-up while loading
-              />
-            </div>
-          </div>
-        </div>
 
-        <div className="border grid grid-cols-10">
-          <div className="border col-span-10 text-lg">
-            <div>Working Experience</div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div>
-              ResumeAi checks if the Working Experience matches with the Job
-              Description
-            </div>
-          </div>
-          <div className="border col-span-5 text-lg">
-            <div>Example 1</div>
-            <div className="  w-full aspect-video  right-8 z-20">
-              <Image
-                src={Example_Work_Exp_1}
-                alt="Example_Work_Exp_1"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              />
-            </div>
-          </div>
-          <div className="border col-span-5 text-lg">
-            <div>Example 2</div>
-            <div className="  w-full aspect-video  right-8 z-20">
-              <Image
-                src={Example_Work_Exp_2}
-                alt="Example_Work_Exp_2"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              />
-            </div>
-          </div>
-        </div>
+      <div className="px-32 py-10 mx-10 border-0 border-[#102C57] rounded-3xl">
+        <Intro_2_Resume_parts_main_parts />
+      </div>
 
-        <div className="border grid grid-cols-10">
-          <div className="border col-span-10 text-lg">
-            <div>Personal/Collaberative Projects</div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div>
-              ResumeAi firstly selects the Projects match with the Job
-              Description
-            </div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div className="  w-full aspect-video  right-8 z-20">
-              <Image
-                src={Example_Projects}
-                alt="Example_Projects"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                // width={500}
-                // width={500} automatically provided
-                // height={500} automatically provided
-                // blurDataURL="data:..." automatically provided
-                // placeholder="blur" // Optional blur-up while loading
-              />
-            </div>
-          </div>
-        </div>
+      <div className="px-32 py-10 mx-10 border-0 border-[#102C57] rounded-3xl">
+        <Intro_2_Resume_parts_what_else />
+      </div>
 
-        <div className="border grid grid-cols-10">
-          <div className="border col-span-10 text-lg">
-            <div>Personal/Collaberative Projects</div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div>
-              ResumeAi firstly selects the Projects match with the Job
-              Description
-            </div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div className="  w-full aspect-video  right-8 z-20">
-              <Image
-                src={Example_Projects}
-                alt="Example_Projects"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                // width={500}
-                // width={500} automatically provided
-                // height={500} automatically provided
-                // blurDataURL="data:..." automatically provided
-                // placeholder="blur" // Optional blur-up while loading
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="border grid grid-cols-10">
-          <div className="border col-span-10 text-lg">
-            <div>What else does ResumeAi do?</div>
-          </div>
-          <div className="border col-span-10 text-lg">
-            <div>
-              ResumeAi also helps you record the application process so that you
-              do not have to open an Excel file to record!
-            </div>
-          </div>
-        </div>
-
-        <div className="border grid grid-cols-10">
-          <div className="border col-span-10 text-lg">
-            <div>Process</div>
-          </div>
-
-          <div className="border col-span-10 text-lg">
-            <div className="  w-full aspect-video  right-8 z-20">
-              <Image
-                src={Example_Process}
-                alt="Example_Process"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                // width={500}
-                // width={500} automatically provided
-                // height={500} automatically provided
-                // blurDataURL="data:..." automatically provided
-                // placeholder="blur" // Optional blur-up while loading
-              />
-            </div>
-          </div>
-        </div>
+      <div className="px-32 py-10 bg-[#102C57]">
+        <Intro_2_Resume_parts_process />
       </div>
     </>
   );

@@ -20,7 +20,7 @@ export default function Intro_2_Resume_parts_resume() {
       {/* responsive */}
       <div className="border-b-4 mb-3">
         <ShowMany
-          mode_IN={"animate__zoomInDown"}
+          mode_IN={"animate__fadeInDown"}
           mode_OUT={"animate__zoomOutDown"}
           speed={"animate__fast"}
           delay={"animate__delay-0s"}
@@ -32,7 +32,7 @@ export default function Intro_2_Resume_parts_resume() {
       </div>
       <div className="border-b-4  mb-3">
         <ShowMany
-          mode_IN={"animate__zoomInDown"}
+          mode_IN={"animate__fadeInDown"}
           mode_OUT={"animate__zoomOutDown"}
           speed={"animate__fast"}
           delay={"animate__delay-1s"}
@@ -44,7 +44,7 @@ export default function Intro_2_Resume_parts_resume() {
       </div>
       <div className="border-b-4  mb-3">
         <ShowMany
-          mode_IN={"animate__zoomInDown"}
+          mode_IN={"animate__fadeInDown"}
           mode_OUT={"animate__zoomOutDown"}
           speed={"animate__fast"}
           delay={"animate__delay-2s"}
