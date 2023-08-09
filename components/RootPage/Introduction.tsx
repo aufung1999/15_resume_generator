@@ -3,6 +3,10 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 
 import Technical_Skills from "../../public/Technical_Skills.png";
+import Example_Work_Exp_1 from "../../public/Example_Work_Exp_1.png";
+import Example_Work_Exp_2 from "../../public/Example_Work_Exp_2.png";
+import Example_Projects from "../../public/Example_Projects.png";
+import Example_Process from "../../public/Example_Process.png";
 import Image from "next/image";
 
 export default function Introduction() {
@@ -205,6 +209,26 @@ export default function Introduction() {
             Description
           </div>
         </div>
+        <div className="border col-span-5 text-lg">
+          <div>Example 1</div>
+          <div className="  w-full aspect-video  right-8 z-20">
+            <Image
+              src={Example_Work_Exp_1}
+              alt="Example_Work_Exp_1"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          </div>
+        </div>
+        <div className="border col-span-5 text-lg">
+          <div>Example 2</div>
+          <div className="  w-full aspect-video  right-8 z-20">
+            <Image
+              src={Example_Work_Exp_2}
+              alt="Example_Work_Exp_2"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="border grid grid-cols-10">
@@ -214,6 +238,66 @@ export default function Introduction() {
         <div className="border col-span-10 text-lg">
           <div>
             ResumeAi firstly selects the Projects match with the Job Description
+          </div>
+        </div>
+        <div className="border col-span-10 text-lg">
+          <div className="  w-full aspect-video  right-8 z-20">
+            <Image
+              src={Example_Projects}
+              alt="Example_Projects"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              // width={500}
+              // width={500} automatically provided
+              // height={500} automatically provided
+              // blurDataURL="data:..." automatically provided
+              // placeholder="blur" // Optional blur-up while loading
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="border grid grid-cols-10">
+        <div className="border col-span-10 text-lg">
+          <div>Personal/Collaberative Projects</div>
+        </div>
+        <div className="border col-span-10 text-lg">
+          <div>
+            ResumeAi firstly selects the Projects match with the Job Description
+          </div>
+        </div>
+        <div className="border col-span-10 text-lg">
+          <div className="  w-full aspect-video  right-8 z-20">
+            <Image
+              src={Example_Projects}
+              alt="Example_Projects"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              // width={500}
+              // width={500} automatically provided
+              // height={500} automatically provided
+              // blurDataURL="data:..." automatically provided
+              // placeholder="blur" // Optional blur-up while loading
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="border grid grid-cols-10">
+        <div className="border col-span-10 text-lg">
+          <div>Process</div>
+        </div>
+
+        <div className="border col-span-10 text-lg">
+          <div className="  w-full aspect-video  right-8 z-20">
+            <Image
+              src={Example_Process}
+              alt="Example_Process"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              // width={500}
+              // width={500} automatically provided
+              // height={500} automatically provided
+              // blurDataURL="data:..." automatically provided
+              // placeholder="blur" // Optional blur-up while loading
+            />
           </div>
         </div>
       </div>

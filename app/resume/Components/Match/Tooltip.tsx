@@ -7,6 +7,7 @@ import { Tooltip } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { add_display } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
+import extractTerms from "@/app/analyse/Functions/extractTerms";
 
 export default function CustomedTooltip({
   index_1st,
@@ -85,7 +86,9 @@ export default function CustomedTooltip({
                 //index
                 each.match_index === index_1st &&
                 //or only text
-                each.user_data === description &&
+                extractTerms(description, "project_redux")?.includes(
+                  each.technique
+                ) &&
                 //To avoid duplication
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
@@ -134,6 +137,7 @@ export default function CustomedTooltip({
 
     return () => {
       setOn(false);
+      setOutline(false);
     };
   }, [
     force_to_update_redux,
@@ -181,7 +185,7 @@ export default function CustomedTooltip({
     <div
       className={`${on && control_highlight_dsiplay ? " bg-yellow-300" : ""} ${
         whichSection === "skill" && outline
-          ? " border-b-2 border-color-[##a9a9a9]"
+          ? " border-b-2 border-slate-300"
           : ""
       }`}
     >
