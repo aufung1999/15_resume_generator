@@ -80,7 +80,7 @@ export default function Search({
   };
 
   return (
-    <div className=" border-2 w-full flex relative justify-between">
+    <div className=" border-2 w-full flex relative justify-between py-3">
       <Button
         icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
         onClick={addSearchBar}

@@ -32,45 +32,42 @@ export default function UserClient({ data }: any) {
 
   return (
     <div className=" w-full relative " key={search}>
-      <div className="flex">
+      <div className="flex justify-center py-3">
         <Button
           className=" "
           onClick={() => dispatch(switch_Components({ select: "Resumes" }))}
         >
           Resumes
         </Button>
-        <div className="grid grid-cols-3">
-          <Button
-            onClick={() => dispatch(switch_Components({ select: "Contact" }))}
-          >
-            Contact
-          </Button>
-          <Button
-            onClick={() => dispatch(switch_Components({ select: "Objective" }))}
-          >
-            Objective
-          </Button>
-          <Button
-            onClick={() => dispatch(switch_Components({ select: "Skill" }))}
-          >
-            Skill
-          </Button>
-          <Button
-            onClick={() => dispatch(switch_Components({ select: "Education" }))}
-          >
-            Education
-          </Button>
-          <Button
-            onClick={() => dispatch(switch_Components({ select: "Work" }))}
-          >
-            Work
-          </Button>
-          <Button
-            onClick={() => dispatch(switch_Components({ select: "Project" }))}
-          >
-            Project
-          </Button>
-        </div>
+
+        <Button
+          onClick={() => dispatch(switch_Components({ select: "Contact" }))}
+        >
+          Contact
+        </Button>
+        <Button
+          onClick={() => dispatch(switch_Components({ select: "Objective" }))}
+        >
+          Objective
+        </Button>
+        <Button
+          onClick={() => dispatch(switch_Components({ select: "Skill" }))}
+        >
+          Skill
+        </Button>
+        <Button
+          onClick={() => dispatch(switch_Components({ select: "Education" }))}
+        >
+          Education
+        </Button>
+        <Button onClick={() => dispatch(switch_Components({ select: "Work" }))}>
+          Work
+        </Button>
+        <Button
+          onClick={() => dispatch(switch_Components({ select: "Project" }))}
+        >
+          Project
+        </Button>
       </div>
       <div className="w-full relative border-4">
         <div className={switch_tab === "Resumes" ? " w-full" : "hidden"}>

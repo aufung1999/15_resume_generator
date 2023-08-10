@@ -21,19 +21,19 @@ export default function RootLayout({
     <html lang="en">
       <Provider>
         <Providers>
-          <body className=" min-h-screen border-8 border-blue-300">
+          <body className=" min-h-screen border-0 border-blue-300">
             <div
               className={
                 inter.className +
-                " relative flex flex-col h-full border-8 border-yellow-300"
+                " relative flex flex-col h-full border-8 border-[#102C57]"
               }
             >
               {/* Header */}
-              <div className="w-full border-4 border-red-300">
+              <div className="w-full border-0 border-red-300">
                 <Header />
               </div>
               {/* Body */}
-              <div className="h-full border-4 border-red-300">{children}</div>
+              <div className="h-full border-0 border-red-300">{children}</div>
             </div>
           </body>
         </Providers>

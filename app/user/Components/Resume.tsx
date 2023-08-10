@@ -63,7 +63,7 @@ export default function EachResume({
     setResponseValue(each.response);
 
     return () => setResponseValue(null);
-  }, [resumes_csr]);
+  }, [resumes_csr, dispatch, each.response]);
 
   const ClickHandler = (received: string) => {
     //Jump to another tab
@@ -132,10 +132,9 @@ export default function EachResume({
         <div className="border border-green-500 bottom-0 px-2 bg-white h-36 ">
           <div className="flex flex-col justify-between h-full">
             <div className="border">
-              <div className="flex">
-                <b className=" w-1/4 flex hover:justify-end">Position</b>
-                <b>:</b>
-                <div className=" w-3/4">{each.job_details.job_position}</div>
+              <div className="flex flex-col">
+                <b className="  flex hover:justify-end">Position</b>
+                <div className="">{each.job_details.job_position}</div>
               </div>
             </div>
             <div className="flex-col border">

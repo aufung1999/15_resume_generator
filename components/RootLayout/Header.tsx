@@ -13,23 +13,29 @@ export default function Header() {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex justify-between border-4 no-wrap">
+    <div className="flex justify-between border-2 border-[#102C57] no-wrap">
       <div className=" flex flex-col justify-center border flex-wrap">
-        {session?.user?.name}
+        {session?.user?.name && <span>Logged In</span>}
       </div>
-      <div className=" border-2">
+      <div className=" border-0">
         <Link href="/user" onClick={() => dispatch(editLayout("user"))}>
-          User
+          <span className="font-sans font-semibold text-xl italic hover:underline transition duration-500">
+            User
+          </span>
         </Link>
       </div>
-      <div className=" border-2">
+      <div className=" border-0">
         <Link href="/analyse" onClick={() => dispatch(editLayout("analyse"))}>
-          Analyse
+          <span className="font-sans font-semibold text-xl italic hover:underline transition duration-500">
+            Analyse
+          </span>
         </Link>
       </div>
-      <div className=" border-2">
+      <div className=" border-0">
         <Link href="/resume" onClick={() => dispatch(editLayout("resume"))}>
-          Resume
+          <span className="font-sans font-semibold text-xl italic hover:underline transition duration-500">
+            Resume
+          </span>
         </Link>
       </div>
 
