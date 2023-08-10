@@ -41,9 +41,8 @@ export default function ObjectiveClient({ data }: any) {
       });
   };
   return (
-    <div className="border border-blue-600 flex-1 ">
+    <div className="border border-blue-600 flex-1 font-sans">
       <Toaster />
-      <h1>Objective</h1>
       <div className=" border-4 flex flex-col items-center justify-center">
         <div className=" w-full">
           <InsertObjective data={data} />

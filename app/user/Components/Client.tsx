@@ -32,7 +32,7 @@ export default function UserClient({ data }: any) {
 
   return (
     <div className=" w-full relative " key={search}>
-      <div className="flex justify-center py-3">
+      <div className="flex gap-3 justify-center py-3">
         <Button
           className=" "
           onClick={() => dispatch(switch_Components({ select: "Resumes" }))}

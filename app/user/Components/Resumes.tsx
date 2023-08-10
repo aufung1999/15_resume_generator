@@ -48,7 +48,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
 
   return (
     <div className=" relative ">
-      <div id="user" className="  border-4 px-72 ">
+      <div id="user" className="  border-4 bg-[#F8F0E5] px-72 ">
         {/* Search Engine */}
         <Search resume_csr={resumes_csr} setResumes={setResumes} />
         {/* if the grid-cols-3 changes, Remember to change the show left or right */}

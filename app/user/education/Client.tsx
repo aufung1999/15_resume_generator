@@ -45,9 +45,8 @@ export default function EducationClient({ data }: any) {
     });
   };
   return (
-    <div className="border border-blue-600 flex-1">
+    <div className="border border-blue-600 flex-1 font-sans">
       <Toaster />
-      <h1>Education</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
         {/* Control the form size */}

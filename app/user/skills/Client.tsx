@@ -44,9 +44,8 @@ export default function SkillClient({ data }: any) {
   return (
     <div className="border border-blue-600 flex-1">
       <Toaster />
-      <h1>Skills</h1>
 
-      <div className=" border-4 flex flex-col items-center justify-center">
+      <div className=" border-4 flex flex-col items-center justify-center font-sans">
         {/* Control the form size */}
         <InsertSkills data={data} />
       </div>

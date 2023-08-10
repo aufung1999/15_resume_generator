@@ -43,9 +43,8 @@ export default function ProjectClient({ data }: any) {
     });
   };
   return (
-    <div className="border border-blue-600 flex-1 ">
+    <div className="border border-blue-600 flex-1 font-sans">
       <Toaster />
-      <h1>Project</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
         <InsertProject data={data} />

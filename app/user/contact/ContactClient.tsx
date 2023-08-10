@@ -23,7 +23,7 @@ export default function ContactClient({ data }: { data: any }) {
   }, [data]);
 
   return (
-    <div>
+    <div className="font-sans">
       <InsertContact data={data} dispatched={dispatched} />
     </div>
   );

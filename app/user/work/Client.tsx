@@ -42,9 +42,8 @@ export default function WorkClient({ data }: any) {
     });
   };
   return (
-    <div className="border border-blue-600 flex-1 relative">
+    <div className="border border-blue-600 flex-1 relative font-sans">
       <Toaster />
-      <h1>Work</h1>
 
       <div className=" border-4 flex flex-col items-center justify-center">
         {/* Control the form size */}

@@ -106,58 +106,65 @@ export default function InsertContact({
       }`}
     >
       <Toaster />
-      <h1>Contact</h1>
       {/* ....................First Name/ Family Name............................ */}
       <div className=" border flex flex-col md:items-center md:justify-center">
-        <div className=" grid grid-cols-2 border w-full">
-          <FormGroup
-            label="First Name"
-            labelFor="text-input"
-            labelInfo="(required)"
-            className="w-full border "
-          >
-            <InputGroup
-              id="text-input"
-              placeholder=""
-              autoComplete="given-name"
-              onChange={(e) => dispatch(editFirstName(e.target.value))}
-              fill={true}
-              value={contact_redux.FirstName}
-              className="w-full border overflow-hidden"
-            />
-          </FormGroup>
+        <div className=" flex justify-center w-full">
+          <div className=" grid grid-cols-2 border w-1/2 ">
+            <FormGroup
+              label="First Name"
+              labelFor="text-input"
+              labelInfo="(required)"
+              className="w-full border "
+            >
+              <InputGroup
+                id="text-input"
+                placeholder=""
+                autoComplete="given-name"
+                onChange={(e) => dispatch(editFirstName(e.target.value))}
+                fill={true}
+                value={contact_redux.FirstName}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
 
-          <FormGroup
-            label="Last Name"
-            labelFor="text-input"
-            labelInfo="(required)"
-            className="w-full border"
-          >
-            <InputGroup
-              id="text-input"
-              placeholder=""
-              autoComplete="family-name"
-              onChange={(e) => dispatch(editLastName(e.target.value))}
-              value={contact_redux.LastName}
-              className="w-full border overflow-hidden"
-            />
-          </FormGroup>
+            <FormGroup
+              label="Last Name"
+              labelFor="text-input"
+              labelInfo="(required)"
+              className="w-full border"
+            >
+              <InputGroup
+                id="text-input"
+                placeholder=""
+                autoComplete="family-name"
+                onChange={(e) => dispatch(editLastName(e.target.value))}
+                value={contact_redux.LastName}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
+          </div>
         </div>
 
         {/* ................................................ */}
-        <div className=" w-full md:w-8/12">
-          <FormGroup label="Phone" labelFor="text-input" labelInfo="(required)">
-            <InputGroup
-              id="text-input"
-              placeholder=""
-              onChange={(e) => dispatch(editPhoneNumber(e.target.value))}
-              value={contact_redux.PhoneNumber}
-              className="w-full border overflow-hidden"
-            />
-          </FormGroup>
+        <div className=" flex justify-center w-full">
+          <div className=" w-full sm:w-1/2">
+            <FormGroup
+              label="Phone"
+              labelFor="text-input"
+              labelInfo="(required)"
+            >
+              <InputGroup
+                id="text-input"
+                placeholder=""
+                onChange={(e) => dispatch(editPhoneNumber(e.target.value))}
+                value={contact_redux.PhoneNumber}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
+          </div>
         </div>
         {/* ..................Country/City.............................. */}
-        <div className=" grid grid-cols-2 w-full md:w-8/12">
+        <div className=" grid grid-cols-2 w-full md:w-1/2">
           <FormGroup
             label="Country"
             labelFor="text-input"
@@ -173,7 +180,7 @@ export default function InsertContact({
             />
           </FormGroup>
 
-          <FormGroup label="City" labelFor="text-input" >
+          <FormGroup label="City" labelFor="text-input">
             <InputGroup
               id="text-input"
               placeholder=""
@@ -185,7 +192,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className="grid grid-cols-2 w-full md:w-8/12">
+        <div className="grid grid-cols-2 w-full md:w-1/2">
           <FormGroup label="State" labelFor="text-input">
             <InputGroup
               id="text-input"
@@ -212,7 +219,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full md:w-1/2">
           <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
             <InputGroup
               id="text-input"
@@ -224,7 +231,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full md:w-1/2">
           <FormGroup
             label="Portfolio"
             labelFor="Portfolio"
@@ -239,7 +246,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full md:w-1/2">
           <SocialMedia
             key="LinkedIn"
             urlParam="linkedin"
@@ -250,7 +257,7 @@ export default function InsertContact({
           />
         </div>
         {/* ............*GitHub*.................................... */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full md:w-1/2">
           <SocialMedia
             key="GitHub"
             urlParam="github"
@@ -261,9 +268,9 @@ export default function InsertContact({
           />
         </div>
         {/* ...................(Add more links?)............................. */}
-        <div>
+        {/* <div>
           <InsertLink />
-        </div>
+        </div> */}
       </div>
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
