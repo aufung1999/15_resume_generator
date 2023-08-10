@@ -27,7 +27,6 @@ export default function Result({
     (state: RootState) => state.resume.force_to_update
   );
 
-
   const [get, setGet] = useState<any[]>([]);
 
   useEffect(() => {
@@ -39,8 +38,6 @@ export default function Result({
     }
   }, [force_to_update_redux, whatToGet]);
 
-
-
   const ClickHandler = (deleteIndex: number) => {
     dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     switch (whatToGet) {
@@ -49,7 +46,7 @@ export default function Result({
         const filtered_unmatches = get.filter(
           (each) => each !== move_to_matches
         );
-        // console.log(filtered_array)
+
         //update localStorage "unmatches"
         localStorage.setItem("unmatches", JSON.stringify(filtered_unmatches));
         //update localStorage "matches"

@@ -25,13 +25,13 @@ export default function Statistic({ res }: any) {
     if (Array.isArray(stage_2)) {
       const match_sentences: any[] = stage_2?.filter(
         (each: any) =>
-          res.find((each_each: any) => each_each.match_sentence === each)
+          res.find((each_2: any) => each_2.match_sentence === each)
             ?.match_sentence === each
       );
 
       const UNmatch_sentences: any[] = stage_2?.filter(
         (each: any) =>
-          res.find((each_each: any) => each_each.match_sentence === each)
+          res.find((each_2: any) => each_2.match_sentence === each)
             ?.match_sentence !== each
       );
 

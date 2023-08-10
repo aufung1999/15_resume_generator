@@ -103,25 +103,67 @@ const analyseSlice = createSlice({
       }
     },
     add_display: (state, action) => {
+      const { sentence, from } = action.payload;
+
       let array = state.display.map(
-        (each): { match_sentence: string; count: number } =>
+        (each: { match_sentence: string; count: number }) =>
           each?.match_sentence
       );
 
-      if (array.includes(action.payload) === false) {
-        state.display.push({ match_sentence: action.payload, count: 0 });
+      switch (from) {
+        case "unmatches":
+          state.display.push({ match_sentence: sentence, count: 0 });
+          return;
+        case "matches":
+          if (array.includes(sentence) === true) {
+            let target = state.display?.find(
+              (each: { match_sentence: string; count: number }) =>
+                each.match_sentence === sentence
+            );
+            if (target) {
+              target.count = target.count + 1;
+              // console.log(target.count);
+            }
+          }
+          return;
       }
-      if (array.includes(action.payload) === true) {
-        let target = state.display?.find(
-          (each): { match_sentence: string; count: number } =>
-            each.match_sentence === action.payload
-        );
-        // target?.count = target?.count + 1;
-        if (target) {
-          target.count = target.count + 1;
-          console.log(target.count);
-        }
+    },
+    remove_display: (state, action) => {
+      const { sentence, from } = action.payload;
+      // 1. get the {match_sentence,count}[] -> string [] of the resume.display
+      let array = state.display.map(
+        (each: { match_sentence: string; count: number }) =>
+          each?.match_sentence
+      );
+
+      let target = state.display?.find(
+        (each: { match_sentence: string; count: number }) =>
+          each?.match_sentence === sentence
+      );
+      if (target) {
+        target.count = target?.count - 1;
       }
+
+      // switch (from) {
+      //   case "unmatches":
+      //     state.display.push({ match_sentence: sentence, count: 0 });
+      //     return;
+      //   case "matches":
+      //     if (array.includes(sentence) === true) {
+      //       let target = state.display?.find(
+      //         (each: { match_sentence: string; count: number }) =>
+      //           each.match_sentence === sentence
+      //       );
+      //       if (target) {
+      //         target.count = target.count + 1;
+      //         // console.log(target.count);
+      //       }
+      //     }
+      //     return;
+      // }
+    },
+    cleanUp_display_redux: (state) => {
+      state.display = [];
     },
     FORCE_to_UPDATE: (state, action) => {
       state.force_to_update = action.payload;
@@ -136,6 +178,8 @@ export const {
   control_Highlight_Dsiplay,
   editResume_stage_4,
   add_display,
+  remove_display,
+  cleanUp_display_redux,
   FORCE_to_UPDATE,
 } = analyseSlice.actions;
 export default analyseSlice.reducer;

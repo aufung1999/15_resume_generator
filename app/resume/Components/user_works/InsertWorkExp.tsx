@@ -43,6 +43,8 @@ import shortenUUID from "@/utils/shortenUUID";
 
 import toast, { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";
+import { add_display, remove_display } from "@/slices/resumeSlice";
+import EachResume from "@/app/user/Components/Resume";
 
 type Props = {
   index: string;
@@ -51,12 +53,14 @@ type Props = {
 type rowProps = {
   index: string;
   rowIndex: string;
+  data: any;
+  remind: boolean;
 };
 
 //*         Important Info.       */
 // Child Component: X
 //Parent Component: InputComp
-const RowComp = ({ index, rowIndex }: rowProps) => {
+const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
   const dispatch = useDispatch();
 
   // get the dynamic variable of "row" from the redux store
@@ -74,6 +78,48 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   useEffect(() => {
     setDynamicGrow(true);
   }, [row]);
+
+  //Similar way as setCopy in the InputComp
+  const [copyData, setCopy] = useState<string | null | undefined>(null);
+
+  useEffect(() => {
+    //Copy the "initialized" data from the database
+    setCopy(row?.Row);
+  }, [data]);
+
+  // Keep track if the row description changes then it will remove the matches count
+
+  const [limit, reachLimit] = useState("false");
+  useEffect(() => {
+    const stage_3_ls: any = window.localStorage.getItem("stage_3");
+
+    const filter_array = JSON.parse(stage_3_ls).filter(
+      (each: any) =>
+        JSON.stringify(each?.user_data) === JSON.stringify(copyData)
+    );
+
+    if (copyData !== row?.Row && limit === "false") {
+      filter_array.map((each: any) =>
+        dispatch(remove_display({ sentence: each.match_sentence }))
+      );
+      // reachLimit("true");
+    }
+
+    if (copyData === row?.Row && limit === "true") {
+      filter_array.map((each: any) =>
+        dispatch(
+          add_display({ sentence: each.match_sentence, from: "matches" })
+        )
+      );
+      // reachLimit("false");
+    }
+  }, [row]);
+
+  useEffect(() => {
+    remind ? reachLimit("true") : reachLimit("false");
+  }, [remind]);
+
+  // ----------------------------------------
 
   return (
     <TextArea
@@ -122,7 +168,13 @@ const InputComp = ({ index, data }: Props) => {
     let temp_arr: any[] = [];
     target_work?.JobDescription?.map((each: any) => {
       temp_arr.push(
-        <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
+        <RowComp
+          key={each.rowIndex}
+          index={index}
+          rowIndex={each.rowIndex}
+          data={data}
+          remind={remind}
+        />
       );
     });
 
@@ -153,7 +205,15 @@ const InputComp = ({ index, data }: Props) => {
     dispatch(addrow({ index: index, rowIndex: rowIndex }));
     //update the useState
     editRow(
-      row.concat(<RowComp key={rowIndex} index={index} rowIndex={rowIndex} />)
+      row.concat(
+        <RowComp
+          key={rowIndex}
+          index={index}
+          rowIndex={rowIndex}
+          data={data}
+          remind={remind}
+        />
+      )
     );
   };
 
@@ -169,6 +229,7 @@ const InputComp = ({ index, data }: Props) => {
 
   //---------------Save to Server-------------------
   const SubmitHandler = () => {
+    const stage_3_ls: any = window.localStorage.getItem("stage_3");
     fetch("/api/user/work", {
       //add this route later
       method: "POST",
@@ -353,7 +414,7 @@ export default function InsertWorkExp({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (work.length !== 0) {
-      work.map((each:any) => {
+      work.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );

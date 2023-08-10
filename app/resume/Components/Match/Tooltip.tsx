@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import "@blueprintjs/core/lib/css/blueprint.css";
-import { Button, mergeRefs, Popover, Tag } from "@blueprintjs/core";
+import { Button, mergeRefs, Tag } from "@blueprintjs/core";
 import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { add_display } from "@/slices/resumeSlice";
+import { add_display, remove_display } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 import extractTerms from "@/app/analyse/Functions/extractTerms";
 
@@ -28,6 +28,7 @@ export default function CustomedTooltip({
   const force_to_update_redux = useSelector(
     (state: RootState) => state.resume.force_to_update
   );
+  const display_redux = useSelector((state: RootState) => state.resume.display);
 
   const [on, setOn] = useState<boolean>(false);
   const [outline, setOutline] = useState<boolean>(false);
@@ -37,6 +38,8 @@ export default function CustomedTooltip({
   const [years, setYears] = useState<any>(null);
 
   const dispatch = useDispatch();
+
+  //
 
   useEffect(() => {
     let temp_array: any[] = [];
@@ -57,7 +60,12 @@ export default function CustomedTooltip({
                 ? (setOn(true),
                   setOutline(true),
                   temp_array.push(each.match_sentence),
-                  dispatch(add_display(each.match_sentence)))
+                  dispatch(
+                    add_display({
+                      sentence: each.match_sentence,
+                      from: "matches",
+                    })
+                  ))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
@@ -65,7 +73,7 @@ export default function CustomedTooltip({
             JSON.parse(stage_3_ls).map((each: any) => {
               //index
               // each.match_index_1st === index_1st &&
-              // each.match_index_2nd === index_2nd &&
+              // each.match_index_2nd === index_2nd
               //or only text
               each.user_data === description &&
               //To avoid duplication
@@ -73,9 +81,16 @@ export default function CustomedTooltip({
                 ? (setOn(true),
                   setOutline(true),
                   temp_array.push(each.match_sentence),
-                  dispatch(add_display(each.match_sentence)))
+                  dispatch(
+                    add_display({
+                      sentence: each.match_sentence,
+                      from: "matches",
+                    })
+                  ))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
+
+              // each.user_data === description &&
             });
 
           case "project":
@@ -94,7 +109,12 @@ export default function CustomedTooltip({
                   ? (setOn(true),
                     setOutline(true),
                     temp_array.push(each.match_sentence),
-                    dispatch(add_display(each.match_sentence)))
+                    dispatch(
+                      add_display({
+                        sentence: each.match_sentence,
+                        from: "matches",
+                      })
+                    ))
                   : //This means that the row description is not included in the "stage_3" ----v
                     null
               );
@@ -112,7 +132,12 @@ export default function CustomedTooltip({
                   ? (setOn(true),
                     setOutline(true),
                     temp_array.push(each.match_sentence),
-                    dispatch(add_display(each.match_sentence)))
+                    dispatch(
+                      add_display({
+                        sentence: each.match_sentence,
+                        from: "matches",
+                      })
+                    ))
                   : //This means that the row description is not included in the "stage_3" ----^
                     null;
               });
@@ -139,14 +164,10 @@ export default function CustomedTooltip({
       setOn(false);
       setOutline(false);
     };
-  }, [
-    force_to_update_redux,
-    whichSection,
-    dispatch,
-    index_1st,
-    index_2nd,
-    description,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [force_to_update_redux, whichSection, index_1st, index_2nd, description]);
+
+  // local property to change the year
 
   useEffect(() => {
     if (matches && target) {
@@ -241,14 +262,14 @@ export default function CustomedTooltip({
         >
           <div>
             {text}
-            {whichSection === "skill" && years && <> ({years}+)</>}
+            {whichSection === "skill" && years > 0 && <> ({years}+)</>}
           </div>
         </Tooltip>
       ) : (
         // border-b-2 border-color-[##a9a9a9]
         <div>
           {text}
-          {whichSection === "skill" && years && <> ({years}+)</>}
+          {whichSection === "skill" && years > 0 && <> ({years}+)</>}
         </div>
       )}
     </div>

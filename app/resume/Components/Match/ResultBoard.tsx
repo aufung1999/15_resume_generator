@@ -4,6 +4,7 @@ import useDragger from "./useDragger";
 import { Paper, ButtonGroup, Button } from "@mui/material";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
+import Result_alt from "./Result_alt";
 
 export default function ResultBoard() {
   const [display, setDisplay] = useState("UNMATCH");
@@ -26,13 +27,27 @@ export default function ResultBoard() {
         </ButtonGroup>
       </div>
       {/* draggable of "matches" result */}
+      {/* Method 1 */}
+      {/* <Result
+        id="matches"
+        whatToGet="matches"
+        customedCSS={display === "MATCH" ? "left-0 " : "hidden"}
+      />
       <Result
+        id="unmatches"
+        whatToGet="unmatches"
+        customedCSS={
+          display === "UNMATCH" ? "left-0  border-red-500" : "hidden"
+        }
+      /> */}
+      {/* Method 2 */}
+      <Result_alt
         id="matches"
         whatToGet="matches"
         customedCSS={display === "MATCH" ? "left-0 " : "hidden"}
       />
       {/* draggable of "unmatches" result */}
-      <Result
+      <Result_alt
         id="unmatches"
         whatToGet="unmatches"
         customedCSS={

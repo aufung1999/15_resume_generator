@@ -11,7 +11,7 @@ import { RootState } from "@/store/store";
 import StatisticBoard from "./Match/StatisticBoard";
 import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
-import { control_Highlight_Dsiplay } from "@/slices/resumeSlice";
+import { add_display, control_Highlight_Dsiplay } from "@/slices/resumeSlice";
 import Testhtml from "./test/Testhtml";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -34,27 +34,32 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
   //save all the localStorage data to Database
   const stage_3_ls = window.localStorage.getItem("stage_3");
-  const matches_ls = window.localStorage.getItem("matches");
-  const unmatches_ls = window.localStorage.getItem("unmatches");
+  const matches_ls: any = window.localStorage.getItem("matches");
+  const unmatches_ls: any = window.localStorage.getItem("unmatches");
   const job_details_ls = window.localStorage.getItem("job_details");
 
   //To show the Statistic here becuz of the format
   const select = useSelector(
     (state: RootState) => state.resume.switch_Statistic
   );
-  const display_redux = useSelector((state: RootState) => state.resume.display);
+  // const display_redux = useSelector((state: RootState) => state.resume.display);
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     if (localStorage.getItem("unmatches")) {
-  //       const stage_3_ls: any = window.localStorage.getItem("stage_3");
-  //       const target = JSON.parse(stage_3_ls)?.find(
-  //         (each) => display_redux?.includes(each.match_sentence) === false
-  //       );
-  //       console.log(target);
-  //     }
-  //   }
-  // }, [display_redux]);
+  useEffect(() => {
+    // 1. initialize ALL job description to 0
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("unmatches")) {
+        JSON.parse(unmatches_ls)?.map((each: string | null) =>
+          dispatch(add_display({ sentence: each, from: "unmatches" }))
+        );
+      }
+      if (localStorage.getItem("matches")) {
+        JSON.parse(matches_ls)?.map((each: string | null) =>
+          dispatch(add_display({ sentence: each, from: "unmatches" }))
+        );
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [matches_ls, unmatches_ls]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>
