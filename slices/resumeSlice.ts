@@ -17,7 +17,7 @@ export interface resumeState {
   switch_Statistic: boolean;
   control_highlight_dsiplay: boolean;
   stage_4: { work: any[]; project: any[]; skill: any[] };
-  display: string[];
+  display: { match_sentence: string; count: number }[];
   force_to_update: any;
 }
 
@@ -103,9 +103,25 @@ const analyseSlice = createSlice({
       }
     },
     add_display: (state, action) => {
-      state.display.includes(action.payload) === false
-        ? state.display.push(action.payload)
-        : null;
+      let array = state.display.map(
+        (each): { match_sentence: string; count: number } =>
+          each?.match_sentence
+      );
+
+      if (array.includes(action.payload) === false) {
+        state.display.push({ match_sentence: action.payload, count: 0 });
+      }
+      if (array.includes(action.payload) === true) {
+        let target = state.display?.find(
+          (each): { match_sentence: string; count: number } =>
+            each.match_sentence === action.payload
+        );
+        // target?.count = target?.count + 1;
+        if (target) {
+          target.count = target.count + 1;
+          console.log(target.count);
+        }
+      }
     },
     FORCE_to_UPDATE: (state, action) => {
       state.force_to_update = action.payload;
