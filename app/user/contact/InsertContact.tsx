@@ -35,6 +35,8 @@ import {
 import type { RootState } from "@/store/store";
 
 import toast, { Toaster } from "react-hot-toast";
+import { usePathname } from "next/navigation";
+import Contact from "@/app/resume/Components/Sections/Contact";
 
 export default function InsertContact({
   data,
@@ -52,6 +54,8 @@ export default function InsertContact({
 
   const [copyData, setCopy] = useState<any | null>(null);
   const [remind, setRemind] = useState(false);
+
+  const pathname = usePathname();
 
   //----------------------------------------------------------------------------------
   useEffect(() => {
@@ -109,7 +113,7 @@ export default function InsertContact({
       {/* ....................First Name/ Family Name............................ */}
       <div className=" border flex flex-col md:items-center md:justify-center">
         <div className=" flex justify-center w-full">
-          <div className=" grid grid-cols-2 border w-1/2 ">
+          <div className=" grid grid-cols-2 border ">
             <FormGroup
               label="First Name"
               labelFor="text-input"
@@ -146,8 +150,8 @@ export default function InsertContact({
         </div>
 
         {/* ................................................ */}
-        <div className=" flex justify-center w-full">
-          <div className=" w-full sm:w-1/2">
+        <div className={` flex justify-center `}>
+          <div className=" w-full">
             <FormGroup
               label="Phone"
               labelFor="text-input"
@@ -164,7 +168,7 @@ export default function InsertContact({
           </div>
         </div>
         {/* ..................Country/City.............................. */}
-        <div className=" grid grid-cols-2 w-full md:w-1/2">
+        <div className=" grid grid-cols-2">
           <FormGroup
             label="Country"
             labelFor="text-input"
@@ -192,7 +196,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className="grid grid-cols-2 w-full md:w-1/2">
+        <div className="grid grid-cols-2 ">
           <FormGroup label="State" labelFor="text-input">
             <InputGroup
               id="text-input"
@@ -219,7 +223,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-full md:w-1/2">
+        <div className=" w-1/2">
           <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
             <InputGroup
               id="text-input"
@@ -231,7 +235,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-full md:w-1/2">
+        <div className="  w-1/2">
           <FormGroup
             label="Portfolio"
             labelFor="Portfolio"
@@ -246,7 +250,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}
-        <div className=" w-full md:w-1/2">
+        <div className="  w-1/2">
           <SocialMedia
             key="LinkedIn"
             urlParam="linkedin"
@@ -257,7 +261,7 @@ export default function InsertContact({
           />
         </div>
         {/* ............*GitHub*.................................... */}
-        <div className=" w-full md:w-1/2">
+        <div className="  w-1/2">
           <SocialMedia
             key="GitHub"
             urlParam="github"

@@ -145,7 +145,7 @@ export default function InsertContact({
         </div>
 
         {/* ................................................ */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full ">
           <FormGroup label="Phone" labelFor="text-input" labelInfo="(required)">
             <InputGroup
               id="text-input"
@@ -157,7 +157,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ..................Country/City.............................. */}
-        <div className=" grid grid-cols-2 w-full md:w-8/12">
+        <div className=" grid grid-cols-2 w-full ">
           <FormGroup
             label="Country"
             labelFor="text-input"
@@ -185,7 +185,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className="grid grid-cols-2 w-full md:w-8/12">
+        <div className="grid grid-cols-2 w-full ">
           <FormGroup label="State" labelFor="text-input">
             <InputGroup
               id="text-input"
@@ -212,7 +212,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full ">
           <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
             <InputGroup
               id="text-input"
@@ -224,7 +224,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full ">
           <FormGroup
             label="Portfolio"
             labelFor="Portfolio"
@@ -239,7 +239,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full ">
           <SocialMedia
             key="LinkedIn"
             urlParam="linkedin"
@@ -250,7 +250,7 @@ export default function InsertContact({
           />
         </div>
         {/* ............*GitHub*.................................... */}
-        <div className=" w-full md:w-8/12">
+        <div className=" w-full ">
           <SocialMedia
             key="GitHub"
             urlParam="github"
