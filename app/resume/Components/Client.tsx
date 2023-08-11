@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import ReactToPrint from "react-to-print";
 import { Button } from "@blueprintjs/core";
@@ -46,17 +46,27 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   const select = useSelector(
     (state: RootState) => state.resume.switch_Statistic
   );
-  // const display_redux = useSelector((state: RootState) => state.resume.display);
+
+  // useEffect(() => {
+  //   const cleanUp = async () => {
+  //     await dispatch(cleanUp_display_redux());
+  //   };
+  //   cleanUp();
+  //   //clean up the resume redux display
+  // }, []);
+  // useEffect(async () => {
+  //   await dispatch(cleanUp_display_redux());
+  // }, [search, searchParams]);
+
+  //initialize in Result Board
+  const [dispatchOnce, setOnce] = useState<boolean>(false);
 
   useEffect(() => {
-    const cleanUp = async () => {
-      await dispatch(cleanUp_display_redux());
-    };
-    cleanUp();
-    //clean up the resume redux display
-  }, []);
-
-  useEffect(() => {
+    // 0 . Only Dispatch Once
+    if (dispatchOnce === false) {
+      dispatch(cleanUp_display_redux());
+      setOnce(true);
+    }
     // 1. initialize ALL job description to 0
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
@@ -72,10 +82,6 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matches_ls, unmatches_ls]);
-
-  // useEffect(() => {
-  //   dispatch(cleanUp_display_redux());
-  // }, [search, searchParams]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>

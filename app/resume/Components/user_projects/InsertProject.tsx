@@ -42,6 +42,7 @@ import "react-quill/dist/quill.snow.css"; // Import Quill styles
 
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
+import { add_display, remove_display } from "@/slices/resumeSlice";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -52,12 +53,14 @@ type Props = {
 type rowProps = {
   index: string;
   rowIndex: string;
+  data: any;
+  remind: boolean;
 };
 
 //*         Important Info.       */
 // Child Component: X
 //Parent Component: InputComp
-const RowComp = ({ index, rowIndex }: rowProps) => {
+const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
   const dispatch = useDispatch();
 
   // get the dynamic variable of "row" from the redux store
@@ -69,6 +72,47 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
     (each) => each.rowIndex === rowIndex
   );
   //***/
+
+  //Similar way as setCopy in the InputComp
+  const [copyData, setCopy] = useState<string | null | undefined>(null);
+
+  useEffect(() => {
+    //Copy the "initialized" data from the database
+    setCopy(row?.Row);
+  }, [data]);
+
+  // Keep track if the row description changes then it will remove the matches count
+  const [limit, reachLimit] = useState("false");
+  useEffect(() => {
+    const stage_3_ls: any = window.localStorage.getItem("stage_3");
+
+    const filter_array = JSON.parse(stage_3_ls).filter(
+      (each: any) =>
+        JSON.stringify(each?.user_data) === JSON.stringify(copyData)
+    );
+
+    if (copyData !== row?.Row && limit === "false") {
+      filter_array.map((each: any) =>
+        dispatch(remove_display({ sentence: each.match_sentence }))
+      );
+      // reachLimit("true");
+    }
+
+    if (copyData === row?.Row && limit === "true") {
+      filter_array.map((each: any) =>
+        dispatch(
+          add_display({ sentence: each.match_sentence, from: "matches" })
+        )
+      );
+      // reachLimit("false");
+    }
+  }, [row]);
+
+  useEffect(() => {
+    remind ? reachLimit("true") : reachLimit("false");
+  }, [remind]);
+
+  // ----------------------------------------
 
   return (
     <div key={rowIndex}>
@@ -93,7 +137,6 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
 
-
 //*         Important Info.       */
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
@@ -117,7 +160,13 @@ const InputComp = ({ index, data }: Props) => {
     let temp_arr: any[] = [];
     target_project?.ProjectDescription?.map((each: any) => {
       temp_arr.push(
-        <RowComp key={each.rowIndex} index={index} rowIndex={each.rowIndex} />
+        <RowComp
+          key={each.rowIndex}
+          index={index}
+          rowIndex={each.rowIndex}
+          data={data}
+          remind={remind}
+        />
       );
     });
 
@@ -149,7 +198,15 @@ const InputComp = ({ index, data }: Props) => {
     dispatch(addrow({ index: index, rowIndex: rowIndex }));
     //update the useState
     editRow(
-      row.concat(<RowComp key={rowIndex} index={index} rowIndex={rowIndex} />)
+      row.concat(
+        <RowComp
+          key={rowIndex}
+          index={index}
+          rowIndex={rowIndex}
+          data={data}
+          remind={remind}
+        />
+      )
     );
   };
 
@@ -292,7 +349,6 @@ const InputComp = ({ index, data }: Props) => {
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
 
-
 //*         Important Info.       */
 // Child Component: InputComp
 //Parent Component: X
@@ -317,7 +373,7 @@ export default function InsertProject({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (projects_redux.length !== 0) {
-      projects_redux.map((each:any) => {
+      projects_redux.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );

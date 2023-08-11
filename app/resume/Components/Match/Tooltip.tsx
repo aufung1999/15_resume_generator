@@ -171,7 +171,14 @@ export default function CustomedTooltip({
       setOutline(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [force_to_update_redux, whichSection, index_1st, index_2nd, description]);
+  }, [
+    force_to_update_redux,
+    whichSection,
+    index_1st,
+    index_2nd,
+    description,
+    text,
+  ]);
 
   // local property to change the year
 

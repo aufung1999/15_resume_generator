@@ -88,7 +88,6 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
   }, [data]);
 
   // Keep track if the row description changes then it will remove the matches count
-
   const [limit, reachLimit] = useState("false");
   useEffect(() => {
     const stage_3_ls: any = window.localStorage.getItem("stage_3");
