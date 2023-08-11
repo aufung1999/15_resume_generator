@@ -104,6 +104,11 @@ const analyseSlice = createSlice({
         });
       }
     },
+    init_display: (state, action) => {
+      const { sentence } = action.payload;
+
+      state.display.push({ match_sentence: sentence, count: 0 });
+    },
     add_display: (state, action) => {
       const { sentence, from } = action.payload;
 
@@ -185,6 +190,7 @@ export const {
   switch_Statistic,
   control_Highlight_Dsiplay,
   editResume_stage_4,
+  init_display,
   add_display,
   remove_display,
   cleanUp_display_redux,

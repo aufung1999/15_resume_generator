@@ -12,9 +12,9 @@ import StatisticBoard from "./Match/StatisticBoard";
 import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
 import {
-  add_display,
   cleanUp_display_redux,
   control_Highlight_Dsiplay,
+  init_display,
 } from "@/slices/resumeSlice";
 import Testhtml from "./test/Testhtml";
 
@@ -49,18 +49,24 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   // const display_redux = useSelector((state: RootState) => state.resume.display);
 
   useEffect(() => {
+    const cleanUp = async () => {
+      await dispatch(cleanUp_display_redux());
+    };
+    cleanUp();
     //clean up the resume redux display
-    dispatch(cleanUp_display_redux());
+  }, []);
+
+  useEffect(() => {
     // 1. initialize ALL job description to 0
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
         JSON.parse(unmatches_ls)?.map((each: string | null) =>
-          dispatch(add_display({ sentence: each, from: "unmatches" }))
+          dispatch(init_display({ sentence: each }))
         );
       }
       if (localStorage.getItem("matches")) {
         JSON.parse(matches_ls)?.map((each: string | null) =>
-          dispatch(add_display({ sentence: each, from: "unmatches" }))
+          dispatch(init_display({ sentence: each }))
         );
       }
     }
