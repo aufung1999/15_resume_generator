@@ -12,6 +12,7 @@ import StatisticBoard from "./Match/StatisticBoard";
 import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
 import {
+  FORCE_to_UPDATE,
   cleanUp_display_redux,
   control_Highlight_Dsiplay,
   init_display,
@@ -47,23 +48,13 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
     (state: RootState) => state.resume.switch_Statistic
   );
 
-  // useEffect(() => {
-  //   const cleanUp = async () => {
-  //     await dispatch(cleanUp_display_redux());
-  //   };
-  //   cleanUp();
-  //   //clean up the resume redux display
-  // }, []);
-  // useEffect(async () => {
-  //   await dispatch(cleanUp_display_redux());
-  // }, [search, searchParams]);
-
   //initialize in Result Board
   const [dispatchOnce, setOnce] = useState<boolean>(false);
 
   useEffect(() => {
     // 0 . Only Dispatch Once
     if (dispatchOnce === false) {
+      dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
       dispatch(cleanUp_display_redux());
       setOnce(true);
     }
