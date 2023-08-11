@@ -94,7 +94,7 @@ export default async function Home() {
       {/* <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
         <Description />
       </div> */}
-      <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex  ">
+      <div className="mx-10 z-10 w-full items-center justify-between text-sm lg:flex lg:flex-col ">
         <Banner />
         <Intro_1_Comparison />
         <Intro_2_Resumes_parts />
