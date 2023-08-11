@@ -26,7 +26,7 @@ const Resume = forwardRef((props, ref: any) => {
 
   return (
     <div
-      className=" w-a4 border-2  px-6 py-2 bg-white text-black"
+      className=" w-a4 border-2  px-6 py-2 bg-white text-black "
       ref={ref}
       key={search}
     >

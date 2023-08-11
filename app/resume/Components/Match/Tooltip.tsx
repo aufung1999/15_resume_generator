@@ -5,7 +5,11 @@ import { Button, mergeRefs, Tag } from "@blueprintjs/core";
 import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { add_display, remove_display } from "@/slices/resumeSlice";
+import {
+  add_display,
+  cleanUp_display_redux,
+  remove_display,
+} from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 import extractTerms from "@/app/analyse/Functions/extractTerms";
 
@@ -28,7 +32,9 @@ export default function CustomedTooltip({
   const force_to_update_redux = useSelector(
     (state: RootState) => state.resume.force_to_update
   );
-  const display_redux = useSelector((state: RootState) => state.resume.display);
+  const hover_des_redux = useSelector(
+    (state: RootState) => state.resume.hover_des
+  );
 
   const [on, setOn] = useState<boolean>(false);
   const [outline, setOutline] = useState<boolean>(false);
@@ -204,11 +210,15 @@ export default function CustomedTooltip({
 
   return (
     <div
-      className={`${on && control_highlight_dsiplay ? " bg-yellow-300" : ""} ${
+      className={`${
+        hover_des_redux === "" && on && control_highlight_dsiplay
+          ? " bg-yellow-300"
+          : ""
+      } ${
         whichSection === "skill" && outline
           ? " border-b-2 border-slate-300"
           : ""
-      }`}
+      } ${target?.includes(hover_des_redux) ? " bg-green-300" : ""}`}
     >
       {on && control_highlight_dsiplay ? (
         <Tooltip
@@ -254,7 +264,7 @@ export default function CustomedTooltip({
                   }
                 >
                   {target?.includes(each) && <span>✔️</span>}
-                  {matches?.indexOf(each)}:{each}
+                  {matches?.indexOf(each) + 1}:{each}
                 </div>
               ))}
             </div>

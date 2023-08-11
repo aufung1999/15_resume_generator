@@ -17,7 +17,7 @@ export default function ResultBoard() {
   return (
     <div
       id="move-board"
-      className={control_highlight_dsiplay ? " absolute z-20 " : "hidden"}
+      className={control_highlight_dsiplay ? "  z-20 " : "hidden"}
     >
       <div className=" bg-white inline-block">
         <ButtonGroup aria-label="Disabled elevation buttons">
@@ -26,7 +26,6 @@ export default function ResultBoard() {
           <Button onClick={() => setDisplay("MATCH")}>MATCH</Button>
         </ButtonGroup>
       </div>
-      {/* draggable of "matches" result */}
       {/* Method 1 */}
       {/* <Result
         id="matches"
@@ -46,7 +45,6 @@ export default function ResultBoard() {
         whatToGet="matches"
         customedCSS={display === "MATCH" ? "left-0 " : "hidden"}
       />
-      {/* draggable of "unmatches" result */}
       <Result_alt
         id="unmatches"
         whatToGet="unmatches"

@@ -13,6 +13,9 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   FORCE_to_UPDATE,
   add_display,
+  cleanUp_display_redux,
+  leave_hover_des,
+  on_hover_des,
   remove_display,
 } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
@@ -29,19 +32,16 @@ export default function Result_alt({
   const dispatch = useDispatch();
 
   const display_redux = useSelector((state: RootState) => state.resume.display);
+  const hover_des_redux = useSelector(
+    (state: RootState) => state.resume.hover_des
+  );
 
   const [get, setGet] = useState<any[]>([]);
 
   useEffect(() => {
-    // if (typeof window !== "undefined") {
-    //   if (localStorage.getItem(whatToGet)) {
-    //     const newObject: any = window.localStorage.getItem(whatToGet);
-    //     setGet(JSON.parse(newObject));
-    //   }
-    // }
+
     let temp_matches: string[] = [];
     let temp_unmatches: string[] = [];
-    console.log(display_redux);
     display_redux?.map((each: { match_sentence: string; count: number }) => {
       each.count > 0 &&
         temp_matches.includes(each.match_sentence) === false &&
@@ -56,8 +56,13 @@ export default function Result_alt({
     if (whatToGet === "unmatches") {
       setGet(temp_unmatches);
     }
+    return () => {
+      temp_matches = [];
+      temp_unmatches = [];
+      setGet([]);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [display_redux]);
+  }, [whatToGet, display_redux]);
 
   const ClickHandler = (deleteIndex: number) => {
     dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
@@ -65,55 +70,45 @@ export default function Result_alt({
       case "unmatches":
         dispatch(add_display({ sentence: get[deleteIndex], from: "matches" }));
 
-        //   const filtered_unmatches = get.filter(
-        //     (each) => each !== move_to_matches
-        //   );
-
-        //   //update localStorage "unmatches"
-        //   localStorage.setItem("unmatches", JSON.stringify(filtered_unmatches));
-        //   //update localStorage "matches"
-        //   const matches_ls: any = window.localStorage.getItem("matches");
-        //   const new_matches: any[] = [...JSON.parse(matches_ls), move_to_matches];
-        //   localStorage.setItem("matches", JSON.stringify(new_matches));
         return;
       case "matches":
         dispatch(remove_display({ sentence: get[deleteIndex] }));
-        //   const filtered_matches = get.filter(
-        //     (each) => each !== move_to_unmatches
-        //   );
-        //   //update localStorage "matches"
-        //   localStorage.setItem("matches", JSON.stringify(filtered_matches));
-        //   //update localStorage "matches"
-        //   const unmatches_ls: any = window.localStorage.getItem("unmatches");
-        //   const new_unmatches: any[] = [
-        //     ...JSON.parse(unmatches_ls),
-        //     move_to_unmatches,
-        //   ];
-        //   localStorage.setItem("unmatches", JSON.stringify(new_unmatches));
+
         return;
     }
   };
 
   return (
     <div
-      className={
-        "bg-white px-3 py-1 cursor-pointer top-0 z-10 rounded border-2  border-green-500 " +
-        customedCSS
-      }
+      className={`bg-white px-3 py-1 cursor-pointer top-0 z-10 rounded border-2
+      ${whatToGet === "matches" ? " border-green-500 " : " "}
+      ${whatToGet === "unmatches" ? " border-red-500 " : " "}
+       grid grid-cols-2 gap-2
+        ${customedCSS}`}
       id={id}
       content="hi"
     >
       {get?.map((each, i) => (
-        <div key={i} className="flex justify-between mb-2">
+        <div key={i} className="flex justify-between mb-0">
           <div className="flex">
             <div> {i + 1}</div>&nbsp;
-            <div className=" text-xs break-words">{each}</div>
+            <div
+              onMouseDown={() => dispatch(on_hover_des(each))}
+              className={` text-xs break-words ${
+                hover_des_redux === each ? " font-bold" : ""
+              }`}
+            >
+              {each}
+            </div>
+            {hover_des_redux === each && (
+              <div onMouseDown={() => dispatch(leave_hover_des())}>remove</div>
+            )}
           </div>
           <div
             className={`
             ${
               whatToGet === "unmatches"
-                ? " hover:border-2 hover:border-green-400 "
+                ? " hover:border-2 hover:border-red-400 "
                 : " "
             }
             ${

@@ -18,6 +18,7 @@ export interface resumeState {
   control_highlight_dsiplay: boolean;
   stage_4: { work: any[]; project: any[]; skill: any[] };
   display: { match_sentence: string; count: number }[];
+  hover_des: string;
   force_to_update: any;
 }
 
@@ -28,6 +29,7 @@ const initialState: resumeState = {
   control_highlight_dsiplay: true,
   stage_4: { work: [], project: [], skill: [] },
   display: [],
+  hover_des: "",
   force_to_update: "",
 };
 
@@ -165,6 +167,12 @@ const analyseSlice = createSlice({
     cleanUp_display_redux: (state) => {
       state.display = [];
     },
+    on_hover_des: (state, action) => {
+      state.hover_des = action.payload;
+    },
+    leave_hover_des: (state) => {
+      state.hover_des = "";
+    },
     FORCE_to_UPDATE: (state, action) => {
       state.force_to_update = action.payload;
     },
@@ -180,6 +188,8 @@ export const {
   add_display,
   remove_display,
   cleanUp_display_redux,
+  on_hover_des,
+  leave_hover_des,
   FORCE_to_UPDATE,
 } = analyseSlice.actions;
 export default analyseSlice.reducer;

@@ -14,8 +14,15 @@ export default function Header() {
 
   return (
     <div className="flex justify-between border-2 border-[#102C57] no-wrap">
-      <div className=" flex flex-col justify-center border flex-wrap">
-        {session?.user?.name && <span>Logged In</span>}
+      <div className=" border-0 flex">
+        <Link href="/">
+          <span className="font-sans font-semibold text-xl italic hover:underline transition duration-500">
+            ResumeAi
+          </span>
+        </Link>
+        <div className=" flex flex-col justify-center border flex-wrap">
+          {session?.user?.name && <span>Logged In</span>}
+        </div>
       </div>
       <div className=" border-0">
         <Link href="/user" onClick={() => dispatch(editLayout("user"))}>
@@ -41,7 +48,14 @@ export default function Header() {
 
       {/* {console.log(JSON.stringify(session?.user._doc.address, null, 1))} */}
       <div>
-        {session?.user && <button onClick={() => signOut()}>SignOut</button>}
+        {session?.user && (
+          <button
+            className="font-sans font-semibold text-xl italic hover:underline transition duration-500"
+            onClick={() => signOut()}
+          >
+            SignOut
+          </button>
+        )}
         {session?.user === null || (session?.user === undefined && <Login />)}
         {session?.user === null ||
           (session?.user === undefined && <Register />)}
