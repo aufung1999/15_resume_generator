@@ -105,8 +105,18 @@ export default function Search({
           <Tooltip
             title={
               <>
-                if you want to find `&quot;Response`&quot; resume, type
-                `&quot;true`&quot; or `&quot;false`&quot;
+                if you want to find &quot;Response&quot;, please type
+                <div className="flex flex-col items-center">
+                  <div className=" font-semibold italic underline">
+                    rejected
+                  </div>
+                  <div className=" font-semibold italic underline">phone</div>
+                  <div className=" font-semibold italic underline">first</div>
+                  <div className=" font-semibold italic underline">second</div>
+                  <div className=" font-semibold italic underline">third</div>
+                  <div className=" font-semibold italic underline">fourth</div>
+                  <div className=" font-semibold italic underline">offer</div>
+                </div>
               </>
             }
           >

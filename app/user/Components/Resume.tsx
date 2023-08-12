@@ -16,10 +16,14 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
+import MdPhone from "@mui/icons-material/Phone";
 
 import toast, { Toaster } from "react-hot-toast";
 
 import { styled } from "@mui/material/styles";
+
+import congratulation from "../../../public/congratulation.gif";
+import ShowOnce from "@/utils/ShowOnce";
 
 const CustomWidthTooltip = styled(
   ({
@@ -160,32 +164,112 @@ export default function EachResume({
         {/* Qualify if the resume gets response */}
         <div className="w-full flex h-7">
           <Button
-            className="w-full "
-            value="true"
-            onClick={() => toggleButtonHandler(each._id, "true")}
+            className="w-1/7 bg-red-400"
+            value="rejected"
+            onClick={() => toggleButtonHandler(each._id, "rejected")}
             style={
-              responseValue === "true"
-                ? { background: Colors.GREEN5 }
-                : { background: Colors.WHITE }
-            }
-          >
-            <div>
-              <DoneIcon style={{ fill: "green" }} />
-            </div>
-          </Button>
-
-          <Button
-            className="w-full bg-red-400"
-            value="false"
-            onClick={() => toggleButtonHandler(each._id, "false")}
-            style={
-              responseValue === "false"
+              responseValue === "rejected"
                 ? { background: Colors.RED5 }
                 : { background: Colors.WHITE }
             }
           >
             <div>
               <CloseIcon style={{ fill: "red" }} />
+            </div>
+          </Button>
+
+          <Button
+            className="w-1/7 bg-red-400"
+            value="phone"
+            onClick={() => toggleButtonHandler(each._id, "phone")}
+            style={
+              responseValue === "phone"
+                ? { background: Colors.BLUE5 }
+                : { background: Colors.WHITE }
+            }
+          >
+            <div>
+              <MdPhone style={{ fill: "black" }} />
+            </div>
+          </Button>
+
+          <Button
+            className="w-1/7 bg-red-400"
+            value="first"
+            onClick={() => toggleButtonHandler(each._id, "first")}
+            style={
+              responseValue === "first"
+                ? { background: "#fff9c4" }
+                : { background: Colors.WHITE }
+            }
+          >
+            <div>1st</div>
+          </Button>
+
+          <Button
+            className="w-1/7 bg-red-400"
+            value="second"
+            onClick={() => toggleButtonHandler(each._id, "second")}
+            style={
+              responseValue === "second"
+                ? { background: "#fff176" }
+                : { background: Colors.WHITE }
+            }
+          >
+            <div>2nd</div>
+          </Button>
+
+          <Button
+            className="w-1/7 bg-red-400"
+            value="third"
+            onClick={() => toggleButtonHandler(each._id, "third")}
+            style={
+              responseValue === "third"
+                ? { background: "#ffeb3b" }
+                : { background: Colors.WHITE }
+            }
+          >
+            <div>3rd</div>
+          </Button>
+
+          <Button
+            className="w-1/7 bg-red-400"
+            value="fourth"
+            onClick={() => toggleButtonHandler(each._id, "fourth")}
+            style={
+              responseValue === "fourth"
+                ? { background: "#ffc107" }
+                : { background: Colors.WHITE }
+            }
+          >
+            <div>4th</div>
+          </Button>
+
+          <Button
+            className="w-1/7 relative"
+            value="offer"
+            onClick={() => toggleButtonHandler(each._id, "offer")}
+            style={
+              responseValue === "offer"
+                ? { background: Colors.GREEN5 }
+                : { background: Colors.WHITE }
+            }
+          >
+            <div className=" w-full relative">
+              {responseValue === "offer" && (
+                <ShowOnce
+                  mode={"animate__flipInX"}
+                  speed={"animate__fast"}
+                  delay={"animate__delay-0s"}
+                >
+                  <img
+                    className=" w-full absolute scale-[1.8]"
+                    src={congratulation.src}
+                    alt="congratulation"
+                  />
+                </ShowOnce>
+              )}
+              <DoneIcon style={{ fill: "green", width: "100%" }} />
             </div>
           </Button>
         </div>

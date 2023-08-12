@@ -20,6 +20,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
 
   useEffect(() => {
     if (resumes_copy) setResumes(resumes_copy);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search_redux]);
 
   useEffect(() => {
@@ -48,11 +49,11 @@ export default function Resume({ resumeData }: { resumeData: any }) {
 
   return (
     <div className=" relative ">
-      <div id="user" className="  border-4 bg-[#F8F0E5] px-72 ">
+      <div id="user" className="  border-4 bg-[#F8F0E5] px-48 ">
         {/* Search Engine */}
         <Search resume_csr={resumes_csr} setResumes={setResumes} />
         {/* if the grid-cols-3 changes, Remember to change the show left or right */}
-        <div className="grid grid-cols-3 gap-3 place-items-start relative">
+        <div className="grid grid-cols-3 gap-10 place-items-start relative">
           {resumes_csr?.map((each: any, i: number) => (
             <div key={i} className=" h-full">
               <EachResume
