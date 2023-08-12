@@ -274,11 +274,12 @@ export default function Revalidate() {
       // get the "unmatches" from the localStorage
       if (localStorage.getItem("unmatches")) {
         const unmatches_ls: any = window.localStorage.getItem("unmatches");
+        const matches_ls: any = window.localStorage.getItem("matches");
 
         // Define the input object for fetching
         const fetch_data = {
           user_data: project_unmatches,
-          input_data: JSON.parse(unmatches_ls),
+          input_data: [...JSON.parse(unmatches_ls), ...JSON.parse(matches_ls)],
           API_KEY: API_KEY,
         };
         // ----result from the chatgpt API

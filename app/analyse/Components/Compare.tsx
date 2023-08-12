@@ -15,6 +15,7 @@ import { RootState } from "@/store/store";
 import extractTerms from "../Functions/extractTerms";
 import compare from "../Functions/compare";
 import Statistic from "./Statistic";
+import Loading from "../loading";
 
 export default function Compare() {
   const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);
@@ -30,12 +31,14 @@ export default function Compare() {
   const API_KEY = useSelector((state: RootState) => state.control.API_KEY);
 
   const [result, setRes] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   //===total results from the function
   let temp_arr: any[] = [];
 
   const CompareHandler = async () => {
     setRes([]);
+    setLoading(true);
     if (Array.isArray(stage_2)) {
       let fetch_stage_2: any[] = [];
       stage_2.map((each, index) =>
@@ -152,6 +155,7 @@ export default function Compare() {
         JSON.stringify(Number(total_usage) + Number(total_usage_project))
       );
       setRes([...temp_arr, ...data, ...data_project]);
+      setLoading(false);
       // setRes(data);
     }
   };
@@ -184,9 +188,12 @@ export default function Compare() {
         </div>
       </Button>
 
-      <div className=" border-2 border-red-300">
-        {result.length !== 0 && <Statistic res={result} />}
-      </div>
+      {loading === false && (
+        <div className=" border-2 border-red-300">
+          {result.length !== 0 && <Statistic res={result} />}
+        </div>
+      )}
+      {loading === true && <Loading />}
     </div>
   );
 }

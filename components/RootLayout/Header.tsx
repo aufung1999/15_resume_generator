@@ -14,14 +14,22 @@ export default function Header() {
 
   return (
     <div className="flex justify-between border-2 border-[#102C57] no-wrap">
-      <div className=" border-0 flex">
+      <div className=" border-0 flex bg-[#102C57] ">
         <Link href="/">
-          <span className="font-sans font-semibold text-xl italic hover:underline transition duration-500">
-            ResumeAi
+          <span className="font-sans italic hover:underline hover:transition hover:duration-500">
+            <div
+              className="text-xl font-semibold
+              bg-gradient-to-r bg-clip-text  text-transparent
+              from-indigo-500 via-white to-indigo-500
+              animate-text
+            "
+            >
+              ResumeAi
+            </div>
           </span>
         </Link>
-        <div className=" flex flex-col justify-center border flex-wrap">
-          {session?.user?.name && <span>Logged In</span>}
+        <div className="px-2  flex flex-col justify-center text-white flex-wrap">
+          {session?.user?.name && <span className="text-xs">Logged In</span>}
         </div>
       </div>
       <div className=" border-0">

@@ -19,10 +19,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const body = await req.json();
     // console.log(body);
     const { image, stage_3, matches, unmatches, job_details, resumeID } = body;
+    console.log("resumeID: " + resumeID);
 
     db.connect();
     if (resumeID) {
-      console.log("resumeID: " + resumeID);
       console.log("unmatches: " + unmatches);
       const filter = { email: session?.user?.email, _id: resumeID };
       const update = {
@@ -37,11 +37,13 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       return NextResponse.json({ message: "Resume Updated" });
     }
 
-    if (!resumeID) {
-      const exist: any = Resume.findOne({
+    if (resumeID === null || resumeID === undefined) {
+      const exist: any = await Resume.findOne({
         email: session?.user?.email,
         Job_Details: job_details,
       });
+
+      console.log(exist);
 
       if (exist) {
         const filter = {

@@ -130,14 +130,14 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
                   >
                     <Button
                       className="w-full"
-                      // onMouseEnter={() =>
-                      //   dispatch(control_Highlight_Dsiplay({ select: true }))
-                      // }
-                      // onMouseLeave={() =>
-                      //   dispatch(control_Highlight_Dsiplay({ select: false }))
-                      // }
+                      onMouseEnter={() =>
+                        dispatch(control_Highlight_Dsiplay({ select: true }))
+                      }
+                      onMouseLeave={() =>
+                        dispatch(control_Highlight_Dsiplay({ select: false }))
+                      }
                     >
-                      Print this out!
+                      Print/Save
                     </Button>
                   </ButtonGroup>
                 )}

@@ -17,7 +17,7 @@ export default function ResultBoard() {
   return (
     <div
       id="move-board"
-      className={control_highlight_dsiplay ? "  z-20 " : "hidden"}
+      // className={control_highlight_dsiplay ? "  z-20 " : "hidden"}
     >
       <div className=" bg-white inline-block">
         <ButtonGroup aria-label="Disabled elevation buttons">
