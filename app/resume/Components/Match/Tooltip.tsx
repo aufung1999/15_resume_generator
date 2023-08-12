@@ -176,8 +176,8 @@ export default function CustomedTooltip({
     whichSection,
     index_1st,
     index_2nd,
-    description,
-    text,
+    // description,
+    // text,
   ]);
 
   // local property to change the year

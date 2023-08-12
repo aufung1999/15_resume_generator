@@ -101,7 +101,7 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
       filter_array.map((each: any) =>
         dispatch(remove_display({ sentence: each.match_sentence }))
       );
-      // reachLimit("true");
+      reachLimit("true");
     }
 
     if (copyData === row?.Row && limit === "true") {
@@ -110,8 +110,9 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
           add_display({ sentence: each.match_sentence, from: "matches" })
         )
       );
-      // reachLimit("false");
+      reachLimit("false");
     }
+    // change to remind dependency?
   }, [row]);
 
   useEffect(() => {

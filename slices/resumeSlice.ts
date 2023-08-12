@@ -122,6 +122,7 @@ const analyseSlice = createSlice({
           state.display.push({ match_sentence: sentence, count: 0 });
           return;
         case "matches":
+          console.log("sentence: " + sentence);
           if (array.includes(sentence) === true) {
             let target = state.display?.find(
               (each: { match_sentence: string; count: number }) =>
