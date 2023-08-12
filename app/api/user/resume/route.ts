@@ -70,7 +70,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Matches: matches,
           Unmatches: unmatches,
           Job_Details: job_details,
-          Response: "false",
+          Response: "",
         });
         db.disconnect();
         await resume.save();

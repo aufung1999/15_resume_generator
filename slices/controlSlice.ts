@@ -8,6 +8,7 @@ export interface ControlState {
   preview: { matches: string[]; unmatches: string[]; img: string };
   job_details: any;
   search: { index: string; input: string | null }[];
+  dispay_format: string;
 }
 
 const initialState: ControlState = {
@@ -17,6 +18,7 @@ const initialState: ControlState = {
   preview: { matches: [], unmatches: [], img: "" },
   job_details: { job_position: "", company_name: "", website: "" },
   search: [],
+  dispay_format: "picture",
 };
 
 const controlSlice = createSlice({
@@ -67,6 +69,9 @@ const controlSlice = createSlice({
       const { select } = action.payload;
       state.switch = select;
     },
+    editDispay_Format: (state, action: PayloadAction<string>) => {
+      state.dispay_format = action.payload;
+    },
   },
 });
 
@@ -77,5 +82,6 @@ export const {
   editSearch,
   addSearchBar_redux,
   switch_Components,
+  editDispay_Format,
 } = controlSlice.actions;
 export default controlSlice.reducer;

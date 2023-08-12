@@ -11,20 +11,24 @@ import Search from "./Search";
 
 import toast, { Toaster } from "react-hot-toast";
 import EachResume from "./Resume";
+import Display from "./Display";
 
 export default function Resume({ resumeData }: { resumeData: any }) {
   const search_redux = useSelector((state: RootState) => state.control.search);
+  const dispay_format_redux = useSelector(
+    (state: RootState) => state.control.dispay_format
+  );
 
   const [resumes_copy, setResumes_copy] = useState<any[]>([]);
   const [resumes_csr, setResumes] = useState<any[]>([]);
 
   useEffect(() => {
     if (resumes_copy) setResumes(resumes_copy);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search_redux]);
 
   useEffect(() => {
-    console.log( resumeData)
+    console.log(resumeData);
     let resumes_db: any[] = [];
     resumeData?.map(async (each: any) => {
       const img = new Image();
@@ -50,12 +54,33 @@ export default function Resume({ resumeData }: { resumeData: any }) {
   return (
     <div className=" relative ">
       <div id="user" className="  border-4 bg-[#F8F0E5] px-48 ">
-        {/* Search Engine */}
-        <Search resume_csr={resumes_csr} setResumes={setResumes} />
+        <div className="flex">
+          {/* Search Engine */}
+          <Search resume_csr={resumes_csr} setResumes={setResumes} />
+          {/* Display format */}
+          <Display />
+        </div>
         {/* if the grid-cols-3 changes, Remember to change the show left or right */}
-        <div className="grid grid-cols-3 gap-10 place-items-start relative">
+        <div
+          className={` relative
+          ${
+            dispay_format_redux === "picture"
+              ? " grid grid-cols-3 gap-10 place-items-start "
+              : ""
+          }
+          ${
+            dispay_format_redux === "list"
+              ? " grid grid-cols-1 gap-2 place-items-start "
+              : ""
+          }
+          `}
+        >
           {resumes_csr?.map((each: any, i: number) => (
-            <div key={i} className=" h-full">
+            <div
+              key={i}
+              className={`${dispay_format_redux === "picture" ? " h-full " : ""}
+            ${dispay_format_redux === "list" ? " w-full " : ""}`}
+            >
               <EachResume
                 each={each}
                 key={"resume-" + i}

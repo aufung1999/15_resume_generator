@@ -93,7 +93,7 @@ export default function Search({
           <div key={i}>{each}</div>
         ))}
       </div>
-      <div className="relative flex flex-col">
+      <div className="relative flex flex-row">
         <Button
           icon={<Icon icon="search" className="" style={{ color: "white" }} />}
           onClick={searchHandler}
@@ -101,7 +101,7 @@ export default function Search({
             backgroundColor: "rgba(0,120,255,1)",
           }}
         />
-        <div className=" absolute z-20 left-full">
+        <div className="  z-20 left-full">
           <Tooltip
             title={
               <>
