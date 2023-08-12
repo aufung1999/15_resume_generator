@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
+import Loading from "./loading";
 
 export default function ResumeLayout({
   children,
@@ -7,10 +8,8 @@ export default function ResumeLayout({
 }) {
   return (
     <div className=" flex relative">
-      {children}
-      {/* <div className="relative">
-        <div className="absolute">hi</div>
-      </div> */}
+      <Suspense fallback={<Loading />}>{children}</Suspense>
+ 
     </div>
   );
 }
