@@ -27,11 +27,13 @@ const projectsSlice = createSlice({
       if (typeof window !== "undefined") {
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
-          const newObject: any = window.localStorage.getItem("stage_3");
-          JSON.parse(newObject)?.map((each: any) => {
-            each.match_index === index &&
+          const stage_3_ls: any = window.localStorage.getItem("stage_3");
+          JSON.parse(stage_3_ls)?.map((each: any) => {
+            //Check the technique
+            each.match_index_1st === index &&
               // no:1
               match_index.push({ match_index_1st: index }),
+              //Check the description
               ProjectDescription?.map(
                 (item: { Row?: string | undefined; rowIndex: string }) =>
                   each.match_index_1st === index &&

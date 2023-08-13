@@ -97,13 +97,13 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     )
       .then((values) => {
         console.log(temp_arr);
-        console.log("Work");
         return NextResponse.json({
           data_project: temp_arr,
           total_usage_project: total_usage,
         });
       })
       .catch((values) => {
+        console.log(temp_arr);
         return NextResponse.json({
           data_project: temp_arr,
           total_usage_project: total_usage,

@@ -73,14 +73,16 @@ export default function Compare() {
       );
 
       let compare_res_project: any = compare(
-        temp_skill,
+        temp_project,
         fetch_stage_2,
-        "skill"
+        "project"
       );
 
       if (compare_res_project) {
         temp_arr.push(...compare_res_project);
       }
+
+      console.log(compare_res_project);
 
       //=====Project===== --------------------- 2
       let temp_project_2: any[] = [];
@@ -108,19 +110,9 @@ export default function Compare() {
       });
 
       const { data_project, total_usage_project } = await res_project.json();
-      console.log(data_project);
-      // localStorage.setItem("total_usage", total_usage);
 
-      //=====Pre-process Work=====            NOT USED
-      const filtered_stage_2 = stage_2.filter(
-        (each) =>
-          temp_arr.find((each_each) => each_each.match_sentence === each)
-            ?.match_sentence !== each
-      );
-
-      // console.log(
-      //   "filtered_stage_2: " + JSON.stringify(filtered_stage_2, null, 1)
-      // );
+      // const data_project: any = [];
+      // const total_usage_project = 0;
 
       //=====Work=====
       let temp_work: any[] = [];

@@ -290,7 +290,8 @@ export default function Revalidate() {
             "Content-type": "application/json; charset=UTF-8",
           },
         });
-        const { data, total_usage } = await res.json();
+        const { data_project: data, total_usage_project: total_usage } =
+          await res.json();
         // Update the localStorage after revalidation
         if (data) {
           const matches_ls: any = window.localStorage.getItem("matches");

@@ -9,9 +9,9 @@ export default function compare(user: any, input: any, mode: string) {
     case "project":
       console.log(user, input);
 
-      user.map((each: any) => {
+      user.map((each: { index: string; array: string[] }) => {
         each.array.map((technique: any) => {
-          input.map((array: any) => {
+          input.map((array: { index: string; array: string[] }) => {
             sim_res = stringSimilarity.findBestMatch(
               technique.toLowerCase(),
               array.array.map((word: string) => word.toLowerCase())
@@ -19,7 +19,8 @@ export default function compare(user: any, input: any, mode: string) {
 
             if (sim_res.bestMatch.rating > 0.6) {
               test.push({
-                match_index: each.index,
+                match_index_1st: each.index,
+                match_index_2nd: null,
                 technique: technique,
                 match_sentence: array.index,
               });

@@ -37,11 +37,13 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
   const componentRef = useRef<any>(null);
 
-  //save all the localStorage data to Database
-  const stage_3_ls = window.localStorage.getItem("stage_3");
-  const matches_ls: any = window.localStorage.getItem("matches");
-  const unmatches_ls: any = window.localStorage.getItem("unmatches");
-  const job_details_ls = window.localStorage.getItem("job_details");
+  // if (typeof window === "undefined") {
+  //   return null;
+  // }
+  // //save all the localStorage data to Database
+
+  // const unmatches_ls: any = localStorage.getItem("unmatches");
+  // const job_details_ls = localStorage.getItem("job_details");
 
   //To show the Statistic here becuz of the format
   const select = useSelector(
@@ -50,6 +52,16 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
   //initialize in Result Board
   const [dispatchOnce, setOnce] = useState<boolean>(false);
+
+  const [matches_ls, setMatches] = useState<string | null>(null);
+  const [unmatches_ls, setUnMatches] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setMatches(localStorage.getItem("matches"));
+      setUnMatches(localStorage.getItem("unmatches"));
+    }
+  }, []);
 
   useEffect(() => {
     // 0 . Only Dispatch Once
@@ -60,12 +72,12 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
     }
     // 1. initialize ALL job description to 0
     if (typeof window !== "undefined") {
-      if (localStorage.getItem("unmatches")) {
+      if (localStorage.getItem("unmatches") && unmatches_ls !== null) {
         JSON.parse(unmatches_ls)?.map((each: string | null) =>
           dispatch(init_display({ sentence: each }))
         );
       }
-      if (localStorage.getItem("matches")) {
+      if (localStorage.getItem("matches") && matches_ls !== null) {
         JSON.parse(matches_ls)?.map((each: string | null) =>
           dispatch(init_display({ sentence: each }))
         );
@@ -103,10 +115,10 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
                         //need to stringify all the thing BEFORE send to API
                         body: JSON.stringify({
                           image: dataUrl,
-                          stage_3: stage_3_ls,
-                          matches: matches_ls,
-                          unmatches: unmatches_ls,
-                          job_details: job_details_ls,
+                          stage_3: localStorage.getItem("stage_3"),
+                          matches: localStorage.getItem("matches"),
+                          unmatches: localStorage.getItem("unmatches"),
+                          job_details: localStorage.getItem("job_details"),
                           resumeID: resumeID,
                         }),
                         headers: {

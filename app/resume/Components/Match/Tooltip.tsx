@@ -105,7 +105,8 @@ export default function CustomedTooltip({
             if (index_2nd === undefined || index_2nd === null) {
               JSON.parse(stage_3_ls).map((each: any) =>
                 //index
-                each.match_index === index_1st &&
+                each.match_index_1st === index_1st &&
+                each.match_index_2nd === null &&
                 //or only text
                 extractTerms(description, "project_redux")?.includes(
                   each.technique
