@@ -39,7 +39,6 @@ export default function Result_alt({
   const [get, setGet] = useState<any[]>([]);
 
   useEffect(() => {
-
     let temp_matches: string[] = [];
     let temp_unmatches: string[] = [];
     display_redux?.map((each: { match_sentence: string; count: number }) => {
@@ -100,9 +99,14 @@ export default function Result_alt({
             >
               {each}
             </div>
-            {hover_des_redux === each && (
-              <div onMouseDown={() => dispatch(leave_hover_des())}>remove</div>
-            )}
+            <div className="ms-3 text-xs ">
+              {hover_des_redux === each && (
+                <div onMouseDown={() => dispatch(leave_hover_des())}>
+                  {" "}
+                  remove
+                </div>
+              )}
+            </div>
           </div>
           <div
             className={`
@@ -112,9 +116,10 @@ export default function Result_alt({
                 : " "
             }
             ${
-              whatToGet === "matches"
-                ? " hover:border-2 hover:border-green-400 "
-                : " "
+              ""
+              // whatToGet === "matches"
+              // ? " hover:border-2 hover:border-green-400 "
+              // : " "
             }
 
             `}

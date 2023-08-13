@@ -42,8 +42,10 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   // }
   // //save all the localStorage data to Database
 
-  // const unmatches_ls: any = localStorage.getItem("unmatches");
-  // const job_details_ls = localStorage.getItem("job_details");
+  const stage_3_ls: any = localStorage.getItem("stage_3");
+  const matches_ls: any = localStorage.getItem("matches");
+  const unmatches_ls: any = localStorage.getItem("unmatches");
+  const job_details_ls = localStorage.getItem("job_details");
 
   //To show the Statistic here becuz of the format
   const select = useSelector(
@@ -53,15 +55,15 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   //initialize in Result Board
   const [dispatchOnce, setOnce] = useState<boolean>(false);
 
-  const [matches_ls, setMatches] = useState<string | null>(null);
-  const [unmatches_ls, setUnMatches] = useState<string | null>(null);
+  // const [matches_ls, setMatches] = useState<string | null>(null);
+  // const [unmatches_ls, setUnMatches] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setMatches(localStorage.getItem("matches"));
-      setUnMatches(localStorage.getItem("unmatches"));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     setMatches(localStorage.getItem("matches"));
+  //     setUnMatches(localStorage.getItem("unmatches"));
+  //   }
+  // }, []);
 
   useEffect(() => {
     // 0 . Only Dispatch Once
