@@ -139,7 +139,7 @@ export default function EachResume({
       {dispay_format_redux === "picture" && (
         <div className=" h-full flex flex-col justify-between">
           <Toaster />
-          <div>
+          <div className="w-full">
             {/* 1 */}
             {/* Job Description */}
             <div className="border border-green-500 bottom-0 px-2 bg-white h-36 ">
@@ -175,9 +175,9 @@ export default function EachResume({
             </div>
             {/* 2 */}
             {/* Qualify if the resume gets response */}
-            <div className="w-full flex h-7">
+            <div className="w-full flex h-7 border">
               <Button
-                className="w-1/7 bg-red-400"
+                className="w-full bg-red-400"
                 value="rejected"
                 onClick={() => toggleButtonHandler(each._id, "rejected")}
                 style={
@@ -192,7 +192,7 @@ export default function EachResume({
               </Button>
 
               <Button
-                className="w-1/7 bg-red-400"
+                className="w-full bg-red-400"
                 value="phone"
                 onClick={() => toggleButtonHandler(each._id, "phone")}
                 style={
@@ -207,7 +207,7 @@ export default function EachResume({
               </Button>
 
               <Button
-                className="w-1/7 bg-red-400"
+                className="w-full bg-red-400"
                 value="first"
                 onClick={() => toggleButtonHandler(each._id, "first")}
                 style={
@@ -220,7 +220,7 @@ export default function EachResume({
               </Button>
 
               <Button
-                className="w-1/7 bg-red-400"
+                className="w-full bg-red-400"
                 value="second"
                 onClick={() => toggleButtonHandler(each._id, "second")}
                 style={
@@ -233,7 +233,7 @@ export default function EachResume({
               </Button>
 
               <Button
-                className="w-1/7 bg-red-400"
+                className="w-full bg-red-400"
                 value="third"
                 onClick={() => toggleButtonHandler(each._id, "third")}
                 style={
@@ -246,7 +246,7 @@ export default function EachResume({
               </Button>
 
               <Button
-                className="w-1/7 bg-red-400"
+                className="w-full bg-red-400"
                 value="fourth"
                 onClick={() => toggleButtonHandler(each._id, "fourth")}
                 style={
@@ -259,7 +259,7 @@ export default function EachResume({
               </Button>
 
               <Button
-                className="w-1/7 relative"
+                className="w-full relative"
                 value="offer"
                 onClick={() => toggleButtonHandler(each._id, "offer")}
                 style={
@@ -471,7 +471,7 @@ export default function EachResume({
               </div>
             </div>
 
-            <div className="flex flex-row">
+            <div className="flex flex-row w-full">
               {/* 2 */}
               {/* Qualify if the resume gets response */}
               <div className="w-full flex h-full">
