@@ -156,47 +156,50 @@ const TermComp = ({ index, data }: Props) => {
         />
       </div>
 
-      {skill?.Skill_list?.map((each: any, i: number) => (
-        <div key={i}>
-          {/* <div>{each.skill}</div> */}
-          {/* hide the index */}
-          {/* <div>{each.skillIndex}</div> */}
+      <div className=" grid grid-cols-2 gap-x-3 h-full">
+        {skill?.Skill_list?.map((each: any, i: number) => (
+          <div key={i} className="h-full">
+            {/* <div>{each.skill}</div> */}
+            {/* hide the index */}
+            {/* <div>{each.skillIndex}</div> */}
 
-          <div className="flex relative">
-            <InputGroup
-              onChange={(e) =>
-                dispatch(
-                  editSkillName({
-                    index: index,
-                    skillIndex: each.skillIndex,
-                    skill: e.target.value,
-                  })
-                )
-              }
-              value={each ? each?.skill : ""}
-              fill
-            />
+            <div className="flex relative h-full">
+              <InputGroup
+                onChange={(e) =>
+                  dispatch(
+                    editSkillName({
+                      index: index,
+                      skillIndex: each.skillIndex,
+                      skill: e.target.value,
+                    })
+                  )
+                }
+                value={each ? each?.skill : ""}
+                fill
+              />
 
-            <Button
-              style={{
-                backgroundColor: "rgba(255,0,0,0.6)",
-                borderRadius: "25% 10%",
-              }}
-              className="absolute top-0 right-0 "
-              onClick={(e) => deleteskill(e, each.skillIndex)}
-              icon={
-                <Icon
-                  icon="delete"
-                  className=""
-                  style={{ color: "white" }}
-                  size={10}
-                />
-              }
-              small
-            />
+              <Button
+                style={{
+                  backgroundColor: "rgba(255,0,0,0.6)",
+                  borderRadius: "25% 10%",
+                }}
+                // className="absolute top-0 right-0 "
+                onClick={(e) => deleteskill(e, each.skillIndex)}
+                icon={
+                  <Icon
+                    icon="delete"
+                    className=""
+                    style={{ color: "white" }}
+                    size={10}
+                  />
+                }
+                small
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
       <div className="flex mt-5 flex-col w-full">
         {/* <InputGroup
           fill
@@ -307,9 +310,9 @@ export default function InsertSkills({ data }: any) {
         `}
       >
         {terms?.map((each: any, i: number) => (
-          <div key={i} className="w-full border-2 border-green-300 ">
-            <div className="flex relative">
-              <div className="w-full">{each}</div>
+          <div key={i} className="w-full border-2 border-green-300 h-full flex">
+            <div className="flex relative ">
+              <div>{each}</div>
               <Button
                 className="absolute top-0 right-0 "
                 style={{

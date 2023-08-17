@@ -293,8 +293,8 @@ export default function InsertContact({
           <InsertLink />
         </div> */}
       </div>
-      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
-        Submit
+      <Button className=" w-full" onClick={SubmitHandler}>
+        Save
       </Button>
     </div>
   );

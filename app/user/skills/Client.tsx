@@ -49,8 +49,8 @@ export default function SkillClient({ data }: any) {
         {/* Control the form size */}
         <InsertSkills data={data} />
       </div>
-      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
-        Submit
+      <Button className="w-full" onClick={SubmitHandler}>
+        Save
       </Button>
     </div>
   );

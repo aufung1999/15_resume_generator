@@ -50,7 +50,7 @@ export default function WorkClient({ data }: any) {
         <InsertWorkExp data={data} />
       </div>
       <Button fill className="top-0" onClick={SubmitHandler}>
-        Submit
+        Save
       </Button>
     </div>
   );

@@ -45,12 +45,11 @@ export default function ProjectClient({ data }: any) {
   return (
     <div className="border border-blue-600 flex-1 font-sans">
       <Toaster />
-
       <div className=" border-4 flex flex-col items-center justify-center">
         <InsertProject data={data} />
       </div>
-      <Button className="" intent="warning" onClick={SubmitHandler}>
-        Submit
+      <Button className="w-full" intent="warning" onClick={SubmitHandler}>
+        Save
       </Button>
     </div>
   );

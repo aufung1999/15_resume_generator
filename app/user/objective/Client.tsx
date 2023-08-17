@@ -48,9 +48,9 @@ export default function ObjectiveClient({ data }: any) {
           <InsertObjective data={data} />
         </div>
       </div>
-      
-      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
-        Submit
+
+      <Button className="w-full" onClick={SubmitHandler}>
+        Save
       </Button>
     </div>
   );

@@ -41,7 +41,7 @@ export default function AwardClient({ data }: any) {
       <div className=" border-4 flex flex-col items-center justify-center">
         <InsertAchievement data={data} />
       </div>
-      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
+      <Button className="w-full" onClick={SubmitHandler}>
         Submit
       </Button>
     </Card>

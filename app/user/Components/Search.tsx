@@ -80,50 +80,62 @@ export default function Search({
   };
 
   return (
-    <div className=" border-2 w-full flex relative justify-between py-3">
-      <Button
-        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
-        onClick={addSearchBar}
-        style={{
-          backgroundColor: "rgba(0,120,255,1)",
-        }}
-      />
-      <div className="flex">
-        {searchBar_csr?.map((each: any, i: number) => (
-          <div key={i}>{each}</div>
-        ))}
-      </div>
-      <div className="relative flex flex-row">
+    <div className="w-full flex flex-col">
+      {/* 1. Search Bar */}
+      <div className=" border-2 w-full flex relative justify-between py-3">
         <Button
-          icon={<Icon icon="search" className="" style={{ color: "white" }} />}
-          onClick={searchHandler}
+          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+          onClick={addSearchBar}
           style={{
             backgroundColor: "rgba(0,120,255,1)",
           }}
         />
-        <div className="  z-20 left-full">
-          <Tooltip
-            title={
-              <>
-                if you want to find &quot;Response&quot;, please type
-                <div className="flex flex-col items-center">
-                  <div className=" font-semibold italic underline">
-                    rejected
-                  </div>
-                  <div className=" font-semibold italic underline">phone</div>
-                  <div className=" font-semibold italic underline">first</div>
-                  <div className=" font-semibold italic underline">second</div>
-                  <div className=" font-semibold italic underline">third</div>
-                  <div className=" font-semibold italic underline">fourth</div>
-                  <div className=" font-semibold italic underline">offer</div>
-                </div>
-              </>
+        <div className="flex">
+          {searchBar_csr?.map((each: any, i: number) => (
+            <div key={i}>{each}</div>
+          ))}
+        </div>
+        <div className="relative flex flex-row">
+          <Button
+            icon={
+              <Icon icon="search" className="" style={{ color: "white" }} />
             }
-          >
-            <ErrorOutlineIcon />
-          </Tooltip>
+            onClick={searchHandler}
+            style={{
+              backgroundColor: "rgba(0,120,255,1)",
+            }}
+          />
+          <div className="  z-20 left-full">
+            <Tooltip
+              title={
+                <>
+                  if you want to find &quot;Response&quot;, please type
+                  <div className="flex flex-col items-center">
+                    <div className=" font-semibold italic underline">
+                      rejected
+                    </div>
+                    <div className=" font-semibold italic underline">phone</div>
+                    <div className=" font-semibold italic underline">first</div>
+                    <div className=" font-semibold italic underline">
+                      second
+                    </div>
+                    <div className=" font-semibold italic underline">third</div>
+                    <div className=" font-semibold italic underline">
+                      fourth
+                    </div>
+                    <div className=" font-semibold italic underline">offer</div>
+                  </div>
+                </>
+              }
+            >
+              <ErrorOutlineIcon />
+            </Tooltip>
+          </div>
         </div>
       </div>
+
+      {/* 2. Icon filter */}
+      <div>hi</div>
     </div>
   );
 }

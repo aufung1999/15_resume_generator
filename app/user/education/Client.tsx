@@ -52,8 +52,8 @@ export default function EducationClient({ data }: any) {
         {/* Control the form size */}
         <InsertEducation data={data} />
       </div>
-      <Button className="bp3-intent-primary" onClick={SubmitHandler}>
-        Submit
+      <Button className="w-full" onClick={SubmitHandler}>
+        Save
       </Button>
     </div>
   );

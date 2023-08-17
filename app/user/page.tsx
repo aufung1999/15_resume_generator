@@ -107,9 +107,9 @@ export default async function Page() {
     };
 
     return (
-      <div className=" w-full items-center justify-between font-mono text-sm lg:flex border-4">
+      <div className=" w-full items-center justify-between font-mono text-sm lg:flex">
         {/* h-screen */}
-        <div className="w-full flex flex-row border-2">
+        <div className="w-full flex flex-row">
           <UserClient data={JSON.parse(JSON.stringify(clientData))} />
         </div>
       </div>
