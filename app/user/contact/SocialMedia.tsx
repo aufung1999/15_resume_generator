@@ -28,7 +28,7 @@ export default function SocialMedia({
   const dispatch = useDispatch();
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-full">
         <SocialIcon
           className="me-1"
           url={"https://" + urlParam + ".com/in/jaketrent"}

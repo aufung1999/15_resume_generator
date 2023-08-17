@@ -12,6 +12,7 @@ import {
   TextArea,
 } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
+import "tailwindcss/tailwind.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -131,7 +132,9 @@ const InputComp = ({ index, data }: Props) => {
       </div>
 
       <FormGroup labelFor="text-input" labelInfo="(required)">
-        Objective Description:
+        <div className="w-full border text-sm font-semibold italic">
+          Objective Description:
+        </div>
         <TextArea
           onChange={(e) =>
             dispatch(
@@ -171,7 +174,7 @@ export default function InsertObjective({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (objective_redux.length !== 0) {
-      objective_redux.map((each:any) => {
+      objective_redux.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );
@@ -237,7 +240,7 @@ export default function InsertObjective({ data }: any) {
                 className={`
            border-green-300 ${
              pathname.split("/").includes("user")
-               ? "  p-3 w-full "
+               ? " w-full "
                : "" + pathname.split("/").includes("resume")
                ? " w-full "
                : ""
@@ -261,14 +264,13 @@ export default function InsertObjective({ data }: any) {
           </div>
         ))}
       </div>
-      <Button
-        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+
+      <button
         onClick={addObj}
-        fill
-        style={{
-          backgroundColor: "rgba(0,120,255,1)",
-        }}
-      />
+        className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+      >
+        + Add Objective
+      </button>
     </div>
   );
 }

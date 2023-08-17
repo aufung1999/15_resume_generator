@@ -93,7 +93,6 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
 
-
 //*         Important Info.       */
 // Child Component: RowComp
 //Parent Component: InsertWorkExp
@@ -268,16 +267,13 @@ const InputComp = ({ index, data }: Props) => {
               {each}
             </div>
           ))}
-          <Button
-            icon={
-              <Icon icon="insert" className="" style={{ color: "white" }} />
-            }
+
+          <button
             onClick={addRow}
-            style={{
-              backgroundColor: "rgba(0,120,255,1)",
-            }}
-            small
-          />
+            className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+          >
+            + Add Project Description
+          </button>
           {remind && (
             <Button className="" intent="warning" onClick={SubmitHandler}>
               Submit
@@ -291,7 +287,6 @@ const InputComp = ({ index, data }: Props) => {
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
-
 
 //*         Important Info.       */
 // Child Component: InputComp
@@ -317,7 +312,7 @@ export default function InsertProject({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (projects_redux.length !== 0) {
-      projects_redux.map((each:any) => {
+      projects_redux.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );
@@ -390,14 +385,13 @@ export default function InsertProject({ data }: any) {
           </div>
         ))}
       </div>
-      <Button
-        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+
+      <button
         onClick={addProj}
-        fill
-        style={{
-          backgroundColor: "rgba(0,120,255,1)",
-        }}
-      />
+        className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+      >
+        + Add Project
+      </button>
     </div>
   );
 }

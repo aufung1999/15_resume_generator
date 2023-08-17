@@ -74,22 +74,27 @@ export default function UserClient({ data }: any) {
           <Resumes resumeData={data.resumeData} />
         </div>
         <div className={switch_tab === "Contact" ? " w-full" : "   "}>
-          <div>Contact</div>
+          <div className=" text-lg font-semibold">Contact</div>
           <ContactClient data={data.contact} />
         </div>
         <div className={switch_tab === "Objective" ? " w-full" : "   "}>
+          <div className=" text-lg font-semibold">Objectives</div>
           <ObjectiveClient data={data.objective} />
         </div>
         <div className={switch_tab === "Skill" ? " w-full" : "   "}>
+          <div className=" text-lg font-semibold">Technical Skills</div>
           <SkillClient data={data.skill} />
         </div>
         <div className={switch_tab === "Education" ? "w-full" : "   "}>
+          <div className=" text-lg font-semibold">Education</div>
           <EducationClient data={data.education} />
         </div>
         <div className={switch_tab === "Work" ? "w-full" : "   "}>
+          <div className=" text-lg font-semibold">Working Experience</div>
           <WorkClient data={data.work} />
         </div>
         <div className={switch_tab === "Project" ? "w-full" : "   "}>
+          <div className=" text-lg font-semibold">Projects</div>
           <ProjectClient data={data.project} />
         </div>
       </div>

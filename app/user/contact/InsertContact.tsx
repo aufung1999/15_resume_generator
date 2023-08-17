@@ -111,14 +111,14 @@ export default function InsertContact({
     >
       <Toaster />
       {/* ....................First Name/ Family Name............................ */}
-      <div className=" border flex flex-col md:items-center md:justify-center">
-        <div className=" flex justify-center w-full">
-          <div className=" grid grid-cols-2 border ">
+      <div className=" border-8 flex flex-col md:items-center md:justify-center">
+        <div className="border-4 flex justify-center w-full">
+          <div className=" grid grid-cols-2 border-2 border-red-300 w-full ">
             <FormGroup
               label="First Name"
               labelFor="text-input"
               labelInfo="(required)"
-              className="w-full border "
+              className="text-sm font-semibold italic"
             >
               <InputGroup
                 id="text-input"
@@ -135,7 +135,7 @@ export default function InsertContact({
               label="Last Name"
               labelFor="text-input"
               labelInfo="(required)"
-              className="w-full border"
+              className="text-sm font-semibold italic"
             >
               <InputGroup
                 id="text-input"
@@ -150,12 +150,13 @@ export default function InsertContact({
         </div>
 
         {/* ................................................ */}
-        <div className={` flex justify-center `}>
+        <div className={` flex justify-center w-full`}>
           <div className=" w-full">
             <FormGroup
               label="Phone"
               labelFor="text-input"
               labelInfo="(required)"
+              className="w-full border text-sm font-semibold italic"
             >
               <InputGroup
                 id="text-input"
@@ -168,11 +169,12 @@ export default function InsertContact({
           </div>
         </div>
         {/* ..................Country/City.............................. */}
-        <div className=" grid grid-cols-2">
+        <div className=" grid grid-cols-2 w-full">
           <FormGroup
             label="Country"
             labelFor="text-input"
             // labelInfo="(required)"
+            className="w-full border text-sm font-semibold italic"
           >
             <InputGroup
               id="text-input"
@@ -184,7 +186,11 @@ export default function InsertContact({
             />
           </FormGroup>
 
-          <FormGroup label="City" labelFor="text-input">
+          <FormGroup
+            label="City"
+            labelFor="text-input"
+            className="w-full border text-sm font-semibold italic"
+          >
             <InputGroup
               id="text-input"
               placeholder=""
@@ -196,8 +202,12 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className="grid grid-cols-2 ">
-          <FormGroup label="State" labelFor="text-input">
+        <div className="grid grid-cols-2 w-full">
+          <FormGroup
+            label="State"
+            labelFor="text-input"
+            className="w-full border text-sm font-semibold italic"
+          >
             <InputGroup
               id="text-input"
               placeholder=""
@@ -211,6 +221,7 @@ export default function InsertContact({
             label="Zip Code"
             labelFor="text-input"
             // labelInfo="(required)"
+            className="w-full border text-sm font-semibold italic"
           >
             <InputGroup
               id="text-input"
@@ -223,8 +234,13 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className=" w-1/2">
-          <FormGroup label="Email" labelFor="Email" labelInfo="(required)">
+        <div className="  w-full">
+          <FormGroup
+            label="Email"
+            labelFor="Email"
+            labelInfo="(required)"
+            className="w-full border text-sm font-semibold italic"
+          >
             <InputGroup
               id="text-input"
               placeholder="abc123@gmail.com"
@@ -235,11 +251,12 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className="  w-1/2">
+        <div className="   w-full">
           <FormGroup
             label="Portfolio"
             labelFor="Portfolio"
             // labelInfo="(required)"
+            className="w-full border text-sm font-semibold italic"
           >
             <InputGroup
               id="text-input"
@@ -250,7 +267,7 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ............*LinkedIn*.................................... */}
-        <div className="  w-1/2">
+        <div className="   w-full">
           <SocialMedia
             key="LinkedIn"
             urlParam="linkedin"
@@ -261,7 +278,7 @@ export default function InsertContact({
           />
         </div>
         {/* ............*GitHub*.................................... */}
-        <div className="  w-1/2">
+        <div className="   w-full">
           <SocialMedia
             key="GitHub"
             urlParam="github"

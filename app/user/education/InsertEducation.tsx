@@ -11,6 +11,8 @@ import {
   Switch,
   TextArea,
 } from "@blueprintjs/core";
+import "@blueprintjs/core/lib/css/blueprint.css";
+import "tailwindcss/tailwind.css";
 
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
@@ -210,7 +212,7 @@ export default function InsertEducation({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (education_redux.length !== 0) {
-      education_redux.map((each:any) => {
+      education_redux.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );
@@ -286,14 +288,13 @@ export default function InsertEducation({ data }: any) {
           </div>
         ))}
       </div>
-      <Button
-        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+
+      <button
         onClick={addEdu}
-        fill
-        style={{
-          backgroundColor: "rgba(0,120,255,1)",
-        }}
-      />
+        className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+      >
+        + Add Education
+      </button>
     </div>
   );
 }

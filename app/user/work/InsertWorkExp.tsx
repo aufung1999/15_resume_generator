@@ -305,16 +305,12 @@ const InputComp = ({ index, data }: Props) => {
               {each}
             </div>
           ))}{" "}
-          <Button
-            icon={
-              <Icon icon="insert" className="" style={{ color: "white" }} />
-            }
+          <button
             onClick={addRow}
-            style={{
-              backgroundColor: "rgba(0,120,255,1)",
-            }}
-            small
-          />
+            className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+          >
+            + Add Job Description
+          </button>
           {remind && (
             <Button className="" intent="warning" onClick={SubmitHandler}>
               Submit
@@ -353,7 +349,7 @@ export default function InsertWorkExp({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (work.length !== 0) {
-      work.map((each:any) => {
+      work.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );
@@ -428,14 +424,13 @@ export default function InsertWorkExp({ data }: any) {
           </div>
         ))}
       </div>
-      <Button
-        icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+
+      <button
         onClick={addExp}
-        fill
-        style={{
-          backgroundColor: "rgba(0,120,255,1)",
-        }}
-      />
+        className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+      >
+        + Add Working Experience
+      </button>
     </div>
   );
 }

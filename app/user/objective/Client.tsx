@@ -34,11 +34,11 @@ export default function ObjectiveClient({ data }: any) {
       .then(() => toast.success("User Objective Updated!"))
       .catch(() => toast.error("Cannot Update!"));
 
-      startTransition(() => {
-        // Refresh the current route and fetch new data from the server without
-        // losing client-side browser or React state.
-        router.refresh();
-      });
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
   };
   return (
     <div className="border border-blue-600 flex-1 font-sans">
@@ -48,6 +48,7 @@ export default function ObjectiveClient({ data }: any) {
           <InsertObjective data={data} />
         </div>
       </div>
+      
       <Button className="bp3-intent-primary" onClick={SubmitHandler}>
         Submit
       </Button>

@@ -14,6 +14,7 @@ import {
   TextArea,
 } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
+import "tailwindcss/tailwind.css";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -197,19 +198,17 @@ const TermComp = ({ index, data }: Props) => {
         </div>
       ))}
       <div className="flex mt-5 flex-col w-full">
-        <InputGroup
+        {/* <InputGroup
           fill
           onChange={(e) => setSkillName(e.target.value)}
           value={skillName}
-        />
-        <Button
-          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        /> */}
+        <button
           onClick={addskill}
-          style={{
-            backgroundColor: "rgba(0,120,255,1)",
-          }}
-          small
-        />
+          className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+        >
+          + Add Item
+        </button>
         {remind && (
           <Button className="" intent="warning" onClick={SubmitHandler}>
             Submit
@@ -248,7 +247,7 @@ export default function InsertSkills({ data }: any) {
   useEffect(() => {
     let temp_arr: any[] = [];
     if (skills_redux.length !== 0) {
-      skills_redux.map((each:any) => {
+      skills_redux.map((each: any) => {
         temp_arr.push(
           <TermComp key={each.index} index={each.index} data={data} />
         );
@@ -326,16 +325,14 @@ export default function InsertSkills({ data }: any) {
         ))}
       </div>
       <div className=" flex-col px-20 ">
-        <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} />
+        {/* <InputGroup onChange={(e) => setTerm(e.target.value)} value={term} /> */}
 
-        <Button
-          icon={<Icon icon="insert" className="" style={{ color: "white" }} />}
+        <button
           onClick={addterm}
-          fill
-          style={{
-            backgroundColor: "rgba(0,120,255,1)",
-          }}
-        />
+          className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+        >
+          + Add Skill
+        </button>
       </div>
     </div>
   );
