@@ -70,25 +70,26 @@ export default function UserClient({ data }: any) {
         </Button>
       </div>
       <div className="w-full relative border-4">
-        <div className={switch_tab === "Resumes" ? " w-full" : "hidden"}>
+        <div className={switch_tab === "Resumes" ? " w-full" : "  hidden "}>
           <Resumes resumeData={data.resumeData} />
         </div>
-        <div className={switch_tab === "Contact" ? " w-full" : "hidden"}>
+        <div className={switch_tab === "Contact" ? " w-full" : "   "}>
+          <div>Contact</div>
           <ContactClient data={data.contact} />
         </div>
-        <div className={switch_tab === "Objective" ? " w-full" : "hidden"}>
+        <div className={switch_tab === "Objective" ? " w-full" : "   "}>
           <ObjectiveClient data={data.objective} />
         </div>
-        <div className={switch_tab === "Skill" ? " w-full" : "hidden"}>
+        <div className={switch_tab === "Skill" ? " w-full" : "   "}>
           <SkillClient data={data.skill} />
         </div>
-        <div className={switch_tab === "Education" ? "w-full" : "hidden"}>
+        <div className={switch_tab === "Education" ? "w-full" : "   "}>
           <EducationClient data={data.education} />
         </div>
-        <div className={switch_tab === "Work" ? "w-full" : "hidden"}>
+        <div className={switch_tab === "Work" ? "w-full" : "   "}>
           <WorkClient data={data.work} />
         </div>
-        <div className={switch_tab === "Project" ? "w-full" : "hidden"}>
+        <div className={switch_tab === "Project" ? "w-full" : "   "}>
           <ProjectClient data={data.project} />
         </div>
       </div>

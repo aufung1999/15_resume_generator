@@ -107,7 +107,7 @@ export default function ResumeDetail({
   if (isLoading === false) {
     return (
       <div>
-        <Toaster />
+        {/* <Toaster /> */}
         <div className="flex">
           <div className="w-1/2 border-2 ">
             <img src={data_csr?.image.src} alt="" />

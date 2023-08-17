@@ -33,7 +33,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       };
 
       db.disconnect();
-      await Resume.findOneAndUpdate(filter, update);
+      await Resume.findOneAndUpdate(filter, update, {
+        new: true,
+      });
       return NextResponse.json({ message: "Resume Updated" });
     }
 
@@ -58,7 +60,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         };
 
         db.disconnect();
-        await Resume.findOneAndUpdate(filter, update);
+        await Resume.findOneAndUpdate(filter, update, {
+          new: true,
+        });
         return NextResponse.json({ message: "Resume Updated" });
       }
 

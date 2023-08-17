@@ -138,7 +138,7 @@ export default function EachResume({
       {/* ********************************************************* */}
       {dispay_format_redux === "picture" && (
         <div className=" h-full flex flex-col justify-between">
-          <Toaster />
+          {/* <Toaster /> */}
           <div className="w-full">
             {/* 1 */}
             {/* Job Description */}
