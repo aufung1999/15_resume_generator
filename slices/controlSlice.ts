@@ -63,8 +63,12 @@ const controlSlice = createSlice({
       if (Search) {
         Search.input = input;
       }
+      if (!Search) {
+        state.search.push({ index: index, input: input });
+      }
       // console.log("input: " + input);
     },
+
     switch_Components: (state, action) => {
       const { select } = action.payload;
       state.switch = select;

@@ -54,7 +54,7 @@ export default function Resume({ resumeData }: { resumeData: any }) {
   return (
     <div className=" relative ">
       <div id="user" className="  border-4 bg-[#F8F0E5] px-48 ">
-        <div className="flex">
+        <div className="flex my-1">
           {/* Search Engine */}
           <Search resume_csr={resumes_csr} setResumes={setResumes} />
           {/* Display format */}

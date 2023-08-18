@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { Icon, InputGroup, Button, FormGroup } from "@blueprintjs/core";
 import "@blueprintjs/core/lib/css/blueprint.css";
+import { Colors } from "@blueprintjs/core";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -16,6 +17,11 @@ import { v4 as uuidv4 } from "uuid";
 import shortenUUID from "@/utils/shortenUUID";
 
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import ShowOnce from "@/utils/ShowOnce";
+
+import DoneIcon from "@mui/icons-material/Done";
+import CloseIcon from "@mui/icons-material/Close";
+import MdPhone from "@mui/icons-material/Phone";
 
 export default function Search({
   resume_csr,
@@ -135,7 +141,93 @@ export default function Search({
       </div>
 
       {/* 2. Icon filter */}
-      <div>hi</div>
+      {/* Qualify if the resume gets response */}
+      <div>
+        <div className="w-full flex h-7 border">
+          <Button
+            className="w-full bg-red-400"
+            value="rejected"
+            onClick={() => {
+              dispatch(editSearch({ input: "rejected", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div>
+              <CloseIcon style={{ fill: "red" }} />
+            </div>
+          </Button>
+
+          <Button
+            className="w-full bg-red-400"
+            value="phone"
+            onClick={() => {
+              dispatch(editSearch({ input: "phone", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div>
+              <MdPhone style={{ fill: "black" }} />
+            </div>
+          </Button>
+
+          <Button
+            className="w-full bg-red-400"
+            value="first"
+            onClick={() => {
+              dispatch(editSearch({ input: "first", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div>1st</div>
+          </Button>
+
+          <Button
+            className="w-full bg-red-400"
+            value="second"
+            onClick={() => {
+              dispatch(editSearch({ input: "second", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div>2nd</div>
+          </Button>
+
+          <Button
+            className="w-full bg-red-400"
+            value="third"
+            onClick={() => {
+              dispatch(editSearch({ input: "third", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div>3rd</div>
+          </Button>
+
+          <Button
+            className="w-full bg-red-400"
+            value="fourth"
+            onClick={() => {
+              dispatch(editSearch({ input: "fourth", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div>4th</div>
+          </Button>
+
+          <Button
+            className="w-full relative"
+            value="offer"
+            onClick={() => {
+              dispatch(editSearch({ input: "offer", index: "filter_icon" })),
+                searchHandler();
+            }}
+          >
+            <div className=" w-full relative">
+              <DoneIcon style={{ fill: "green", width: "100%" }} />
+            </div>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
