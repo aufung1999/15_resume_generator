@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import {
   Button,
@@ -143,10 +143,12 @@ export default function Compare() {
       });
       const { data, total_usage } = await res.json();
       //=====Get the result and display=====
-      localStorage.setItem(
-        "total_usage",
-        JSON.stringify(Number(total_usage) + Number(total_usage_project))
-      );
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "total_usage",
+          JSON.stringify(Number(total_usage) + Number(total_usage_project))
+        );
+      }
       setRes([...temp_arr, ...data, ...data_project]);
       setLoading(false);
       // setRes(data);

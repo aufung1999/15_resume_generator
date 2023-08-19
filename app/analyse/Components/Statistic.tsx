@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { editAnalyse_stage_3 } from "@/slices/analyseSlice";
 import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
@@ -47,30 +47,32 @@ export default function Statistic({ res }: any) {
   }, []);
 
   const ClickHandler = () => {
-    //store the result from chatgpt / other algorithms to localStorage  ***Choose
-    window.localStorage.setItem("stage_3", JSON.stringify(res));
+    if (typeof window !== "undefined") {
+      //store the result from chatgpt / other algorithms to localStorage  ***Choose
+      window.localStorage.setItem("stage_3", JSON.stringify(res));
 
-    //store the "matches" from chatgpt / other algorithms to localStorage
-    window.localStorage.setItem("matches", JSON.stringify(matches));
+      //store the "matches" from chatgpt / other algorithms to localStorage
+      window.localStorage.setItem("matches", JSON.stringify(matches));
 
-    //store the "unmatches" from chatgpt / other algorithms to localStorage
-    window.localStorage.setItem("unmatches", JSON.stringify(unmatches));
+      //store the "unmatches" from chatgpt / other algorithms to localStorage
+      window.localStorage.setItem("unmatches", JSON.stringify(unmatches));
 
-    //store the "job related"
-    window.localStorage.setItem(
-      "job_details",
-      JSON.stringify({
-        job_position: job_position,
-        company_name: company_name,
-        website: website,
-      })
-    );
+      //store the "job related"
+      window.localStorage.setItem(
+        "job_details",
+        JSON.stringify({
+          job_position: job_position,
+          company_name: company_name,
+          website: website,
+        })
+      );
 
-    //store the "job related"
-    window.localStorage.setItem("last_website", JSON.stringify(website));
+      //store the "job related"
+      window.localStorage.setItem("last_website", JSON.stringify(website));
 
-    //Jump to another tab
-    router.push("/resume");
+      //Jump to another tab
+      router.push("/resume");
+    }
   };
 
   return (
