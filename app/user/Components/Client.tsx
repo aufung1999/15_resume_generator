@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 
 import ContactClient from "../contact/ContactClient";
 import EducationClient from "../education/Client";
@@ -26,7 +26,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useSearchParams } from "next/navigation";
 import Resumes from "./Resumes";
-import { switch_Components } from "@/slices/controlSlice";
+import { editOnScreen, switch_Components } from "@/slices/controlSlice";
+
+import TrackVisibility from "react-on-screen";
 
 export default function UserClient({ data }: any) {
   const searchParams = useSearchParams();
@@ -36,7 +38,7 @@ export default function UserClient({ data }: any) {
 
   const switch_tab = useSelector((state: RootState) => state.control.switch);
 
-  console.log(data);
+  // console.log(data);
 
   //-------------------------------------------------
   const scrollToSection = (sectionId: string) => {
@@ -46,12 +48,14 @@ export default function UserClient({ data }: any) {
     }
   };
 
-  //-------------------------------------------------
+  //----------------Side Bar---------------------------------
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  //---------On/ Off Screen
 
   return (
     <div className=" w-full relative " key={search}>
@@ -130,8 +134,8 @@ export default function UserClient({ data }: any) {
             {/* 1. the left side menu  */}
             <div
               className={`${
-                sidebarOpen ? "w-1/4" : "w-16"
-              } bg-[#102C57] text-white transition-all duration-300 `}
+                sidebarOpen ? " w-1/6 " : " w-16 "
+              } bg-[#102C57] text-white transition-all duration-300 flex flex-col h-full`}
             >
               <div className="p-4">
                 <Button
@@ -142,57 +146,62 @@ export default function UserClient({ data }: any) {
                   <Icon icon={sidebarOpen ? "chevron-left" : "chevron-right"} />
                 </Button>
               </div>
-              {sidebarOpen && (
-                <div className=" flex flex-col">
-                  <Button
-                    className=" focus:opacity-100 opacity-50 rounded-l-full"
-                    onClick={() => scrollToSection("contact")}
-                  >
-                    Contact
-                  </Button>
 
-                  <Button
-                    className=" focus:opacity-100 opacity-50"
-                    onClick={() => scrollToSection("objective")}
-                  >
-                    Objective
-                  </Button>
+              <div className=" border-4 flex-1">
+                {sidebarOpen && (
+                  <div className=" flex flex-col w-auto justify-evenly h-full">
+                    <Button
+                      className=" focus:opacity-100 opacity-50 "
+                      onClick={() => scrollToSection("contact")}
+                    >
+                      Contact
+                    </Button>
 
-                  <Button
-                    className=" focus:opacity-100 opacity-50"
-                    onClick={() => scrollToSection("skill")}
-                  >
-                    Skill
-                  </Button>
+                    <Button
+                      className=" focus:opacity-100 opacity-50"
+                      onClick={() => scrollToSection("objective")}
+                    >
+                      Objective
+                    </Button>
 
-                  <Button
-                    className=" focus:opacity-100 opacity-50"
-                    onClick={() => scrollToSection("education")}
-                  >
-                    Education
-                  </Button>
+                    <Button
+                      className=" focus:opacity-100 opacity-50"
+                      onClick={() => scrollToSection("skill")}
+                    >
+                      Skill
+                    </Button>
 
-                  <Button
-                    className=" focus:opacity-100 opacity-50"
-                    onClick={() => scrollToSection("work")}
-                  >
-                    Work
-                  </Button>
+                    <Button
+                      className=" focus:opacity-100 opacity-50"
+                      onClick={() => scrollToSection("education")}
+                    >
+                      Education
+                    </Button>
 
-                  <Button
-                    className=" focus:opacity-100 opacity-50 rounded-r-full"
-                    onClick={() => scrollToSection("project")}
-                  >
-                    Project
-                  </Button>
-                </div>
-              )}
+                    <Button
+                      className=" focus:opacity-100 opacity-50"
+                      onClick={() => scrollToSection("work")}
+                    >
+                      Work
+                    </Button>
+
+                    <Button
+                      className=" focus:opacity-100 opacity-50 "
+                      onClick={() => scrollToSection("project")}
+                    >
+                      Project
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* 2. the right side menu */}
-            <div className="overflow-y-auto no-scrollbar">
+            <div className=" overflow-y-auto no-scrollbar flex-1">
               <div id="contact">
-                <div className=" text-lg font-semibold border flex justify-center bg-[#102C57] text-white py-2">
+                <div
+                  className={`text-lg font-semibold border flex justify-center bg-[#102C57] text-white py-2 `}
+                >
                   Contact
                 </div>
                 <ContactClient data={data.contact} />

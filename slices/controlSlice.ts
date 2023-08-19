@@ -9,6 +9,7 @@ export interface ControlState {
   job_details: any;
   search: { index: string; input: string | null }[];
   dispay_format: string;
+  onScreen: string;
 }
 
 const initialState: ControlState = {
@@ -19,6 +20,7 @@ const initialState: ControlState = {
   job_details: { job_position: "", company_name: "", website: "" },
   search: [],
   dispay_format: "picture",
+  onScreen: "",
 };
 
 const controlSlice = createSlice({
@@ -76,6 +78,9 @@ const controlSlice = createSlice({
     editDispay_Format: (state, action: PayloadAction<string>) => {
       state.dispay_format = action.payload;
     },
+    editOnScreen: (state, action: PayloadAction<string>) => {
+      state.onScreen = action.payload;
+    },
   },
 });
 
@@ -87,5 +92,6 @@ export const {
   addSearchBar_redux,
   switch_Components,
   editDispay_Format,
+  editOnScreen,
 } = controlSlice.actions;
 export default controlSlice.reducer;
