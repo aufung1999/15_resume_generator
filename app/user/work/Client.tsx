@@ -49,9 +49,13 @@ export default function WorkClient({ data }: any) {
         {/* Control the form size */}
         <InsertWorkExp data={data} />
       </div>
-      <Button fill className="top-0" onClick={SubmitHandler}>
+
+      <button
+        onClick={SubmitHandler}
+        className="bp3-button hover:bg-opacity-100 w-full font-bold text-sm bg-opacity-50 bg-white text-red-500 "
+      >
         Save
-      </Button>
+      </button>
     </div>
   );
 }

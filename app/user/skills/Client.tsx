@@ -49,9 +49,13 @@ export default function SkillClient({ data }: any) {
         {/* Control the form size */}
         <InsertSkills data={data} />
       </div>
-      <Button className="w-full" onClick={SubmitHandler}>
+
+      <button
+        onClick={SubmitHandler}
+        className="bp3-button hover:bg-opacity-100 w-full font-bold text-sm bg-opacity-50 bg-white text-red-500 "
+      >
         Save
-      </Button>
+      </button>
     </div>
   );
 }

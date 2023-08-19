@@ -48,9 +48,13 @@ export default function ProjectClient({ data }: any) {
       <div className=" border-4 flex flex-col items-center justify-center">
         <InsertProject data={data} />
       </div>
-      <Button className="w-full" intent="warning" onClick={SubmitHandler}>
+      
+      <button
+        onClick={SubmitHandler}
+        className="bp3-button hover:bg-opacity-100 w-full font-bold text-sm bg-opacity-50 bg-white text-red-500 "
+      >
         Save
-      </Button>
+      </button>
     </div>
   );
 }

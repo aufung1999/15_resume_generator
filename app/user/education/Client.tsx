@@ -52,9 +52,13 @@ export default function EducationClient({ data }: any) {
         {/* Control the form size */}
         <InsertEducation data={data} />
       </div>
-      <Button className="w-full" onClick={SubmitHandler}>
+
+      <button
+        onClick={SubmitHandler}
+        className="bp3-button hover:bg-opacity-100 w-full font-bold text-sm bg-opacity-50 bg-white text-red-500 "
+      >
         Save
-      </Button>
+      </button>
     </div>
   );
 }
