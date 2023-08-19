@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 
 export default function Statistic({ whatToGet }: { whatToGet: string }) {
@@ -8,11 +8,20 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
   const [matches_csr, setMatches] = useState<string[] | null>(null);
   const [unmatches_csr, setUnMatches] = useState<string[] | null>(null);
 
-  const check_usage_ls = localStorage.getItem("total_usage");
-  const check_job_details_ls = localStorage.getItem("job_details");
-  const check_matches_ls = localStorage.getItem("matches");
-  const check_unmatches_ls = localStorage.getItem("unmatches");
+  //---use let to access the localStorage value---
+  let check_usage_ls;
+  let check_job_details_ls;
+  let check_matches_ls;
+  let check_unmatches_ls;
 
+  useEffect(() => {
+    check_usage_ls = localStorage.getItem("total_usage");
+    check_job_details_ls = localStorage.getItem("job_details");
+    check_matches_ls = localStorage.getItem("matches");
+    check_unmatches_ls = localStorage.getItem("unmatches");
+  }, []);
+
+  //------------------------------------------
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem(whatToGet)) {
@@ -86,7 +95,8 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
         <div className="grid grid-cols-10 w-full mb-2">
           <div className=" col-span-2 flex justify-center">Match:</div>
           <div className=" col-span-8 break-words">
-            {matches_csr &&unmatches_csr&&
+            {matches_csr &&
+              unmatches_csr &&
               (
                 (matches_csr?.length /
                   (matches_csr?.length + unmatches_csr?.length)) *

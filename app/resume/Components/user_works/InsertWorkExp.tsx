@@ -229,7 +229,9 @@ const InputComp = ({ index, data }: Props) => {
 
   //---------------Save to Server-------------------
   const SubmitHandler = () => {
-    const stage_3_ls: any = window.localStorage.getItem("stage_3");
+    if (typeof window !== "undefined") {
+      const stage_3_ls: any = window.localStorage.getItem("stage_3");
+    }
     fetch("/api/user/work", {
       //add this route later
       method: "POST",

@@ -37,15 +37,12 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
   const componentRef = useRef<any>(null);
 
-  // if (typeof window === "undefined") {
-  //   return null;
-  // }
-  // //save all the localStorage data to Database
-
   const stage_3_ls: any = localStorage.getItem("stage_3");
   const matches_ls: any = localStorage.getItem("matches");
   const unmatches_ls: any = localStorage.getItem("unmatches");
   const job_details_ls = localStorage.getItem("job_details");
+
+  useEffect(()=>{},[])
 
   //To show the Statistic here becuz of the format
   const select = useSelector(
@@ -54,16 +51,6 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
   //initialize in Result Board
   const [dispatchOnce, setOnce] = useState<boolean>(false);
-
-  // const [matches_ls, setMatches] = useState<string | null>(null);
-  // const [unmatches_ls, setUnMatches] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     setMatches(localStorage.getItem("matches"));
-  //     setUnMatches(localStorage.getItem("unmatches"));
-  //   }
-  // }, []);
 
   useEffect(() => {
     // 0 . Only Dispatch Once
@@ -86,7 +73,7 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matches_ls, unmatches_ls]);
+  }, [resumeID]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>
