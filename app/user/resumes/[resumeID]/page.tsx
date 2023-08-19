@@ -31,48 +31,50 @@ export default function ResumeDetail({
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    //fetch from the database
-    //Using Dynamic Route
-    fetch(`/api/user/resume/${params.resumeID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const {
-          HTMLDIVElement,
-          Stage_3,
-          Matches,
-          Unmatches,
-          Job_Details,
-          ...rest
-        } = data;
-        //for Resume image
-        const img = new Image();
-        img.src = HTMLDIVElement;
+    if (typeof window !== "undefined") {
+      //fetch from the database
+      //Using Dynamic Route
+      fetch(`/api/user/resume/${params.resumeID}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const {
+            HTMLDIVElement,
+            Stage_3,
+            Matches,
+            Unmatches,
+            Job_Details,
+            ...rest
+          } = data;
+          //for Resume image
+          const img = new Image();
+          img.src = HTMLDIVElement;
 
-        //store the result from chatgpt / other algorithms to localStorage  ***Choose
-        //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
-        localStorage.setItem("stage_3", Stage_3);
+          //store the result from chatgpt / other algorithms to localStorage  ***Choose
+          //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
+          localStorage.setItem("stage_3", Stage_3);
 
-        //store the "matches" from chatgpt / other algorithms to localStorage
-        //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
-        localStorage.setItem("matches", Matches);
+          //store the "matches" from chatgpt / other algorithms to localStorage
+          //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
+          localStorage.setItem("matches", Matches);
 
-        //store the "unmatches" from chatgpt / other algorithms to localStorage
-        //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
-        localStorage.setItem("unmatches", Unmatches);
+          //store the "unmatches" from chatgpt / other algorithms to localStorage
+          //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
+          localStorage.setItem("unmatches", Unmatches);
 
-        //store the "job related"
-        localStorage.setItem("job_details", Job_Details);
+          //store the "job related"
+          localStorage.setItem("job_details", Job_Details);
 
-        setData({
-          image: img,
-          stage_3: JSON.parse(Stage_3),
-          matches: JSON.parse(Matches),
-          unmatches: JSON.parse(Unmatches),
-          job_details: JSON.parse(Job_Details),
-          ...rest,
+          setData({
+            image: img,
+            stage_3: JSON.parse(Stage_3),
+            matches: JSON.parse(Matches),
+            unmatches: JSON.parse(Unmatches),
+            job_details: JSON.parse(Job_Details),
+            ...rest,
+          });
+          setLoading(false);
         });
-        setLoading(false);
-      });
+    }
   }, []);
 
   const ClickHandler = () => {

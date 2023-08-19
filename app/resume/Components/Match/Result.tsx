@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
@@ -40,36 +40,41 @@ export default function Result({
   }, [force_to_update_redux, whatToGet]);
 
   const ClickHandler = (deleteIndex: number) => {
-    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
-    switch (whatToGet) {
-      case "unmatches":
-        const move_to_matches = get[deleteIndex];
-        const filtered_unmatches = get.filter(
-          (each) => each !== move_to_matches
-        );
+    if (typeof window !== "undefined") {
+      dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+      switch (whatToGet) {
+        case "unmatches":
+          const move_to_matches = get[deleteIndex];
+          const filtered_unmatches = get.filter(
+            (each) => each !== move_to_matches
+          );
 
-        //update localStorage "unmatches"
-        localStorage.setItem("unmatches", JSON.stringify(filtered_unmatches));
-        //update localStorage "matches"
-        const matches_ls: any = localStorage.getItem("matches");
-        const new_matches: any[] = [...JSON.parse(matches_ls), move_to_matches];
-        localStorage.setItem("matches", JSON.stringify(new_matches));
-        return;
-      case "matches":
-        const move_to_unmatches = get[deleteIndex];
-        const filtered_matches = get.filter(
-          (each) => each !== move_to_unmatches
-        );
-        //update localStorage "matches"
-        localStorage.setItem("matches", JSON.stringify(filtered_matches));
-        //update localStorage "matches"
-        const unmatches_ls: any = localStorage.getItem("unmatches");
-        const new_unmatches: any[] = [
-          ...JSON.parse(unmatches_ls),
-          move_to_unmatches,
-        ];
-        localStorage.setItem("unmatches", JSON.stringify(new_unmatches));
-        return;
+          //update localStorage "unmatches"
+          localStorage.setItem("unmatches", JSON.stringify(filtered_unmatches));
+          //update localStorage "matches"
+          const matches_ls: any = localStorage.getItem("matches");
+          const new_matches: any[] = [
+            ...JSON.parse(matches_ls),
+            move_to_matches,
+          ];
+          localStorage.setItem("matches", JSON.stringify(new_matches));
+          return;
+        case "matches":
+          const move_to_unmatches = get[deleteIndex];
+          const filtered_matches = get.filter(
+            (each) => each !== move_to_unmatches
+          );
+          //update localStorage "matches"
+          localStorage.setItem("matches", JSON.stringify(filtered_matches));
+          //update localStorage "matches"
+          const unmatches_ls: any = localStorage.getItem("unmatches");
+          const new_unmatches: any[] = [
+            ...JSON.parse(unmatches_ls),
+            move_to_unmatches,
+          ];
+          localStorage.setItem("unmatches", JSON.stringify(new_unmatches));
+          return;
+      }
     }
   };
 

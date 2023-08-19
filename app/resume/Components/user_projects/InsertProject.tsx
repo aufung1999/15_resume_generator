@@ -84,27 +84,29 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
   // Keep track if the row description changes then it will remove the matches count
   const [limit, reachLimit] = useState("false");
   useEffect(() => {
-    const stage_3_ls: any = localStorage.getItem("stage_3");
+    if (typeof window !== "undefined") {
+      const stage_3_ls: any = localStorage.getItem("stage_3");
 
-    const filter_array = JSON.parse(stage_3_ls).filter(
-      (each: any) =>
-        JSON.stringify(each?.user_data) === JSON.stringify(copyData)
-    );
-
-    if (copyData !== row?.Row && limit === "false") {
-      filter_array.map((each: any) =>
-        dispatch(remove_display({ sentence: each.match_sentence }))
+      const filter_array = JSON.parse(stage_3_ls).filter(
+        (each: any) =>
+          JSON.stringify(each?.user_data) === JSON.stringify(copyData)
       );
-      // reachLimit("true");
-    }
 
-    if (copyData === row?.Row && limit === "true") {
-      filter_array.map((each: any) =>
-        dispatch(
-          add_display({ sentence: each.match_sentence, from: "matches" })
-        )
-      );
-      // reachLimit("false");
+      if (copyData !== row?.Row && limit === "false") {
+        filter_array.map((each: any) =>
+          dispatch(remove_display({ sentence: each.match_sentence }))
+        );
+        // reachLimit("true");
+      }
+
+      if (copyData === row?.Row && limit === "true") {
+        filter_array.map((each: any) =>
+          dispatch(
+            add_display({ sentence: each.match_sentence, from: "matches" })
+          )
+        );
+        // reachLimit("false");
+      }
     }
   }, [row]);
 

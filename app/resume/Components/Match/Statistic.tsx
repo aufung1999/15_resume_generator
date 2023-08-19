@@ -15,10 +15,12 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
   let check_unmatches_ls;
 
   useEffect(() => {
-    check_usage_ls = localStorage.getItem("total_usage");
-    check_job_details_ls = localStorage.getItem("job_details");
-    check_matches_ls = localStorage.getItem("matches");
-    check_unmatches_ls = localStorage.getItem("unmatches");
+    if (typeof window !== "undefined") {
+      check_usage_ls = localStorage.getItem("total_usage");
+      check_job_details_ls = localStorage.getItem("job_details");
+      check_matches_ls = localStorage.getItem("matches");
+      check_unmatches_ls = localStorage.getItem("unmatches");
+    }
   }, []);
 
   //------------------------------------------
@@ -42,8 +44,7 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
         setTotalUsage(total_usage_ls);
       }
       if (localStorage.getItem("job_details")) {
-        const job_details_ls: any | null =
-          localStorage.getItem("job_details");
+        const job_details_ls: any | null = localStorage.getItem("job_details");
         set_job_details_csr(JSON.parse(job_details_ls));
       }
       if (localStorage.getItem("matches")) {
@@ -51,8 +52,7 @@ export default function Statistic({ whatToGet }: { whatToGet: string }) {
         setMatches(JSON.parse(matches_ls));
       }
       if (localStorage.getItem("unmatches")) {
-        const unmatches_ls: any | null =
-          localStorage.getItem("unmatches");
+        const unmatches_ls: any | null = localStorage.getItem("unmatches");
         setUnMatches(JSON.parse(unmatches_ls));
       }
     }
