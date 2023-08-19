@@ -7,7 +7,7 @@ function TrackedComponent({
   id,
   children,
 }: {
-  id: string | number;
+  id: string;
   children: React.ReactNode;
 }) {
   const targetRef = useRef(null);
@@ -18,7 +18,7 @@ function TrackedComponent({
     const options = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.5, // Adjust threshold as needed
+      threshold: 0.6, // Adjust threshold as needed
     };
 
     const observer = new IntersectionObserver((entries) => {

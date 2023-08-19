@@ -56,7 +56,17 @@ export default function UserClient({ data }: any) {
     setSidebarOpen(!sidebarOpen);
   };
 
-  //---------On/ Off Screen
+  //-----------Get the user info. from redux-----------------
+  const Viewport_redux = useSelector(
+    (state: RootState) => state.control.Viewport
+  );
+
+  const contact_redux = useSelector((state: RootState) => state.contact);
+  const work_redux = useSelector((state: RootState) => state.work);
+  const education_redux = useSelector((state: RootState) => state.education);
+  const skills_redux = useSelector((state: RootState) => state.skills);
+  const objectives_redux = useSelector((state: RootState) => state.objectives);
+  const projects_redux = useSelector((state: RootState) => state.projects);
 
   return (
     <div className=" w-full relative " key={search}>
@@ -151,47 +161,235 @@ export default function UserClient({ data }: any) {
               <div className=" border-4 flex-1">
                 {sidebarOpen && (
                   <div className=" flex flex-col w-auto justify-evenly h-full">
-                    <Button
-                      className=" focus:opacity-100 opacity-50 "
-                      onClick={() => scrollToSection("contact")}
-                    >
-                      Contact
-                    </Button>
+                    {/* Contact Section */}
+                    <div className=" w-full ">
+                      <Button
+                        className={`focus:opacity-100 opacity-50 w-full ${
+                          Viewport_redux === "contact" ? "opacity-100" : ""
+                        }`}
+                        onClick={() => scrollToSection("contact")}
+                      >
+                        Contact
+                      </Button>
 
-                    <Button
-                      className=" focus:opacity-100 opacity-50"
-                      onClick={() => scrollToSection("objective")}
-                    >
-                      Objective
-                    </Button>
+                      <div className="transition-opacity duration-500 opacity-100 hover:opacity-50">
+                        {Viewport_redux === "contact" && (
+                          <div className="w-full grid grid-cols-10  ">
+                            {/* 1. first name */}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">First Name</div>
+                            <div className=" col-span-1">
+                              {contact_redux.FirstName !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
 
-                    <Button
-                      className=" focus:opacity-100 opacity-50"
-                      onClick={() => scrollToSection("skill")}
-                    >
-                      Skill
-                    </Button>
+                            {/* 2. last name */}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">Last Name</div>
+                            <div className=" col-span-1">
+                              {contact_redux.LastName !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
 
-                    <Button
-                      className=" focus:opacity-100 opacity-50"
-                      onClick={() => scrollToSection("education")}
-                    >
-                      Education
-                    </Button>
+                            {/* 3. Phone name */}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">Phone</div>
+                            <div className=" col-span-1">
+                              {contact_redux.PhoneNumber !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
 
-                    <Button
-                      className=" focus:opacity-100 opacity-50"
-                      onClick={() => scrollToSection("work")}
-                    >
-                      Work
-                    </Button>
+                            {/* 4. Email*/}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">Email</div>
+                            <div className=" col-span-1">
+                              {contact_redux.Email !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
 
-                    <Button
-                      className=" focus:opacity-100 opacity-50 "
-                      onClick={() => scrollToSection("project")}
-                    >
-                      Project
-                    </Button>
+                            {/* 5. Portfolio*/}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">Portfolio</div>
+                            <div className=" col-span-1">
+                              {contact_redux.Portfolio !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
+
+                            {/* 6. LinkedIn*/}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">LinkedIn</div>
+                            <div className=" col-span-1">
+                              {contact_redux.LinkedIn !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
+
+                            {/* 7. LinkedIn*/}
+                            <div className=" col-span-1" />
+                            <li className=" col-span-1" />
+                            <div className=" col-span-6">Github</div>
+                            <div className=" col-span-1">
+                              {contact_redux.GitHub !== "" ? (
+                                <span>✔️</span>
+                              ) : (
+                                <span>❔</span>
+                              )}
+                            </div>
+                            <div className=" col-span-1" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Objective Section */}
+                    <div className=" w-full ">
+                      <Button
+                        className={`focus:opacity-100 opacity-50 w-full ${
+                          Viewport_redux === "objective" ? "opacity-100" : ""
+                        }`}
+                        onClick={() => scrollToSection("objective")}
+                      >
+                        Objective
+                      </Button>
+
+                      {Viewport_redux === "objective" && (
+                        <div className="w-full grid grid-cols-10 ">
+                          <div className=" col-span-1" />
+                          <li className=" col-span-1" />
+                          <div className=" col-span-6">
+                            {" "}
+                            {objectives_redux.length} Objectives
+                          </div>
+                          <div className=" col-span-1" />
+                          <div className=" col-span-1" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Skill Section */}
+                    <div className=" w-full ">
+                      <Button
+                        className={`focus:opacity-100 opacity-50 w-full ${
+                          Viewport_redux === "skill" ? "opacity-100" : ""
+                        }`}
+                        onClick={() => scrollToSection("skill")}
+                      >
+                        Skill
+                      </Button>
+
+                      {Viewport_redux === "skill" && (
+                        <div className="w-full grid grid-cols-10 ">
+                          <div className=" col-span-1" />
+                          <li className=" col-span-1" />
+                          <div className=" col-span-6">
+                            <div>{skills_redux.length} Skills</div>
+                          </div>
+                          <div className=" col-span-1" />
+                          <div className=" col-span-1" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Education Section */}
+                    <div className=" w-full ">
+                      <Button
+                        className={`focus:opacity-100 opacity-50 w-full ${
+                          Viewport_redux === "education" ? "opacity-100" : ""
+                        }`}
+                        onClick={() => scrollToSection("education")}
+                      >
+                        Education
+                      </Button>
+
+                      {Viewport_redux === "education" && (
+                        <div className="w-full grid grid-cols-10 ">
+                          <div className=" col-span-1" />
+                          <li className=" col-span-1" />
+                          <div className=" col-span-6">
+                            <div>{education_redux.length} Educations</div>
+                          </div>
+                          <div className=" col-span-1" />
+                          <div className=" col-span-1" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Work Section */}
+                    <div className=" w-full ">
+                      <Button
+                        className={`focus:opacity-100 opacity-50 w-full ${
+                          Viewport_redux === "work" ? "opacity-100" : ""
+                        }`}
+                        onClick={() => scrollToSection("work")}
+                      >
+                        Work
+                      </Button>
+
+                      {Viewport_redux === "work" && (
+                        <div className="w-full grid grid-cols-10 ">
+                          <div className=" col-span-1" />
+                          <li className=" col-span-1" />
+                          <div className=" col-span-6">
+                            <div>{work_redux.length} Works</div>
+                          </div>
+                          <div className=" col-span-1" />
+                          <div className=" col-span-1" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Project Section */}
+                    <div className=" w-full ">
+                      <Button
+                        className={`focus:opacity-100 opacity-50 w-full ${
+                          Viewport_redux === "project" ? "opacity-100" : ""
+                        }`}
+                        onClick={() => scrollToSection("project")}
+                      >
+                        Project
+                      </Button>
+
+                      {Viewport_redux === "project" && (
+                        <div className="w-full grid grid-cols-10 ">
+                          <div className=" col-span-1" />
+                          <li className=" col-span-1" />
+                          <div className=" col-span-6">
+                            <div>{projects_redux.length} Projects</div>
+                          </div>
+                          <div className=" col-span-1" />
+                          <div className=" col-span-1" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
