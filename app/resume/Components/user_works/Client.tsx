@@ -25,32 +25,6 @@ export default function WorkClient({ data }: any) {
   const [isPending, startTransition] = useTransition();
 
   const works = useSelector((state: RootState) => state.work);
-  const display_redux = useSelector((state: RootState) => state.resume.display);
-
-  const dispatch = useDispatch();
-
-  // Keep tracking the route changes
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  // useEffect(() => {
-  //   dispatch(cleanUp_display_redux());
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   const appear = display_redux.filter(
-  //     (each: { match_sentence: string; count: number }) => each.count > 0
-  //     // if(whatToGet==="matches"){}:null
-  //   );
-  //   const Not_appear = display_redux.filter(
-  //     (each: { match_sentence: string; count: number }) => each.count === 0
-  //     // if(whatToGet==="matches"){}:null
-  //   );
-
-  //   const extracted_appear = appear.map(
-  //     (each: { match_sentence: string; count: number }) => each.match_sentence
-  //   );
-  //   //update localStorage "matches"
-  //   // localStorage.setItem("matches", JSON.stringify(extracted_appear));
-  // }, []);
 
   // Save to server
   const SubmitHandler = () => {

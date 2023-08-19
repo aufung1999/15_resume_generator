@@ -64,7 +64,7 @@ export default function Result_alt({
   }, [whatToGet, display_redux]);
 
   const ClickHandler = (deleteIndex: number) => {
-    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+    // dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     switch (whatToGet) {
       case "unmatches":
         dispatch(add_display({ sentence: get[deleteIndex], from: "matches" }));
