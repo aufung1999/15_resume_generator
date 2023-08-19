@@ -12,7 +12,7 @@ export default function Header() {
 
   const dispatch = useDispatch();
 
-  const stage_3_ls: any = localStorage.getItem("stage_3");
+  // const stage_3_ls: any = localStorage.getItem("stage_3");
 
   return (
     <div className="flex justify-between border-2 border-[#102C57] no-wrap">
@@ -52,7 +52,7 @@ export default function Header() {
         <Link
           href="/resume"
           onClick={() => dispatch(editLayout("resume"))}
-          className={`${stage_3_ls ? "" : " pointer-events-none opacity-20"}`}
+          // className={`${stage_3_ls ? "" : " pointer-events-none opacity-20"}`}
         >
           <span className="font-sans font-semibold text-xl italic hover:underline transition duration-500">
             Resume
