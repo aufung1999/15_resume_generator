@@ -49,16 +49,16 @@ export default function Statistic({ res }: any) {
   const ClickHandler = () => {
     if (typeof window !== "undefined") {
       //store the result from chatgpt / other algorithms to localStorage  ***Choose
-      window.localStorage.setItem("stage_3", JSON.stringify(res));
+      localStorage.setItem("stage_3", JSON.stringify(res));
 
       //store the "matches" from chatgpt / other algorithms to localStorage
-      window.localStorage.setItem("matches", JSON.stringify(matches));
+      localStorage.setItem("matches", JSON.stringify(matches));
 
       //store the "unmatches" from chatgpt / other algorithms to localStorage
-      window.localStorage.setItem("unmatches", JSON.stringify(unmatches));
+      localStorage.setItem("unmatches", JSON.stringify(unmatches));
 
       //store the "job related"
-      window.localStorage.setItem(
+      localStorage.setItem(
         "job_details",
         JSON.stringify({
           job_position: job_position,
@@ -68,7 +68,7 @@ export default function Statistic({ res }: any) {
       );
 
       //store the "job related"
-      window.localStorage.setItem("last_website", JSON.stringify(website));
+      localStorage.setItem("last_website", JSON.stringify(website));
 
       //Jump to another tab
       router.push("/resume");

@@ -7,7 +7,7 @@ export default function DisplayResult({ whatToGet }: { whatToGet: string }) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem(whatToGet)) {
-        const newObject: any = window.localStorage.getItem(whatToGet);
+        const newObject: any = localStorage.getItem(whatToGet);
         setGet(JSON.parse(newObject));
       }
     }

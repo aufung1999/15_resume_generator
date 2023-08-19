@@ -50,18 +50,18 @@ export default function ResumeDetail({
 
         //store the result from chatgpt / other algorithms to localStorage  ***Choose
         //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
-        window.localStorage.setItem("stage_3", Stage_3);
+        localStorage.setItem("stage_3", Stage_3);
 
         //store the "matches" from chatgpt / other algorithms to localStorage
         //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
-        window.localStorage.setItem("matches", Matches);
+        localStorage.setItem("matches", Matches);
 
         //store the "unmatches" from chatgpt / other algorithms to localStorage
         //we dont use, JSON.stringify becuz it has already been "stringify" before fetch
-        window.localStorage.setItem("unmatches", Unmatches);
+        localStorage.setItem("unmatches", Unmatches);
 
         //store the "job related"
-        window.localStorage.setItem("job_details", Job_Details);
+        localStorage.setItem("job_details", Job_Details);
 
         setData({
           image: img,

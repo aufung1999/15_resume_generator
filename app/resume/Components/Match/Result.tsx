@@ -33,7 +33,7 @@ export default function Result({
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem(whatToGet)) {
-        const newObject: any = window.localStorage.getItem(whatToGet);
+        const newObject: any = localStorage.getItem(whatToGet);
         setGet(JSON.parse(newObject));
       }
     }
@@ -51,7 +51,7 @@ export default function Result({
         //update localStorage "unmatches"
         localStorage.setItem("unmatches", JSON.stringify(filtered_unmatches));
         //update localStorage "matches"
-        const matches_ls: any = window.localStorage.getItem("matches");
+        const matches_ls: any = localStorage.getItem("matches");
         const new_matches: any[] = [...JSON.parse(matches_ls), move_to_matches];
         localStorage.setItem("matches", JSON.stringify(new_matches));
         return;
@@ -63,7 +63,7 @@ export default function Result({
         //update localStorage "matches"
         localStorage.setItem("matches", JSON.stringify(filtered_matches));
         //update localStorage "matches"
-        const unmatches_ls: any = window.localStorage.getItem("unmatches");
+        const unmatches_ls: any = localStorage.getItem("unmatches");
         const new_unmatches: any[] = [
           ...JSON.parse(unmatches_ls),
           move_to_unmatches,

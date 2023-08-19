@@ -51,7 +51,7 @@ export default function CustomedTooltip({
     let temp_array: any[] = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
-        const stage_3_ls: any = window.localStorage.getItem("stage_3");
+        const stage_3_ls: any = localStorage.getItem("stage_3");
 
         switch (whichSection) {
           case "skill":
@@ -153,7 +153,7 @@ export default function CustomedTooltip({
       }
       //Get "matches" from localStorage
       if (localStorage.getItem("matches")) {
-        const matches_ls: any = window.localStorage.getItem("matches");
+        const matches_ls: any = localStorage.getItem("matches");
         //sorting for "temp_array"
         temp_array.sort((a, b) =>
           JSON.parse(matches_ls).indexOf(a) > JSON.parse(matches_ls).indexOf(b)

@@ -38,7 +38,7 @@ const workSlice = createSlice({
       if (typeof window !== "undefined") {
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
-          const stage_3_ls: any = window.localStorage.getItem("stage_3");
+          const stage_3_ls: any = localStorage.getItem("stage_3");
           JSON.parse(stage_3_ls)?.map((each: any) => {
             each.match_index === index &&
               // no:1

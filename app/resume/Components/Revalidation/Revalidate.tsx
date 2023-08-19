@@ -33,7 +33,7 @@ export default function Revalidate() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
-        const stage_3_ls: any = window.localStorage.getItem("stage_3");
+        const stage_3_ls: any = localStorage.getItem("stage_3");
         work_redux.map((each: any) =>
           each.JobDescription?.map((each_2: any) =>
             JSON.parse(stage_3_ls)?.some(
@@ -62,7 +62,7 @@ export default function Revalidate() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
-        const stage_3_ls: any = window.localStorage.getItem("stage_3");
+        const stage_3_ls: any = localStorage.getItem("stage_3");
         projects_redux.map((each: any) =>
           each.ProjectDescription?.map((each_2: any) =>
             JSON.parse(stage_3_ls)?.some(
@@ -91,7 +91,7 @@ export default function Revalidate() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
-        const stage_3_ls: any = window.localStorage.getItem("stage_3");
+        const stage_3_ls: any = localStorage.getItem("stage_3");
         skills_redux?.map((each: any) =>
           each?.Skill_list?.map((each_2: any) =>
             JSON.parse(stage_3_ls)?.some(
@@ -127,7 +127,7 @@ export default function Revalidate() {
 
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
-        const unmatches_ls: any = window.localStorage.getItem("unmatches");
+        const unmatches_ls: any = localStorage.getItem("unmatches");
         let fetch_stage_2: any[] = [];
         JSON.parse(unmatches_ls).map((each: string, index: number) =>
           fetch_stage_2.push({
@@ -140,9 +140,9 @@ export default function Revalidate() {
       }
     }
     if (data) {
-      const unmatches_ls: any = window.localStorage.getItem("unmatches");
-      const matches_ls: any = window.localStorage.getItem("matches");
-      const stage_3_ls: any = window.localStorage.getItem("stage_3");
+      const unmatches_ls: any = localStorage.getItem("unmatches");
+      const matches_ls: any = localStorage.getItem("matches");
+      const stage_3_ls: any = localStorage.getItem("stage_3");
 
       //Process
       const unmatches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
@@ -166,19 +166,19 @@ export default function Revalidate() {
       const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
 
       //update the localStorage of "matches", "unmatches", and "stage_3"
-      window.localStorage.setItem(
+      localStorage.setItem(
         "stage_3",
         JSON.stringify(stage_3_ls_revalidated)
       );
 
       //store the "matches" from chatgpt / other algorithms to localStorage
-      window.localStorage.setItem(
+      localStorage.setItem(
         "matches",
         JSON.stringify(matches_ls_revalidated)
       );
 
       //store the "unmatches" from chatgpt / other algorithms to localStorage
-      window.localStorage.setItem(
+      localStorage.setItem(
         "unmatches",
         JSON.stringify(unmatches_ls_revalidated)
       );
@@ -196,8 +196,8 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       // get the "unmatches" from the localStorage
       if (localStorage.getItem("unmatches")) {
-        const unmatches_ls: any = window.localStorage.getItem("unmatches");
-        const matches_ls: any = window.localStorage.getItem("matches");
+        const unmatches_ls: any = localStorage.getItem("unmatches");
+        const matches_ls: any = localStorage.getItem("matches");
 
         // Define the input object for fetching
         const fetch_data = {
@@ -216,7 +216,7 @@ export default function Revalidate() {
         const { data, total_usage } = await res.json();
         // Update the localStorage after revalidation
         if (data) {
-          const stage_3_ls: any = window.localStorage.getItem("stage_3");
+          const stage_3_ls: any = localStorage.getItem("stage_3");
 
           //Process
           const unmatches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
@@ -240,19 +240,19 @@ export default function Revalidate() {
           const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
 
           //update the localStorage of "matches", "unmatches", and "stage_3"
-          window.localStorage.setItem(
+          localStorage.setItem(
             "stage_3",
             JSON.stringify(stage_3_ls_revalidated)
           );
 
           //store the "matches" from chatgpt / other algorithms to localStorage
-          window.localStorage.setItem(
+          localStorage.setItem(
             "matches",
             JSON.stringify(matches_ls_revalidated)
           );
 
           //store the "unmatches" from chatgpt / other algorithms to localStorage
-          window.localStorage.setItem(
+          localStorage.setItem(
             "unmatches",
             JSON.stringify(unmatches_ls_revalidated)
           );
@@ -274,8 +274,8 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       // get the "unmatches" from the localStorage
       if (localStorage.getItem("unmatches")) {
-        const unmatches_ls: any = window.localStorage.getItem("unmatches");
-        const matches_ls: any = window.localStorage.getItem("matches");
+        const unmatches_ls: any = localStorage.getItem("unmatches");
+        const matches_ls: any = localStorage.getItem("matches");
 
         // Define the input object for fetching
         const fetch_data = {
@@ -295,8 +295,8 @@ export default function Revalidate() {
           await res.json();
         // Update the localStorage after revalidation
         if (data) {
-          const matches_ls: any = window.localStorage.getItem("matches");
-          const stage_3_ls: any = window.localStorage.getItem("stage_3");
+          const matches_ls: any = localStorage.getItem("matches");
+          const stage_3_ls: any = localStorage.getItem("stage_3");
 
           //Process
           const unmatches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
@@ -320,19 +320,19 @@ export default function Revalidate() {
           const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
 
           //update the localStorage of "matches", "unmatches", and "stage_3"
-          window.localStorage.setItem(
+          localStorage.setItem(
             "stage_3",
             JSON.stringify(stage_3_ls_revalidated)
           );
 
           //store the "matches" from chatgpt / other algorithms to localStorage
-          window.localStorage.setItem(
+          localStorage.setItem(
             "matches",
             JSON.stringify(matches_ls_revalidated)
           );
 
           //store the "unmatches" from chatgpt / other algorithms to localStorage
-          window.localStorage.setItem(
+          localStorage.setItem(
             "unmatches",
             JSON.stringify(unmatches_ls_revalidated)
           );

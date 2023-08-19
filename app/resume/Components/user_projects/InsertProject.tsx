@@ -84,7 +84,7 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
   // Keep track if the row description changes then it will remove the matches count
   const [limit, reachLimit] = useState("false");
   useEffect(() => {
-    const stage_3_ls: any = window.localStorage.getItem("stage_3");
+    const stage_3_ls: any = localStorage.getItem("stage_3");
 
     const filter_array = JSON.parse(stage_3_ls).filter(
       (each: any) =>
