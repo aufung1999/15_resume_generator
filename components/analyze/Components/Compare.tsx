@@ -16,7 +16,7 @@ import { RootState } from "@/store/store";
 import extractTerms from "../Functions/extractTerms";
 import compare from "../Functions/compare";
 import Statistic from "./Statistic";
-import Loading from "../loading";
+import Loading from "../../../app/analyse/loading";
 
 export default function Compare() {
   const stage_2 = useSelector((state: RootState) => state.analyse.stage_2);

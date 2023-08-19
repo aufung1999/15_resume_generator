@@ -1,5 +1,4 @@
 import React from "react";
-import { forEachChild } from "typescript";
 var stringSimilarity = require("string-similarity");
 
 export default function compare(user: any, input: any, mode: string) {

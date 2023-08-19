@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Paper, ButtonGroup, Button } from "@mui/material";
 import { RootState } from "@/store/store";
 import { FORCE_to_UPDATE, editResume_stage_4 } from "@/slices/resumeSlice";
-import compare from "../../../analyse/Functions/compare";
-import extractTerms from "../../../analyse/Functions/extractTerms";
+import compare from "@/components/analyze/Functions/compare";
+import extractTerms from "@/components/analyze/Functions/extractTerms";
 import {
   SkillsState,
   initialize_SkillData,

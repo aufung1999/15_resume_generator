@@ -7,7 +7,7 @@ import { Colors } from "@blueprintjs/core";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { addSearchBar_redux, editSearch } from "@/slices/controlSlice";
-import extractTerms from "../../analyse/Functions/extractTerms";
+import extractTerms from "@/components/analyze/Functions/extractTerms";
 
 import { Tooltip } from "@mui/material";
 

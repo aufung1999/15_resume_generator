@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
-import extractTerms from "../../../analyse/Functions/extractTerms";
+import extractTerms from "@/components/analyze/Functions/extractTerms";
 import { Configuration, OpenAIApi } from "openai";
 
 export async function POST(req: NextRequest, res: NextApiResponse) {

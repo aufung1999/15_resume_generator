@@ -11,7 +11,7 @@ import {
   remove_display,
 } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
-import extractTerms from "@/app/analyse/Functions/extractTerms";
+import extractTerms from "@/components/analyze/Functions/extractTerms";
 
 export default function CustomedTooltip({
   index_1st,
