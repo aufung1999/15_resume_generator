@@ -26,9 +26,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useSearchParams } from "next/navigation";
 import Resumes from "./Resumes";
-import { editOnScreen, switch_Components } from "@/slices/controlSlice";
+import { switch_Components } from "@/slices/controlSlice";
 
 import TrackVisibility from "react-on-screen";
+import TrackedComponent from "./TrackedComponent";
 
 export default function UserClient({ data }: any) {
   const searchParams = useSearchParams();
@@ -198,49 +199,61 @@ export default function UserClient({ data }: any) {
 
             {/* 2. the right side menu */}
             <div className=" overflow-y-auto no-scrollbar flex-1">
-              <div id="contact">
-                <div
-                  className={`text-lg font-semibold border flex justify-center bg-[#102C57] text-white py-2 `}
-                >
-                  Contact
+              <TrackedComponent id="contact">
+                <div id="contact">
+                  <div
+                    className={`text-lg font-semibold border flex justify-center bg-[#102C57] text-white py-2 `}
+                  >
+                    Contact
+                  </div>
+                  <ContactClient data={data.contact} />
                 </div>
-                <ContactClient data={data.contact} />
-              </div>
+              </TrackedComponent>
 
-              <div id="objective">
-                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                  Objectives
+              <TrackedComponent id="objective">
+                <div id="objective">
+                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                    Objectives
+                  </div>
+                  <ObjectiveClient data={data.objective} />
                 </div>
-                <ObjectiveClient data={data.objective} />
-              </div>
+              </TrackedComponent>
 
-              <div id="skill">
-                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                  Technical Skills
+              <TrackedComponent id="skill">
+                <div id="skill">
+                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                    Technical Skills
+                  </div>
+                  <SkillClient data={data.skill} />
                 </div>
-                <SkillClient data={data.skill} />
-              </div>
+              </TrackedComponent>
 
-              <div id="education">
-                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                  Education
+              <TrackedComponent id="education">
+                <div id="education">
+                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                    Education
+                  </div>
+                  <EducationClient data={data.education} />
                 </div>
-                <EducationClient data={data.education} />
-              </div>
+              </TrackedComponent>
 
-              <div id="work">
-                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                  Working Experience
+              <TrackedComponent id="work">
+                <div id="work">
+                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                    Working Experience
+                  </div>
+                  <WorkClient data={data.work} />
                 </div>
-                <WorkClient data={data.work} />
-              </div>
+              </TrackedComponent>
 
-              <div id="project">
-                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                  Projects
+              <TrackedComponent id="project">
+                <div id="project">
+                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                    Projects
+                  </div>
+                  <ProjectClient data={data.project} />
                 </div>
-                <ProjectClient data={data.project} />
-              </div>
+              </TrackedComponent>
             </div>
           </div>
         )}

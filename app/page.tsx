@@ -15,6 +15,8 @@ import Intro_1_Comparison from "@/components/RootPage/Intro_1_Comparison";
 import Intro_2_Resumes_parts from "@/components/RootPage/Intro_2_Resumes_parts";
 import Banner from "@/components/RootPage/Banner";
 
+import 'intersection-observer';
+
 export default async function Home() {
   const session = await getServerSession(authOptions);
 

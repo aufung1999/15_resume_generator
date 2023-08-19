@@ -234,68 +234,78 @@ export default function InsertContact({
           </FormGroup>
         </div>
         {/* ................................................ */}
-        <div className="  w-full">
-          <FormGroup
-            label="Email"
-            labelFor="Email"
-            labelInfo="(required)"
-            className="w-full border text-sm font-semibold italic"
-          >
-            <InputGroup
-              id="text-input"
-              placeholder="abc123@gmail.com"
-              onChange={(e) => dispatch(editEmail(e.target.value))}
-              value={contact_redux.Email}
-              className="w-full border overflow-hidden"
-            />
-          </FormGroup>
+        <div className="grid grid-cols-2 w-full">
+          {/* ................................................ */}
+          <div className="  w-full">
+            <FormGroup
+              label="Email"
+              labelFor="Email"
+              labelInfo="(required)"
+              className="w-full border text-sm font-semibold italic"
+            >
+              <InputGroup
+                id="text-input"
+                placeholder="abc123@gmail.com"
+                onChange={(e) => dispatch(editEmail(e.target.value))}
+                value={contact_redux.Email}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
+          </div>
+          {/* ................................................ */}
+          <div className="   w-full">
+            <FormGroup
+              label="Portfolio"
+              labelFor="Portfolio"
+              // labelInfo="(required)"
+              className="w-full border text-sm font-semibold italic"
+            >
+              <InputGroup
+                id="text-input"
+                onChange={(e) => dispatch(editPortfolio(e.target.value))}
+                value={contact_redux.Portfolio}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
+          </div>
         </div>
         {/* ................................................ */}
-        <div className="   w-full">
-          <FormGroup
-            label="Portfolio"
-            labelFor="Portfolio"
-            // labelInfo="(required)"
-            className="w-full border text-sm font-semibold italic"
-          >
-            <InputGroup
-              id="text-input"
-              onChange={(e) => dispatch(editPortfolio(e.target.value))}
-              value={contact_redux.Portfolio}
-              className="w-full border overflow-hidden"
+        <div className="grid grid-cols-2 w-full">
+          {/* ............*LinkedIn*.................................... */}
+          <div className="   w-full">
+            <SocialMedia
+              key="LinkedIn"
+              urlParam="linkedin"
+              DisplayName="LinkedIn"
+              labelFor="LinkedIn"
+              edit={editLinkedIn}
+              SocialMedia={contact_redux.LinkedIn}
             />
-          </FormGroup>
-        </div>
-        {/* ............*LinkedIn*.................................... */}
-        <div className="   w-full">
-          <SocialMedia
-            key="LinkedIn"
-            urlParam="linkedin"
-            DisplayName="LinkedIn"
-            labelFor="LinkedIn"
-            edit={editLinkedIn}
-            SocialMedia={contact_redux.LinkedIn}
-          />
-        </div>
-        {/* ............*GitHub*.................................... */}
-        <div className="   w-full">
-          <SocialMedia
-            key="GitHub"
-            urlParam="github"
-            DisplayName="GitHub"
-            labelFor="GitHub"
-            edit={editGitHub}
-            SocialMedia={contact_redux?.GitHub}
-          />
+          </div>
+          {/* ............*GitHub*.................................... */}
+          <div className="   w-full">
+            <SocialMedia
+              key="GitHub"
+              urlParam="github"
+              DisplayName="GitHub"
+              labelFor="GitHub"
+              edit={editGitHub}
+              SocialMedia={contact_redux?.GitHub}
+            />
+          </div>
         </div>
         {/* ...................(Add more links?)............................. */}
         {/* <div>
           <InsertLink />
         </div> */}
       </div>
-      <Button className=" w-full" onClick={SubmitHandler}>
+
+      <button
+        onClick={SubmitHandler}
+        className="bp3-button hover:bg-opacity-100 w-full font-bold text-sm bg-opacity-50 bg-white text-red-500 "
+      >
         Save
-      </Button>
+      </button>
     </div>
   );
 }
