@@ -1,3 +1,4 @@
+"use client"
 import { editAnalyse_stage_3 } from "@/slices/analyseSlice";
 import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
