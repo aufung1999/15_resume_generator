@@ -153,9 +153,13 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div>
-              <CloseIcon style={{ fill: "red" }} />
-            </div>
+            <Tooltip
+              title={<div>Received Rejection letter from the Company</div>}
+            >
+              <div>
+                <CloseIcon style={{ fill: "red" }} />
+              </div>
+            </Tooltip>
           </Button>
 
           <Button
@@ -166,9 +170,11 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div>
-              <MdPhone style={{ fill: "black" }} />
-            </div>
+            <Tooltip title={<div>Phone Call Interview Received</div>}>
+              <div>
+                <MdPhone style={{ fill: "black" }} />
+              </div>
+            </Tooltip>
           </Button>
 
           <Button
@@ -179,7 +185,9 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div>1st</div>
+            <Tooltip title={<div>1st Round Interview</div>}>
+              <div>1st</div>
+            </Tooltip>
           </Button>
 
           <Button
@@ -190,7 +198,9 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div>2nd</div>
+            <Tooltip title={<div>2nd Round Interview</div>}>
+              <div>2nd</div>
+            </Tooltip>
           </Button>
 
           <Button
@@ -201,7 +211,9 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div>3rd</div>
+            <Tooltip title={<div>3nd Round Interview</div>}>
+              <div>3rd</div>
+            </Tooltip>
           </Button>
 
           <Button
@@ -212,7 +224,9 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div>4th</div>
+            <Tooltip title={<div>4th Round Interview</div>}>
+              <div>4th</div>
+            </Tooltip>
           </Button>
 
           <Button
@@ -223,9 +237,11 @@ export default function Search({
                 searchHandler();
             }}
           >
-            <div className=" w-full relative">
-              <DoneIcon style={{ fill: "green", width: "100%" }} />
-            </div>
+            <Tooltip title={<div>Received Offer</div>}>
+              <div className=" w-full relative">
+                <DoneIcon style={{ fill: "green", width: "100%" }} />
+              </div>
+            </Tooltip>
           </Button>
         </div>
       </div>

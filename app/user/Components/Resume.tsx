@@ -449,7 +449,7 @@ export default function EachResume({
       {/* mode of "list" */}
       {/* ********************************************************* */}
       {dispay_format_redux === "list" && (
-        <div className=" w-full flex border-8">
+        <div className=" w-full flex border-0 mb-2">
           <Toaster />
           <div className="flex justify-between  w-full">
             {/* 1 */}
@@ -457,25 +457,25 @@ export default function EachResume({
             <div className="border border-green-500 bottom-0 px-2 bg-white w-full">
               <div className="flex flex-col  ">
                 <div className="flex">
-                  <b className="flex ">Position</b>
-                  <b>:</b>
-                  <div className=" ">{each.job_details.job_position}</div>
+                  <b className="flex text-xs">Position</b>
+                  <b className="text-xs">:</b>
+                  <div className="text-xs">{each.job_details.job_position}</div>
                 </div>
                 <div className="flex flex-row justify-between">
                   <div className="flex">
-                    <b className="flex ">Company</b>
-                    <b>:</b>
-                    <div className="  ">{each.job_details.company_name}</div>
+                    <b className="flex text-xs">Company</b>
+                    <b className="text-xs">:</b>
+                    <div className="text-xs">{each.job_details.company_name}</div>
                   </div>
                   <div className="flex">
-                    <b className=" flex ">Website</b>
-                    <b>:</b>
-                    <div className="  ">{each.job_details.website}</div>
+                    <b className=" flex text-xs">Website</b>
+                    <b className="text-xs">:</b>
+                    <div className="text-xs">{each.job_details.website}</div>
                   </div>
                   <div className="flex">
-                    <b className="  flex ">Date</b>
-                    <b>:</b>
-                    <div className=" ">{each.createdAt.substring(0, 10)}</div>
+                    <b className="  flex text-xs">Date</b>
+                    <b className="text-xs">:</b>
+                    <div className="text-xs">{each.createdAt.substring(0, 10)}</div>
                   </div>
                 </div>
               </div>
@@ -484,9 +484,9 @@ export default function EachResume({
             <div className="flex flex-row w-full">
               {/* 2 */}
               {/* Qualify if the resume gets response */}
-              <div className="w-full flex h-full">
+              <div className="w-full flex px-4 ">
                 <Button
-                  className="w-1/7 bg-red-400"
+                  className=" bg-red-400 w-full h-2/3"
                   value="rejected"
                   onClick={() => toggleButtonHandler(each._id, "rejected")}
                   style={
@@ -501,7 +501,7 @@ export default function EachResume({
                 </Button>
 
                 <Button
-                  className="w-1/7 bg-red-400"
+                  className=" bg-red-400 w-full  h-2/3"
                   value="phone"
                   onClick={() => toggleButtonHandler(each._id, "phone")}
                   style={
@@ -516,7 +516,7 @@ export default function EachResume({
                 </Button>
 
                 <Button
-                  className="w-1/7 bg-red-400"
+                  className=" bg-red-400 w-full  h-2/3"
                   value="first"
                   onClick={() => toggleButtonHandler(each._id, "first")}
                   style={
@@ -529,7 +529,7 @@ export default function EachResume({
                 </Button>
 
                 <Button
-                  className="w-1/7 bg-red-400"
+                  className=" bg-red-400 w-full  h-2/3"
                   value="second"
                   onClick={() => toggleButtonHandler(each._id, "second")}
                   style={
@@ -542,7 +542,7 @@ export default function EachResume({
                 </Button>
 
                 <Button
-                  className="w-1/7 bg-red-400"
+                  className=" bg-red-400 w-full  h-2/3"
                   value="third"
                   onClick={() => toggleButtonHandler(each._id, "third")}
                   style={
@@ -555,7 +555,7 @@ export default function EachResume({
                 </Button>
 
                 <Button
-                  className="w-1/7 bg-red-400"
+                  className=" bg-red-400 w-full  h-2/3"
                   value="fourth"
                   onClick={() => toggleButtonHandler(each._id, "fourth")}
                   style={
@@ -568,7 +568,7 @@ export default function EachResume({
                 </Button>
 
                 <Button
-                  className="w-1/7 relative h-full"
+                  className=" relative w-full  h-2/3"
                   value="offer"
                   onClick={() => toggleButtonHandler(each._id, "offer")}
                   style={
