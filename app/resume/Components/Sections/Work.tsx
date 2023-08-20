@@ -44,7 +44,13 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                     text={
                       <div className="flex">
                         <li />
-                        <div>{each?.Row}</div>
+                        <div
+                          className=" flex leading-none"
+                          dangerouslySetInnerHTML={{
+                            __html: each?.Row,
+                          }}
+                        />
+                        {/* <div>{each?.Row}</div> */}
                       </div>
                     }
                     whichSection="work"

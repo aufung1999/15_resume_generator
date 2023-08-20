@@ -46,6 +46,11 @@ import { usePathname } from "next/navigation";
 import { add_display, remove_display } from "@/slices/resumeSlice";
 import EachResume from "@/app/user/Components/Resume";
 
+import dynamic from "next/dynamic";
+
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 type Props = {
   index: string;
   data: any;
@@ -124,22 +129,37 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
   // ----------------------------------------
 
   return (
-    <TextArea
-      key={rowIndex}
-      // large={true}
-      fill={true}
-      growVertically={dynamicGrow}
-      onChange={(e) =>
-        dispatch(
-          editJobDescription({
-            index: index,
-            rowIndex: rowIndex,
-            Row: e.target.value,
-          })
-        )
-      }
-      value={row ? row.Row : ""}
-    />
+    <div key={rowIndex}>
+      <ReactQuill
+        onChange={(value) =>
+          dispatch(
+            editJobDescription({
+              index: index,
+              rowIndex: rowIndex,
+              Row: value,
+            })
+          )
+        }
+        value={row ? row.Row : ""}
+      />
+
+      {/* <TextArea
+        key={rowIndex}
+        // large={true}
+        fill={true}
+        growVertically={dynamicGrow}
+        onChange={(e) =>
+          dispatch(
+            editJobDescription({
+              index: index,
+              rowIndex: rowIndex,
+              Row: e.target.value,
+            })
+          )
+        }
+        value={row ? row.Row : ""}
+      /> */}
+    </div>
   );
 };
 //===================================================================================================================================================================================

@@ -44,6 +44,11 @@ import shortenUUID from "@/utils/shortenUUID";
 import toast, { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";
 
+import dynamic from "next/dynamic";
+
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
 type Props = {
   index: string;
   data: any;
@@ -76,24 +81,23 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   }, [row]);
 
   return (
-    <TextArea
-      key={rowIndex}
-      // large={true}
-      fill={true}
-      growVertically={dynamicGrow}
-      onChange={(e) =>
-        dispatch(
-          editJobDescription({
-            index: index,
-            rowIndex: rowIndex,
-            Row: e.target.value,
-          })
-        )
-      }
-      value={row ? row.Row : ""}
-    />
+    <div key={rowIndex}>
+      <ReactQuill
+        onChange={(value) =>
+          dispatch(
+            editJobDescription({
+              index: index,
+              rowIndex: rowIndex,
+              Row: value,
+            })
+          )
+        }
+        value={row ? row.Row : ""}
+      />
+    </div>
   );
 };
+
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
 //===================================================================================================================================================================================
