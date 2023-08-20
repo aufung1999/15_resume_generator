@@ -18,14 +18,14 @@ function TrackedComponent({
     const options = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.6, // Adjust threshold as needed
+      threshold: 0, // Adjust threshold as needed
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           console.log(`Component with ID ${id} is in viewport`);
-          dispatch(editViewport(id));
+          dispatch(editViewport({ id: id, ratio: entry.intersectionRatio }));
         }
       });
     }, options);

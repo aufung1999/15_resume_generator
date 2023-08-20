@@ -26,10 +26,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useSearchParams } from "next/navigation";
 import Resumes from "./Resumes";
-import { switch_Components } from "@/slices/controlSlice";
+import { editViewport, switch_Components } from "@/slices/controlSlice";
 
 import TrackVisibility from "react-on-screen";
 import TrackedComponent from "./TrackedComponent";
+
+import { useInView } from "react-intersection-observer";
 
 export default function UserClient({ data }: any) {
   const searchParams = useSearchParams();
@@ -67,6 +69,102 @@ export default function UserClient({ data }: any) {
   const skills_redux = useSelector((state: RootState) => state.skills);
   const objectives_redux = useSelector((state: RootState) => state.objectives);
   const projects_redux = useSelector((state: RootState) => state.projects);
+
+  //------Track Component
+  //    ----Contact
+  const {
+    ref: ContactRef,
+    inView: ContactinView,
+    entry: ContactEntry,
+  } = useInView();
+  const {
+    ref: ObjectiveRef,
+    inView: ObjectiveinView,
+    entry: ObjectiveEntry,
+  } = useInView();
+  const { ref: SkillRef, inView: SkillinView, entry: SkillEntry } = useInView();
+  const {
+    ref: EducationRef,
+    inView: EducationinView,
+    entry: EducationEntry,
+  } = useInView();
+  const { ref: WorkRef, inView: WorkinView, entry: WorkEntry } = useInView();
+  const {
+    ref: ProjectRef,
+    inView: ProjectinView,
+    entry: ProjectEntry,
+  } = useInView();
+
+  useEffect(() => {
+    console.log(`========================`);
+    // console.log(
+    //   `The Contact    is ${ContactinView ? "visible" : "not visible"}`
+    // );
+    // console.log(ContactEntry?.intersectionRatio);
+    // console.log(
+    //   `The Objective  is ${ObjectiveinView ? "visible" : "not visible"}.`
+    // );
+    // console.log(ObjectiveEntry?.intersectionRatio);
+    // console.log(
+    //   `The Skill      is ${SkillinView ? "visible" : "not visible"}.`
+    // );
+    // console.log(SkillEntry?.intersectionRatio);
+    // console.log(
+    //   `The Education  is ${EducationinView ? "visible" : "not visible"}.`
+    // );
+    // console.log(EducationEntry?.intersectionRatio);
+    // console.log(`The Work       is ${WorkinView ? "visible" : "not visible"}.`);
+    // console.log(WorkEntry?.intersectionRatio);
+    // console.log(
+    //   `The Project    is ${ProjectinView ? "visible" : "not visible"}.`
+    // );
+    // console.log(ProjectEntry?.intersectionRatio);
+
+    // if (
+    //   ContactEntry?.intersectionRatio &&
+    //   ObjectiveEntry?.intersectionRatio &&
+    //   SkillEntry?.intersectionRatio &&
+    //   EducationEntry?.intersectionRatio &&
+    //   WorkEntry?.intersectionRatio &&
+    //   ProjectEntry?.intersectionRatio
+    // ) {
+    //   const maxNumber = Math.max(
+    //     ContactEntry?.intersectionRatio,
+    //     ObjectiveEntry?.intersectionRatio,
+    //     SkillEntry?.intersectionRatio,
+    //     EducationEntry?.intersectionRatio,
+    //     WorkEntry?.intersectionRatio,
+    //     ProjectEntry?.intersectionRatio
+    //   );
+
+    //   console.log(maxNumber);
+    // }
+
+    dispatch(
+      editViewport([
+        ContactEntry?.intersectionRatio,
+        ObjectiveEntry?.intersectionRatio,
+        SkillEntry?.intersectionRatio,
+        EducationEntry?.intersectionRatio,
+        WorkEntry?.intersectionRatio,
+        ProjectEntry?.intersectionRatio,
+      ])
+    );
+    console.log(`========================`);
+  }, [
+    // ContactinView,
+    // ObjectiveinView,
+    // SkillinView,
+    // EducationinView,
+    // WorkinView,
+    // ProjectinView,
+    ContactEntry?.intersectionRatio,
+    ObjectiveEntry?.intersectionRatio,
+    SkillEntry?.intersectionRatio,
+    EducationEntry?.intersectionRatio,
+    WorkEntry?.intersectionRatio,
+    ProjectEntry?.intersectionRatio,
+  ]);
 
   return (
     <div className=" w-full relative " key={search}>
@@ -397,61 +495,59 @@ export default function UserClient({ data }: any) {
 
             {/* 2. the right side menu */}
             <div className=" overflow-y-auto no-scrollbar flex-1">
-              <TrackedComponent id="contact">
-                <div id="contact">
-                  <div
-                    className={`text-lg font-semibold border flex justify-center bg-[#102C57] text-white py-2 `}
-                  >
-                    Contact
-                  </div>
-                  <ContactClient data={data.contact} />
+              <div id="contact" ref={ContactRef}>
+                <div
+                  className={`text-lg font-semibold border flex justify-center bg-[#102C57] text-white py-2 `}
+                >
+                  Contact
                 </div>
-              </TrackedComponent>
+                <ContactClient data={data.contact} />
+              </div>
 
-              <TrackedComponent id="objective">
-                <div id="objective">
-                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                    Objectives
-                  </div>
-                  <ObjectiveClient data={data.objective} />
+              {/* <TrackedComponent id="objective"> */}
+              <div id="objective" ref={ObjectiveRef}>
+                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                  Objectives
                 </div>
-              </TrackedComponent>
+                <ObjectiveClient data={data.objective} />
+              </div>
+              {/* </TrackedComponent> */}
 
-              <TrackedComponent id="skill">
-                <div id="skill">
-                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                    Technical Skills
-                  </div>
-                  <SkillClient data={data.skill} />
+              {/* <TrackedComponent id="skill"> */}
+              <div id="skill" ref={SkillRef}>
+                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                  Technical Skills
                 </div>
-              </TrackedComponent>
+                <SkillClient data={data.skill} />
+              </div>
+              {/* </TrackedComponent> */}
 
-              <TrackedComponent id="education">
-                <div id="education">
-                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                    Education
-                  </div>
-                  <EducationClient data={data.education} />
+              {/* <TrackedComponent id="education"> */}
+              <div id="education" ref={EducationRef}>
+                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                  Education
                 </div>
-              </TrackedComponent>
+                <EducationClient data={data.education} />
+              </div>
+              {/* </TrackedComponent> */}
 
-              <TrackedComponent id="work">
-                <div id="work">
-                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                    Working Experience
-                  </div>
-                  <WorkClient data={data.work} />
+              {/* <TrackedComponent id="work"> */}
+              <div id="work" ref={WorkRef}>
+                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                  Working Experience
                 </div>
-              </TrackedComponent>
+                <WorkClient data={data.work} />
+              </div>
+              {/* </TrackedComponent> */}
 
-              <TrackedComponent id="project">
-                <div id="project">
-                  <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
-                    Projects
-                  </div>
-                  <ProjectClient data={data.project} />
+              {/* <TrackedComponent id="project"> */}
+              <div id="project" ref={ProjectRef}>
+                <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
+                  Projects
                 </div>
-              </TrackedComponent>
+                <ProjectClient data={data.project} />
+              </div>
+              {/* </TrackedComponent> */}
             </div>
           </div>
         )}

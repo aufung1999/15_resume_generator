@@ -142,7 +142,8 @@ export default function Search({
 
       {/* 2. Icon filter */}
       {/* Qualify if the resume gets response */}
-      <div>
+      <div className=" flex ">
+        <div className=" text-xs font-semibold">Stage of Application</div>
         <div className="w-full flex h-7 border">
           <Button
             className="w-full bg-red-400"

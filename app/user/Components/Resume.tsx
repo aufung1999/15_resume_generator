@@ -391,7 +391,7 @@ export default function EachResume({
                   className=" hover:z-20 "
                   src={each.image.src}
                   alt=""
-                  onMouseEnter={() =>
+                  onClick={() =>
                     dispatch(
                       editPreview({
                         matches: each.matches,
@@ -400,19 +400,29 @@ export default function EachResume({
                       })
                     )
                   }
-                  onMouseLeave={() =>
-                    dispatch(
-                      editPreview({
-                        matches: [],
-                        unmatches: [],
-                        job_details: {
-                          job_position: "",
-                          company_name: "",
-                          website: "",
-                        },
-                      })
-                    )
-                  }
+                  // onMouseDown={() =>
+                  //   dispatch(
+                  //     editPreview({
+                  //       matches: each.matches,
+                  //       unmatches: each.unmatches,
+                  //       job_details: each.job_details,
+                  //     })
+                  //   )
+                  // }
+
+                  // onMouseLeave={() =>
+                  //   dispatch(
+                  //     editPreview({
+                  //       matches: [],
+                  //       unmatches: [],
+                  //       job_details: {
+                  //         job_position: "",
+                  //         company_name: "",
+                  //         website: "",
+                  //       },
+                  //     })
+                  //   )
+                  // }
                 />
               </CustomWidthTooltip>
             </div>

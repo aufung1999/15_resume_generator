@@ -78,8 +78,34 @@ const controlSlice = createSlice({
     editDispay_Format: (state, action: PayloadAction<string>) => {
       state.dispay_format = action.payload;
     },
-    editViewport: (state, action: PayloadAction<string>) => {
-      state.Viewport = action.payload;
+    editViewport: (state, action: PayloadAction<number[] | any>) => {
+      const array = action.payload;
+      if (
+        array?.some((each: number | null | undefined) => each !== undefined)
+      ) {
+        const maxNumber = Math.max(...array);
+        // console.log(array.indexOf(maxNumber));
+        switch (array.indexOf(maxNumber)) {
+          case 0:
+            state.Viewport = "contact";
+            return;
+          case 1:
+            state.Viewport = "objective";
+            return;
+          case 2:
+            state.Viewport = "skill";
+            return;
+          case 3:
+            state.Viewport = "education";
+            return;
+          case 4:
+            state.Viewport = "work";
+            return;
+          case 5:
+            state.Viewport = "project";
+            return;
+        }
+      }
     },
   },
 });
