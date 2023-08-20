@@ -3,11 +3,11 @@
 import React, { useEffect } from "react";
 
 import ContactClient from "@/components/user/contact/ContactClient";
-import EducationClient from "./user_education/Client";
-import ObjectiveClient from "./user_objective/Client";
-import ProjectClient from "./user_projects/Client";
-import SkillClient from "./user_skills/Client";
-import WorkClient from "./user_works/Client";
+import EducationClient from "@/components/user/education/Client";
+import ObjectiveClient from "@/components/user/objective/Client";
+import ProjectClient from "@/components/user/projects/Client";
+import SkillClient from "@/components/user/skills/Client";
+import WorkClient from "@/components/user/work/Client";
 
 import { Button } from "@blueprintjs/core";
 
