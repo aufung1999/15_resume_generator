@@ -9,7 +9,14 @@ export interface ControlState {
   job_details: any;
   search: { index: string; input: string | null }[];
   dispay_format: string;
-  Viewport: string;
+  Viewport: {
+    contact: string;
+    objective: string;
+    skill: string;
+    education: string;
+    work: string;
+    project: string;
+  };
 }
 
 const initialState: ControlState = {
@@ -20,7 +27,14 @@ const initialState: ControlState = {
   job_details: { job_position: "", company_name: "", website: "" },
   search: [],
   dispay_format: "picture",
-  Viewport: "",
+  Viewport: {
+    contact: "false",
+    objective: "false",
+    skill: "false",
+    education: "false",
+    work: "false",
+    project: "false",
+  },
 };
 
 const controlSlice = createSlice({
@@ -78,34 +92,19 @@ const controlSlice = createSlice({
     editDispay_Format: (state, action: PayloadAction<string>) => {
       state.dispay_format = action.payload;
     },
-    editViewport: (state, action: PayloadAction<number[] | any>) => {
-      const array = action.payload;
-      if (
-        array?.some((each: number | null | undefined) => each !== undefined)
-      ) {
-        const maxNumber = Math.max(...array);
-        // console.log(array.indexOf(maxNumber));
-        switch (array.indexOf(maxNumber)) {
-          case 0:
-            state.Viewport = "contact";
-            return;
-          case 1:
-            state.Viewport = "objective";
-            return;
-          case 2:
-            state.Viewport = "skill";
-            return;
-          case 3:
-            state.Viewport = "education";
-            return;
-          case 4:
-            state.Viewport = "work";
-            return;
-          case 5:
-            state.Viewport = "project";
-            return;
-        }
-      }
+    editViewport: (state, action: PayloadAction<String[] | any>) => {
+      const { contact, objective, skill, education, work, project } =
+        action.payload;
+
+      // console.log(contact, objective, skill, education, work, project);
+
+      state.Viewport.contact = contact;
+      state.Viewport.objective = objective;
+      state.Viewport.skill = skill;
+      state.Viewport.education = education;
+      state.Viewport.work = work;
+      state.Viewport.project = project;
+
     },
   },
 });

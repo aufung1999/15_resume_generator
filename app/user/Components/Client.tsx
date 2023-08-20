@@ -97,73 +97,25 @@ export default function UserClient({ data }: any) {
 
   useEffect(() => {
     console.log(`========================`);
-    // console.log(
-    //   `The Contact    is ${ContactinView ? "visible" : "not visible"}`
-    // );
-    // console.log(ContactEntry?.intersectionRatio);
-    // console.log(
-    //   `The Objective  is ${ObjectiveinView ? "visible" : "not visible"}.`
-    // );
-    // console.log(ObjectiveEntry?.intersectionRatio);
-    // console.log(
-    //   `The Skill      is ${SkillinView ? "visible" : "not visible"}.`
-    // );
-    // console.log(SkillEntry?.intersectionRatio);
-    // console.log(
-    //   `The Education  is ${EducationinView ? "visible" : "not visible"}.`
-    // );
-    // console.log(EducationEntry?.intersectionRatio);
-    // console.log(`The Work       is ${WorkinView ? "visible" : "not visible"}.`);
-    // console.log(WorkEntry?.intersectionRatio);
-    // console.log(
-    //   `The Project    is ${ProjectinView ? "visible" : "not visible"}.`
-    // );
-    // console.log(ProjectEntry?.intersectionRatio);
-
-    // if (
-    //   ContactEntry?.intersectionRatio &&
-    //   ObjectiveEntry?.intersectionRatio &&
-    //   SkillEntry?.intersectionRatio &&
-    //   EducationEntry?.intersectionRatio &&
-    //   WorkEntry?.intersectionRatio &&
-    //   ProjectEntry?.intersectionRatio
-    // ) {
-    //   const maxNumber = Math.max(
-    //     ContactEntry?.intersectionRatio,
-    //     ObjectiveEntry?.intersectionRatio,
-    //     SkillEntry?.intersectionRatio,
-    //     EducationEntry?.intersectionRatio,
-    //     WorkEntry?.intersectionRatio,
-    //     ProjectEntry?.intersectionRatio
-    //   );
-
-    //   console.log(maxNumber);
-    // }
 
     dispatch(
-      editViewport([
-        ContactEntry?.intersectionRatio,
-        ObjectiveEntry?.intersectionRatio,
-        SkillEntry?.intersectionRatio,
-        EducationEntry?.intersectionRatio,
-        WorkEntry?.intersectionRatio,
-        ProjectEntry?.intersectionRatio,
-      ])
+      editViewport({
+        contact: JSON.stringify(ContactinView),
+        objective: JSON.stringify(ObjectiveinView),
+        skill: JSON.stringify(SkillinView),
+        education: JSON.stringify(EducationinView),
+        work: JSON.stringify(WorkinView),
+        project: JSON.stringify(ProjectinView),
+      })
     );
     console.log(`========================`);
   }, [
-    // ContactinView,
-    // ObjectiveinView,
-    // SkillinView,
-    // EducationinView,
-    // WorkinView,
-    // ProjectinView,
-    ContactEntry?.intersectionRatio,
-    ObjectiveEntry?.intersectionRatio,
-    SkillEntry?.intersectionRatio,
-    EducationEntry?.intersectionRatio,
-    WorkEntry?.intersectionRatio,
-    ProjectEntry?.intersectionRatio,
+    ContactinView,
+    ObjectiveinView,
+    SkillinView,
+    EducationinView,
+    WorkinView,
+    ProjectinView,
   ]);
 
   return (
@@ -263,7 +215,7 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux === "contact" ? "opacity-100" : ""
+                          Viewport_redux.contact === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("contact")}
                       >
@@ -271,7 +223,7 @@ export default function UserClient({ data }: any) {
                       </Button>
 
                       <div className="transition-opacity duration-500 opacity-100 hover:opacity-50">
-                        {Viewport_redux === "contact" && (
+                        {Viewport_redux.contact === "true" && (
                           <div className="w-full grid grid-cols-10  ">
                             {/* 1. first name */}
                             <div className=" col-span-1" />
@@ -372,14 +324,16 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux === "objective" ? "opacity-100" : ""
+                          Viewport_redux.objective === "true"
+                            ? "opacity-100"
+                            : ""
                         }`}
                         onClick={() => scrollToSection("objective")}
                       >
                         Objective
                       </Button>
 
-                      {Viewport_redux === "objective" && (
+                      {Viewport_redux.objective === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
@@ -397,14 +351,14 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux === "skill" ? "opacity-100" : ""
+                          Viewport_redux.skill === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("skill")}
                       >
                         Skill
                       </Button>
 
-                      {Viewport_redux === "skill" && (
+                      {Viewport_redux.skill === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
@@ -421,14 +375,16 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux === "education" ? "opacity-100" : ""
+                          Viewport_redux.education === "true"
+                            ? "opacity-100"
+                            : ""
                         }`}
                         onClick={() => scrollToSection("education")}
                       >
                         Education
                       </Button>
 
-                      {Viewport_redux === "education" && (
+                      {Viewport_redux.education === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
@@ -445,14 +401,14 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux === "work" ? "opacity-100" : ""
+                          Viewport_redux.work === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("work")}
                       >
                         Work
                       </Button>
 
-                      {Viewport_redux === "work" && (
+                      {Viewport_redux.work === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
@@ -469,14 +425,14 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux === "project" ? "opacity-100" : ""
+                          Viewport_redux.project === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("project")}
                       >
                         Project
                       </Button>
 
-                      {Viewport_redux === "project" && (
+                      {Viewport_redux.project === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
