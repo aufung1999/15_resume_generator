@@ -44,7 +44,7 @@ import shortenUUID from "@/utils/shortenUUID";
 import toast, { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";
 import { add_display, remove_display } from "@/slices/resumeSlice";
-import EachResume from "@/app/user/Components/Resume";
+import EachResume from "@/components/user/Components/Resume";
 
 import dynamic from "next/dynamic";
 

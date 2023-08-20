@@ -11,7 +11,7 @@ import Award from "@/models/Award";
 import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
 import Project from "@/models/Project";
-import UserClient from "./Components/Client";
+import UserClient from "../../components/user/Components/Client";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
