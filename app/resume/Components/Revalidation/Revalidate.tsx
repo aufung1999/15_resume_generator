@@ -188,7 +188,7 @@ export default function Revalidate() {
         dispatch(update_revalidation(each))
       );
       //After everything update the Client side page
-      dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+      router.refresh();
     }
   };
 
@@ -266,7 +266,7 @@ export default function Revalidate() {
           );
 
           //After everything update the Client side page
-          router.reload();
+          router.refresh();
         }
       }
     }
@@ -346,7 +346,7 @@ export default function Revalidate() {
             JSON.stringify(total_usage_ls_revalidated)
           );
           //After everything update the Client side page
-          dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+          router.refresh();
         }
       }
     }
