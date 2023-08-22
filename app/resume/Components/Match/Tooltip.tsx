@@ -41,7 +41,7 @@ export default function CustomedTooltip({
 
   const [target, setTarget] = useState<any>(null);
   const [matches, setMatches] = useState<any>(null);
-  const [years, setYears] = useState<any>(null);
+  const [years, setYears] = useState<any>(0);
 
   const dispatch = useDispatch();
 
