@@ -36,7 +36,7 @@ export default function CustomedTooltip({
     (state: RootState) => state.resume.hover_des
   );
 
-  const [on, setOn] = useState<boolean>(false);
+  const [on, setOn] = useState<boolean | null>(null);
   const [outline, setOutline] = useState<boolean>(false);
 
   const [target, setTarget] = useState<any>(null);
@@ -77,9 +77,9 @@ export default function CustomedTooltip({
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
-
+            break;
           case "work":
-            console.log("description: " + description);
+            // console.log("description: " + description);
             JSON.parse(stage_3_ls).map((each: any) => {
               //index
               // each.match_index_1st === index_1st &&
@@ -122,7 +122,7 @@ export default function CustomedTooltip({
 
               // each.user_data === description &&
             });
-
+            break;
           case "project":
             // Conditional-case based on if the index_2nd exists or not
             // *****NOT exist*****
@@ -173,6 +173,7 @@ export default function CustomedTooltip({
                     null;
               });
             }
+            break;
         }
       }
       //Get "matches" from localStorage
@@ -200,7 +201,9 @@ export default function CustomedTooltip({
   }, [force_to_update_redux]);
 
   //-------------------------------------------
+  const [change, isChange] = useState<boolean>(false);
   useEffect(() => {
+    isChange(!change);
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
         const stage_3_ls: any = localStorage.getItem("stage_3");
@@ -209,8 +212,8 @@ export default function CustomedTooltip({
           case "skill":
             JSON.parse(stage_3_ls).map((each: any) => {
               //index
-              // each.match_index_1st === index_1st &&
-              // each.match_index_2nd === index_2nd &&
+              each.match_index_1st === index_1st &&
+              each.match_index_2nd === index_2nd &&
               //or only text
               each.technique === description &&
               //To avoid duplication
@@ -227,10 +230,12 @@ export default function CustomedTooltip({
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
-
+            break;
           case "work":
-            console.log("description: " + description);
+            // console.log("description: " + description);
             JSON.parse(stage_3_ls).map((each: any) => {
+              each.match_index_1st === index_1st &&
+              each.match_index_2nd === index_2nd &&
               JSON.stringify(each.user_data) === JSON.stringify(description) &&
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
@@ -240,7 +245,7 @@ export default function CustomedTooltip({
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
-
+            break;
           case "project":
             // Conditional-case based on if the index_2nd exists or not
             // *****NOT exist*****
@@ -279,17 +284,8 @@ export default function CustomedTooltip({
                     null;
               });
             }
+            break;
         }
-      }
-      //Get "matches" from localStorage
-      if (localStorage.getItem("matches")) {
-        const matches_ls: any = localStorage.getItem("matches");
-        //sorting for "temp_array"
-        temp_array.sort((a, b) =>
-          JSON.parse(matches_ls).indexOf(a) > JSON.parse(matches_ls).indexOf(b)
-            ? 1
-            : -1
-        );
       }
     }
 
@@ -299,57 +295,6 @@ export default function CustomedTooltip({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description, text]);
-
-  //-------------------------------------------------------
-  useEffect(() => {
-    // on === true && console.log(index_1st, index_2nd, description + " ADD");
-    if (on === true) {
-      if (typeof window !== "undefined") {
-        if (localStorage.getItem("stage_3")) {
-          const stage_3_ls: any = localStorage.getItem("stage_3");
-          const filtered_stage_3 = JSON.parse(stage_3_ls).filter(
-            (each: any) =>
-              JSON.stringify(each.match_index_1st) ===
-                JSON.stringify(index_1st) &&
-              JSON.stringify(each.match_index_2nd) === JSON.stringify(index_2nd)
-          );
-
-          filtered_stage_3.map((each: any) =>
-            dispatch(
-              add_display({
-                sentence: each.match_sentence,
-                from: "matches",
-              })
-            )
-          );
-        }
-      }
-    }
-
-    if (on === false) {
-      if (typeof window !== "undefined") {
-        if (localStorage.getItem("stage_3")) {
-          const stage_3_ls: any = localStorage.getItem("stage_3");
-          const filtered_stage_3 = JSON.parse(stage_3_ls).filter(
-            (each: any) =>
-              JSON.stringify(each.match_index_1st) ===
-                JSON.stringify(index_1st) &&
-              JSON.stringify(each.match_index_2nd) === JSON.stringify(index_2nd)
-          );
-
-          filtered_stage_3.map((each: any) =>
-            dispatch(
-              remove_display({
-                sentence: each.match_sentence,
-                from: "randomtype thing",
-              })
-            )
-          );
-        }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [on]);
 
   // local property to change the year
   useEffect(() => {

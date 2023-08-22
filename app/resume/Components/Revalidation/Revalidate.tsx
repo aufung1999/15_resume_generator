@@ -1,10 +1,15 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Paper, ButtonGroup, Button } from "@mui/material";
 import { RootState } from "@/store/store";
-import { FORCE_to_UPDATE, editResume_stage_4 } from "@/slices/resumeSlice";
+import {
+  FORCE_to_UPDATE,
+  cleanUp_display_redux,
+  editResume_stage_4,
+} from "@/slices/resumeSlice";
 import compare from "@/components/analyze/Functions/compare";
 import extractTerms from "@/components/analyze/Functions/extractTerms";
 import {
@@ -15,6 +20,7 @@ import {
 
 export default function Revalidate() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const work_unmatches = useSelector(
     (state: RootState) => state.resume.stage_4.work
@@ -74,7 +80,7 @@ export default function Revalidate() {
                 each_2.Row === item.user_data
             )
               ? null
-              : dispatch( 
+              : dispatch(
                   editResume_stage_4({
                     index_1st: each.index,
                     index_2nd: each_2.rowIndex,
@@ -166,16 +172,10 @@ export default function Revalidate() {
       const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
 
       //update the localStorage of "matches", "unmatches", and "stage_3"
-      localStorage.setItem(
-        "stage_3",
-        JSON.stringify(stage_3_ls_revalidated)
-      );
+      localStorage.setItem("stage_3", JSON.stringify(stage_3_ls_revalidated));
 
       //store the "matches" from chatgpt / other algorithms to localStorage
-      localStorage.setItem(
-        "matches",
-        JSON.stringify(matches_ls_revalidated)
-      );
+      localStorage.setItem("matches", JSON.stringify(matches_ls_revalidated));
 
       //store the "unmatches" from chatgpt / other algorithms to localStorage
       localStorage.setItem(
@@ -264,8 +264,9 @@ export default function Revalidate() {
             "total_usage",
             JSON.stringify(total_usage_ls_revalidated)
           );
+
           //After everything update the Client side page
-          dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+          router.reload();
         }
       }
     }

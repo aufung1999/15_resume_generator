@@ -11,7 +11,6 @@ import {
 } from "@blueprintjs/core";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  FORCE_to_UPDATE,
   add_display,
   cleanUp_display_redux,
   leave_hover_des,
@@ -64,7 +63,6 @@ export default function Result_alt({
   }, [whatToGet, display_redux]);
 
   const ClickHandler = (deleteIndex: number) => {
-    // dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     switch (whatToGet) {
       case "unmatches":
         dispatch(add_display({ sentence: get[deleteIndex], from: "matches" }));
