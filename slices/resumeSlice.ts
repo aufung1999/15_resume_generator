@@ -118,6 +118,21 @@ const analyseSlice = createSlice({
       );
 
       switch (from) {
+        case "init":
+          if (array.includes(sentence) === false) {
+            state.display.push({ match_sentence: sentence, count: 1 });
+          }
+          if (array.includes(sentence) === true) {
+            let target = state.display?.find(
+              (each: { match_sentence: string; count: number }) =>
+                each.match_sentence === sentence
+            );
+            if (target) {
+              target.count = target.count + 1;
+              // console.log(target.count);
+            }
+          }
+          return;
         case "unmatches":
           state.display.push({ match_sentence: sentence, count: 0 });
           return;

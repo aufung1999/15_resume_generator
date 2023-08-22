@@ -45,10 +45,12 @@ export default function CustomedTooltip({
 
   const dispatch = useDispatch();
 
+  // const arrayRef = useRef<string[]>([]);
+
   //
+  let temp_array: any[] = [];
 
   useEffect(() => {
-    let temp_array: any[] = [];
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
         const stage_3_ls: any = localStorage.getItem("stage_3");
@@ -75,13 +77,21 @@ export default function CustomedTooltip({
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
+
           case "work":
+            console.log("description: " + description);
             JSON.parse(stage_3_ls).map((each: any) => {
               //index
               // each.match_index_1st === index_1st &&
               // each.match_index_2nd === index_2nd
               //or only text
-              each.user_data === description &&
+              // console.log("============================");
+              // console.log(JSON.stringify(each.user_data));
+              // console.log(
+              //   JSON.stringify(each.user_data) === JSON.stringify(description)
+              // );
+              // console.log("============================");
+              JSON.stringify(each.user_data) === JSON.stringify(description) &&
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
@@ -95,6 +105,20 @@ export default function CustomedTooltip({
                   ))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
+
+              // //index
+              // each.match_index_1st === index_1st &&
+              // each.match_index_2nd === index_2nd &&
+              // JSON.stringify(each.user_data) !== JSON.stringify(description)
+              //   ? dispatch(
+              //       remove_display({
+              //         sentence: each.match_sentence,
+              //         // from: "matches",
+              //       })
+              //     )
+              //   : null;
+
+              console.log(temp_array);
 
               // each.user_data === description &&
             });
@@ -164,6 +188,7 @@ export default function CustomedTooltip({
         setMatches(JSON.parse(matches_ls));
       }
       //pass the synchronous "temp_array" variable to a asynchronous state "target"
+
       setTarget(temp_array);
     }
 
@@ -172,17 +197,161 @@ export default function CustomedTooltip({
       setOutline(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    force_to_update_redux,
-    whichSection,
-    index_1st,
-    index_2nd,
-    // description,
-    // text,
-  ]);
+  }, [force_to_update_redux]);
+
+  //-------------------------------------------
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("stage_3")) {
+        const stage_3_ls: any = localStorage.getItem("stage_3");
+
+        switch (whichSection) {
+          case "skill":
+            JSON.parse(stage_3_ls).map((each: any) => {
+              //index
+              // each.match_index_1st === index_1st &&
+              // each.match_index_2nd === index_2nd &&
+              //or only text
+              each.technique === description &&
+              //To avoid duplication
+              temp_array.includes(each.match_sentence) === false
+                ? (setOn(true),
+                  setOutline(true),
+                  temp_array.push(each.match_sentence),
+                  dispatch(
+                    add_display({
+                      sentence: each.match_sentence,
+                      from: "matches",
+                    })
+                  ))
+                : //This means that the row description is not included in the "stage_3" ----^
+                  null;
+            });
+
+          case "work":
+            console.log("description: " + description);
+            JSON.parse(stage_3_ls).map((each: any) => {
+              JSON.stringify(each.user_data) === JSON.stringify(description) &&
+              //To avoid duplication
+              temp_array.includes(each.match_sentence) === false
+                ? (setOn(true),
+                  setOutline(true),
+                  temp_array.push(each.match_sentence))
+                : //This means that the row description is not included in the "stage_3" ----^
+                  null;
+            });
+
+          case "project":
+            // Conditional-case based on if the index_2nd exists or not
+            // *****NOT exist*****
+            if (index_2nd === undefined || index_2nd === null) {
+              JSON.parse(stage_3_ls).map((each: any) =>
+                //index
+                each.match_index_1st === index_1st &&
+                each.match_index_2nd === null &&
+                //or only text
+                extractTerms(description, "project_redux")?.includes(
+                  each.technique
+                ) &&
+                //To avoid duplication
+                temp_array.includes(each.match_sentence) === false
+                  ? (setOn(true),
+                    setOutline(true),
+                    temp_array.push(each.match_sentence))
+                  : //This means that the row description is not included in the "stage_3" ----v
+                    null
+              );
+            }
+            // *****Exist*****
+            if (index_2nd) {
+              JSON.parse(stage_3_ls).map((each: any) => {
+                //index
+                // each.match_index_1st === index_1st &&
+                // each.match_index_2nd === index_2nd &&
+                //or only text
+                each.user_data === description &&
+                //To avoid duplication
+                temp_array.includes(each.match_sentence) === false
+                  ? (setOn(true),
+                    setOutline(true),
+                    temp_array.push(each.match_sentence))
+                  : //This means that the row description is not included in the "stage_3" ----^
+                    null;
+              });
+            }
+        }
+      }
+      //Get "matches" from localStorage
+      if (localStorage.getItem("matches")) {
+        const matches_ls: any = localStorage.getItem("matches");
+        //sorting for "temp_array"
+        temp_array.sort((a, b) =>
+          JSON.parse(matches_ls).indexOf(a) > JSON.parse(matches_ls).indexOf(b)
+            ? 1
+            : -1
+        );
+      }
+    }
+
+    return () => {
+      setOn(false);
+      setOutline(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [description, text]);
+
+  //-------------------------------------------------------
+  useEffect(() => {
+    // on === true && console.log(index_1st, index_2nd, description + " ADD");
+    if (on === true) {
+      if (typeof window !== "undefined") {
+        if (localStorage.getItem("stage_3")) {
+          const stage_3_ls: any = localStorage.getItem("stage_3");
+          const filtered_stage_3 = JSON.parse(stage_3_ls).filter(
+            (each: any) =>
+              JSON.stringify(each.match_index_1st) ===
+                JSON.stringify(index_1st) &&
+              JSON.stringify(each.match_index_2nd) === JSON.stringify(index_2nd)
+          );
+
+          filtered_stage_3.map((each: any) =>
+            dispatch(
+              add_display({
+                sentence: each.match_sentence,
+                from: "matches",
+              })
+            )
+          );
+        }
+      }
+    }
+
+    if (on === false) {
+      if (typeof window !== "undefined") {
+        if (localStorage.getItem("stage_3")) {
+          const stage_3_ls: any = localStorage.getItem("stage_3");
+          const filtered_stage_3 = JSON.parse(stage_3_ls).filter(
+            (each: any) =>
+              JSON.stringify(each.match_index_1st) ===
+                JSON.stringify(index_1st) &&
+              JSON.stringify(each.match_index_2nd) === JSON.stringify(index_2nd)
+          );
+
+          filtered_stage_3.map((each: any) =>
+            dispatch(
+              remove_display({
+                sentence: each.match_sentence,
+                from: "randomtype thing",
+              })
+            )
+          );
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [on]);
 
   // local property to change the year
-
   useEffect(() => {
     if (matches && target) {
       const find_res = matches?.find((each: string, i: number) =>

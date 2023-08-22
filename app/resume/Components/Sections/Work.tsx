@@ -9,6 +9,7 @@ import { timeConverter } from "../../Functions/timeConvertor";
 import CustomedTooltip from "../Match/Tooltip";
 
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
+
   // Revalidation(experience)
   return (
     <div className="mb-2">

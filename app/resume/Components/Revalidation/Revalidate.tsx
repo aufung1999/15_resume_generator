@@ -74,7 +74,7 @@ export default function Revalidate() {
                 each_2.Row === item.user_data
             )
               ? null
-              : dispatch(
+              : dispatch( 
                   editResume_stage_4({
                     index_1st: each.index,
                     index_2nd: each_2.rowIndex,

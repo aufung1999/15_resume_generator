@@ -13,6 +13,7 @@ import { ButtonGroup } from "@mui/material";
 import DisplayResultBoard from "./Match/DisplayResultBoard";
 import {
   FORCE_to_UPDATE,
+  add_display,
   cleanUp_display_redux,
   control_Highlight_Dsiplay,
   init_display,
@@ -42,7 +43,7 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   const unmatches_ls: any = localStorage.getItem("unmatches");
   const job_details_ls = localStorage.getItem("job_details");
 
-  useEffect(()=>{},[])
+  useEffect(() => {}, []);
 
   //To show the Statistic here becuz of the format
   const select = useSelector(
@@ -60,18 +61,28 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
       setOnce(true);
     }
     // 1. initialize ALL job description to 0
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("unmatches") && unmatches_ls !== null) {
-        JSON.parse(unmatches_ls)?.map((each: string | null) =>
-          dispatch(init_display({ sentence: each }))
-        );
-      }
-      if (localStorage.getItem("matches") && matches_ls !== null) {
-        JSON.parse(matches_ls)?.map((each: string | null) =>
-          dispatch(init_display({ sentence: each }))
-        );
-      }
+    // if (typeof window !== "undefined") {
+    //   if (localStorage.getItem("stage_3") && stage_3_ls !== null) {
+    //     JSON.parse(stage_3_ls)?.map((each: any | null) =>
+    //       dispatch(
+    //         add_display({
+    //           sentence: each.match_sentence,
+    //           from: "init",
+    //         })
+    //       )
+    //     );
+    //   }
+    if (localStorage.getItem("unmatches") && unmatches_ls !== null) {
+      JSON.parse(unmatches_ls)?.map((each: string | null) =>
+        dispatch(init_display({ sentence: each }))
+      );
     }
+    if (localStorage.getItem("matches") && matches_ls !== null) {
+      JSON.parse(matches_ls)?.map((each: string | null) =>
+        dispatch(init_display({ sentence: each }))
+      );
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeID]);
 
