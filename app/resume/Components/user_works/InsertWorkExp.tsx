@@ -143,6 +143,20 @@ const RowComp = ({ index, rowIndex, data, remind }: rowProps) => {
       <ReactQuill
         onChange={(value) => rowOnChange(value)}
         value={row ? row.Row : ""}
+        formats={[
+          "header",
+          "bold",
+          "italic",
+          "underline",
+          "strike",
+          "blockquote",
+          "list",
+          "bullet",
+          "indent",
+          "link",
+          "image",
+          "align",
+        ]}
       />
 
       {/* <TextArea

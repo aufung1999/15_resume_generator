@@ -93,6 +93,20 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
           )
         }
         value={row ? row.Row : ""}
+        formats={[
+          "header",
+          "bold",
+          "italic",
+          "underline",
+          "strike",
+          "blockquote",
+          "list",
+          "bullet",
+          "indent",
+          "link",
+          "image",
+          "align",
+        ]}
       />
     </div>
   );
