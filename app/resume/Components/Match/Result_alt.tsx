@@ -106,7 +106,7 @@ export default function Result_alt({
               )}
             </div>
           </div>
-          <div
+          {/* <div
             className={`
             ${
               whatToGet === "unmatches"
@@ -135,7 +135,7 @@ export default function Result_alt({
               small
               onClick={() => ClickHandler(i)}
             />
-          </div>
+          </div> */}
         </div>
       ))}
     </div>
