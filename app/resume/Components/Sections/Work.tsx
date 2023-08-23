@@ -46,7 +46,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                       <div className="flex">
                         <li />
                         <div
-                          className=" flex leading-none"
+                          className=" flex leading-snug "
                           dangerouslySetInnerHTML={{
                             __html: each?.Row,
                           }}
