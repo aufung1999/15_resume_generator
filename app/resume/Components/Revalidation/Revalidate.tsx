@@ -17,6 +17,7 @@ import {
   initialize_SkillData,
   update_revalidation,
 } from "@/slices/skillsSlice";
+import LoadingModal from "./LoadingMOdal";
 
 export default function Revalidate() {
   const dispatch = useDispatch();
@@ -35,6 +36,8 @@ export default function Revalidate() {
 
   //Get the Client API Key from ChatGPT, but stored inDatabase
   const API_KEY = useSelector((state: RootState) => state.control.API_KEY);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -121,6 +124,8 @@ export default function Revalidate() {
   }, [skills_redux]);
 
   const SkillRevalidateHandler = async () => {
+    setLoading(true);
+
     let temp_skill: any[] = [];
     let data: any;
 
@@ -190,9 +195,12 @@ export default function Revalidate() {
       //After everything update the Client side page
       router.refresh();
     }
+    setLoading(false);
   };
 
   const WorkRevalidateHandler = async () => {
+    setLoading(true);
+
     if (typeof window !== "undefined") {
       // get the "unmatches" from the localStorage
       if (localStorage.getItem("unmatches")) {
@@ -270,8 +278,11 @@ export default function Revalidate() {
         }
       }
     }
+    setLoading(false);
   };
   const ProjectRevalidateHandler = async () => {
+    setLoading(true);
+
     if (typeof window !== "undefined") {
       // get the "unmatches" from the localStorage
       if (localStorage.getItem("unmatches")) {
@@ -350,6 +361,7 @@ export default function Revalidate() {
         }
       }
     }
+    setLoading(false);
   };
 
   return (
@@ -358,6 +370,8 @@ export default function Revalidate() {
         "bg-white px-3 py-1 cursor-pointer top-0 z-10 rounded border-2  border-green-500 "
       }
     >
+      {/* Conditionally render the LoadingModal */}
+      <LoadingModal loading={loading} />
       <div className=" bg-white inline-block">
         <div>Revalidation</div>
         <ButtonGroup aria-label=" elevation buttons " className="flex flex-col">
