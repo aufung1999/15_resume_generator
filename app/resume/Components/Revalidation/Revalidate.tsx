@@ -17,7 +17,7 @@ import {
   initialize_SkillData,
   update_revalidation,
 } from "@/slices/skillsSlice";
-import LoadingModal from "./LoadingMOdal";
+import LoadingModal from "./LoadingModal";
 
 export default function Revalidate() {
   const dispatch = useDispatch();
