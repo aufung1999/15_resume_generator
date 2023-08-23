@@ -6,6 +6,7 @@ import { Tooltip } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
+  Switc_years_in_skill_show,
   add_display,
   cleanUp_display_redux,
   remove_display,
@@ -41,15 +42,13 @@ export default function CustomedTooltip({
 
   const [target, setTarget] = useState<any>(null);
   const [matches, setMatches] = useState<any>(null);
-  const [years, setYears] = useState<any>(0);
+  const [years, setYears] = useState<number>(0);
 
   const dispatch = useDispatch();
 
-  // const arrayRef = useRef<string[]>([]);
-
-  //
   let temp_array: any[] = [];
 
+  //----------------------------
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
@@ -329,6 +328,31 @@ export default function CustomedTooltip({
       }
     }
   }, [target, matches]);
+
+  //-------------------------Track if the years
+  useEffect(() => {
+    if (whichSection === "skill") {
+      console.log("dispatch");
+      switch (true) {
+        case years === 0:
+          dispatch(
+            Switc_years_in_skill_show({
+              isSwitch: false,
+              description: description,
+            })
+          );
+          break;
+        case years > 0:
+          dispatch(
+            Switc_years_in_skill_show({
+              isSwitch: true,
+              description: description,
+            })
+          );
+          break;
+      }
+    }
+  }, [years]);
 
   return (
     <div

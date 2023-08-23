@@ -20,6 +20,7 @@ export interface resumeState {
   display: { match_sentence: string; count: number }[];
   hover_des: string;
   force_to_update: any;
+  years_in_skill_show: { isSwitch: boolean; description: "" }[];
 }
 
 const initialState: resumeState = {
@@ -31,6 +32,7 @@ const initialState: resumeState = {
   display: [],
   hover_des: "",
   force_to_update: "",
+  years_in_skill_show: [],
 };
 
 const analyseSlice = createSlice({
@@ -166,24 +168,6 @@ const analyseSlice = createSlice({
       if (target) {
         target.count = target?.count - 1;
       }
-
-      // switch (from) {
-      //   case "unmatches":
-      //     state.display.push({ match_sentence: sentence, count: 0 });
-      //     return;
-      //   case "matches":
-      //     if (array.includes(sentence) === true) {
-      //       let target = state.display?.find(
-      //         (each: { match_sentence: string; count: number }) =>
-      //           each.match_sentence === sentence
-      //       );
-      //       if (target) {
-      //         target.count = target.count + 1;
-      //         // console.log(target.count);
-      //       }
-      //     }
-      //     return;
-      // }
     },
     cleanUp_display_redux: (state) => {
       state.display = [];
@@ -196,6 +180,25 @@ const analyseSlice = createSlice({
     },
     FORCE_to_UPDATE: (state, action) => {
       state.force_to_update = action.payload;
+    },
+    Switc_years_in_skill_show: (state, action) => {
+      const { isSwitch, description } = action.payload;
+
+      let target = state.years_in_skill_show?.find(
+        (each: { isSwitch: boolean; description: string }) =>
+          each?.description === description
+      );
+
+      if (target === null || target === undefined) {
+        state.years_in_skill_show.push({
+          isSwitch: isSwitch,
+          description: description,
+        });
+      }
+
+      if (target) {
+        target.isSwitch = isSwitch;
+      }
     },
   },
 });
@@ -213,5 +216,6 @@ export const {
   on_hover_des,
   leave_hover_des,
   FORCE_to_UPDATE,
+  Switc_years_in_skill_show,
 } = analyseSlice.actions;
 export default analyseSlice.reducer;
