@@ -15,7 +15,7 @@ export default function SkillSection({ skill }: SkillsState[] | any) {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
   return (
-    <div className="mb-2 w-full" key={search}>
+    <div className="mb-2 w-full flex flex-col relative" key={search}>
       <SectionHeading title="Technical Skills (years+)" />
       <div className="flex flex-col w-full ">
         {skill?.map((item: SkillsState, i: number) => (

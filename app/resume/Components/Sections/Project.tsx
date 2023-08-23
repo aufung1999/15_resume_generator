@@ -20,20 +20,26 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
   return (
     <div className="mb-2">
       <SectionHeading title="Project" />
+      {/* Drag and Drop */}
       <DragDropContext onDragEnd={handleOnDragEnd}>
+      {/* Drag and Drop */}
         <Droppable droppableId="projects">
+          {/* Drag and Drop */}
           {(provided: any) => (
             <div
-              className="projects"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
+            className="projects"
+            // {/* Drag and Drop */}
+            {...provided.droppableProps}
+            // {/* Drag and Drop */}
+            ref={provided.innerRef}
             >
               {project.map((item: ProjectState, i: number) => {
                 return (
                   <Draggable
-                    key={item.index}
-                    draggableId={item.index}
-                    index={i}
+                  // {/* Drag and Drop */}
+                  key={item.index}
+                  draggableId={item.index}
+                  index={i}
                   >
                     {(provided) => (
                       <div
