@@ -47,7 +47,7 @@ const ResumeClient = ({
   data,
 }: {
   resumeID: string | null;
-  data: any;
+  data?: any;
 }) => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
