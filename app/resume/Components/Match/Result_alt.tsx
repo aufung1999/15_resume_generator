@@ -105,14 +105,16 @@ export default function Result_alt({
             >
               {each}
             </div>
-            <div className="ms-3 text-xs ">
+            <span className="ms-3 text-xs ">
               {hover_des_redux === each && (
-                <div onMouseDown={() => dispatch(leave_hover_des())}>
-                  {" "}
-                  remove
+                <div
+                  className=" text-red-600 font-bold"
+                  onMouseDown={() => dispatch(leave_hover_des())}
+                >
+                  hide
                 </div>
               )}
-            </div>
+            </span>
           </div>
           {/* <div
             className={`
