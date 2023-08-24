@@ -1,5 +1,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { SkillsState } from "./skillsSlice";
+import { Skill_interface, Stage_3_skill } from "@/utils/interfaces";
 
 type anything =
   | number
@@ -108,47 +110,38 @@ const analyseSlice = createSlice({
     },
     init_display: (state, action) => {
       const { sentence } = action.payload;
-
-      state.display.push({ match_sentence: sentence, count: 0 });
+      let target = state.display.find(
+        (each: { match_sentence: string; count: number }) =>
+          each?.match_sentence === sentence
+      );
+      if (!target) {
+        state.display.push({ match_sentence: sentence, count: 0 });
+      }
     },
+
     add_display: (state, action) => {
       const { sentence, from } = action.payload;
 
-      let array = state.display.map(
+      let target = state.display.find(
         (each: { match_sentence: string; count: number }) =>
-          each?.match_sentence
+          each?.match_sentence === sentence
       );
 
       switch (from) {
-        case "init":
-          if (array.includes(sentence) === false) {
-            state.display.push({ match_sentence: sentence, count: 1 });
-          }
-          if (array.includes(sentence) === true) {
-            let target = state.display?.find(
-              (each: { match_sentence: string; count: number }) =>
-                each.match_sentence === sentence
-            );
-            if (target) {
-              target.count = target.count + 1;
-              // console.log(target.count);
-            }
-          }
-          return;
         case "unmatches":
-          state.display.push({ match_sentence: sentence, count: 0 });
+          if (target) {
+            null;
+          }
+          if (!target) {
+            state.display.push({ match_sentence: sentence, count: 0 });
+          }
           return;
         case "matches":
-          console.log("sentence: " + sentence);
-          if (array.includes(sentence) === true) {
-            let target = state.display?.find(
-              (each: { match_sentence: string; count: number }) =>
-                each.match_sentence === sentence
-            );
-            if (target) {
-              target.count = target.count + 1;
-              // console.log(target.count);
-            }
+          if (target) {
+            target.count = target.count + 1;
+          }
+          if (!target) {
+            state.display.push({ match_sentence: sentence, count: 1 });
           }
           return;
       }

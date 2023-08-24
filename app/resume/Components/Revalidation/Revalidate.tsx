@@ -139,18 +139,31 @@ export default function Revalidate() {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("unmatches")) {
         const unmatches_ls: any = localStorage.getItem("unmatches");
+        const matches_ls: any = localStorage.getItem("matches");
+
         let fetch_stage_2: any[] = [];
+
         JSON.parse(unmatches_ls).map((each: string, index: number) =>
           fetch_stage_2.push({
             index: each,
             array: extractTerms(each, "input"),
           })
         );
+        JSON.parse(matches_ls).map((each: string, index: number) =>
+          fetch_stage_2.push({
+            index: each,
+            array: extractTerms(each, "input"),
+          })
+        );
+
+        // console.log(fetch_stage_2);
 
         data = compare(temp_skill, fetch_stage_2, "skill");
       }
     }
     if (data) {
+       console.log(data);
+
       const unmatches_ls: any = localStorage.getItem("unmatches");
       const matches_ls: any = localStorage.getItem("matches");
       const stage_3_ls: any = localStorage.getItem("stage_3");
@@ -161,12 +174,14 @@ export default function Revalidate() {
           data?.find((each_each: any) => each_each.match_sentence === each)
             ?.match_sentence !== each
       );
+      console.log(unmatches_revalidated);
 
-      const matches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
+      const matches_revalidated: any[] = JSON.parse(matches_ls)?.filter(
         (each: any) =>
           data?.find((each_each: any) => each_each.match_sentence === each)
             ?.match_sentence === each
       );
+      console.log(matches_revalidated);
 
       // update the fetch object for localStorage of "matches_ls"
       const matches_ls_revalidated = [
@@ -175,6 +190,10 @@ export default function Revalidate() {
       ];
       const unmatches_ls_revalidated = unmatches_revalidated;
       const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
+
+      console.log(matches_ls_revalidated);
+      console.log(unmatches_ls_revalidated);
+      console.log(stage_3_ls_revalidated);
 
       //update the localStorage of "matches", "unmatches", and "stage_3"
       localStorage.setItem("stage_3", JSON.stringify(stage_3_ls_revalidated));
@@ -193,9 +212,10 @@ export default function Revalidate() {
         dispatch(update_revalidation(each))
       );
       //After everything update the Client side page
-      router.refresh();
     }
     setLoading(false);
+    // dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+    router.refresh();
   };
 
   const WorkRevalidateHandler = async () => {

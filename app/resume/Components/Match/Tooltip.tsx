@@ -44,11 +44,15 @@ export default function CustomedTooltip({
   const [matches, setMatches] = useState<any>(null);
   const [years, setYears] = useState<number>(0);
 
+  const stage_3_ls: any = localStorage.getItem("stage_3");
+
   const dispatch = useDispatch();
 
   let temp_array: any[] = [];
 
-  //----------------------------
+
+
+  //---------------------
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("stage_3")) {
@@ -66,13 +70,7 @@ export default function CustomedTooltip({
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
                   setOutline(true),
-                  temp_array.push(each.match_sentence),
-                  dispatch(
-                    add_display({
-                      sentence: each.match_sentence,
-                      from: "matches",
-                    })
-                  ))
+                  temp_array.push(each.match_sentence))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
@@ -83,43 +81,15 @@ export default function CustomedTooltip({
               //index
               // each.match_index_1st === index_1st &&
               // each.match_index_2nd === index_2nd
-              //or only text
-              // console.log("============================");
-              // console.log(JSON.stringify(each.user_data));
-              // console.log(
-              //   JSON.stringify(each.user_data) === JSON.stringify(description)
-              // );
               // console.log("============================");
               JSON.stringify(each.user_data) === JSON.stringify(description) &&
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
                   setOutline(true),
-                  temp_array.push(each.match_sentence),
-                  dispatch(
-                    add_display({
-                      sentence: each.match_sentence,
-                      from: "matches",
-                    })
-                  ))
+                  temp_array.push(each.match_sentence))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
-
-              // //index
-              // each.match_index_1st === index_1st &&
-              // each.match_index_2nd === index_2nd &&
-              // JSON.stringify(each.user_data) !== JSON.stringify(description)
-              //   ? dispatch(
-              //       remove_display({
-              //         sentence: each.match_sentence,
-              //         // from: "matches",
-              //       })
-              //     )
-              //   : null;
-
-              console.log(temp_array);
-
-              // each.user_data === description &&
             });
             break;
           case "project":
@@ -138,13 +108,7 @@ export default function CustomedTooltip({
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
                     setOutline(true),
-                    temp_array.push(each.match_sentence),
-                    dispatch(
-                      add_display({
-                        sentence: each.match_sentence,
-                        from: "matches",
-                      })
-                    ))
+                    temp_array.push(each.match_sentence))
                   : //This means that the row description is not included in the "stage_3" ----v
                     null
               );
@@ -161,13 +125,7 @@ export default function CustomedTooltip({
                 temp_array.includes(each.match_sentence) === false
                   ? (setOn(true),
                     setOutline(true),
-                    temp_array.push(each.match_sentence),
-                    dispatch(
-                      add_display({
-                        sentence: each.match_sentence,
-                        from: "matches",
-                      })
-                    ))
+                    temp_array.push(each.match_sentence))
                   : //This means that the row description is not included in the "stage_3" ----^
                     null;
               });
@@ -197,7 +155,7 @@ export default function CustomedTooltip({
       setOutline(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [force_to_update_redux]);
+  }, [force_to_update_redux, stage_3_ls]);
 
   //-------------------------------------------
   const [change, isChange] = useState<boolean>(false);
@@ -219,13 +177,7 @@ export default function CustomedTooltip({
               temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
                   setOutline(true),
-                  temp_array.push(each.match_sentence),
-                  dispatch(
-                    add_display({
-                      sentence: each.match_sentence,
-                      from: "matches",
-                    })
-                  ))
+                  temp_array.push(each.match_sentence))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });

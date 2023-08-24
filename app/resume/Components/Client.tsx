@@ -30,8 +30,25 @@ import Revalidate from "./Revalidation/Revalidate";
 import Statistic from "./Match/Statistic";
 
 import { useSearchParams } from "next/navigation";
+import { SkillsState } from "@/slices/skillsSlice";
+import {
+  Skill_interface,
+  Stage_3_skill,
+  Stage_3_work,
+  Job_Description_interface,
+  Stage_3_project,
+  Project_Description_interface,
+} from "@/utils/interfaces";
+import { WorkExpState } from "@/slices/workSlice";
+import { ProjectState } from "@/slices/projectsSlice";
 
-const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
+const ResumeClient = ({
+  resumeID,
+  data,
+}: {
+  resumeID: string | null;
+  data: any;
+}) => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
   const dispatch = useDispatch();
@@ -43,7 +60,12 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
   const unmatches_ls: any = localStorage.getItem("unmatches");
   const job_details_ls = localStorage.getItem("job_details");
 
-  useEffect(() => {}, []);
+  const contact_redux = useSelector((state: RootState) => state.contact);
+  const work_redux = useSelector((state: RootState) => state.work);
+  const education_redux = useSelector((state: RootState) => state.education);
+  const skill_redux = useSelector((state: RootState) => state.skills);
+  const project_redux = useSelector((state: RootState) => state.projects);
+  const objective_redux = useSelector((state: RootState) => state.objectives);
 
   //To show the Statistic here becuz of the format
   const select = useSelector(
@@ -55,36 +77,115 @@ const ResumeClient = ({ resumeID }: { resumeID: string | null }) => {
 
   useEffect(() => {
     // 0 . Only Dispatch Once
-    if (dispatchOnce === false) {
-      dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
-      dispatch(cleanUp_display_redux());
-      setOnce(true);
-    }
+    // if (dispatchOnce === false) {
+    //   dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+    //   dispatch(cleanUp_display_redux());
+    //   setOnce(true);
+    // }
     // 1. initialize ALL job description to 0
-    // if (typeof window !== "undefined") {
-    //   if (localStorage.getItem("stage_3") && stage_3_ls !== null) {
-    //     JSON.parse(stage_3_ls)?.map((each: any | null) =>
-    //       dispatch(
-    //         add_display({
-    //           sentence: each.match_sentence,
-    //           from: "init",
-    //         })
-    //       )
-    //     );
-    //   }
-    if (localStorage.getItem("unmatches") && unmatches_ls !== null) {
-      JSON.parse(unmatches_ls)?.map((each: string | null) =>
+    if (typeof window !== "undefined") {
+      JSON.parse(matches_ls).map((each: string) =>
         dispatch(init_display({ sentence: each }))
       );
-    }
-    if (localStorage.getItem("matches") && matches_ls !== null) {
-      JSON.parse(matches_ls)?.map((each: string | null) =>
+      JSON.parse(unmatches_ls).map((each: string) =>
         dispatch(init_display({ sentence: each }))
       );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeID]);
+
+  useEffect(() => {
+    if (localStorage.getItem("stage_3")) {
+      //-------------Skill-------------------
+      JSON.parse(stage_3_ls)?.map((item: Stage_3_skill) =>
+        data.skill.map((each: SkillsState) =>
+          each.index === item.match_index_1st
+            ? each?.Skill_list.map((each_2: Skill_interface) =>
+                each_2.skillIndex === item.match_index_2nd &&
+                each_2.skill === item.technique
+                  ? dispatch(
+                      add_display({
+                        sentence: item.match_sentence,
+                        from: "matches",
+                      })
+                    )
+                  : dispatch(
+                      add_display({
+                        sentence: item.match_sentence,
+                        from: "unmatches",
+                      })
+                    )
+              )
+            : null
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage_3_ls, data]);
+
+  useEffect(() => {
+    // 1. initialize ALL job description to 0
+    if (localStorage.getItem("stage_3")) {
+      //-------------Work-------------------
+      JSON.parse(stage_3_ls)?.map((item: Stage_3_work) =>
+        data.work.map((each: WorkExpState) =>
+          each.index === item.match_index_1st
+            ? each?.JobDescription?.map((each_2: Job_Description_interface) =>
+                each_2.rowIndex === item.match_index_2nd &&
+                each_2.Row === item.user_data
+                  ? dispatch(
+                      add_display({
+                        sentence: item.match_sentence,
+                        from: "matches",
+                      })
+                    )
+                  : dispatch(
+                      add_display({
+                        sentence: item.match_sentence,
+                        from: "unmatches",
+                      })
+                    )
+              )
+            : null
+        )
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage_3_ls, data]);
+
+  useEffect(() => {
+    // 1. initialize ALL job description to 0
+    if (localStorage.getItem("stage_3")) {
+      //-------------Project-------------------
+      JSON.parse(stage_3_ls)?.map((item: Stage_3_project) =>
+        data.project.map((each: ProjectState) =>
+          each.index === item.match_index_1st
+            ? each?.ProjectDescription?.map(
+                (each_2: Project_Description_interface) =>
+                  each_2.rowIndex === item.match_index_2nd &&
+                  each_2.Row === item.user_data
+                    ? dispatch(
+                        add_display({
+                          sentence: item.match_sentence,
+                          from: "matches",
+                        })
+                      )
+                    : dispatch(
+                        add_display({
+                          sentence: item.match_sentence,
+                          from: "unmatches",
+                        })
+                      )
+              )
+            : null
+        )
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage_3_ls, data]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>

@@ -107,7 +107,7 @@ export default async function Page({
           <EditResume data={JSON.parse(JSON.stringify(clientData))} />
         </div>
         <div className=" w-9/12 overflow-auto relative no-scrollbar z-10">
-          <ResumeClient resumeID={params.resumeID} />
+          <ResumeClient resumeID={params.resumeID} data={JSON.parse(JSON.stringify(clientData))} />
         </div>
       </div>
     );

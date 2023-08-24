@@ -30,6 +30,8 @@ export default function Result_alt({
 }) {
   const dispatch = useDispatch();
 
+  const stage_3_ls: any = localStorage.getItem("stage_3");
+
   const display_redux = useSelector((state: RootState) => state.resume.display);
   const hover_des_redux = useSelector(
     (state: RootState) => state.resume.hover_des
@@ -50,9 +52,15 @@ export default function Result_alt({
     });
     if (whatToGet === "matches") {
       setGet(temp_matches);
+      // if (typeof window !== "undefined") {
+      //   localStorage.setItem("matches", JSON.stringify(temp_matches));
+      // }
     }
     if (whatToGet === "unmatches") {
       setGet(temp_unmatches);
+      // if (typeof window !== "undefined") {
+      //   localStorage.setItem("unmatches", JSON.stringify(temp_unmatches));
+      // }
     }
     return () => {
       temp_matches = [];
@@ -60,7 +68,7 @@ export default function Result_alt({
       setGet([]);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [whatToGet, display_redux]);
+  }, [whatToGet, display_redux, stage_3_ls]);
 
   const ClickHandler = (deleteIndex: number) => {
     switch (whatToGet) {
