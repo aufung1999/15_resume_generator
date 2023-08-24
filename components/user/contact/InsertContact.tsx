@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   Elevation,
+  Switch,
   FormGroup,
   InputGroup,
 } from "@blueprintjs/core";
@@ -31,6 +32,8 @@ import {
   ContactState,
   initialize_ClientData,
   cleanUp_Contact_redux,
+  editOpentoWork,
+  editSponsorship,
 } from "@/slices/contactSlice";
 import type { RootState } from "@/store/store";
 
@@ -292,6 +295,43 @@ export default function InsertContact({
               edit={editGitHub}
               SocialMedia={contact_redux?.GitHub}
             />
+          </div>
+        </div>
+        {/* ................................................ */}
+        <div className="grid grid-cols-1 w-full">
+          {/* ................................................ */}
+          <div className="  w-full">
+            <FormGroup
+              label="Open to Work"
+              labelFor="Open to Work"
+              className="w-full border text-sm font-semibold italic"
+            >
+              <InputGroup
+                id="text-input"
+                placeholder="Open to work remote/hybrid/on-site"
+                onChange={(e) => dispatch(editOpentoWork(e.target.value))}
+                value={contact_redux.OpentoWork}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
+
+
+          </div>
+          {/* ................................................ */}
+          <div className="   w-full">
+            <FormGroup
+              label="Sponsor"
+              labelFor="Sponsor"
+              // labelInfo="(required)"
+              className="w-full border text-sm font-semibold italic"
+            >
+              <InputGroup
+                id="text-input"
+                onChange={(e) => dispatch(editSponsorship(e.target.value))}
+                value={contact_redux.Sponsorship}
+                className="w-full border overflow-hidden"
+              />
+            </FormGroup>
           </div>
         </div>
         {/* ...................(Add more links?)............................. */}

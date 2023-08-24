@@ -54,6 +54,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       Portfolio,
       LinkedIn,
       GitHub,
+      OpentoWork,
+      Sponsorship,
     } = body;
 
     //use the email from "Next-auth" to find the data in "Contact" collection
@@ -79,6 +81,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         Portfolio: Portfolio,
         LinkedIn: LinkedIn,
         GitHub: GitHub,
+        OpentoWork: OpentoWork,
+        Sponsorship: Sponsorship,
       };
 
       // `doc` is the document _after_ `update` was applied because of
@@ -105,6 +109,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       Portfolio: Portfolio,
       LinkedIn: LinkedIn,
       GitHub: GitHub,
+      OpentoWork: OpentoWork,
+      Sponsorship: Sponsorship,
     });
 
     await contact.save();

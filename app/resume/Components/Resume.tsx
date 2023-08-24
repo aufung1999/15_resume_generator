@@ -86,6 +86,8 @@ const Resume = forwardRef((props, ref: any) => {
       Portfolio={contact_redux.Portfolio}
       LinkedIn={contact_redux.LinkedIn}
       GitHub={contact_redux.GitHub}
+      OpentoWork={contact_redux.OpentoWork}
+      Sponsorship={contact_redux.Sponsorship}
     />,
 
     <ObjectiveSection key="objective" objective={objective_redux} />,
@@ -110,12 +112,19 @@ const Resume = forwardRef((props, ref: any) => {
 
   return (
     <div
-      className=" w-a4 border-2  px-6 py-2 bg-white text-black "
+      className=" w-a4 border-2  px-6 py-2 bg-white text-black relative"
       ref={ref}
       key={search}
     >
       {/* //rename the print Default Name */}
       <title>Hello</title>
+
+      <div className=" absolute top-0 right-0 z-20 text-sm">
+        <span>{contact_redux.OpentoWork}</span>
+        <span> </span>
+        <span>{contact_redux.Sponsorship}</span>
+      </div>
+
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="resume">
           {(provided: any) => (

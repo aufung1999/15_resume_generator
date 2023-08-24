@@ -14,6 +14,8 @@ const contactSchema = new mongoose.Schema(
     Portfolio: { type: String, required: false },
     LinkedIn: { type: String, required: false },
     GitHub: { type: String, required: false },
+    OpentoWork: { type: String, required: false },
+    Sponsorship: { type: String, required: false },
   },
   {
     timestamps: true,

@@ -15,9 +15,12 @@ export default function Contact({
   Portfolio,
   LinkedIn,
   GitHub,
+  OpentoWork,
+  Sponsorship,
 }: ContactState) {
   return (
-    <div className="flex-col  justify-center items-center p-2">
+    <div className="flex-col  justify-center items-center p-2 border relative">
+
       <ProfileName name={FirstName} />
 
       {/* <SectionSubtitle label={label} /> */}

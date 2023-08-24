@@ -13,6 +13,8 @@ export interface ContactState {
   Portfolio: string;
   LinkedIn: string;
   GitHub: string;
+  OpentoWork: string;
+  Sponsorship: string;
 }
 
 const initialState: ContactState = {
@@ -27,6 +29,8 @@ const initialState: ContactState = {
   Portfolio: "",
   LinkedIn: "",
   GitHub: "",
+  OpentoWork: "Open to Remote/Hybrid/On-Site",
+  Sponsorship: "No Sponsorship Needed",
 };
 
 const contactSlice = createSlice({
@@ -47,6 +51,8 @@ const contactSlice = createSlice({
         Portfolio,
         LinkedIn,
         GitHub,
+        OpentoWork,
+        Sponsorship,
       }: any = action.payload;
 
       state.FirstName = FirstName;
@@ -60,6 +66,8 @@ const contactSlice = createSlice({
       state.Portfolio = Portfolio;
       state.LinkedIn = LinkedIn;
       state.GitHub = GitHub;
+      state.OpentoWork = OpentoWork;
+      state.Sponsorship = Sponsorship;
     },
     editFirstName: (state, action: PayloadAction<string>) => {
       state.FirstName = action.payload;
@@ -94,6 +102,12 @@ const contactSlice = createSlice({
     editGitHub: (state, action: PayloadAction<string>) => {
       state.GitHub = action.payload;
     },
+    editOpentoWork: (state, action: PayloadAction<string>) => {
+      state.OpentoWork = action.payload;
+    },
+    editSponsorship: (state, action: PayloadAction<string>) => {
+      state.Sponsorship = action.payload;
+    },
   },
   // extraReducers: {
   //   [getPosts.pending]: (state, action) => {
@@ -123,5 +137,7 @@ export const {
   editPortfolio,
   editLinkedIn,
   editGitHub,
+  editOpentoWork,
+  editSponsorship,
 } = contactSlice.actions;
 export default contactSlice.reducer;

@@ -18,7 +18,6 @@ import {
   control_Highlight_Dsiplay,
   init_display,
 } from "@/slices/resumeSlice";
-import Testhtml from "./test/Testhtml";
 
 import toast, { Toaster } from "react-hot-toast";
 

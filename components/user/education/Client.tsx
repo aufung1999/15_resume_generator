@@ -26,7 +26,6 @@ export default function EducationClient({ data }: any) {
 
   // Save to server
   const SubmitHandler = () => {
-    // console.log(contact);
 
     fetch("/api/user/education", {
       method: "POST",
