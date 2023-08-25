@@ -58,7 +58,7 @@ const analyseSlice = createSlice({
       state.control_highlight_dsiplay = !select;
     },
     editResume_stage_4: (state, action) => {
-      const { index_1st, Description, whichSection, index_2nd } =
+      const { index_1st, Description, whichSection, index_2nd, Techniques } =
         action.payload;
 
       if (whichSection === "work") {
@@ -89,6 +89,7 @@ const analyseSlice = createSlice({
         state.stage_4.project.push({
           index_1st: index_1st,
           index_2nd: index_2nd,
+          Techniques: Techniques,
           ProjectDescription: Description,
         });
       }
@@ -148,11 +149,6 @@ const analyseSlice = createSlice({
     },
     remove_display: (state, action) => {
       const { sentence, from } = action.payload;
-      // 1. get the {match_sentence,count}[] -> string [] of the resume.display
-      let array = state.display.map(
-        (each: { match_sentence: string; count: number }) =>
-          each?.match_sentence
-      );
 
       let target = state.display?.find(
         (each: { match_sentence: string; count: number }) =>

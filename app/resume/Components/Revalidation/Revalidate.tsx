@@ -87,6 +87,7 @@ export default function Revalidate() {
                   editResume_stage_4({
                     index_1st: each.index,
                     index_2nd: each_2.rowIndex,
+                    Techniques: each.Techniques,
                     Description: each_2.Row,
                     whichSection: "project",
                   })
@@ -162,7 +163,7 @@ export default function Revalidate() {
       }
     }
     if (data) {
-       console.log(data);
+      console.log(data);
 
       const unmatches_ls: any = localStorage.getItem("unmatches");
       const matches_ls: any = localStorage.getItem("matches");
@@ -383,6 +384,99 @@ export default function Revalidate() {
     }
     setLoading(false);
   };
+  const ProjectTechniqueRevalidateHandler = async () => {
+    setLoading(true);
+
+    if (typeof window !== "undefined") {
+      // get the "unmatches" from the localStorage
+      if (localStorage.getItem("unmatches")) {
+        const unmatches_ls: any = localStorage.getItem("unmatches");
+        const matches_ls: any = localStorage.getItem("matches");
+
+        let fetch_stage_2: any[] = [];
+
+        let combined_array: string[] = [
+          ...JSON.parse(unmatches_ls),
+          ...JSON.parse(matches_ls),
+        ];
+
+        combined_array.map((each, index) =>
+          fetch_stage_2.push({
+            index: each,
+            array: extractTerms(each, "input"),
+          })
+        );
+
+        console.log(combined_array);
+
+        // Define the input object for fetching
+        let temp_project: any[] = [];
+        project_unmatches.map((each: any) =>
+          temp_project.push({
+            index: each.index_1st,
+            array: extractTerms(each?.Techniques, "project_redux"),
+          })
+        );
+
+        let compare_res_project: any = compare(
+          temp_project,
+          fetch_stage_2,
+          "project"
+        );
+
+        const data = compare_res_project;
+
+        // Update the localStorage after revalidation
+        if (data) {
+          const matches_ls: any = localStorage.getItem("matches");
+          const stage_3_ls: any = localStorage.getItem("stage_3");
+
+          //Process
+          const unmatches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
+            (each: any) =>
+              data.find((each_each: any) => each_each.match_sentence === each)
+                ?.match_sentence !== each
+          );
+
+          const matches_revalidated: any[] = JSON.parse(unmatches_ls)?.filter(
+            (each: any) =>
+              data.find((each_each: any) => each_each.match_sentence === each)
+                ?.match_sentence === each
+          );
+
+          // update the fetch object for localStorage of "matches_ls"
+          const matches_ls_revalidated = [
+            ...JSON.parse(matches_ls),
+            ...matches_revalidated,
+          ];
+          const unmatches_ls_revalidated = unmatches_revalidated;
+          const stage_3_ls_revalidated = [...JSON.parse(stage_3_ls), ...data];
+
+          //update the localStorage of "matches", "unmatches", and "stage_3"
+          localStorage.setItem(
+            "stage_3",
+            JSON.stringify(stage_3_ls_revalidated)
+          );
+
+          //store the "matches" from chatgpt / other algorithms to localStorage
+          localStorage.setItem(
+            "matches",
+            JSON.stringify(matches_ls_revalidated)
+          );
+
+          //store the "unmatches" from chatgpt / other algorithms to localStorage
+          localStorage.setItem(
+            "unmatches",
+            JSON.stringify(unmatches_ls_revalidated)
+          );
+
+          //After everything update the Client side page
+          router.refresh();
+        }
+      }
+    }
+    setLoading(false);
+  };
 
   return (
     <div
@@ -398,6 +492,9 @@ export default function Revalidate() {
           <Button onClick={SkillRevalidateHandler}>Skill</Button>
           <Button onClick={WorkRevalidateHandler}>Work</Button>
           <Button onClick={ProjectRevalidateHandler}>Project</Button>
+          <Button onClick={ProjectTechniqueRevalidateHandler}>
+            Project Technique
+          </Button>
         </ButtonGroup>
       </div>
     </div>

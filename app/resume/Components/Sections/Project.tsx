@@ -68,10 +68,10 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                                   index_2nd={each.rowIndex}
                                   description={each?.Row}
                                   text={
-                                    <span className="flex leading-snug ">
+                                    <span className="flex leading-none ">
                                       <li />
                                       <div
-                                        className=" flex"
+                                        className=" flex leading-none"
                                         dangerouslySetInnerHTML={{
                                           __html: each?.Row,
                                         }}

@@ -98,7 +98,7 @@ const ResumeClient = ({
     if (localStorage.getItem("stage_3")) {
       //-------------Skill-------------------
       JSON.parse(stage_3_ls)?.map((item: Stage_3_skill) =>
-        data.skill.map((each: SkillsState) =>
+        skill_redux?.map((each: SkillsState) =>
           each.index === item.match_index_1st
             ? each?.Skill_list.map((each_2: Skill_interface) =>
                 each_2.skillIndex === item.match_index_2nd &&
@@ -121,14 +121,14 @@ const ResumeClient = ({
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage_3_ls, data]);
+  }, [stage_3_ls, data, skill_redux]);
 
   useEffect(() => {
     // 1. initialize ALL job description to 0
     if (localStorage.getItem("stage_3")) {
       //-------------Work-------------------
       JSON.parse(stage_3_ls)?.map((item: Stage_3_work) =>
-        data.work.map((each: WorkExpState) =>
+        work_redux?.map((each: WorkExpState) =>
           each.index === item.match_index_1st
             ? each?.JobDescription?.map((each_2: Job_Description_interface) =>
                 each_2.rowIndex === item.match_index_2nd &&
@@ -152,14 +152,14 @@ const ResumeClient = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage_3_ls, data]);
+  }, [stage_3_ls, data, work_redux]);
 
   useEffect(() => {
     // 1. initialize ALL job description to 0
     if (localStorage.getItem("stage_3")) {
       //-------------Project-------------------
       JSON.parse(stage_3_ls)?.map((item: Stage_3_project) =>
-        data.project.map((each: ProjectState) =>
+        project_redux?.map((each: ProjectState) =>
           each.index === item.match_index_1st
             ? each?.ProjectDescription?.map(
                 (each_2: Project_Description_interface) =>
@@ -184,7 +184,7 @@ const ResumeClient = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage_3_ls, data]);
+  }, [stage_3_ls, data, project_redux]);
 
   return (
     <div className=" bg-gray-300 relative" key={search}>
