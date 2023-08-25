@@ -214,9 +214,8 @@ export default function Revalidate() {
       );
       //After everything update the Client side page
     }
+    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     setLoading(false);
-    // dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
-    router.refresh();
   };
 
   const WorkRevalidateHandler = async () => {
@@ -299,6 +298,7 @@ export default function Revalidate() {
         }
       }
     }
+    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     setLoading(false);
   };
   const ProjectRevalidateHandler = async () => {
@@ -382,8 +382,10 @@ export default function Revalidate() {
         }
       }
     }
+    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     setLoading(false);
   };
+
   const ProjectTechniqueRevalidateHandler = async () => {
     setLoading(true);
 
@@ -475,6 +477,7 @@ export default function Revalidate() {
         }
       }
     }
+    dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
     setLoading(false);
   };
 
@@ -492,9 +495,7 @@ export default function Revalidate() {
           <Button onClick={SkillRevalidateHandler}>Skill</Button>
           <Button onClick={WorkRevalidateHandler}>Work</Button>
           <Button onClick={ProjectRevalidateHandler}>Project</Button>
-          <Button onClick={ProjectTechniqueRevalidateHandler}>
-            Project Technique
-          </Button>
+          <Button onClick={ProjectTechniqueRevalidateHandler}>Technique</Button>
         </ButtonGroup>
       </div>
     </div>

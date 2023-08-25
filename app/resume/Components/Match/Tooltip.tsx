@@ -50,8 +50,6 @@ export default function CustomedTooltip({
 
   let temp_array: any[] = [];
 
-
-
   //---------------------
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -155,7 +153,7 @@ export default function CustomedTooltip({
       setOutline(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [force_to_update_redux, stage_3_ls]);
+  }, [force_to_update_redux]);
 
   //-------------------------------------------
   const [change, isChange] = useState<boolean>(false);
@@ -175,9 +173,7 @@ export default function CustomedTooltip({
               each.technique === description &&
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
-                ? (setOn(true),
-                  setOutline(true),
-                  temp_array.push(each.match_sentence))
+                ? (setOn(true), setOutline(true))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
@@ -190,9 +186,7 @@ export default function CustomedTooltip({
               JSON.stringify(each.user_data) === JSON.stringify(description) &&
               //To avoid duplication
               temp_array.includes(each.match_sentence) === false
-                ? (setOn(true),
-                  setOutline(true),
-                  temp_array.push(each.match_sentence))
+                ? (setOn(true), setOutline(true))
                 : //This means that the row description is not included in the "stage_3" ----^
                   null;
             });
@@ -211,9 +205,7 @@ export default function CustomedTooltip({
                 ) &&
                 //To avoid duplication
                 temp_array.includes(each.match_sentence) === false
-                  ? (setOn(true),
-                    setOutline(true),
-                    temp_array.push(each.match_sentence))
+                  ? (setOn(true), setOutline(true))
                   : //This means that the row description is not included in the "stage_3" ----v
                     null
               );
@@ -228,9 +220,7 @@ export default function CustomedTooltip({
                 each.user_data === description &&
                 //To avoid duplication
                 temp_array.includes(each.match_sentence) === false
-                  ? (setOn(true),
-                    setOutline(true),
-                    temp_array.push(each.match_sentence))
+                  ? (setOn(true), setOutline(true))
                   : //This means that the row description is not included in the "stage_3" ----^
                     null;
               });
