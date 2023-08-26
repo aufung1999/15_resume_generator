@@ -1,13 +1,11 @@
 export default function Loading() {
   return (
-    <div className="flex w-full justify-center">
-      <div
-        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-        role="status"
-      >
-        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-          Loading...
-        </span>
+    <div
+      className={`fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-800 `}
+    >
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="animate-spin w-8 h-8 border-t-4 border-blue-500"></div>
+        <p className="mt-3 text-center">Loading...</p>
       </div>
     </div>
   );
