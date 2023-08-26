@@ -119,10 +119,10 @@ const Resume = forwardRef((props, ref: any) => {
       {/* //rename the print Default Name */}
       <title>Hello</title>
 
-      <div className=" absolute top-0 right-0 z-20 text-sm">
-        <span>{contact_redux.OpentoWork}</span>
+      <div className=" absolute top-0 right-0 z-20 text-xs">
+        <span className=" font-bold">*{contact_redux.OpentoWork}</span>
         <span> </span>
-        <span>{contact_redux.Sponsorship}</span>
+        <span className=" font-bold">*{contact_redux.Sponsorship}</span>
       </div>
 
       <DragDropContext onDragEnd={handleOnDragEnd}>
