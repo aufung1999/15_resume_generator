@@ -39,6 +39,7 @@ export default function CustomedTooltip({
 
   const [on, setOn] = useState<boolean | null>(null);
   const [outline, setOutline] = useState<boolean>(false);
+  const [bold, setBold] = useState<boolean>(false);
 
   const [target, setTarget] = useState<any>(null);
   const [matches, setMatches] = useState<any>(null);
@@ -306,7 +307,9 @@ export default function CustomedTooltip({
         whichSection === "skill" && outline
           ? " border-b-2 border-slate-300"
           : ""
-      } ${target?.includes(hover_des_redux) ? " bg-green-300" : ""}`}
+      } ${whichSection === "skill" && bold ? " font-bold" : ""} ${
+        target?.includes(hover_des_redux) ? " bg-green-300" : ""
+      }`}
     >
       {on && control_highlight_dsiplay ? (
         <Tooltip
@@ -318,6 +321,7 @@ export default function CustomedTooltip({
                     <Button onClick={() => setOutline(!outline)}>
                       Underline
                     </Button>
+                    <Button onClick={() => setBold(!bold)}>Bold</Button>
                   </div>
                   <div className="flex border h-full z-20">
                     <div>

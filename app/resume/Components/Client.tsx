@@ -194,7 +194,7 @@ const ResumeClient = ({
   };
 
   return (
-    <div className=" bg-gray-300 relative" key={search}>
+    <div className=" bg-slate-700 relative" key={search}>
       <div
         id="boundary"
         className="flex flex-col border-8 border-green-300 justify-center relative w-full "
@@ -272,13 +272,16 @@ const ResumeClient = ({
                   <Revalidate />
                 </div>
               )}
-              <div className="p-4 flex w-full justify-end">
+              <div className=" flex w-full justify-end">
                 <Button
                   onClick={toggleSidebar}
-                  className="w-8 h-8 p-0 m-0 mb-4 text-white hover:text-yellow-300"
+                  className="w-8 h-8 p-0 m-0 mb-4 flex justify-end border-2 rounded"
                   minimal
                 >
-                  <Icon className=" text-red" icon={sidebarOpen ? "chevron-left" : "chevron-right"} />
+                  <Icon
+                    className=" bg-white rounded"
+                    icon={sidebarOpen ? "chevron-right" : "chevron-left"}
+                  />
                 </Button>
               </div>
             </div>
