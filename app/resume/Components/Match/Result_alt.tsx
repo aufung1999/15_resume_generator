@@ -12,7 +12,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import {
   add_display,
-  cleanUp_display_redux,
   leave_hover_des,
   on_hover_des,
   remove_display,

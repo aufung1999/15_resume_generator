@@ -158,7 +158,8 @@ const analyseSlice = createSlice({
         target.count = target?.count - 1;
       }
     },
-    cleanUp_display_redux: (state) => {
+
+    rest_display_redux: (state) => {
       state.display = [];
     },
     on_hover_des: (state, action) => {
@@ -201,7 +202,7 @@ export const {
   init_display,
   add_display,
   remove_display,
-  cleanUp_display_redux,
+  rest_display_redux,
   on_hover_des,
   leave_hover_des,
   FORCE_to_UPDATE,

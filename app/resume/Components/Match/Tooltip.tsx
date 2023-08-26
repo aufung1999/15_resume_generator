@@ -8,11 +8,21 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   Switc_years_in_skill_show,
   add_display,
-  cleanUp_display_redux,
   remove_display,
 } from "@/slices/resumeSlice";
 import { RootState } from "@/store/store";
 import extractTerms from "@/components/analyze/Functions/extractTerms";
+import {
+  Job_Description_interface,
+  Project_Description_interface,
+  Skill_interface,
+  Stage_3_project,
+  Stage_3_skill,
+  Stage_3_work,
+} from "@/utils/interfaces";
+import { SkillsState } from "@/slices/skillsSlice";
+import { WorkExpState } from "@/slices/workSlice";
+import { ProjectState } from "@/slices/projectsSlice";
 
 export default function CustomedTooltip({
   index_1st,
@@ -215,8 +225,8 @@ export default function CustomedTooltip({
             if (index_2nd) {
               JSON.parse(stage_3_ls).map((each: any) => {
                 //index
-                // each.match_index_1st === index_1st &&
-                // each.match_index_2nd === index_2nd &&
+                each.match_index_1st === index_1st &&
+                each.match_index_2nd === index_2nd &&
                 //or only text
                 each.user_data === description &&
                 //To avoid duplication
@@ -237,6 +247,14 @@ export default function CustomedTooltip({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description, text]);
+
+  //-------------------------------------
+  //-------------------------------------
+  //-------------------------------------
+
+  //-------------------------------------
+  //-------------------------------------
+  //-------------------------------------
 
   // local property to change the year
   useEffect(() => {

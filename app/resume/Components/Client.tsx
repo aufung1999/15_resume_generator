@@ -14,9 +14,9 @@ import DisplayResultBoard from "./Match/DisplayResultBoard";
 import {
   FORCE_to_UPDATE,
   add_display,
-  cleanUp_display_redux,
   control_Highlight_Dsiplay,
   init_display,
+  rest_display_redux,
 } from "@/slices/resumeSlice";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -95,6 +95,7 @@ const ResumeClient = ({
   }, [resumeID]);
 
   useEffect(() => {
+    //--------------------------------Skill---------------------------
     if (localStorage.getItem("stage_3")) {
       //-------------Skill-------------------
       JSON.parse(stage_3_ls)?.map((item: Stage_3_skill) =>
@@ -120,11 +121,7 @@ const ResumeClient = ({
         )
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage_3_ls, data, skill_redux]);
-
-  useEffect(() => {
-    // 1. initialize ALL job description to 0
+    //--------------------------------Work---------------------------
     if (localStorage.getItem("stage_3")) {
       //-------------Work-------------------
       JSON.parse(stage_3_ls)?.map((item: Stage_3_work) =>
@@ -151,11 +148,7 @@ const ResumeClient = ({
       );
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage_3_ls, data, work_redux]);
-
-  useEffect(() => {
-    // 1. initialize ALL job description to 0
+    //--------------------------------Project---------------------------
     if (localStorage.getItem("stage_3")) {
       //-------------Project-------------------
       JSON.parse(stage_3_ls)?.map((item: Stage_3_project) =>
@@ -183,8 +176,12 @@ const ResumeClient = ({
       );
     }
 
+    return () => {
+      // This cleanup function will run when the component unmounts
+      dispatch(rest_display_redux()); // Dispatch the resetUser action to reset the state
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage_3_ls, data, project_redux]);
+  }, [stage_3_ls, skill_redux, work_redux, project_redux]);
 
   //----------------Side Bar---------------------------------
   const [sidebarOpen, setSidebarOpen] = useState(true);

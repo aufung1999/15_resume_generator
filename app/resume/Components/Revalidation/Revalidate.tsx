@@ -7,7 +7,6 @@ import { Paper, ButtonGroup, Button } from "@mui/material";
 import { RootState } from "@/store/store";
 import {
   FORCE_to_UPDATE,
-  cleanUp_display_redux,
   editResume_stage_4,
 } from "@/slices/resumeSlice";
 import compare from "@/components/analyze/Functions/compare";
