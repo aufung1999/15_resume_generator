@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import ReactToPrint from "react-to-print";
-import { Button } from "@blueprintjs/core";
+import { Button, Icon } from "@blueprintjs/core";
 import Resume from "./Resume";
 import useDragger from "./Match/useDragger";
 import ResultBoard from "./Match/ResultBoard";
@@ -186,6 +186,13 @@ const ResumeClient = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage_3_ls, data, project_redux]);
 
+  //----------------Side Bar---------------------------------
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className=" bg-gray-300 relative" key={search}>
       <div
@@ -202,64 +209,81 @@ const ResumeClient = ({
 
             <div className=" flex flex-col">
               <Toaster />
-
-              <ReactToPrint
-                onAfterPrint={async () => {
-                  //1. convert the html-to-image
-                  htmlToImage
-                    .toPng(componentRef.current)
-                    .then(async (dataUrl) => {
-                      //2. after getting the string of result, fetch it to mongoDB
-                      await fetch(`/api/user/resume`, {
-                        method: "POST",
-                        //need to stringify all the thing BEFORE send to API
-                        body: JSON.stringify({
-                          image: dataUrl,
-                          stage_3: localStorage.getItem("stage_3"),
-                          matches: localStorage.getItem("matches"),
-                          unmatches: localStorage.getItem("unmatches"),
-                          job_details: localStorage.getItem("job_details"),
-                          resumeID: resumeID,
-                        }),
-                        headers: {
-                          "Content-type": "application/json; charset=UTF-8",
-                        },
-                      })
-                        .then((res) => res.json())
-                        .then((data) => toast.success(data?.message))
-                        // .then((res) => toast.success(res?.json().message))
-                        .catch(() => toast.error("Cannot Delete!"));
-                    })
-                    .catch((error) => {
-                      console.error("oops, something went wrong!", error);
-                    });
-                }}
-                // removeAfterPrint={true}
-                trigger={() => (
-                  <ButtonGroup
-                    aria-label="Disabled elevation buttons"
-                    className="bg-white w-full"
-                  >
-                    <Button
-                      className="w-full"
-                      onMouseEnter={() =>
-                        dispatch(control_Highlight_Dsiplay({ select: true }))
-                      }
-                      onMouseLeave={() =>
-                        dispatch(control_Highlight_Dsiplay({ select: false }))
-                      }
-                    >
-                      Print/Save
-                    </Button>
-                  </ButtonGroup>
-                )}
-                content={() => componentRef.current}
-              />
-              <StatisticBoard />
-              <DisplayResultBoard />
-              <Revalidate />
+              {sidebarOpen && (
+                <div className=" flex flex-col">
+                  <ReactToPrint
+                    onAfterPrint={async () => {
+                      //1. convert the html-to-image
+                      htmlToImage
+                        .toPng(componentRef.current)
+                        .then(async (dataUrl) => {
+                          //2. after getting the string of result, fetch it to mongoDB
+                          await fetch(`/api/user/resume`, {
+                            method: "POST",
+                            //need to stringify all the thing BEFORE send to API
+                            body: JSON.stringify({
+                              image: dataUrl,
+                              stage_3: localStorage.getItem("stage_3"),
+                              matches: localStorage.getItem("matches"),
+                              unmatches: localStorage.getItem("unmatches"),
+                              job_details: localStorage.getItem("job_details"),
+                              resumeID: resumeID,
+                            }),
+                            headers: {
+                              "Content-type": "application/json; charset=UTF-8",
+                            },
+                          })
+                            .then((res) => res.json())
+                            .then((data) => toast.success(data?.message))
+                            // .then((res) => toast.success(res?.json().message))
+                            .catch(() => toast.error("Cannot Delete!"));
+                        })
+                        .catch((error) => {
+                          console.error("oops, something went wrong!", error);
+                        });
+                    }}
+                    // removeAfterPrint={true}
+                    trigger={() => (
+                      <ButtonGroup
+                        aria-label="Disabled elevation buttons"
+                        className="bg-white w-full"
+                      >
+                        <Button
+                          className="w-full"
+                          onMouseEnter={() =>
+                            dispatch(
+                              control_Highlight_Dsiplay({ select: true })
+                            )
+                          }
+                          onMouseLeave={() =>
+                            dispatch(
+                              control_Highlight_Dsiplay({ select: false })
+                            )
+                          }
+                        >
+                          Print/Save
+                        </Button>
+                      </ButtonGroup>
+                    )}
+                    content={() => componentRef.current}
+                  />
+                  <StatisticBoard />
+                  <DisplayResultBoard />
+                  <Revalidate />
+                </div>
+              )}
+              <div className="p-4 flex w-full justify-end">
+                <Button
+                  onClick={toggleSidebar}
+                  className="w-8 h-8 p-0 m-0 mb-4 text-white hover:text-yellow-300"
+                  minimal
+                >
+                  <Icon className=" text-red" icon={sidebarOpen ? "chevron-left" : "chevron-right"} />
+                </Button>
+              </div>
             </div>
           </div>
+
           {/* 2. Resume Part */}
           <div className="flex justify-center">
             <Resume ref={componentRef} />

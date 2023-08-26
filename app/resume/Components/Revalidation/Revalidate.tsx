@@ -18,6 +18,7 @@ import {
   update_revalidation,
 } from "@/slices/skillsSlice";
 import LoadingModal from "./LoadingModal";
+import { Icon } from "@blueprintjs/core";
 
 export default function Revalidate() {
   const dispatch = useDispatch();
@@ -481,6 +482,13 @@ export default function Revalidate() {
     setLoading(false);
   };
 
+  //----------------Side Bar---------------------------------
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div
       className={
@@ -489,6 +497,7 @@ export default function Revalidate() {
     >
       {/* Conditionally render the LoadingModal */}
       <LoadingModal loading={loading} />
+
       <div className=" bg-white inline-block">
         <div>Revalidation</div>
         <ButtonGroup aria-label=" elevation buttons " className="flex flex-col">
