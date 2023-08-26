@@ -30,6 +30,7 @@ export default async function Page({
     objectiveData,
     skillData,
     projectData,
+    resumeData,
     API_Key;
 
   if (session) {
@@ -48,44 +49,56 @@ export default async function Page({
       email: session?.user?.email,
     });
     if (workData) {
-      workData = workData.map((each:any) => db.convertDocToObj(each));
+      workData = workData.map((each: any) => db.convertDocToObj(each));
+      // console.log(workData);
     }
     //fetch Education
     educationData = await Education.find({
       email: session?.user?.email,
     });
     if (educationData) {
-      educationData = educationData.map((each:any) => db.convertDocToObj(each));
+      educationData = educationData.map((each: any) =>
+        db.convertDocToObj(each)
+      );
     }
     //fetch Award
     awardData = await Award.find({
       email: session?.user?.email,
     });
     if (awardData) {
-      awardData = awardData.map((each:any) => db.convertDocToObj(each));
+      awardData = awardData.map((each: any) => db.convertDocToObj(each));
     }
     //fetch Objective
     objectiveData = await Objective.find({
       email: session?.user?.email,
     });
     if (objectiveData) {
-      objectiveData = objectiveData.map((each:any) => db.convertDocToObj(each));
+      objectiveData = objectiveData.map((each: any) =>
+        db.convertDocToObj(each)
+      );
     }
     //fetch Skill
     skillData = await Skill.find({
       email: session?.user?.email,
     });
     if (skillData) {
-      skillData = skillData.map((each:any) => db.convertDocToObj(each));
+      skillData = skillData.map((each: any) => db.convertDocToObj(each));
     }
     //fetch Project
     projectData = await Project.find({
       email: session?.user?.email,
     });
     if (projectData) {
-      projectData = projectData.map((each:any) => db.convertDocToObj(each));
+      projectData = projectData.map((each: any) => db.convertDocToObj(each));
     }
-
+    //fetch Resume
+    resumeData = await Resume.findOne({
+      email: session?.user?.email,
+      _id: params.resumeID,
+    });
+    if (resumeData) {
+      resumeData = db.convertDocToObj(resumeData);
+    }
     //fetch APIKey
     API_Key = await APIKey.findOne({
       email: session?.user?.email,
@@ -93,12 +106,27 @@ export default async function Page({
 
     clientData = {
       contact: contactData,
-      work: workData,
+      work:
+        ((resumeData?.Work?.length !== 0 ||
+          resumeData?.Work !== null ||
+          resumeData?.Work !== undefined) &&
+          resumeData?.Work) ||
+        workData,
       education: educationData,
       award: awardData,
-      skill: skillData,
+      skill:
+        ((resumeData?.Skill?.length !== 0 ||
+          resumeData?.Skill !== null ||
+          resumeData?.Skill !== undefined) &&
+          resumeData?.Skill) ||
+        skillData,
       objective: objectiveData,
-      project: projectData,
+      project:
+        ((resumeData?.Project?.length !== 0 ||
+          resumeData?.Project !== null ||
+          resumeData?.Project !== undefined) &&
+          resumeData?.Project) ||
+        projectData,
       api_key: API_Key,
     };
     return (
@@ -107,7 +135,10 @@ export default async function Page({
           <EditResume data={JSON.parse(JSON.stringify(clientData))} />
         </div>
         <div className=" w-9/12 overflow-auto relative no-scrollbar z-10">
-          <ResumeClient resumeID={params.resumeID} data={JSON.parse(JSON.stringify(clientData))} />
+          <ResumeClient
+            resumeID={params.resumeID}
+            data={JSON.parse(JSON.stringify(clientData))}
+          />
         </div>
       </div>
     );

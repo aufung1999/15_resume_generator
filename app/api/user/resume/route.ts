@@ -18,8 +18,22 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     // Signed in
     const body = await req.json();
     // console.log(body);
-    const { image, stage_3, matches, unmatches, job_details, resumeID } = body;
+    const {
+      image,
+      stage_3,
+      matches,
+      unmatches,
+      job_details,
+      resumeID,
+      work,
+      project,
+      skill,
+    } = body;
+
+    console.log("--------------------------");
     console.log("resumeID: " + resumeID);
+    console.log(work);
+    console.log("--------------------------");
 
     db.connect();
     if (resumeID) {
@@ -30,6 +44,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         Stage_3: stage_3,
         Matches: matches,
         Unmatches: unmatches,
+        Work: work,
+        Project: project,
+        Skill: skill,
       };
 
       db.disconnect();
@@ -57,6 +74,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Stage_3: stage_3,
           Matches: matches,
           Unmatches: unmatches,
+          Work: work,
+          Project: project,
+          Skill: skill,
         };
 
         db.disconnect();
@@ -75,6 +95,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Unmatches: unmatches,
           Job_Details: job_details,
           Response: "",
+          Work: work,
+          Project: project,
+          Skill: skill,
         });
         db.disconnect();
         await resume.save();

@@ -9,6 +9,10 @@ const resumeSchema = new mongoose.Schema(
     Unmatches: { type: String, required: false },
     Job_Details: { type: String, required: false },
     Response: { type: String, required: false },
+    Work: { type: Array, required: false },
+    Project: { type: Array, required: false },
+    Skill: { type: Array, required: false },
+
   },
   { timestamps: true }
 );

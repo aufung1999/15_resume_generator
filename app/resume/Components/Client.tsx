@@ -225,6 +225,9 @@ const ResumeClient = ({
                               unmatches: localStorage.getItem("unmatches"),
                               job_details: localStorage.getItem("job_details"),
                               resumeID: resumeID,
+                              work: work_redux,
+                              project: project_redux,
+                              skill: skill_redux,
                             }),
                             headers: {
                               "Content-type": "application/json; charset=UTF-8",
