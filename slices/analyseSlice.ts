@@ -54,6 +54,17 @@ const analyseSlice = createSlice({
     editAnalyse_website: (state, action) => {
       state.website = action.payload;
     },
+    delete_stage_2: (state, action) => {
+      const { sentence } = action.payload;
+
+      const filteredArray = state.stage_2?.filter(
+        (each: string) => each !== sentence
+      );
+
+      if (filteredArray) {
+        state.stage_2 = filteredArray;
+      }
+    },
   },
 });
 
@@ -65,5 +76,6 @@ export const {
   editAnalyse_job_position,
   editAnalyse_company_name,
   editAnalyse_website,
+  delete_stage_2,
 } = analyseSlice.actions;
 export default analyseSlice.reducer;
