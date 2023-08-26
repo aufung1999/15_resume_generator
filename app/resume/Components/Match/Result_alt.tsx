@@ -45,9 +45,7 @@ export default function Result_alt({
       each.count > 0 &&
         temp_matches.includes(each.match_sentence) === false &&
         temp_matches.push(each.match_sentence);
-      each.count === 0 &&
-        temp_unmatches.includes(each.match_sentence) === false &&
-        temp_unmatches.push(each.match_sentence);
+      each.count === 0 && temp_unmatches.push(each.match_sentence);
     });
     if (whatToGet === "matches") {
       setGet(temp_matches);
@@ -62,8 +60,8 @@ export default function Result_alt({
       // }
     }
     return () => {
-      temp_matches = [];
-      temp_unmatches = [];
+      // temp_matches = [];
+      // temp_unmatches = [];
       setGet([]);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

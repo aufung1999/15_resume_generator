@@ -74,14 +74,27 @@ const ResumeClient = ({
   //initialize in Result Board
   const [dispatchOnce, setOnce] = useState<boolean>(false);
 
+  // useEffect(() => {
+  //   // 0 . Only Dispatch Once
+  //   // if (dispatchOnce === false) {
+  //   //   dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+  //   //   dispatch(cleanUp_display_redux());
+  //   //   setOnce(true);
+  //   // }
+  //   // 1. initialize ALL job description to 0
+  //   if (typeof window !== "undefined") {
+  //     JSON.parse(matches_ls).map((each: string) =>
+  //       dispatch(init_display({ sentence: each }))
+  //     );
+  //     JSON.parse(unmatches_ls).map((each: string) =>
+  //       dispatch(init_display({ sentence: each }))
+  //     );
+  //   }
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [resumeID]);
+
   useEffect(() => {
-    // 0 . Only Dispatch Once
-    // if (dispatchOnce === false) {
-    //   dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
-    //   dispatch(cleanUp_display_redux());
-    //   setOnce(true);
-    // }
-    // 1. initialize ALL job description to 0
     if (typeof window !== "undefined") {
       JSON.parse(matches_ls).map((each: string) =>
         dispatch(init_display({ sentence: each }))
@@ -90,11 +103,6 @@ const ResumeClient = ({
         dispatch(init_display({ sentence: each }))
       );
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resumeID]);
-
-  useEffect(() => {
     //--------------------------------Skill---------------------------
     if (localStorage.getItem("stage_3")) {
       //-------------Skill-------------------
