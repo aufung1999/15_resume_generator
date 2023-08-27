@@ -6,9 +6,7 @@ import db from "@/utils/db";
 import Education from "@/models/Education";
 import { EducationState } from "@/slices/educationSlice";
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
