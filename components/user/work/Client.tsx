@@ -25,6 +25,7 @@ export default function WorkClient({ data }: any) {
 
   // Save to server
   const SubmitHandler = () => {
+    console.log("works_redux");
     console.log(works_redux);
     fetch("/api/user/work", {
       method: "POST",
