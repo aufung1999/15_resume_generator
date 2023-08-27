@@ -38,6 +38,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const body = await req.json();
 
     await db.connect();
+
     body.map(async (each: WorkExpState) => {
       const {
         index,
