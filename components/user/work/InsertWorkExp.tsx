@@ -193,16 +193,20 @@ const InputComp = ({ index, data }: Props) => {
       },
     })
       .then(() => {
-        toast.success("User Works Updated!");
         //After Submit Btn pressed
         //2. update redux side
         dispatch(cleanUp_Work_redux());
         works_redux.map((each: WorkExpState) => {
           dispatch(initialize_WorkData(each));
         });
+      })
+      .then(() => {
         //1. update client side
         setCopy(rest);
         setRemind(false);
+      })
+      .then(() => {
+        toast.success("User Works Updated!");
       })
       .catch(() => toast.error("Cannot Update!"));
 
