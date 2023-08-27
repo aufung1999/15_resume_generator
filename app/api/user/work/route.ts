@@ -47,6 +47,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         StartDate,
         EndDate,
         JobDescription,
+        
       } = each;
 
       //use the email from "Next-auth" to find the data in "Work" collection

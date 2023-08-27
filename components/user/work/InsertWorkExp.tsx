@@ -135,7 +135,7 @@ const InputComp = ({ index, data }: Props) => {
   const target_work: WorkExpState | any = works_redux.find(
     (each) => each.index === index
   );
-  const { display_in_Resume, ...rest } = target_work;
+  const { display_in_Resume, ...rest } = target_work || {};
 
   const [row, editRow] = useState<any>([]);
 
