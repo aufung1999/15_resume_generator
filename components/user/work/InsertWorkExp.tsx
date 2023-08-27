@@ -199,10 +199,10 @@ const InputComp = ({ index, data }: Props) => {
         setCopy(rest);
         setRemind(false);
         //2. update redux side
-        // dispatch(cleanUp_Work_redux());
-        // works_redux.map((each: WorkExpState) => {
-        //   dispatch(initialize_WorkData(each));
-        // });
+        dispatch(cleanUp_Work_redux());
+        works_redux.map((each: WorkExpState) => {
+          dispatch(initialize_WorkData(each));
+        });
       })
       .catch(() => toast.error("Cannot Update!"));
 
