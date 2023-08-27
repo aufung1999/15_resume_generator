@@ -71,7 +71,7 @@ export default function EachResume({
     setResponseValue(each.response);
 
     return () => setResponseValue(null);
-  }, [resumes_csr, dispatch, each.response]);
+  }, [resumes_csr, each.response]);
 
   const ClickHandler = (received: string) => {
     //Jump to another tab
@@ -81,7 +81,6 @@ export default function EachResume({
   //==========================================================================
   const toggleButtonHandler = async (_id: string, value: string) => {
     console.log(_id, value);
-    setResponseValue(value);
 
     await fetch(`/api/user/resume/${_id}`, {
       method: "POST",
@@ -95,7 +94,9 @@ export default function EachResume({
       },
     })
       .then((res) => res.json())
-      .then((data) => toast.success(data?.message))
+      .then((data) => {
+        toast.success(data?.message), setResponseValue(value);
+      })
       // .then((res) => toast.success(res?.json().message))
       .catch(() => toast.error("Cannot Update Response Status!"));
 
