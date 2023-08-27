@@ -39,7 +39,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
     await db.connect();
 
-    body.map(async (each: WorkExpState) => {
+    await body.map(async (each: WorkExpState) => {
       const {
         index,
         CompanyName,
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         index: index,
       });
 
-      console.log('exist: ' + exist)
+      console.log("exist: " + exist);
       //***/
 
       //if "Work" collction has the data
