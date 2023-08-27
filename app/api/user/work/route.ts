@@ -6,7 +6,7 @@ import db from "@/utils/db";
 import Work from "@/models/Work";
 import { WorkExpState } from "@/slices/workSlice";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const body = await req.json();
 
     await Promise.all(
-      await body.map(async (each: WorkExpState) => {
+      body.map(async (each: WorkExpState) => {
         await db.connect();
         const {
           index,
