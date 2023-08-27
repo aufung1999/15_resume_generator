@@ -56,6 +56,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         index: index,
       });
 
+      console.log('exist: ' + exist)
       //***/
 
       //if "Work" collction has the data
