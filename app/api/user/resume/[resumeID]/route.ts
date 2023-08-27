@@ -56,10 +56,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         Response: response,
       };
 
-      await db.disconnect();
       await Resume.findOneAndUpdate(filter, update, {
         new: true,
       });
+      await db.disconnect();
       return NextResponse.json({ message: "Response Value Updated" });
     }
   } else {
