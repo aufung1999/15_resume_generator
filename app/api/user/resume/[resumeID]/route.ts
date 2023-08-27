@@ -47,7 +47,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     // console.log(body);
     const { resumeID, response } = body;
 
-    db.connect();
+    await db.connect();
     if (resumeID) {
       console.log("resumeID: " + resumeID);
       console.log("response: " + response);
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         Response: response,
       };
 
-      db.disconnect();
+      await db.disconnect();
       await Resume.findOneAndUpdate(filter, update, {
         new: true,
       });

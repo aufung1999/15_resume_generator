@@ -35,7 +35,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     console.log(work);
     console.log("--------------------------");
 
-    db.connect();
+    await db.connect();
     if (resumeID) {
       console.log("unmatches: " + unmatches);
       const filter = { email: session?.user?.email, _id: resumeID };
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         Skill: skill,
       };
 
-      db.disconnect();
+      await db.disconnect();
       await Resume.findOneAndUpdate(filter, update, {
         new: true,
       });
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Skill: skill,
         };
 
-        db.disconnect();
+        await db.disconnect();
         await Resume.findOneAndUpdate(filter, update, {
           new: true,
         });
@@ -99,7 +99,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Project: project,
           Skill: skill,
         });
-        db.disconnect();
+        await db.disconnect();
         await resume.save();
         return NextResponse.json({ message: "Resume Saved" });
       }

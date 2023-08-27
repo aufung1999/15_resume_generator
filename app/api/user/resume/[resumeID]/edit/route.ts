@@ -19,14 +19,14 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const { resumeID, job_details } = body;
     console.log(resumeID);
 
-    db.connect();
+    await db.connect();
     if (resumeID) {
       const filter = { _id: resumeID };
       const update = {
         Job_Details: JSON.stringify(job_details),
       };
 
-      db.disconnect();
+      await db.disconnect();
       await Resume.findOneAndUpdate(filter, update, {
         new: true,
       });

@@ -19,11 +19,11 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     // console.log(body);
     const { resumeID } = body;
 
-    db.connect();
+    await db.connect();
     if (resumeID) {
       const filter = { _id: resumeID };
 
-      db.disconnect();
+      await db.disconnect();
       await Resume.deleteOne(filter);
       return NextResponse.json({ message: "Resume Deleted" });
     }
