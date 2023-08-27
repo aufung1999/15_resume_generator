@@ -47,7 +47,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         StartDate,
         EndDate,
         JobDescription,
-        
       } = each;
 
       //use the email from "Next-auth" to find the data in "Work" collection
@@ -84,12 +83,12 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         const work = await new Work({
           email: session?.user?.email,
           index: index,
-          CompanyName: CompanyName,
-          Position: Position,
-          current: current,
-          StartDate: StartDate,
-          EndDate: EndDate,
-          JobDescription: JobDescription,
+          CompanyName: CompanyName || null,
+          Position: Position || null,
+          current: current || null,
+          StartDate: StartDate || null,
+          EndDate: EndDate || null,
+          JobDescription: JobDescription || null,
         });
 
         await work.save();
@@ -104,4 +103,3 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   }
   res.end();
 }
-

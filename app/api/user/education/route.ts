@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
 
 export async function POST(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
-  console.log("session?.user?.email: " + session?.user?.email);
+  // console.log("session?.user?.email: " + session?.user?.email);
   if (session) {
     const body = await req.json();
 
