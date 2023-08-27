@@ -108,8 +108,7 @@ export default function EachResume({
     const filtered_resumes_csr = resumes_csr.filter(
       (each: any) => each._id === _id
     );
-    setResumes(filtered_resumes_csr);
-    setResumes_copy(filtered_resumes_csr);
+
     await fetch(`/api/user/resume/${_id}/delete`, {
       method: "POST",
       //need to stringify all the thing BEFORE send to API
@@ -123,6 +122,8 @@ export default function EachResume({
       .then((res) => res.json())
       .then((data) => {
         toast.success(data?.message);
+        setResumes(filtered_resumes_csr);
+        setResumes_copy(filtered_resumes_csr);
       })
       // .then((res) => toast.success(res?.json().message))
       .catch(() => toast.error("Cannot delete Resume"));
@@ -465,7 +466,9 @@ export default function EachResume({
                   <div className="flex">
                     <b className="flex text-xs">Company</b>
                     <b className="text-xs">:</b>
-                    <div className="text-xs">{each.job_details.company_name}</div>
+                    <div className="text-xs">
+                      {each.job_details.company_name}
+                    </div>
                   </div>
                   <div className="flex">
                     <b className=" flex text-xs">Website</b>
@@ -475,7 +478,9 @@ export default function EachResume({
                   <div className="flex">
                     <b className="  flex text-xs">Date</b>
                     <b className="text-xs">:</b>
-                    <div className="text-xs">{each.createdAt.substring(0, 10)}</div>
+                    <div className="text-xs">
+                      {each.createdAt.substring(0, 10)}
+                    </div>
                   </div>
                 </div>
               </div>
