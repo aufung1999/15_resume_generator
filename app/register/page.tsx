@@ -34,7 +34,7 @@ export default function Register() {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-      .then(() => toast.error("User has been registered!"))
+      .then(() => toast.success("User has been registered!"))
       .catch(() => toast.error("Something went wrong!"));
   };
 

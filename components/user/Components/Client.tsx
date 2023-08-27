@@ -39,7 +39,7 @@ export default function UserClient({ data }: any) {
 
   const dispatch = useDispatch();
 
-  const switch_tab = useSelector((state: RootState) => state.control.switch);
+  const switch_tab = useSelector((state: RootState) => state?.control.switch);
 
   // console.log(data);
 
@@ -60,15 +60,15 @@ export default function UserClient({ data }: any) {
 
   //-----------Get the user info. from redux-----------------
   const Viewport_redux = useSelector(
-    (state: RootState) => state.control.Viewport
+    (state: RootState) => state?.control.Viewport
   );
 
-  const contact_redux = useSelector((state: RootState) => state.contact);
-  const work_redux = useSelector((state: RootState) => state.work);
-  const education_redux = useSelector((state: RootState) => state.education);
-  const skills_redux = useSelector((state: RootState) => state.skills);
-  const objectives_redux = useSelector((state: RootState) => state.objectives);
-  const projects_redux = useSelector((state: RootState) => state.projects);
+  const contact_redux = useSelector((state: RootState) => state?.contact);
+  const work_redux = useSelector((state: RootState) => state?.work);
+  const education_redux = useSelector((state: RootState) => state?.education);
+  const skills_redux = useSelector((state: RootState) => state?.skills);
+  const objectives_redux = useSelector((state: RootState) => state?.objectives);
+  const projects_redux = useSelector((state: RootState) => state?.projects);
 
   //------Track Component
   //    ----Contact
@@ -187,7 +187,7 @@ export default function UserClient({ data }: any) {
       {/* rendered page */}
       <div className="w-full relative">
         <div className={switch_tab === "Resumes" ? " w-full" : "  hidden "}>
-          <Resumes resumeData={data.resumeData} />
+          <Resumes resumeData={data?.resumeData} />
         </div>
 
         {switch_tab === "User_Info" && (
@@ -215,7 +215,7 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux.contact === "true" ? "opacity-100" : ""
+                          Viewport_redux?.contact === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("contact")}
                       >
@@ -223,14 +223,14 @@ export default function UserClient({ data }: any) {
                       </Button>
 
                       <div className="transition-opacity duration-500 opacity-100 hover:opacity-50">
-                        {Viewport_redux.contact === "true" && (
+                        {Viewport_redux?.contact === "true" && (
                           <div className="w-full grid grid-cols-10  ">
                             {/* 1. first name */}
                             <div className=" col-span-1" />
                             <li className=" col-span-1" />
                             <div className=" col-span-6">First Name</div>
                             <div className=" col-span-1">
-                              {contact_redux.FirstName !== "" ? (
+                              {contact_redux?.FirstName !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -243,7 +243,7 @@ export default function UserClient({ data }: any) {
                             <li className=" col-span-1" />
                             <div className=" col-span-6">Last Name</div>
                             <div className=" col-span-1">
-                              {contact_redux.LastName !== "" ? (
+                              {contact_redux?.LastName !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -256,7 +256,7 @@ export default function UserClient({ data }: any) {
                             <li className=" col-span-1" />
                             <div className=" col-span-6">Phone</div>
                             <div className=" col-span-1">
-                              {contact_redux.PhoneNumber !== "" ? (
+                              {contact_redux?.PhoneNumber !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -269,7 +269,7 @@ export default function UserClient({ data }: any) {
                             <li className=" col-span-1" />
                             <div className=" col-span-6">Email</div>
                             <div className=" col-span-1">
-                              {contact_redux.Email !== "" ? (
+                              {contact_redux?.Email !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -282,7 +282,7 @@ export default function UserClient({ data }: any) {
                             <li className=" col-span-1" />
                             <div className=" col-span-6">Portfolio</div>
                             <div className=" col-span-1">
-                              {contact_redux.Portfolio !== "" ? (
+                              {contact_redux?.Portfolio !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -295,7 +295,7 @@ export default function UserClient({ data }: any) {
                             <li className=" col-span-1" />
                             <div className=" col-span-6">LinkedIn</div>
                             <div className=" col-span-1">
-                              {contact_redux.LinkedIn !== "" ? (
+                              {contact_redux?.LinkedIn !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -308,7 +308,7 @@ export default function UserClient({ data }: any) {
                             <li className=" col-span-1" />
                             <div className=" col-span-6">Github</div>
                             <div className=" col-span-1">
-                              {contact_redux.GitHub !== "" ? (
+                              {contact_redux?.GitHub !== "" ? (
                                 <span>✔️</span>
                               ) : (
                                 <span>❔</span>
@@ -324,7 +324,7 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux.objective === "true"
+                          Viewport_redux?.objective === "true"
                             ? "opacity-100"
                             : ""
                         }`}
@@ -333,13 +333,13 @@ export default function UserClient({ data }: any) {
                         Objective
                       </Button>
 
-                      {Viewport_redux.objective === "true" && (
+                      {Viewport_redux?.objective === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
                           <div className=" col-span-6">
                             {" "}
-                            {objectives_redux.length} Objectives
+                            {objectives_redux?.length} Objectives
                           </div>
                           <div className=" col-span-1" />
                           <div className=" col-span-1" />
@@ -351,19 +351,19 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux.skill === "true" ? "opacity-100" : ""
+                          Viewport_redux?.skill === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("skill")}
                       >
                         Skill
                       </Button>
 
-                      {Viewport_redux.skill === "true" && (
+                      {Viewport_redux?.skill === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
                           <div className=" col-span-6">
-                            <div>{skills_redux.length} Skills</div>
+                            <div>{skills_redux?.length} Skills</div>
                           </div>
                           <div className=" col-span-1" />
                           <div className=" col-span-1" />
@@ -375,7 +375,7 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux.education === "true"
+                          Viewport_redux?.education === "true"
                             ? "opacity-100"
                             : ""
                         }`}
@@ -384,12 +384,12 @@ export default function UserClient({ data }: any) {
                         Education
                       </Button>
 
-                      {Viewport_redux.education === "true" && (
+                      {Viewport_redux?.education === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
                           <div className=" col-span-6">
-                            <div>{education_redux.length} Educations</div>
+                            <div>{education_redux?.length} Educations</div>
                           </div>
                           <div className=" col-span-1" />
                           <div className=" col-span-1" />
@@ -401,19 +401,19 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux.work === "true" ? "opacity-100" : ""
+                          Viewport_redux?.work === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("work")}
                       >
                         Work
                       </Button>
 
-                      {Viewport_redux.work === "true" && (
+                      {Viewport_redux?.work === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
                           <div className=" col-span-6">
-                            <div>{work_redux.length} Works</div>
+                            <div>{work_redux?.length} Works</div>
                           </div>
                           <div className=" col-span-1" />
                           <div className=" col-span-1" />
@@ -425,19 +425,19 @@ export default function UserClient({ data }: any) {
                     <div className=" w-full ">
                       <Button
                         className={`focus:opacity-100 opacity-50 w-full ${
-                          Viewport_redux.project === "true" ? "opacity-100" : ""
+                          Viewport_redux?.project === "true" ? "opacity-100" : ""
                         }`}
                         onClick={() => scrollToSection("project")}
                       >
                         Project
                       </Button>
 
-                      {Viewport_redux.project === "true" && (
+                      {Viewport_redux?.project === "true" && (
                         <div className="w-full grid grid-cols-10 ">
                           <div className=" col-span-1" />
                           <li className=" col-span-1" />
                           <div className=" col-span-6">
-                            <div>{projects_redux.length} Projects</div>
+                            <div>{projects_redux?.length} Projects</div>
                           </div>
                           <div className=" col-span-1" />
                           <div className=" col-span-1" />
@@ -457,7 +457,7 @@ export default function UserClient({ data }: any) {
                 >
                   Contact
                 </div>
-                <ContactClient data={data.contact} />
+                <ContactClient data={data?.contact} />
               </div>
 
               {/* <TrackedComponent id="objective"> */}
@@ -465,7 +465,7 @@ export default function UserClient({ data }: any) {
                 <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
                   Objectives
                 </div>
-                <ObjectiveClient data={data.objective} />
+                <ObjectiveClient data={data?.objective} />
               </div>
               {/* </TrackedComponent> */}
 
@@ -474,7 +474,7 @@ export default function UserClient({ data }: any) {
                 <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
                   Technical Skills
                 </div>
-                <SkillClient data={data.skill} />
+                <SkillClient data={data?.skill} />
               </div>
               {/* </TrackedComponent> */}
 
@@ -483,7 +483,7 @@ export default function UserClient({ data }: any) {
                 <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
                   Education
                 </div>
-                <EducationClient data={data.education} />
+                <EducationClient data={data?.education} />
               </div>
               {/* </TrackedComponent> */}
 
@@ -492,7 +492,7 @@ export default function UserClient({ data }: any) {
                 <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
                   Working Experience
                 </div>
-                <WorkClient data={data.work} />
+                <WorkClient data={data?.work} />
               </div>
               {/* </TrackedComponent> */}
 
@@ -501,7 +501,7 @@ export default function UserClient({ data }: any) {
                 <div className=" text-lg font-semibold flex justify-center bg-[#102C57] text-white py-2">
                   Projects
                 </div>
-                <ProjectClient data={data.project} />
+                <ProjectClient data={data?.project} />
               </div>
               {/* </TrackedComponent> */}
             </div>
