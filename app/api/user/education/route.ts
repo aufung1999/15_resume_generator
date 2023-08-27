@@ -38,6 +38,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
 
+    await db.connect();
     body.map(async (each: EducationState) => {
       const {
         index,
@@ -50,12 +51,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       } = each;
 
       //use the email from "Next-auth" to find the data in "Education" collection
-      await db.connect();
       const exist = await Education.findOne({
         email: session?.user?.email,
         index: index,
       });
-      await db.disconnect();
       //***/
 
       //if "Education" collction has the data
@@ -96,6 +95,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       }
       //***/
     });
+    await db.disconnect();
 
     return NextResponse.json({ message: "Hello" });
   } else {

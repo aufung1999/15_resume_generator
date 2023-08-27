@@ -49,10 +49,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         Skill: skill,
       };
 
-      await db.disconnect();
       await Resume.findOneAndUpdate(filter, update, {
         new: true,
       });
+      await db.disconnect();
       return NextResponse.json({ message: "Resume Updated" });
     }
 
@@ -79,10 +79,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Skill: skill,
         };
 
-        await db.disconnect();
         await Resume.findOneAndUpdate(filter, update, {
           new: true,
         });
+        await db.disconnect();
         return NextResponse.json({ message: "Resume Updated" });
       }
 
@@ -99,8 +99,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Project: project,
           Skill: skill,
         });
-        await db.disconnect();
         await resume.save();
+        await db.disconnect();
         return NextResponse.json({ message: "Resume Saved" });
       }
     }

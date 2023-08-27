@@ -63,7 +63,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const exist = await Contact.findOne({
       email: session?.user?.email,
     });
-    await db.disconnect();
+
     //***/
 
     //if "Contact" collction has the data
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
     await contact.save();
     //***/
-
+    await db.disconnect();
     return NextResponse.json({ message: "Contact Saved" });
   } else {
     // Not Signed in
