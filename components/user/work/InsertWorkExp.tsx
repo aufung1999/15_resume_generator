@@ -352,14 +352,14 @@ const InputComp = ({ index, data }: Props) => {
 //Parent Component: X
 export default function InsertWorkExp({ data }: any) {
   const pathname = usePathname();
-  const work = useSelector((state: RootState) => state.work);
+  const work_redux = useSelector((state: RootState) => state.work);
   const dispatch = useDispatch();
   const [workExps, editWorkExps] = useState<any>([]);
 
   useEffect(() => {
     dispatch(cleanUp_Work_redux());
+    console.log("data: " + JSON.stringify(data, null, 1));
     if (data) {
-      // console.log("data: " + JSON.stringify(data, null, 1));
       data.map((each: WorkExpState) => {
         dispatch(initialize_WorkData(each));
       });
@@ -370,15 +370,15 @@ export default function InsertWorkExp({ data }: any) {
 
   useEffect(() => {
     let temp_arr: any[] = [];
-    if (work.length !== 0) {
-      work.map((each: any) => {
+    if (work_redux.length !== 0) {
+      work_redux.map((each: any) => {
         temp_arr.push(
           <InputComp key={each.index} index={each.index} data={data} />
         );
       });
       editWorkExps(temp_arr);
     }
-  }, [work, data]);
+  }, [work_redux, data]);
 
   //---------------ADD/DELETE-------------------
   const addExp = () => {
