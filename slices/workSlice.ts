@@ -36,6 +36,7 @@ const workSlice = createSlice({
       let match_index: any[] = [];
 
       if (typeof window !== "undefined") {
+        //localStorage.getItem("stage_3") Exisit
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
           const stage_3_ls: any = localStorage.getItem("stage_3");
@@ -91,6 +92,24 @@ const workSlice = createSlice({
           Data?.display_in_Resume === true
             ? state.unshift(Data)
             : state.push(Data);
+        }
+
+        //localStorage.getItem("stage_3") DOES NOT Exisit----------------------------------------
+        if (!localStorage.getItem("stage_3")) {
+          //set the data format
+          let Data = {
+            index: index,
+            CompanyName: CompanyName,
+            Position: Position,
+            current: current,
+            StartDate: StartDate,
+            EndDate: EndDate,
+            JobDescription: JobDescription,
+            display_in_Resume: false,
+          };
+
+          //-------------------------------------------------------------------------------
+          state.push(Data);
         }
       }
     },
@@ -208,6 +227,6 @@ export const {
   addrow,
   deleterow,
   editJobDescription,
-  switch_display_in_Resume
+  switch_display_in_Resume,
 } = workSlice.actions;
 export default workSlice.reducer;

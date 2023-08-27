@@ -25,6 +25,7 @@ const projectsSlice = createSlice({
       let match_index: any[] = [];
 
       if (typeof window !== "undefined") {
+        //localStorage.getItem("stage_3") Exisit
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
           const stage_3_ls: any = localStorage.getItem("stage_3");
@@ -79,6 +80,21 @@ const projectsSlice = createSlice({
           Data?.display_in_Resume === true
             ? state.unshift(Data)
             : state.push(Data);
+        }
+
+        //localStorage.getItem("stage_3") DOES NOT Exisit----------------------------------------
+        if (!localStorage.getItem("stage_3")) {
+          //set the data format
+          let Data = {
+            index: index,
+            ProjectName: ProjectName,
+            Techniques: Techniques,
+            ProjectDescription: ProjectDescription,
+            display_in_Resume: false,
+          };
+
+          //-------------------------------------------------------------------------------
+          state.push(Data);
         }
       }
     },
