@@ -21,7 +21,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   const exist = await User.findOne({
     email: email,
   });
-  await db.disconnect();
 
   if (exist) {
     throw new Error("Email already exists");
@@ -36,6 +35,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   });
 
   await user.save();
+  await db.disconnect();
 
   return NextResponse.json(user);
 }
