@@ -195,14 +195,14 @@ const InputComp = ({ index, data }: Props) => {
       .then(() => {
         toast.success("User Works Updated!");
         //After Submit Btn pressed
-        //1. update client side
-        setCopy(rest);
-        setRemind(false);
         //2. update redux side
         dispatch(cleanUp_Work_redux());
         works_redux.map((each: WorkExpState) => {
           dispatch(initialize_WorkData(each));
         });
+        //1. update client side
+        setCopy(rest);
+        setRemind(false);
       })
       .catch(() => toast.error("Cannot Update!"));
 
