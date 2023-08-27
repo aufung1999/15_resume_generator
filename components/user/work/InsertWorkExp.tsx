@@ -76,12 +76,6 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   );
   //***/
 
-  const [dynamicGrow, setDynamicGrow] = useState(false);
-
-  useEffect(() => {
-    setDynamicGrow(true);
-  }, [row]);
-
   return (
     <div key={rowIndex}>
       <ReactQuill

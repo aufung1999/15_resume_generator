@@ -21,13 +21,14 @@ export default function WorkClient({ data }: any) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const works = useSelector((state: RootState) => state.work);
+  const works_redux = useSelector((state: RootState) => state.work);
 
   // Save to server
   const SubmitHandler = () => {
+    console.log(works_redux);
     fetch("/api/user/work", {
       method: "POST",
-      body: JSON.stringify(works),
+      body: JSON.stringify(works_redux),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
