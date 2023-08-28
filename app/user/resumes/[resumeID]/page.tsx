@@ -16,7 +16,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 
 import { useRouter } from "next/navigation";
 import Loading from "../../loading";
-import data from "@/utils/data";
+// import data from "@/utils/data";
 
 import toast, { Toaster } from "react-hot-toast";
 
