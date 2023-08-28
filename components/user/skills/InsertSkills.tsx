@@ -156,28 +156,28 @@ const TermComp = ({ index, data }: Props) => {
         />
       </div>
 
-      <div className=" grid grid-cols-2 gap-x-3 h-full">
+      <div className=" grid grid-cols-2 gap-x-3 ">
         {skill?.Skill_list?.map((each: any, i: number) => (
-          <div key={i} className="h-full">
+          <div key={i} className="flex">
             {/* <div>{each.skill}</div> */}
             {/* hide the index */}
             {/* <div>{each.skillIndex}</div> */}
 
-            <div className="flex relative h-full">
-              <InputGroup
-                onChange={(e) =>
-                  dispatch(
-                    editSkillName({
-                      index: index,
-                      skillIndex: each.skillIndex,
-                      skill: e.target.value,
-                    })
-                  )
-                }
-                value={each ? each?.skill : ""}
-                fill
-              />
+            <InputGroup
+              onChange={(e) =>
+                dispatch(
+                  editSkillName({
+                    index: index,
+                    skillIndex: each.skillIndex,
+                    skill: e.target.value,
+                  })
+                )
+              }
+              value={each ? each?.skill : ""}
+              fill
+            />
 
+            <div>
               <Button
                 style={{
                   backgroundColor: "rgba(255,0,0,0.6)",
@@ -314,7 +314,7 @@ export default function InsertSkills({ data }: any) {
             <div className="flex relative w-full">
               {each}
               <Button
-                className="absolute top-0 right-0 "
+                className="absolute top-0 right-0"
                 style={{
                   backgroundColor: "rgba(255,0,0,0.6)",
                   borderRadius: "25% 10%",
