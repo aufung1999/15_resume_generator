@@ -39,51 +39,53 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const body = await req.json();
     console.log("body: " + JSON.stringify(body, null, 1));
 
-    await db.connect();
-    body.map(async (each: SkillsState) => {
-      const { index, term, Skill_list } = each;
-      console.log("term: " + term);
-      //use the email from "Next-auth" to find the data in "Skill" collection
-      const exist = await Skill.findOne({
-        email: session?.user?.email,
-        index: index,
-      });
-
-      //***/
-
-      //if "Skill" collction has the data
-      if (exist) {
-        console.log("exist: " + JSON.stringify(exist, null, 1));
-        console.log("Skill_list: " + JSON.stringify(Skill_list, null, 1));
-
-        const filter = { email: session?.user?.email, index: index };
-
-        const update = {
-          term: term,
-          Skill_list: Skill_list,
-        };
-
-        // `doc` is the document _after_ `update` was applied because of
-        // `new: true`
-        await Skill.findOneAndUpdate(filter, update, {
-          new: true,
-        });
-      }
-      //***/
-
-      //if "Skill" collction does NOT have the data
-      if (!exist) {
-        const skill = await new Skill({
+    await Promise.all(
+      body.map(async (each: SkillsState) => {
+        await db.connect();
+        const { index, term, Skill_list } = each;
+        console.log("term: " + term);
+        //use the email from "Next-auth" to find the data in "Skill" collection
+        const exist = await Skill.findOne({
           email: session?.user?.email,
           index: index,
-          term: term,
-          Skill_list: Skill_list,
         });
 
-        await skill.save();
-      }
-      //***/
-    });
+        //***/
+
+        //if "Skill" collction has the data
+        if (exist) {
+          console.log("exist: " + JSON.stringify(exist, null, 1));
+          console.log("Skill_list: " + JSON.stringify(Skill_list, null, 1));
+
+          const filter = { email: session?.user?.email, index: index };
+
+          const update = {
+            term: term,
+            Skill_list: Skill_list,
+          };
+
+          // `doc` is the document _after_ `update` was applied because of
+          // `new: true`
+          await Skill.findOneAndUpdate(filter, update, {
+            new: true,
+          });
+        }
+        //***/
+
+        //if "Skill" collction does NOT have the data
+        if (!exist) {
+          const skill = await new Skill({
+            email: session?.user?.email,
+            index: index,
+            term: term,
+            Skill_list: Skill_list,
+          });
+
+          await skill.save();
+        }
+        //***/
+      })
+    );
 
     await db.disconnect();
 
