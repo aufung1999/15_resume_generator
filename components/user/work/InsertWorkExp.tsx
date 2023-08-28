@@ -220,7 +220,7 @@ const InputComp = ({ index, data }: Props) => {
   return (
     <div
       style={{ color: "black" }}
-      className={`w-full h-full
+      className={`w-full h-full 
     ${pathname.split("/").includes("user") ? "px-5" : ""}
     ${remind ? " bg-red-300" : " bg-green-200"}`}
     >
