@@ -3,10 +3,10 @@
 // import db from "@/utils/db";
 // import { NextRequest, NextResponse } from "next/server";
 
-// export async function GET() {
-//   await db.connect();
-//   await User.deleteMany();
-//   await User.insertMany(data.users);
-//   await db.disconnect();
-//   return NextResponse.json({ message: "Hello" });
-// }
+export async function GET() {
+  //   await db.connect();
+  //   await User.deleteMany();
+  //   await User.insertMany(data.users);
+  //   await db.disconnect();
+  //   return NextResponse.json({ message: "Hello" });
+}
