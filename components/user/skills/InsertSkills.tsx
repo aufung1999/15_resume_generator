@@ -312,7 +312,7 @@ export default function InsertSkills({ data }: any) {
         {terms?.map((each: any, i: number) => (
           <div key={i} className="w-full border-2 border-green-300 h-full flex">
             <div className="flex relative w-full">
-              <div>{each}</div>
+              {each}
               <Button
                 className="absolute top-0 right-0 "
                 style={{

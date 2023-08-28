@@ -272,7 +272,7 @@ export default function InsertEducation({ data }: any) {
       >
         {educations?.map((each: any, i: number) => (
           <div key={i} className="w-full border-2 border-green-300 h-full">
-            <div className=" relative">
+            <div className=" relative h-full">
               {each}
               <Button
                 className="absolute top-0 right-0 "
