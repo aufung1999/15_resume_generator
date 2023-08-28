@@ -108,7 +108,7 @@ const InputComp = ({ index, data }: Props) => {
   const target_project: ProjectState | any = projects_redux.find(
     (each) => each.index === index
   );
-  const { display_in_Resume, ...rest } = target_project;
+  const { display_in_Resume, ...rest } = target_project || {};
 
   const [row, editRow] = useState<any>([]);
 
@@ -179,16 +179,19 @@ const InputComp = ({ index, data }: Props) => {
       },
     })
       .then(() => {
-        toast.success("User Projects Updated!"),
-          //After Submit Btn pressed
-          //1. update client side
-          setCopy(rest);
-        setRemind(false);
         //2. update redux side
         dispatch(cleanUp_Project_redux());
         projects_redux.map((each: ProjectState) => {
           dispatch(initialize_ProjectData(each));
         });
+      })
+      .then(() => {
+        //1. update client side
+        setCopy(rest);
+        setRemind(false);
+      })
+      .then(() => {
+        toast.success("User Projects Updated!");
       })
       .catch(() => toast.error("Cannot Update!"));
 

@@ -6,9 +6,7 @@ import db from "@/utils/db";
 import Project from "@/models/Project";
 import { ProjectState } from "@/slices/projectsSlice";
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
@@ -37,49 +35,52 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
     // console.log("body: " + JSON.stringify(body, null, 1));
-    await db.connect();
-    body.map(async (each: ProjectState) => {
-      const { index, ProjectName, Techniques, ProjectDescription } = each;
 
-      //use the email from "Next-auth" to find the data in "Project" collection
+    await Promise.all(
+      body.map(async (each: ProjectState) => {
+        await db.connect();
+        const { index, ProjectName, Techniques, ProjectDescription } = each;
 
-      const exist = await Project.findOne({
-        email: session?.user?.email,
-        index: index,
-      });
-      //***/
+        //use the email from "Next-auth" to find the data in "Project" collection
 
-      //if "Project" collction has the data
-      if (exist) {
-        const filter = { email: session?.user?.email, index: index };
-        const update = {
-          ProjectName: ProjectName,
-          Techniques: Techniques,
-          ProjectDescription: ProjectDescription,
-        };
-
-        // `doc` is the document _after_ `update` was applied because of
-        // `new: true`
-        await Project.findOneAndUpdate(filter, update, {
-          new: true,
-        });
-      }
-      //***/
-
-      //if "Project" collction does NOT have the data
-      if (!exist) {
-        const project = await new Project({
+        const exist = await Project.findOne({
           email: session?.user?.email,
           index: index,
-          ProjectName: ProjectName,
-          Techniques: Techniques,
-          ProjectDescription: ProjectDescription,
         });
+        //***/
 
-        await project.save();
-      }
-      //***/
-    });
+        //if "Project" collction has the data
+        if (exist) {
+          const filter = { email: session?.user?.email, index: index };
+          const update = {
+            ProjectName: ProjectName,
+            Techniques: Techniques,
+            ProjectDescription: ProjectDescription,
+          };
+
+          // `doc` is the document _after_ `update` was applied because of
+          // `new: true`
+          await Project.findOneAndUpdate(filter, update, {
+            new: true,
+          });
+        }
+        //***/
+
+        //if "Project" collction does NOT have the data
+        if (!exist) {
+          const project = await new Project({
+            email: session?.user?.email,
+            index: index,
+            ProjectName: ProjectName || null,
+            Techniques: Techniques || null,
+            ProjectDescription: ProjectDescription || null,
+          });
+
+          await project.save();
+        }
+        //***/
+      })
+    );
 
     await db.disconnect();
     return NextResponse.json({ message: "Updaed" });
