@@ -16,7 +16,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     await db.connect();
 
     const query = { index: body, email: session?.user?.email };
-    Project.deleteOne(query)
+    await Project.deleteOne(query)
       .then(function () {
         console.log("Data deleted"); // Success
       })
