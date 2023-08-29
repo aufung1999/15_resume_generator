@@ -42,14 +42,15 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                     index_2nd={each.rowIndex}
                     description={each?.Row}
                     text={
-                      <div className="flex">
-                        <li className=" inline-flex overflow-hidden" />
+                      <div className="flex ">
+                        <li className="" />
                         <div
-                          className=" flex "
+                          className=""
                           dangerouslySetInnerHTML={{
                             __html: each?.Row,
                           }}
                         />
+
                         {/* <div>{each?.Row}</div> */}
                       </div>
                     }
