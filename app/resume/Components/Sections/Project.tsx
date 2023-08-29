@@ -22,24 +22,24 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
       <SectionHeading title="Project" />
       {/* Drag and Drop */}
       <DragDropContext onDragEnd={handleOnDragEnd}>
-      {/* Drag and Drop */}
+        {/* Drag and Drop */}
         <Droppable droppableId="projects">
           {/* Drag and Drop */}
           {(provided: any) => (
             <div
-            className="projects"
-            // {/* Drag and Drop */}
-            {...provided.droppableProps}
-            // {/* Drag and Drop */}
-            ref={provided.innerRef}
+              className="projects"
+              // {/* Drag and Drop */}
+              {...provided.droppableProps}
+              // {/* Drag and Drop */}
+              ref={provided.innerRef}
             >
               {project.map((item: ProjectState, i: number) => {
                 return (
                   <Draggable
-                  // {/* Drag and Drop */}
-                  key={item.index}
-                  draggableId={item.index}
-                  index={i}
+                    // {/* Drag and Drop */}
+                    key={item.index}
+                    draggableId={item.index}
+                    index={i}
                   >
                     {(provided) => (
                       <div
@@ -49,12 +49,17 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <div className="flex justify-between items-center">
+                        <div className=" flex justify-between">
                           <SectionTitle label={item.ProjectName} />
+
                           <CustomedTooltip
                             index_1st={item.index}
                             index_2nd={null}
-                            text={item.Techniques}
+                            text={
+                              <div className=" text-[12px]">
+                                {item.Techniques}
+                              </div>
+                            }
                             description={item.Techniques}
                             whichSection="project"
                           />
