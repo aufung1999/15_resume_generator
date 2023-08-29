@@ -317,7 +317,7 @@ export default function CustomedTooltip({
 
   return (
     <div
-      className={`${
+      className={` p-0 ${
         hover_des_redux === "" && on && control_highlight_dsiplay
           ? " bg-yellow-300"
           : ""
