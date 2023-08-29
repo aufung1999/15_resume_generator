@@ -61,18 +61,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       }
     }
 
-    // if (resumeID) {
-    //   const filter = { _id: resumeID };
-    //   const update = {
-    //     Job_Details: JSON.stringify(job_details),
-    //   };
-
-    //   await db.disconnect();
-    //   await Resume.findOneAndUpdate(filter, update, {
-    //     new: true,
-    //   });
-    //   return NextResponse.json({ message: "job Details Updated" });
-    // }
   } else {
     // Not Signed in
     res.status(401);

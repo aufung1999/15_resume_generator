@@ -183,6 +183,7 @@ const InputComp = ({ index, data }: Props) => {
   //***/
 
   //---------------Save to Server-------------------
+  //1. User Side/Not Resume Side
   const SubmitHandler = () => {
     fetch("/api/user/work", {
       //add this route later
@@ -217,10 +218,49 @@ const InputComp = ({ index, data }: Props) => {
     });
   };
 
+  //2. Resume Side
+  const SubmitHandler_Resume = async () => {
+    // console.log('pathname: ' + pathname.split("/").at(-1))
+    await fetch(`/api/user/resume/${pathname.split("/").at(-1)}/edit/project`, {
+      method: "POST",
+      //need to stringify all the thing BEFORE send to API
+      body: JSON.stringify({
+        resumeID: pathname.split("/").at(-1),
+        job_details: localStorage.getItem("job_details"),
+        work: works_redux,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => {
+        //2. update redux side
+        dispatch(cleanUp_Work_redux());
+        works_redux.map((each: WorkExpState) => {
+          dispatch(initialize_WorkData(each));
+        });
+      })
+      .then(() => {
+        //1. update client side
+        setCopy(rest);
+        setRemind(false);
+      })
+      .then(() => {
+        toast.success("User Works Updated!");
+      })
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
+
   return (
     <div
       style={{ color: "black" }}
-      className={`w-full h-full 
+      className={`w-full h-full
     ${pathname.split("/").includes("user") ? "px-5" : ""}
     ${remind ? " bg-red-300" : " bg-green-200"}`}
     >
@@ -331,9 +371,22 @@ const InputComp = ({ index, data }: Props) => {
             + Add Job Description
           </button>
           {remind && (
-            <Button className="" intent="warning" onClick={SubmitHandler}>
-              Submit
-            </Button>
+            <>
+              {pathname.split("/").includes("user") && (
+                <Button className="" intent="warning" onClick={SubmitHandler}>
+                  Submit
+                </Button>
+              )}
+              {pathname.split("/").includes("resume") && (
+                <Button
+                  className=""
+                  intent="warning"
+                  onClick={SubmitHandler_Resume}
+                >
+                  Submit
+                </Button>
+              )}
+            </>
           )}
         </div>
       </FormGroup>

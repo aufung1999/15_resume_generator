@@ -17,17 +17,16 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   if (session) {
     // Signed in
     const body = await req.json();
-    const { resumeID, job_details, project } = body;
+    const { resumeID, job_details, work } = body;
     console.log(resumeID);
 
     await db.connect();
     await mongoose.connect(MONGODB_URL);
 
-    await db.connect();
     if (resumeID) {
       const filter = { email: session?.user?.email, _id: resumeID };
       const update = {
-        Project: project,
+        Work: work,
       };
 
       await Resume.findOneAndUpdate(filter, update, {
@@ -51,7 +50,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Job_Details: job_details,
         };
         const update = {
-          Project: project,
+          Work: work,
         };
 
         await Resume.findOneAndUpdate(filter, update, {
@@ -62,18 +61,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       }
     }
 
-    // if (resumeID) {
-    //   const filter = { _id: resumeID };
-    //   const update = {
-    //     Job_Details: JSON.stringify(job_details),
-    //   };
-
-    //   await db.disconnect();
-    //   await Resume.findOneAndUpdate(filter, update, {
-    //     new: true,
-    //   });
-    //   return NextResponse.json({ message: "job Details Updated" });
-    // }
   } else {
     // Not Signed in
     res.status(401);
