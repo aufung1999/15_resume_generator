@@ -219,8 +219,9 @@ const ResumeClient = ({
                 <div className=" flex flex-col">
                   <ReactToPrint
                     onBeforePrint={() =>
-                      (document.title =
-                        JSON.parse(job_details_ls)?.job_position)
+                      (document.title = job_details_ls
+                        ? JSON.parse(job_details_ls)?.job_position
+                        : "Resume")
                     }
                     onAfterPrint={async () => {
                       //1. convert the html-to-image
