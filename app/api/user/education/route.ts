@@ -7,6 +7,9 @@ import Education from "@/models/Education";
 import { EducationState } from "@/slices/educationSlice";
 
 export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
+
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);

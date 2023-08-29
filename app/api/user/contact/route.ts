@@ -8,9 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import Contact from "@/models/Contact";
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
+
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);

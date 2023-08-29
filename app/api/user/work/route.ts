@@ -7,10 +7,9 @@ import Work from "@/models/Work";
 import { WorkExpState } from "@/slices/workSlice";
 
 export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
