@@ -101,6 +101,7 @@ const TermComp = ({ index, data }: Props) => {
   //***/
 
   //---------------Save to Server-------------------
+  //1. User Side/Not Resume Side
   const SubmitHandler = () => {
     fetch("/api/user/skill", {
       //add this route later
@@ -111,16 +112,18 @@ const TermComp = ({ index, data }: Props) => {
       },
     })
       .then(() => {
-        toast.success("User Skills Updated!"),
-          //After Submit Btn pressed
-          //1. update client side
-          setCopy(skill),
-          setRemind(false);
         //2. update redux side
         dispatch(cleanUp_Skill_redux());
         skills_redux.map((each: SkillsState) => {
           dispatch(initialize_SkillData(each));
         });
+      })
+      .then(() => {
+        //1. update client side
+        setCopy(skill), setRemind(false);
+      })
+      .then(() => {
+        toast.success("User Projects Updated!");
       })
       .catch(() => toast.error("Cannot Update!"));
 
@@ -131,6 +134,43 @@ const TermComp = ({ index, data }: Props) => {
     });
   };
 
+  //2. Resume Side
+  const SubmitHandler_Resume = async () => {
+    // console.log('pathname: ' + pathname.split("/").at(-1))
+    await fetch(`/api/user/resume/${pathname.split("/").at(-1)}/edit/project`, {
+      method: "POST",
+      //need to stringify all the thing BEFORE send to API
+      body: JSON.stringify({
+        resumeID: pathname.split("/").at(-1),
+        job_details: localStorage.getItem("job_details"),
+        project: skills_redux,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => {
+        //2. update redux side
+        dispatch(cleanUp_Skill_redux());
+        skills_redux.map((each: SkillsState) => {
+          dispatch(initialize_SkillData(each));
+        });
+      })
+      .then(() => {
+        //1. update client side
+        setCopy(skill), setRemind(false);
+      })
+      .then(() => {
+        toast.success("User Projects Updated!");
+      })
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
   return (
     <div
       className={`
@@ -213,9 +253,22 @@ const TermComp = ({ index, data }: Props) => {
           + Add Item
         </button>
         {remind && (
-          <Button className="" intent="warning" onClick={SubmitHandler}>
-            Submit
-          </Button>
+          <>
+            {pathname.split("/").includes("user") && (
+              <Button className="" intent="warning" onClick={SubmitHandler}>
+                Submit
+              </Button>
+            )}
+            {pathname.split("/").includes("resume") && (
+              <Button
+                className=""
+                intent="warning"
+                onClick={SubmitHandler_Resume}
+              >
+                Submit
+              </Button>
+            )}
+          </>
         )}
       </div>
     </div>

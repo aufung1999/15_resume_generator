@@ -169,7 +169,7 @@ const InputComp = ({ index, data }: Props) => {
   //***/
 
   //---------------Save to Server-------------------
-  //1. User Side
+  //1. User Side/Not Resume Side
   const SubmitHandler = async () => {
     await fetch("/api/user/project", {
       //add this route later
@@ -324,13 +324,15 @@ const InputComp = ({ index, data }: Props) => {
                   Submit
                 </Button>
               )}
-              <Button
-                className=""
-                intent="warning"
-                onClick={SubmitHandler_Resume}
-              >
-                Submit
-              </Button>
+              {pathname.split("/").includes("resume") && (
+                <Button
+                  className=""
+                  intent="warning"
+                  onClick={SubmitHandler_Resume}
+                >
+                  Submit
+                </Button>
+              )}
             </>
           )}
         </div>
