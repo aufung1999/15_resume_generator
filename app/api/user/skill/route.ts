@@ -6,9 +6,10 @@ import db from "@/utils/db";
 import Skill from "@/models/Skill";
 import { SkillsState } from "@/slices/skillsSlice";
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
+
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
@@ -39,9 +40,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const body = await req.json();
     console.log("body: " + JSON.stringify(body, null, 1));
 
+    await db.connect();
     await Promise.all(
       body.map(async (each: SkillsState) => {
-        await db.connect();
+        await mongoose.connect(MONGODB_URL);
         const { index, term, Skill_list } = each;
         console.log("term: " + term);
         //use the email from "Next-auth" to find the data in "Skill" collection

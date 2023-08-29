@@ -6,7 +6,7 @@ import db from "@/utils/db";
 import Education from "@/models/Education";
 import { EducationState } from "@/slices/educationSlice";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
@@ -36,9 +36,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
 
+    await db.connect();
     await Promise.all(
       body.map(async (each: EducationState) => {
-        await db.connect();
+        await mongoose.connect(MONGODB_URL);
         const {
           index,
           SchoolName,

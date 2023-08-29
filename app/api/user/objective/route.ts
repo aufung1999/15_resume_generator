@@ -41,6 +41,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
     await db.connect();
     body.map(async (each: ObjectiveState) => {
+      await mongoose.connect(MONGODB_URL);
       const { index, ObjectiveDes } = each;
 
       //use the email from "Next-auth" to find the data in "Objective" collection
@@ -64,7 +65,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         await Objective.findOneAndUpdate(filter, update, {
           new: true,
         });
-
       }
       //***/
 

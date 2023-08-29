@@ -39,9 +39,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   if (session) {
     const body = await req.json();
 
+    await db.connect();
     await Promise.all(
       body.map(async (each: WorkExpState) => {
-        await db.connect();
+        await mongoose.connect(MONGODB_URL);
         const {
           index,
           CompanyName,
