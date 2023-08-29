@@ -9,7 +9,6 @@ import { timeConverter } from "../../Functions/timeConvertor";
 import CustomedTooltip from "../Match/Tooltip";
 
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
-
   // Revalidation(experience)
   return (
     <div className="mb-2">
@@ -44,7 +43,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                     description={each?.Row}
                     text={
                       <div className="flex">
-                        <li />
+                        <li className="h-16 overflow-hidden" />
                         <div
                           className=" flex leading-snug "
                           dangerouslySetInnerHTML={{
