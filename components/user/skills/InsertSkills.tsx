@@ -143,7 +143,7 @@ const TermComp = ({ index, data }: Props) => {
       body: JSON.stringify({
         resumeID: pathname.split("/").at(-1),
         job_details: localStorage.getItem("job_details"),
-        project: skills_redux,
+        skill: skills_redux,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",

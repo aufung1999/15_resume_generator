@@ -17,17 +17,16 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   if (session) {
     // Signed in
     const body = await req.json();
-    const { resumeID, job_details, project } = body;
+    const { resumeID, job_details, skill } = body;
     console.log(resumeID);
 
     await db.connect();
     await mongoose.connect(MONGODB_URL);
 
-    await db.connect();
     if (resumeID) {
       const filter = { email: session?.user?.email, _id: resumeID };
       const update = {
-        Project: project,
+        Skill: skill,
       };
 
       await Resume.findOneAndUpdate(filter, update, {
@@ -51,7 +50,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
           Job_Details: job_details,
         };
         const update = {
-          Project: project,
+          Skill: skill,
         };
 
         await Resume.findOneAndUpdate(filter, update, {
