@@ -26,7 +26,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                 <SectionSubtitle label={item.CompanyName} />
               </div>
               <div>
-                <p className="text-sm">
+                <p className="text-[12px]">
                   {timeConverter(Date.parse(item.StartDate))} -
                   {item.current
                     ? "present"
@@ -45,7 +45,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                       <div className="flex ">
                         {/* <li className="" /> */}
                         <div
-                          className=""
+                          className="text-[12px]"
                           dangerouslySetInnerHTML={{
                             __html: each?.Row,
                           }}
