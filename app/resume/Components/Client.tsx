@@ -204,6 +204,7 @@ const ResumeClient = ({
         id="boundary"
         className="flex flex-col border-8 border-green-300 justify-center relative w-full "
       >
+        <title>Resume</title>
         <ResultBoard />
         <div className=" h-a4 border-4 relative">
           {/* 1. The tool list */}
@@ -217,6 +218,10 @@ const ResumeClient = ({
               {sidebarOpen && (
                 <div className=" flex flex-col">
                   <ReactToPrint
+                    onBeforePrint={() =>
+                      (document.title =
+                        JSON.parse(job_details_ls)?.job_position)
+                    }
                     onAfterPrint={async () => {
                       //1. convert the html-to-image
                       htmlToImage

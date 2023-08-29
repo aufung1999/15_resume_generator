@@ -18,6 +18,8 @@ const Resume = forwardRef((props, ref: any) => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
 
+  const job_details_ls = localStorage.getItem("job_details");
+
   const contact_redux = useSelector((state: RootState) => state.contact);
   const work_redux = useSelector((state: RootState) => state.work);
   const education_redux = useSelector((state: RootState) => state.education);
@@ -117,7 +119,7 @@ const Resume = forwardRef((props, ref: any) => {
       key={search}
     >
       {/* //rename the print Default Name */}
-      <title>Hello</title>
+   
 
       <div className=" absolute top-0 right-0 z-20 text-xs">
         <span className=" font-bold">*{contact_redux.OpentoWork}</span>
