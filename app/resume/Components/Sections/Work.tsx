@@ -43,9 +43,9 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                     description={each?.Row}
                     text={
                       <div className="flex">
-                        <li className="h-16 overflow-hidden" />
+                        <li className=" inline-flex overflow-hidden" />
                         <div
-                          className=" flex leading-snug "
+                          className=" flex "
                           dangerouslySetInnerHTML={{
                             __html: each?.Row,
                           }}
