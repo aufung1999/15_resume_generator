@@ -43,7 +43,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                     description={each?.Row}
                     text={
                       <div className="flex ">
-                        <li className="" />
+                        {/* <li className="" /> */}
                         <div
                           className=""
                           dangerouslySetInnerHTML={{
