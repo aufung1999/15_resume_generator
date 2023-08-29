@@ -221,7 +221,7 @@ const InputComp = ({ index, data }: Props) => {
   //2. Resume Side
   const SubmitHandler_Resume = async () => {
     // console.log('pathname: ' + pathname.split("/").at(-1))
-    await fetch(`/api/user/resume/${pathname.split("/").at(-1)}/edit/project`, {
+    await fetch(`/api/user/resume/${pathname.split("/").at(-1)}/edit/work`, {
       method: "POST",
       //need to stringify all the thing BEFORE send to API
       body: JSON.stringify({
