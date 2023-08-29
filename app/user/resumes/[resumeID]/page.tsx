@@ -86,7 +86,7 @@ export default function ResumeDetail({
   const updateHandler = async () => {
     console.log(data_csr);
 
-    await fetch(`/api/user/resume/${params.resumeID}/edit`, {
+    await fetch(`/api/user/resume/${params.resumeID}/edit/job_details`, {
       method: "POST",
       //need to stringify all the thing BEFORE send to API
       body: JSON.stringify({

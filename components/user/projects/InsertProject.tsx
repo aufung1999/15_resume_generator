@@ -169,11 +169,51 @@ const InputComp = ({ index, data }: Props) => {
   //***/
 
   //---------------Save to Server-------------------
-  const SubmitHandler = () => {
-    fetch("/api/user/project", {
+  //1. User Side
+  const SubmitHandler = async () => {
+    await fetch("/api/user/project", {
       //add this route later
       method: "POST",
       body: JSON.stringify(projects_redux),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(() => {
+        //2. update redux side
+        dispatch(cleanUp_Project_redux());
+        projects_redux.map((each: ProjectState) => {
+          dispatch(initialize_ProjectData(each));
+        });
+      })
+      .then(() => {
+        //1. update client side
+        setCopy(rest);
+        setRemind(false);
+      })
+      .then(() => {
+        toast.success("User Projects Updated!");
+      })
+      .catch(() => toast.error("Cannot Update!"));
+
+    startTransition(() => {
+      // Refresh the current route and fetch new data from the server without
+      // losing client-side browser or React state.
+      router.refresh();
+    });
+  };
+
+  //2. Resume Side
+  const SubmitHandler_Resume = async () => {
+    // console.log('pathname: ' + pathname.split("/").at(-1))
+    await fetch(`/api/user/resume/${pathname.split("/").at(-1)}/edit/project`, {
+      method: "POST",
+      //need to stringify all the thing BEFORE send to API
+      body: JSON.stringify({
+        resumeID: pathname.split("/").at(-1),
+        job_details: localStorage.getItem("job_details"),
+        project: projects_redux,
+      }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
@@ -278,9 +318,20 @@ const InputComp = ({ index, data }: Props) => {
             + Add Project Description
           </button>
           {remind && (
-            <Button className="" intent="warning" onClick={SubmitHandler}>
-              Submit
-            </Button>
+            <>
+              {pathname.split("/").includes("user") && (
+                <Button className="" intent="warning" onClick={SubmitHandler}>
+                  Submit
+                </Button>
+              )}
+              <Button
+                className=""
+                intent="warning"
+                onClick={SubmitHandler_Resume}
+              >
+                Submit
+              </Button>
+            </>
           )}
         </div>
       </FormGroup>

@@ -55,6 +55,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
         //if "Project" collction has the data
         if (exist) {
+          console.log("Techniques: " + Techniques);
           const filter = { email: session?.user?.email, index: index };
           const update = {
             ProjectName: ProjectName,
