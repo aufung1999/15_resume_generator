@@ -11,6 +11,9 @@ import bcrypt from "bcryptjs";
 import db from "@/utils/db";
 import { signIn } from "next-auth/react";
 
+const mongoose = require("mongoose");
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -43,6 +46,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         await db.connect();
+        await mongoose.connect(MONGODB_URL);
 
         // check to see if user exists
         const user = await User.findOne({

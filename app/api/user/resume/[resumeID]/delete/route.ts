@@ -6,9 +6,10 @@ import { NextRequest, NextResponse } from "next/server";
 import Resume from "@/models/Resume";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
+
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export async function POST(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
@@ -20,6 +21,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const { resumeID } = body;
 
     await db.connect();
+    await mongoose.connect(MONGODB_URL);
+    
     if (resumeID) {
       const filter = { _id: resumeID };
 

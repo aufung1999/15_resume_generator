@@ -5,6 +5,11 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 import db from "@/utils/db";
 import APIKey from "@/models/APIKey";
 
+export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
+
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
+
 export interface IGetUserAuthInfoRequest extends NextApiRequest {
   json: any; // or any other type
 }
@@ -41,6 +46,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
 
     await db.connect();
+     await mongoose.connect(MONGODB_URL);
+     
     const exist = await APIKey.findOne({
       email: session?.user?.email,
       api_key: API_Key,

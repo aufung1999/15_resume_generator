@@ -14,6 +14,9 @@ import Skill from "@/models/Skill";
 import Project from "@/models/Project";
 import APIKey from "@/models/APIKey";
 
+import mongoose from "mongoose";
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
+
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
@@ -30,6 +33,7 @@ export default async function Page() {
   //check if "Authenticated"
   if (session) {
     await db.connect();
+    await mongoose.connect(MONGODB_URL);
     //fetch Contact
     contactData = await Contact.findOne({
       email: session?.user?.email,

@@ -16,6 +16,8 @@ import Intro_2_Resumes_parts from "@/components/RootPage/Intro_2_Resumes_parts";
 import Banner from "@/components/RootPage/Banner";
 
 import 'intersection-observer';
+import mongoose from "mongoose";
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -31,6 +33,7 @@ export default async function Home() {
   //check if "Authenticated"
   if (session) {
     await db.connect();
+    await mongoose.connect(MONGODB_URL);
     //fetch Contact
     contactData = await Contact.findOne({
       email: session?.user?.email,

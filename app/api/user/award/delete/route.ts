@@ -5,15 +5,18 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/utils/db";
 import Award from "@/models/Award";
 
-export interface IGetUserAuthInfoRequest extends NextApiRequest {
-  json: any; // or any other type
-}
+export const dynamic = "force-dynamic";
+const mongoose = require("mongoose");
+
+const MONGODB_URL: string = process.env.MONGODB_URL as string;
 
 export async function POST(req: NextRequest, res: NextApiResponse) {
   const session = await getServerSession(authOptions);
   if (session) {
     const body = await req.json();
+    
     await db.connect();
+    await mongoose.connect(MONGODB_URL);
 
     const query = { index: body, email: session?.user?.email };
     Award.deleteOne(query)
