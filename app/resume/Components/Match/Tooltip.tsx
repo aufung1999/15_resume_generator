@@ -380,14 +380,14 @@ export default function CustomedTooltip({
             </div>
           }
         >
-          <div>
+          <div className="p-0">
             {text}
             {whichSection === "skill" && years > 0 && <> ({years}+)</>}
           </div>
         </Tooltip>
       ) : (
         // border-b-2 border-color-[##a9a9a9]
-        <div>
+        <div className="p-0">
           {text}
           {whichSection === "skill" && years > 0 && <> ({years}+)</>}
         </div>
