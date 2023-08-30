@@ -47,7 +47,7 @@ export default function SkillsYearsBoard({
                 )
               }
             >
-              +
+              -
             </Button>
           </div>
         ))
