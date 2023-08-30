@@ -7,6 +7,18 @@ import { editLayout } from "@/slices/controlSlice";
 import Login from "../RootPage/Login";
 import Register from "../RootPage/Register";
 
+import { Pacifico, Leckerli_One, Lobster } from "next/font/google";
+
+const leckerli_one = Leckerli_One({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const lobster = Lobster({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 export default function Header() {
   const { data: session, status } = useSession();
 
@@ -18,16 +30,21 @@ export default function Header() {
     <div className="flex justify-between border-2 border-[#102C57] no-wrap">
       <div className=" border-0 flex bg-[#102C57] ">
         <Link href="/">
-          <span className="font-sans italic hover:underline hover:transition hover:duration-500">
-            <div
-              className="text-xl font-semibold
+          <span className=" hover:underline hover:transition hover:duration-500">
+            <span
+              className={`${lobster.className} text-xl text-white me-0.5 inline-block transform -rotate-[10deg]`}
+            >
+              Check
+            </span>
+            <span
+              className="font-sans italic text-xl font-bold
               bg-gradient-to-r bg-clip-text  text-transparent
               from-indigo-500 via-white to-indigo-500
               animate-text
             "
             >
               ResumeAi
-            </div>
+            </span>
           </span>
         </Link>
         <div className="px-2  flex flex-col justify-center text-white flex-wrap">

@@ -35,6 +35,9 @@ module.exports = {
           },
         },
       },
+      fontFamily: {
+        pacifico: ["Pacifico", "cursive"],
+      },
     },
     screens: {
       xxs: "200px", // min-width

@@ -1,6 +1,6 @@
 import Provider from "@/context/AuthContext";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Pacifico } from "next/font/google";
 import Header from "@/components/RootLayout/Header";
 
 import { Providers } from "./provider";
