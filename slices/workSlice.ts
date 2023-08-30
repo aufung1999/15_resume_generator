@@ -111,6 +111,11 @@ const workSlice = createSlice({
           //-------------------------------------------------------------------------------
           state.push(Data);
         }
+
+        //Sort By Start Date, but need convert from string -> Date
+        state.map((each: any) => new Date(each.StartDate));
+        state.sort((a, b) => (a.StartDate > b.StartDate ? -1 : 1));
+        state.map((each: any) => JSON.stringify(each.StartDate));
       }
     },
     addWorkExp: (state, action) => {

@@ -13,7 +13,8 @@ export interface Stage_3_work extends Stage_3_interface {
 }
 
 export interface Stage_3_project extends Stage_3_interface {
-  user_data: string;
+  user_data?: string;
+  technique?: string;
 }
 
 //==================================================================================

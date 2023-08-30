@@ -50,7 +50,10 @@ export default async function Page({
     });
     if (workData) {
       workData = workData.map((each: any) => db.convertDocToObj(each));
-      // console.log(workData);
+      //Sort By Start Date, but need convert from string -> Date
+      // workData.map((each: any) => new Date(each.StartDate));
+      // workData.sort((a, b) => (a.StartDate > b.StartDate ? 1 : -1));
+      // workData.map((each: any) => JSON.stringify(each.StartDate));
     }
     //fetch Education
     educationData = await Education.find({
@@ -98,6 +101,15 @@ export default async function Page({
     });
     if (resumeData) {
       resumeData = db.convertDocToObj(resumeData);
+      //resume.Work
+      if (resumeData?.Work) {
+        //Sort By Start Date, but need convert from string -> Date
+        // resumeData?.Work?.map((each: any) => new Date(each.StartDate));
+        // resumeData?.Work?.sort((a: any, b: any) =>
+        //   a.StartDate > b.StartDate ? 1 : -1
+        // );
+        // resumeData?.Work?.map((each: any) => JSON.stringify(each.StartDate));
+      }
     }
     //fetch APIKey
     API_Key = await APIKey.findOne({

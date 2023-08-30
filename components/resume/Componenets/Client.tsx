@@ -40,6 +40,7 @@ import {
 } from "@/utils/interfaces";
 import { WorkExpState } from "@/slices/workSlice";
 import { ProjectState } from "@/slices/projectsSlice";
+import extractTerms from "@/components/analyze/Functions/extractTerms";
 
 const ResumeClient = ({
   resumeID,
@@ -162,7 +163,7 @@ const ResumeClient = ({
       JSON.parse(stage_3_ls)?.map((item: Stage_3_project) =>
         project_redux?.map((each: ProjectState) =>
           each.index === item.match_index_1st
-            ? each?.ProjectDescription?.map(
+            ? (each?.ProjectDescription?.map(
                 (each_2: Project_Description_interface) =>
                   each_2.rowIndex === item.match_index_2nd &&
                   each_2.Row === item.user_data
@@ -178,7 +179,16 @@ const ResumeClient = ({
                           from: "unmatches",
                         })
                       )
-              )
+              ),
+              extractTerms(each?.Techniques, "project_redux")?.includes(
+                item?.technique
+              ) &&
+                dispatch(
+                  add_display({
+                    sentence: item.match_sentence,
+                    from: "matches",
+                  })
+                ))
             : null
         )
       );
