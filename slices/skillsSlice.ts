@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface SkillsState {
   index: string;
   term: string;
-  Skill_list: { skillIndex: any; skill: string }[];
+  Skill_list: { skillIndex: any; skill: string; years?: number | null }[];
 }
 
 const initialState: SkillsState[] = [];
@@ -15,7 +15,7 @@ const awardSlice = createSlice({
   reducers: {
     cleanUp_Skill_redux: () => initialState,
     initialize_SkillData: (state, action: PayloadAction<SkillsState>) => {
-      const { index, term, Skill_list }: any = action.payload;
+      const { index, term, Skill_list, years }: any = action.payload;
       //if the "stage_3" data exists
       let stage_3_exist = false;
       //get the index from "stage_3"
@@ -41,11 +41,21 @@ const awardSlice = createSlice({
           }
         }
       }
+
       //set the data format
       let Data = {
         index: index,
         term: term,
-        Skill_list: stage_3_exist ? rearrange_Skill_list : Skill_list,
+        Skill_list: stage_3_exist
+          ? //add years property to each skill
+            rearrange_Skill_list?.map((each: any) => ({
+              ...each,
+              years: each.years ? each.years : 0,
+            }))
+          : Skill_list?.map((each: any) => ({
+              ...each,
+              years: each.years ? each.years : 0,
+            })),
       };
       //push the tidied up data into state
       state.push(Data);
@@ -142,6 +152,33 @@ const awardSlice = createSlice({
         }
       }
     },
+
+    addYears: (state, action) => {
+      const { index, skillIndex, years } = action.payload;
+      const Term = state.find((each) => each.index === index);
+      if (Term) {
+        console.log(current(Term.Skill_list));
+        const Skill = Term.Skill_list.find(
+          (each) => each.skillIndex === skillIndex
+        );
+        if (Skill) {
+          Skill.years = years;
+        }
+      }
+    },
+    subtractYears: (state, action) => {
+      const { index, skillIndex, years } = action.payload;
+      const Term = state.find((each) => each.index === index);
+      if (Term) {
+        console.log(current(Term.Skill_list));
+        const Skill = Term.Skill_list.find(
+          (each) => each.skillIndex === skillIndex
+        );
+        if (Skill) {
+          Skill.years = years;
+        }
+      }
+    },
   },
 });
 
@@ -155,5 +192,7 @@ export const {
   addSkill,
   deleteSkill,
   editSkillName,
+  addYears,
+  subtractYears,
 } = awardSlice.actions;
 export default awardSlice.reducer;

@@ -20,7 +20,7 @@ import {
   Stage_3_skill,
   Stage_3_work,
 } from "@/utils/interfaces";
-import { SkillsState } from "@/slices/skillsSlice";
+import { SkillsState, addYears, subtractYears } from "@/slices/skillsSlice";
 import { WorkExpState } from "@/slices/workSlice";
 import { ProjectState } from "@/slices/projectsSlice";
 
@@ -46,6 +46,19 @@ export default function CustomedTooltip({
   const hover_des_redux = useSelector(
     (state: RootState) => state.resume.hover_des
   );
+  const skill_years_redux = useSelector(
+    (state: RootState) =>
+      state.skills
+        ?.map((each) =>
+          each.Skill_list?.find(
+            (skill) =>
+              each.index === index_1st &&
+              skill.skillIndex === index_2nd &&
+              skill.skill === description
+          )
+        )
+        .filter(Boolean)[0]?.years
+  );
 
   const [on, setOn] = useState<boolean | null>(null);
   const [outline, setOutline] = useState<boolean>(false);
@@ -53,7 +66,6 @@ export default function CustomedTooltip({
 
   const [target, setTarget] = useState<any>(null);
   const [matches, setMatches] = useState<any>(null);
-  const [years, setYears] = useState<number>(0);
 
   const stage_3_ls: any = localStorage.getItem("stage_3");
 
@@ -280,8 +292,13 @@ export default function CustomedTooltip({
             Number.isInteger(Number(find_res[i])) &&
             Number(find_res[i]) >= 1
           ) {
-            // console.log("hi: ");
-            setYears(Number(find_res[i]));
+            dispatch(
+              addYears({
+                index: index_1st,
+                skillIndex: index_2nd,
+                years: Number(find_res[i]),
+              })
+            );
           }
           i--;
         }
@@ -293,27 +310,30 @@ export default function CustomedTooltip({
   //-------------------------Track if the years
   useEffect(() => {
     if (whichSection === "skill") {
-      console.log("dispatch");
-      switch (true) {
-        case years === 0:
-          dispatch(
-            Switc_years_in_skill_show({
-              isSwitch: false,
-              description: description,
-            })
-          );
-          break;
-        case years > 0:
-          dispatch(
-            Switc_years_in_skill_show({
-              isSwitch: true,
-              description: description,
-            })
-          );
-          break;
+      // console.log("dispatch");
+      if (skill_years_redux) {
+        console.log('skill_years_redux: ' + skill_years_redux)
+        switch (true) {
+          case skill_years_redux === 0:
+            dispatch(
+              Switc_years_in_skill_show({
+                isSwitch: false,
+                description: description,
+              })
+            );
+            break;
+          case skill_years_redux > 0:
+            dispatch(
+              Switc_years_in_skill_show({
+                isSwitch: true,
+                description: description,
+              })
+            );
+            break;
+        }
       }
     }
-  }, [years]);
+  }, [skill_years_redux]);
 
   return (
     <div
@@ -343,25 +363,43 @@ export default function CustomedTooltip({
                   </div>
                   <div className="flex border h-full z-20">
                     <div>
-                      {Number.isInteger(years) && (
-                        <Button
-                          onClick={() => setYears((prev: number) => prev + 1)}
-                        >
-                          +
-                        </Button>
-                      )}
+                      {skill_years_redux !== null &&
+                        skill_years_redux !== undefined && (
+                          <Button
+                            onClick={() =>
+                              dispatch(
+                                addYears({
+                                  index: index_1st,
+                                  skillIndex: index_2nd,
+                                  years: Number(skill_years_redux) + 1,
+                                })
+                              )
+                            }
+                          >
+                            +
+                          </Button>
+                        )}
                     </div>
                     <div className="h-full flex flex-col items-center justify-center border text-xl px-5">
-                      {years}
+                      {skill_years_redux && skill_years_redux}
                     </div>
                     <div>
-                      {Number.isInteger(years) && (
-                        <Button
-                          onClick={() => setYears((prev: number) => prev - 1)}
-                        >
-                          -
-                        </Button>
-                      )}
+                      {skill_years_redux !== null &&
+                        skill_years_redux !== undefined && (
+                          <Button
+                            onClick={() =>
+                              dispatch(
+                                subtractYears({
+                                  index: index_1st,
+                                  skillIndex: index_2nd,
+                                  years: Number(skill_years_redux) - 1,
+                                })
+                              )
+                            }
+                          >
+                            -
+                          </Button>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -382,14 +420,20 @@ export default function CustomedTooltip({
         >
           <div>
             {text}
-            {whichSection === "skill" && years > 0 && <> ({years}+)</>}
+            {skill_years_redux !== null &&
+              skill_years_redux !== undefined &&
+              whichSection === "skill" &&
+              skill_years_redux > 0 && <> ({skill_years_redux}+)</>}
           </div>
         </Tooltip>
       ) : (
         // border-b-2 border-color-[##a9a9a9]
         <div>
           {text}
-          {whichSection === "skill" && years > 0 && <> ({years}+)</>}
+          {skill_years_redux !== null &&
+            skill_years_redux !== undefined &&
+            whichSection === "skill" &&
+            skill_years_redux > 0 && <> ({skill_years_redux}+)</>}
         </div>
       )}
     </div>

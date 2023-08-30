@@ -5,6 +5,7 @@ import { Paper, ButtonGroup, Button } from "@mui/material";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import Result_alt from "./Result_alt";
+import SkillsYearsBoard from "./SkillsYearsBoard";
 
 export default function ResultBoard() {
   const [display, setDisplay] = useState("UNMATCH");
@@ -24,6 +25,7 @@ export default function ResultBoard() {
           <Button onClick={() => setDisplay("")}>Hide</Button>
           <Button onClick={() => setDisplay("UNMATCH")}>UNMATCH</Button>
           <Button onClick={() => setDisplay("MATCH")}>MATCH</Button>
+          <Button onClick={() => setDisplay("Skills_Years")}>Skills Years</Button>
         </ButtonGroup>
       </div>
       {/* Method 1 */}
@@ -50,6 +52,12 @@ export default function ResultBoard() {
         whatToGet="unmatches"
         customedCSS={
           display === "UNMATCH" ? "left-0  border-red-500" : "hidden"
+        }
+      />
+      <SkillsYearsBoard
+        // id="skills_years"
+        customedCSS={
+          display === "Skills_Years" ? "left-0  border-red-500" : "hidden"
         }
       />
     </div>
