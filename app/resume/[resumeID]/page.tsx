@@ -10,8 +10,8 @@ import Objective from "@/models/Objective";
 import Skill from "@/models/Skill";
 import Project from "@/models/Project";
 import Resume from "@/models/Resume";
-import EditResume from "../Components/EditResume";
-import ResumeClient from "../../../components/resume/Componenets/Client";
+import EditResume from "@/components/resume/Componenets/EditResume";
+import ResumeClient from "@/components/resume/Componenets/Client";
 import APIKey from "@/models/APIKey";
 
 export default async function Page({
