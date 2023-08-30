@@ -18,7 +18,7 @@ export default function ObjectiveSection({
   return (
     <>
       {display && (
-        <div className="mb-2">
+        <div className="mb-1">
           <SectionHeading title="Objective" />
           {objective.map((item: ObjectiveState, i: number) => {
             return (

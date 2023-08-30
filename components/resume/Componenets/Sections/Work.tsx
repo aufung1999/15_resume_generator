@@ -14,7 +14,7 @@ import "./Work.css";
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
   // Revalidation(experience)
   return (
-    <div className="mb-2">
+    <div className="mb-1">
       <SectionHeading title="Experience" />
 
       {experience.map((item: WorkExpState, i: number) => {

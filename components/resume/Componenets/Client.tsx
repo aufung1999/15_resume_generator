@@ -302,8 +302,19 @@ const ResumeClient = ({
           </div>
 
           {/* 2. Resume Part */}
-          <div className="flex justify-center">
+          <div className="flex justify-center relative">
+            {/* 1. The Resume */}
             <Resume ref={componentRef} />
+            {/* 2. Show the end of 1-page resume */}
+            <div className=" absolute w-full flex">
+              <div className="flex-grow h-letter border-b-4 border-black border-dashed"></div>
+              <div className=" h-letter  flex flex-col justify-end">
+                <span className="px-2 text-gray-500 translate-y-2 border italic font-semibold">
+                  Size of Letter
+                </span>
+              </div>
+              <div className="flex-grow h-letter border-b-4 border-black border-dashed"></div>
+            </div>
           </div>
         </div>
       </div>

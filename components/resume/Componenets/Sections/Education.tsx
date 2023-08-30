@@ -10,7 +10,7 @@ export default function EducationSection({
   education,
 }: EducationState[] | any) {
   return (
-    <div className="mb-2">
+    <div className="mb-1">
       <SectionHeading title="Education" />
 
       {education.map((item: EducationState, index: number) => {

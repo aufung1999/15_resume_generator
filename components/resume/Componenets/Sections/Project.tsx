@@ -21,7 +21,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
     dispatch(drag_drop({ result: result }));
   }
   return (
-    <div className="mb-2">
+    <div className="mb-1">
       <SectionHeading title="Project" />
       {/* Drag and Drop */}
       <DragDropContext onDragEnd={handleOnDragEnd}>

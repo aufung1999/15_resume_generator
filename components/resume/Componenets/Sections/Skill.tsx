@@ -26,7 +26,7 @@ export default function SkillSection({ skill }: SkillsState[] | any) {
   );
 
   return (
-    <div className="mb-2 w-full flex flex-col relative" key={search}>
+    <div className="mb-1 w-full flex flex-col relative" key={search}>
       <SectionHeading
         title="Technical Skills"
         subtite={show_In_resume ? "(years+)" : ""}
