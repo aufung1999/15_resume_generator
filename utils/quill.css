@@ -1,3 +1,12 @@
 .ql-editor {
-    line-height: 1.5; /* Adjust line spacing here */
-  }
+  line-height: 1.5; /* Adjust line spacing here */
+}
+
+.ql-editor p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.decoded-content p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
