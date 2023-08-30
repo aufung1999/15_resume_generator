@@ -206,7 +206,7 @@ const ResumeClient = ({
       >
         <title>Resume</title>
         <ResultBoard />
-        <div className=" h-a4 border-4 relative">
+        <div className=" h-a4 border-4 relative overflow-y-hidden">
           {/* 1. The tool list */}
           <div className="absolute z-10 right-0 flex">
             <div className={select ? "" : "hidden"}>

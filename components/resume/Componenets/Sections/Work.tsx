@@ -39,26 +39,26 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
             </div>
             <div className="px-3 flex flex-col">
               {item?.JobDescription?.map((each: any, ind: number) => (
-                <CustomedTooltip
-                  key={ind}
-                  // <SectionList key={ind}>
-                  index_1st={item.index}
-                  index_2nd={each.rowIndex}
-                  description={each?.Row}
-                  text={
-                    <>
-                      {/* <li className="" /> */}
-                      <div
-                        className="text-[12px] pb-0 myClass"
-                        dangerouslySetInnerHTML={{
-                          __html: each?.Row,
-                        }}
-                      />
-                    </>
-                  }
-                  whichSection="work"
-                  // </SectionList>
-                />
+                <SectionList key={ind}>
+                  <CustomedTooltip
+                    key={ind}
+                    index_1st={item.index}
+                    index_2nd={each.rowIndex}
+                    description={each?.Row}
+                    text={
+                      <div className="flex">
+                        <li className="" />
+                        <div
+                          className="text-[12px] pb-0 myClass"
+                          dangerouslySetInnerHTML={{
+                            __html: each?.Row,
+                          }}
+                        />
+                      </div>
+                    }
+                    whichSection="work"
+                  />
+                </SectionList>
               ))}
             </div>
           </div>

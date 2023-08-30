@@ -14,9 +14,11 @@ module.exports = {
       },
       width: {
         a4: "210mm",
+        letter: "215mm",
       },
       height: {
         a4: "297mm",
+        letter: "279mm",
       },
       animation: {
         text: "text 5s ease infinite",

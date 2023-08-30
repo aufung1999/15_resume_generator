@@ -76,7 +76,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                                     <span className=" inline-flex">
                                       <li  />
                                       <div
-                                        className=" flex leading-none"
+                                        className=" flex leading-snug"
                                         dangerouslySetInnerHTML={{
                                           __html: each?.Row,
                                         }}
