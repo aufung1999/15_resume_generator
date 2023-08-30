@@ -34,7 +34,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                 </p>
               </div>
             </div>
-            <div className="px-3">
+            <div className="px-3 leading-4">
               {item?.JobDescription?.map((each: any, ind: number) => (
                 <SectionList key={ind}>
                   <CustomedTooltip

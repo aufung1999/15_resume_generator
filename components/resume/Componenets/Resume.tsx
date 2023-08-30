@@ -2,14 +2,14 @@
 import { RootState } from "@/store/store";
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Contact from "./Sections/Contact";
-import { WorkSection } from "./Sections/Work";
-import EducationSection from "./Sections/Education";
-import SkillSection from "./Sections/Skill";
-import ProjectSection from "./Sections/Project";
-import ObjectiveSection from "./Sections/Objective";
+import Contact from "../../../components/resume/Componenets/Sections/Contact";
+import { WorkSection } from "../../../components/resume/Componenets/Sections/Work";
+import EducationSection from "../../../components/resume/Componenets/Sections/Education";
+import SkillSection from "../../../components/resume/Componenets/Sections/Skill";
+import ProjectSection from "../../../components/resume/Componenets/Sections/Project";
+import ObjectiveSection from "../../../components/resume/Componenets/Sections/Objective";
 import { forwardRef } from "react";
-import DisplaySkill from "./Match/Skill";
+import DisplaySkill from "../../../components/resume/Componenets/Match/Skill";
 
 import { useSearchParams } from "next/navigation";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -119,7 +119,7 @@ const Resume = forwardRef((props, ref: any) => {
       key={search}
     >
       {/* //rename the print Default Name */}
-   
+
 
       <div className=" absolute top-0 right-0 z-20 text-xs">
         <span className=" font-bold">*{contact_redux.OpentoWork}</span>

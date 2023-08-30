@@ -39,7 +39,7 @@ import type { RootState } from "@/store/store";
 
 import toast, { Toaster } from "react-hot-toast";
 import { usePathname } from "next/navigation";
-import Contact from "@/app/resume/Components/Sections/Contact";
+import Contact from "@/components/resume/Componenets/Sections/Contact";
 
 export default function InsertContact({
   data,
