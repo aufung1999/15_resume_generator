@@ -38,7 +38,7 @@ import { ProjectState } from "@/slices/projectsSlice";
 
 import toast, { Toaster } from "react-hot-toast";
 
-// import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
 
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -75,6 +75,7 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
       {/* hide the index */}
       {/* <div>{rowIndex}</div> */}
       <ReactQuill
+      theme="snow"
         value={row ? row.Row : ""}
         onChange={(value) =>
           dispatch(

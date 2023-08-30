@@ -49,7 +49,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                       <div className="flex">
                         <li className="" />
                         <div
-                          className="text-[12px] pb-0 myClass"
+                          className="text-[12px] myClass"
                           dangerouslySetInnerHTML={{
                             __html: each?.Row,
                           }}

@@ -9,6 +9,9 @@ import CustomedTooltip from "../Match/Tooltip";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 
+//Css style
+import "./Project.css";
+
 export default function ProjectSection({ project }: ProjectState[] | any) {
   const dispatch = useDispatch();
 
@@ -76,7 +79,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                                     <span className=" inline-flex">
                                       <li  />
                                       <div
-                                        className=" flex leading-snug"
+                                        className=" flex leading-1 myClass"
                                         dangerouslySetInnerHTML={{
                                           __html: each?.Row,
                                         }}
