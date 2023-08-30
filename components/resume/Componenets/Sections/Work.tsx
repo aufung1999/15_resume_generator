@@ -8,6 +8,9 @@ import { SectionTitle } from "../../atoms/SectionTitle";
 import { timeConverter } from "../../Functions/timeConvertor";
 import CustomedTooltip from "../Match/Tooltip";
 
+//Css style
+import "./Work.css";
+
 export const WorkSection = ({ experience }: WorkExpState[] | any) => {
   // Revalidation(experience)
   return (
@@ -46,7 +49,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                     <>
                       {/* <li className="" /> */}
                       <div
-                        className="text-[12px] pb-0"
+                        className="text-[12px] pb-0 myClass"
                         dangerouslySetInnerHTML={{
                           __html: each?.Row,
                         }}
