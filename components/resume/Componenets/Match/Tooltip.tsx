@@ -317,7 +317,7 @@ export default function CustomedTooltip({
 
   return (
     <div
-      className={` p-0 ${
+      className={` pb-0 ${
         hover_des_redux === "" && on && control_highlight_dsiplay
           ? " bg-yellow-300"
           : ""
@@ -332,7 +332,7 @@ export default function CustomedTooltip({
       {on && control_highlight_dsiplay ? (
         <Tooltip
           title={
-            <div>
+            <>
               {whichSection === "skill" && (
                 <div className="flex justify-between">
                   <div className="">
@@ -377,20 +377,20 @@ export default function CustomedTooltip({
                   {matches?.indexOf(each) + 1}:{each}
                 </div>
               ))}
-            </div>
+            </>
           }
         >
-          <div className="p-0">
+          <>
             {text}
             {whichSection === "skill" && years > 0 && <> ({years}+)</>}
-          </div>
+          </>
         </Tooltip>
       ) : (
         // border-b-2 border-color-[##a9a9a9]
-        <div className="p-0">
+        <>
           {text}
           {whichSection === "skill" && years > 0 && <> ({years}+)</>}
-        </div>
+        </>
       )}
     </div>
   );
