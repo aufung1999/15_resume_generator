@@ -114,14 +114,14 @@ const Resume = forwardRef((props, ref: any) => {
 
   return (
     <div
-      className=" w-a4 px-6 bg-white text-black relative z-10"
+      className=" w-a4 px-6 bg-white text-black relative inline-flex"
       ref={ref}
       key={search}
     >
       {/* //rename the print Default Name */}
 
 
-      <div className=" absolute top-0 right-0 z-20 text-xs">
+      <div className=" absolute top-0 right-0 z-20 text-xs pe-2">
         <span className=" font-bold">*{contact_redux.OpentoWork}</span>
         <span> </span>
         <span className=" font-bold">*{contact_redux.Sponsorship}</span>

@@ -19,7 +19,7 @@ export default function Contact({
   Sponsorship,
 }: ContactState) {
   return (
-    <div className="flex-col  justify-center items-center p-1 border relative">
+    <div className="flex-col  justify-center items-center p-1 border-0 relative">
 
       <ProfileName name={FirstName} />
 

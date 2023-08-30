@@ -491,7 +491,7 @@ export default function Revalidate() {
   return (
     <div
       className={
-        "bg-white px-3 py-1 cursor-pointer top-0 z-10 rounded border-2  border-green-500 "
+        "bg-white px-3 py-1 cursor-pointer top-0 rounded border-2  border-green-500 "
       }
     >
       {/* Conditionally render the LoadingModal */}

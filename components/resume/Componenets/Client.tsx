@@ -208,7 +208,7 @@ const ResumeClient = ({
         <ResultBoard />
         <div className=" h-a4 border-4 relative overflow-y-hidden">
           {/* 1. The tool list */}
-          <div className="absolute z-10 right-0 flex">
+          <div className="absolute z-20 right-0 flex">
             <div className={select ? "" : "hidden"}>
               <Statistic whatToGet="stage_3" />
             </div>

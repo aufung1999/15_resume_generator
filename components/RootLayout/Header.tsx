@@ -32,7 +32,7 @@ export default function Header() {
         <Link href="/">
           <span className=" hover:underline hover:transition hover:duration-500">
             <span
-              className={`${lobster.className} text-xl text-white me-0.5 inline-block transform -rotate-[10deg]`}
+              className={`${lobster.className} text-xl text-white me-0.5 inline-block transform -rotate-[8deg]`}
             >
               Check
             </span>
