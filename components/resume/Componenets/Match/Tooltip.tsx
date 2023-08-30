@@ -332,7 +332,7 @@ export default function CustomedTooltip({
       {on && control_highlight_dsiplay ? (
         <Tooltip
           title={
-            <>
+            <div>
               {whichSection === "skill" && (
                 <div className="flex justify-between">
                   <div className="">
@@ -377,20 +377,20 @@ export default function CustomedTooltip({
                   {matches?.indexOf(each) + 1}:{each}
                 </div>
               ))}
-            </>
+            </div>
           }
         >
-          <>
+          <div>
             {text}
             {whichSection === "skill" && years > 0 && <> ({years}+)</>}
-          </>
+          </div>
         </Tooltip>
       ) : (
         // border-b-2 border-color-[##a9a9a9]
-        <>
+        <div>
           {text}
           {whichSection === "skill" && years > 0 && <> ({years}+)</>}
-        </>
+        </div>
       )}
     </div>
   );

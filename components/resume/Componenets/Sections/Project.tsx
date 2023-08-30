@@ -44,7 +44,7 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                     {(provided) => (
                       <div
                         key={i}
-                        className={item.display_in_Resume ? "" : "hidden"}
+                        className={` ${item.display_in_Resume ? "" : "hidden"}`}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
