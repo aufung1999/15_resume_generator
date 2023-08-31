@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 export default function SkillsYearsBoard({
   customedCSS,
 }: {
-  customedCSS: any;
+  customedCSS: string;
 }) {
   const dispatch = useDispatch();
   const skills_redux = useSelector((state: RootState) => state.skills);

@@ -6,6 +6,7 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import Result_alt from "./Result_alt";
 import SkillsYearsBoard from "./SkillsYearsBoard";
+import API_KeyBoard from "./API_KeyBoard";
 
 export default function ResultBoard() {
   const [display, setDisplay] = useState("UNMATCH");
@@ -25,7 +26,10 @@ export default function ResultBoard() {
           <Button onClick={() => setDisplay("")}>Hide</Button>
           <Button onClick={() => setDisplay("UNMATCH")}>UNMATCH</Button>
           <Button onClick={() => setDisplay("MATCH")}>MATCH</Button>
-          <Button onClick={() => setDisplay("Skills_Years")}>Skills Years</Button>
+          <Button onClick={() => setDisplay("Skills_Years")}>
+            Skills Years
+          </Button>
+          <Button onClick={() => setDisplay("API_Key")}>API_Key</Button>
         </ButtonGroup>
       </div>
       {/* Method 1 */}
@@ -58,6 +62,11 @@ export default function ResultBoard() {
         // id="skills_years"
         customedCSS={
           display === "Skills_Years" ? "left-0  border-blue-500" : "hidden"
+        }
+      />
+      <API_KeyBoard
+        customedCSS={
+          display === "API_Key" ? "left-0  border-blue-500" : "hidden"
         }
       />
     </div>

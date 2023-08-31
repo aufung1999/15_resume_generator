@@ -14,7 +14,6 @@ import {
   update_revalidation,
 } from "@/slices/skillsSlice";
 import LoadingModal from "./LoadingModal";
-import { Icon } from "@blueprintjs/core";
 
 export default function Revalidate() {
   const dispatch = useDispatch();
@@ -33,7 +32,6 @@ export default function Revalidate() {
   const work_redux = useSelector((state: RootState) => state.work);
   const projects_redux = useSelector((state: RootState) => state.projects);
   const skills_redux = useSelector((state: RootState) => state.skills);
-
   //Get the Client API Key from ChatGPT, but stored inDatabase
   const API_KEY = useSelector((state: RootState) => state.control.API_KEY);
 
@@ -499,11 +497,7 @@ export default function Revalidate() {
 
       <div className=" bg-white inline-block">
         <div>Revalidation</div>
-        <div>
-          <Tooltip title={API_Key_redux}>
-            <>API Key</>
-          </Tooltip>
-        </div>
+
         <ButtonGroup aria-label=" elevation buttons " className="flex flex-col">
           <Button onClick={SkillRevalidateHandler}>Skill</Button>
           <Button onClick={WorkRevalidateHandler}>Work</Button>
