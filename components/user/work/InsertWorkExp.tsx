@@ -139,6 +139,8 @@ const InputComp = ({ index, data }: Props) => {
   const { display_in_Resume, ...rest } = target_work || {};
 
   const [row, editRow] = useState<any>([]);
+  const [datePickerOpen_1, set1Open] = useState<any>(false);
+  const [datePickerOpen_2, set2Open] = useState<any>(false);
 
   useEffect(() => {
     let temp_arr: any[] = [];
@@ -329,18 +331,24 @@ const InputComp = ({ index, data }: Props) => {
           <div className=" text-black ">
             Start Date:{" "}
             <DatePicker
+              className={` ${datePickerOpen_1 ? "z-20" : ""}`}
               onChange={(value) =>
                 dispatch(editStartDate({ index: index, StartDate: value }))
               }
+              onCalendarOpen={() => set1Open(true)}
+              onCalendarClose={() => set1Open(false)}
               value={target_work?.StartDate ? target_work.StartDate : null}
             />
           </div>
           <div className=" text-black">
             End Date:
             <DatePicker
+              className={` ${datePickerOpen_2 ? "z-20" : ""}`}
               onChange={(value) =>
                 dispatch(editEndDate({ index: index, EndDate: value }))
               }
+              onCalendarOpen={() => set2Open(true)}
+              onCalendarClose={() => set2Open(false)}
               value={target_work?.EndDate ? target_work.EndDate : null}
               disabled={target_work?.current ? target_work.current : false}
             />
