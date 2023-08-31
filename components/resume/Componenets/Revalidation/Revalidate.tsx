@@ -3,12 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Paper, ButtonGroup, Button } from "@mui/material";
+import { Paper, ButtonGroup, Button, Tooltip } from "@mui/material";
 import { RootState } from "@/store/store";
-import {
-  FORCE_to_UPDATE,
-  editResume_stage_4,
-} from "@/slices/resumeSlice";
+import { FORCE_to_UPDATE, editResume_stage_4 } from "@/slices/resumeSlice";
 import compare from "@/components/analyze/Functions/compare";
 import extractTerms from "@/components/analyze/Functions/extractTerms";
 import {
@@ -28,6 +25,9 @@ export default function Revalidate() {
   );
   const project_unmatches = useSelector(
     (state: RootState) => state.resume.stage_4.project
+  );
+  const API_Key_redux = useSelector(
+    (state: RootState) => state.control.API_KEY
   );
 
   const work_redux = useSelector((state: RootState) => state.work);
@@ -499,6 +499,11 @@ export default function Revalidate() {
 
       <div className=" bg-white inline-block">
         <div>Revalidation</div>
+        <div>
+          <Tooltip title={API_Key_redux}>
+            <>API Key</>
+          </Tooltip>
+        </div>
         <ButtonGroup aria-label=" elevation buttons " className="flex flex-col">
           <Button onClick={SkillRevalidateHandler}>Skill</Button>
           <Button onClick={WorkRevalidateHandler}>Work</Button>

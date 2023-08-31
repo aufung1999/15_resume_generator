@@ -71,15 +71,15 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   //***/
 
   const handleConvertToPlainText = (value: string) => {
-    const parser = new DOMParser();
-    const parsedHtml = parser.parseFromString(value, "text/html");
-    const plainText = parsedHtml.body.textContent;
-    console.log(plainText); // Pure string without HTML tags
+    // const parser = new DOMParser();
+    // const parsedHtml = parser.parseFromString(value, "text/html");
+    // const plainText = parsedHtml.body.textContent;
+
     dispatch(
       editProjectDescription({
         index: index,
         rowIndex: rowIndex,
-        Row: plainText,
+        Row: value,
       })
     );
   };
