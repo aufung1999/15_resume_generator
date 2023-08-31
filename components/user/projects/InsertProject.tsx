@@ -70,22 +70,28 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   );
   //***/
 
+  const handleConvertToPlainText = (value: string) => {
+    const parser = new DOMParser();
+    const parsedHtml = parser.parseFromString(value, "text/html");
+    const plainText = parsedHtml.body.textContent;
+    console.log(plainText); // Pure string without HTML tags
+    dispatch(
+      editProjectDescription({
+        index: index,
+        rowIndex: rowIndex,
+        Row: plainText,
+      })
+    );
+  };
+
   return (
     <div key={rowIndex}>
       {/* hide the index */}
       {/* <div>{rowIndex}</div> */}
       <ReactQuill
-      theme="snow"
+        theme="snow"
         value={row ? row.Row : ""}
-        onChange={(value) =>
-          dispatch(
-            editProjectDescription({
-              index: index,
-              rowIndex: rowIndex,
-              Row: value,
-            })
-          )
-        }
+        onChange={(value) => handleConvertToPlainText(value)}
       />
     </div>
   );

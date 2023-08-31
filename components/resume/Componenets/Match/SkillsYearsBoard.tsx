@@ -17,7 +17,7 @@ export default function SkillsYearsBoard({
 
   return (
     <div
-      className={` bg-white border-2 border-blue-500 
+      className={` bg-white border-2 border-blue-500
     ${customedCSS}`}
     >
       {skills_redux?.map((each: SkillsState, i: number) => (

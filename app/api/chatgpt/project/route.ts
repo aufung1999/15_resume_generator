@@ -43,6 +43,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     let temp_arr: any[] = [];
     let total_usage = 0;
     let chatCompletion: any;
+
+
     return Promise.all(
       //NEED to delete .slice function
       // statement_2.slice(0,1).map((each: any) =>
@@ -96,6 +98,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       )
     )
       .then((values) => {
+        console.log("sucess");
         console.log(temp_arr);
         return NextResponse.json({
           data_project: temp_arr,
@@ -103,6 +106,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
         });
       })
       .catch((values) => {
+        console.log("error");
         console.log(temp_arr);
         return NextResponse.json({
           data_project: temp_arr,
