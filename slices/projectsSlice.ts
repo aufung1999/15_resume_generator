@@ -1,3 +1,5 @@
+import extractTerms from "@/components/analyze/Functions/extractTerms";
+import { Stage_3_project } from "@/utils/interfaces";
 import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -29,12 +31,14 @@ const projectsSlice = createSlice({
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
           const stage_3_ls: any = localStorage.getItem("stage_3");
-          JSON.parse(stage_3_ls)?.map((each: any) => {
-            //Check the technique
+          JSON.parse(stage_3_ls)?.map((each: Stage_3_project) => {
+            //1. Check the technique
             each.match_index_1st === index &&
-              // no:1
+              extractTerms(Techniques, "project_redux")?.includes(
+                each.technique
+              ) &&
               match_index.push({ match_index_1st: index }),
-              //Check the description
+              //2. Check the description
               ProjectDescription?.map(
                 (item: { Row?: string | undefined; rowIndex: string }) =>
                   each.match_index_1st === index &&
@@ -69,7 +73,6 @@ const projectsSlice = createSlice({
                   match_index_2nd?: string;
                 }) =>
                   // no:1
-                  // the reason to use "||" becuz it is "safe"
                   item?.match_index_1st === index ||
                   item?.match_index_2nd === each.rowIndex
               )
