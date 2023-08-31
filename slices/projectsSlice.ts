@@ -7,8 +7,14 @@ export interface ProjectState {
   index: string;
   ProjectName: string;
   Techniques?: string;
-  ProjectDescription: { rowIndex: string; Row?: string }[];
+  ProjectDescription: { rowIndex: string; Row?: string; HTML?: string }[];
   display_in_Resume?: boolean;
+}
+
+export interface ProjectDescription {
+  rowIndex: string;
+  Row?: string;
+  HTML?: string;
 }
 
 const initialState: ProjectState[] = [];
@@ -39,15 +45,17 @@ const projectsSlice = createSlice({
               ) &&
               match_index.push({ match_index_1st: index }),
               //2. Check the description
-              ProjectDescription?.map(
-                (item: { Row?: string | undefined; rowIndex: string }) =>
-                  each.match_index_1st === index &&
+              ProjectDescription?.map((item: ProjectDescription) => {
+                each.match_index_1st === index &&
                   each.match_index_2nd === item.rowIndex &&
                   match_index.push({
                     match_index_1st: index,
                     match_index_2nd: item.rowIndex,
-                  })
-              );
+                  }),
+                  item.HTML === undefined || item.HTML === null
+                    ? (item.HTML = item.Row)
+                    : null;
+              });
           });
 
           //set the data format
@@ -63,21 +71,19 @@ const projectsSlice = createSlice({
           //"unshift" is to add at the beginning:
           //"push" is to add at the end
 
-          // console.log(match_index);
-          ProjectDescription?.map(
-            (each: { Row?: string | undefined; rowIndex: string }) =>
-              match_index?.some(
-                (item: {
-                  match_index?: string;
-                  match_index_1st?: string;
-                  match_index_2nd?: string;
-                }) =>
-                  // no:1
-                  item?.match_index_1st === index ||
-                  item?.match_index_2nd === each.rowIndex
-              )
-                ? (Data.display_in_Resume = true)
-                : null
+          ProjectDescription?.map((each: ProjectDescription) =>
+            match_index?.some(
+              (item: {
+                match_index?: string;
+                match_index_1st?: string;
+                match_index_2nd?: string;
+              }) =>
+                // no:1
+                item?.match_index_1st === index ||
+                item?.match_index_2nd === each.rowIndex
+            )
+              ? (Data.display_in_Resume = true)
+              : null
           );
           //-------------------------------------------------------------------------------
           Data?.display_in_Resume === true
@@ -156,7 +162,7 @@ const projectsSlice = createSlice({
       }
     },
     editProjectDescription: (state, action) => {
-      const { index, rowIndex, Row } = action.payload;
+      const { index, rowIndex, Row, HTML } = action.payload;
       let Project = state.find((each) => each.index === index);
       if (Project) {
         if (Project.ProjectDescription === undefined) {
@@ -168,6 +174,7 @@ const projectsSlice = createSlice({
         );
         if (target_row) {
           target_row.Row = Row;
+          target_row.HTML = HTML;
         }
       }
     },

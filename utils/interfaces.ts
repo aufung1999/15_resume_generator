@@ -31,4 +31,5 @@ export interface Job_Description_interface {
 export interface Project_Description_interface {
   rowIndex: string;
   Row?: string;
+  HTML?: string;
 }

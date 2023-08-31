@@ -47,7 +47,9 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                     {(provided) => (
                       <div
                         key={i}
-                        className={`mb-1 ${item.display_in_Resume ? "" : "hidden"}`}
+                        className={`mb-1 ${
+                          item.display_in_Resume ? "" : "hidden"
+                        }`}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
@@ -77,11 +79,11 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                                   description={each?.Row}
                                   text={
                                     <span className=" inline-flex">
-                                      <li  />
+                                      <li />
                                       <div
                                         className=" flex leading-1 myClass"
                                         dangerouslySetInnerHTML={{
-                                          __html: each?.Row,
+                                          __html: each?.HTML,
                                         }}
                                       />
                                     </span>
