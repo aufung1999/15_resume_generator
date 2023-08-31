@@ -57,7 +57,7 @@ export default function ResultBoard() {
       <SkillsYearsBoard
         // id="skills_years"
         customedCSS={
-          display === "Skills_Years" ? "left-0  border-red-500" : "hidden"
+          display === "Skills_Years" ? "left-0  border-blue-500" : "hidden"
         }
       />
     </div>

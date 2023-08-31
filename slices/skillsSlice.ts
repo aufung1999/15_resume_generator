@@ -4,7 +4,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface SkillsState {
   index: string;
   term: string;
-  Skill_list: { skillIndex: any; skill: string; years?: number | null }[];
+  Skill_list: { skillIndex: any; skill: string; years?: number }[];
+}
+
+export interface skill {
+  skillIndex: any;
+  skill: string;
+  years?: number | any;
 }
 
 const initialState: SkillsState[] = [];
@@ -157,13 +163,17 @@ const awardSlice = createSlice({
       const { index, skillIndex, years } = action.payload;
       const Term = state.find((each) => each.index === index);
       if (Term) {
-        console.log(current(Term.Skill_list));
         const Skill = Term.Skill_list.find(
           (each) => each.skillIndex === skillIndex
         );
         if (Skill) {
           Skill.years = years;
         }
+
+        //Sort the order after the Skill.years Change
+        Term.Skill_list?.sort((a: skill, b: skill) =>
+          a?.years > b?.years ? -1 : 1
+        );
       }
     },
     subtractYears: (state, action) => {
@@ -177,6 +187,10 @@ const awardSlice = createSlice({
         if (Skill) {
           Skill.years = years;
         }
+        //Sort the order after the Skill.years Change
+        Term.Skill_list?.sort((a: skill, b: skill) =>
+          a?.years > b?.years ? -1 : 1
+        );
       }
     },
   },

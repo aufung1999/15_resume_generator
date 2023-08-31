@@ -312,9 +312,9 @@ export default function CustomedTooltip({
     if (whichSection === "skill") {
       // console.log("dispatch");
       if (skill_years_redux) {
-        console.log('skill_years_redux: ' + skill_years_redux)
         switch (true) {
           case skill_years_redux === 0:
+            console.log("skill_years_redux: " + skill_years_redux);
             dispatch(
               Switc_years_in_skill_show({
                 isSwitch: false,
