@@ -76,20 +76,27 @@ const RowComp = ({ index, rowIndex }: rowProps) => {
   );
   //***/
 
+  const handleConvertToPlainText = (value: string) => {
+    const parser = new DOMParser();
+    const parsedHtml = parser.parseFromString(value, "text/html");
+    const plainText = parsedHtml.body.textContent;
+
+    dispatch(
+      editJobDescription({
+        index: index,
+        rowIndex: rowIndex,
+        Row: plainText,
+        HTML: value,
+      })
+    );
+  };
+
   return (
     <div key={rowIndex}>
       <ReactQuill
         theme="snow"
-        onChange={(value) =>
-          dispatch(
-            editJobDescription({
-              index: index,
-              rowIndex: rowIndex,
-              Row: value,
-            })
-          )
-        }
-        value={row ? row.Row : ""}
+        onChange={(value) => handleConvertToPlainText(value)}
+        value={row ? row.HTML : ""}
         formats={[
           "header",
           "bold",

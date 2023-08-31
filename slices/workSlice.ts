@@ -1,3 +1,4 @@
+import { Stage_3_work } from "@/utils/interfaces";
 import { createSlice, current } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -8,8 +9,13 @@ export interface WorkExpState {
   current?: boolean;
   StartDate: string;
   EndDate?: string;
-  JobDescription: { rowIndex: string; Row?: string }[];
+  JobDescription: { rowIndex: string; Row?: string; HTML?: string }[];
   display_in_Resume?: boolean;
+}
+export interface JobDescription {
+  rowIndex: string;
+  Row?: string;
+  HTML?: string;
 }
 
 const initialState: WorkExpState[] = [];
@@ -28,7 +34,7 @@ const workSlice = createSlice({
         StartDate,
         EndDate,
         JobDescription,
-      }: any = action.payload;
+      }: WorkExpState = action.payload;
 
       //if the "stage_3" data exists
       let stage_3_exist = false;
@@ -40,19 +46,21 @@ const workSlice = createSlice({
         if (localStorage.getItem("stage_3")) {
           stage_3_exist = true;
           const stage_3_ls: any = localStorage.getItem("stage_3");
-          JSON.parse(stage_3_ls)?.map((each: any) => {
-            each.match_index === index &&
+          JSON.parse(stage_3_ls)?.map((each: Stage_3_work) => {
+            each.match_index_1st === index &&
               // no:1
               match_index.push({ match_index_1st: index }),
-              JobDescription?.map(
-                (item: { Row?: string | undefined; rowIndex: string }) =>
-                  each.match_index_1st === index &&
+              JobDescription?.map((item: JobDescription) => {
+                each.match_index_1st === index &&
                   each.match_index_2nd === item.rowIndex &&
                   match_index.push({
                     match_index_1st: index,
                     match_index_2nd: item.rowIndex,
-                  })
-              );
+                  }),
+                  item.HTML === undefined || item.HTML === null
+                    ? (item.HTML = item.Row)
+                    : null;
+              });
           });
 
           //set the data format
@@ -72,21 +80,20 @@ const workSlice = createSlice({
           //"push" is to add at the end
 
           // console.log(match_index);
-          JobDescription?.map(
-            (each: { Row?: string | undefined; rowIndex: string }) =>
-              match_index?.some(
-                (item: {
-                  match_index?: string;
-                  match_index_1st?: string;
-                  match_index_2nd?: string;
-                }) =>
-                  // no:1
-                  // the reason to use "||" becuz it is "safe"
-                  item?.match_index_1st === index ||
-                  item?.match_index_2nd === each.rowIndex
-              )
-                ? (Data.display_in_Resume = true)
-                : null
+          JobDescription?.map((each: JobDescription) =>
+            match_index?.some(
+              (item: {
+                match_index?: string;
+                match_index_1st?: string;
+                match_index_2nd?: string;
+              }) =>
+                // no:1
+                // the reason to use "||" becuz it is "safe"
+                item?.match_index_1st === index ||
+                item?.match_index_2nd === each.rowIndex
+            )
+              ? (Data.display_in_Resume = true)
+              : null
           );
           //-------------------------------------------------------------------------------
           Data?.display_in_Resume === true
@@ -113,9 +120,9 @@ const workSlice = createSlice({
         }
 
         //Sort By Start Date, but need convert from string -> Date
-        state.map((each: any) => new Date(each.StartDate));
+        state.map((each: WorkExpState) => new Date(each.StartDate));
         state.sort((a, b) => (a.StartDate > b.StartDate ? -1 : 1));
-        state.map((each: any) => JSON.stringify(each.StartDate));
+        state.map((each: WorkExpState) => JSON.stringify(each.StartDate));
       }
     },
     addWorkExp: (state, action) => {
@@ -194,7 +201,7 @@ const workSlice = createSlice({
       }
     },
     editJobDescription: (state, action) => {
-      const { index, rowIndex, Row } = action.payload;
+      const { index, rowIndex, Row, HTML } = action.payload;
       let WorkExp = state.find((each) => each.index === index);
       if (WorkExp) {
         if (WorkExp.JobDescription === undefined) {
@@ -206,6 +213,7 @@ const workSlice = createSlice({
         );
         if (target_row) {
           target_row.Row = Row;
+          target_row.HTML = HTML;
         }
       }
     },
