@@ -148,25 +148,25 @@ export default function EachResume({
               <div className="flex flex-col justify-between h-full">
                 <div className="border">
                   <div className="flex flex-col">
-                    <b className="  flex hover:justify-end">Position</b>
+                    <b className="  flex ">Position</b>
                     <div className="">{each.job_details.job_position}</div>
                   </div>
                 </div>
                 <div className="flex-col border">
                   <div className="flex">
-                    <b className=" w-1/4 flex hover:justify-end">Company</b>
+                    <b className=" w-1/4 flex ">Company</b>
                     <b>:</b>
                     <div className="  w-3/4">
                       {each.job_details.company_name}
                     </div>
                   </div>
                   <div className="flex">
-                    <b className=" w-1/4 flex hover:justify-end">Website</b>
+                    <b className=" w-1/4 flex ">Website</b>
                     <b>:</b>
                     <div className=" w-3/4 ">{each.job_details.website}</div>
                   </div>
                   <div className="flex">
-                    <b className=" w-1/4 flex hover:justify-end">Date</b>
+                    <b className=" w-1/4 flex ">Date</b>
                     <b>:</b>
                     <div className=" w-3/4 ">
                       {each.createdAt.substring(0, 10)}
@@ -299,7 +299,7 @@ export default function EachResume({
                   <div>
                     <div className="border border-green-500 bottom-0 px-2  ">
                       <div className="flex">
-                        <b className=" w-1/4 flex group-hover/left:justify-end">
+                        <b className=" w-1/4 flex ">
                           Position
                         </b>
                         <b>:</b>
@@ -308,7 +308,7 @@ export default function EachResume({
                         </div>
                       </div>
                       <div className="flex">
-                        <b className=" w-1/4 flex group-hover/left:justify-end">
+                        <b className=" w-1/4 flex ">
                           Company
                         </b>
                         <b>:</b>
@@ -317,7 +317,7 @@ export default function EachResume({
                         </div>
                       </div>
                       <div className="flex">
-                        <b className=" w-1/4 flex group-hover/left:justify-end">
+                        <b className=" w-1/4 flex ">
                           Website
                         </b>
                         <b>:</b>
