@@ -43,7 +43,14 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     await Promise.all(
       body.map(async (each: ProjectState) => {
         await mongoose.connect(MONGODB_URL);
-        const { index, ProjectName, Techniques, ProjectDescription } = each;
+        const {
+          index,
+          ProjectName,
+          Techniques,
+          ProjectDescription,
+          Link,
+          GithubLink,
+        } = each;
 
         //use the email from "Next-auth" to find the data in "Project" collection
 
@@ -61,6 +68,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
             ProjectName: ProjectName,
             Techniques: Techniques,
             ProjectDescription: ProjectDescription,
+            Link: Link,
+            GithubLink: GithubLink,
           };
 
           // `doc` is the document _after_ `update` was applied because of
@@ -79,6 +88,8 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
             ProjectName: ProjectName || null,
             Techniques: Techniques || null,
             ProjectDescription: ProjectDescription || null,
+            Link: Link || null,
+            GithubLink: GithubLink || null,
           });
 
           await project.save();
@@ -88,7 +99,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     );
 
     await db.disconnect();
-    return NextResponse.json({ message: "Updaed" });
+    return NextResponse.json({ message: "Updated" });
   } else {
     // Not Signed in
     res.status(401);

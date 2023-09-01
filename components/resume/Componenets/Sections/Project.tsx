@@ -9,6 +9,9 @@ import CustomedTooltip from "../Match/Tooltip";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 
+import LaunchIcon from "@mui/icons-material/Launch";
+import GitHubIcon from "@mui/icons-material/GitHub";
+
 //Css style
 import "./Project.css";
 
@@ -55,7 +58,26 @@ export default function ProjectSection({ project }: ProjectState[] | any) {
                         {...provided.dragHandleProps}
                       >
                         <div className=" flex justify-between">
-                          <SectionTitle label={item.ProjectName} />
+                          <div className="flex flex-row gap-1">
+                            {/* 1. Project Name */}
+                            <SectionTitle label={item.ProjectName} />
+                            {/* 2. Link */}
+                            {item.Link && (
+                              <div className=" flex flex-start">
+                                <a href={item.Link} className="">
+                                  <LaunchIcon style={{ fontSize: 12 }} />
+                                </a>
+                              </div>
+                            )}
+                            {/* 3. Github Link */}
+                            {item.GithubLink && (
+                              <div className=" flex flex-start">
+                                <a href={item.GithubLink}>
+                                  <GitHubIcon style={{ fontSize: 12 }} />
+                                </a>
+                              </div>
+                            )}
+                          </div>
 
                           <CustomedTooltip
                             index_1st={item.index}

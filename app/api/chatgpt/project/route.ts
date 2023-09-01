@@ -25,11 +25,12 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     // const statement_2 = Object.values(user_data);
     const statement_2 = user_data;
 
-    console.log("*****************************");
-    console.log("Project");
-    console.log("Project");
-    console.log("Project");
-    console.log("Project");
+    process.env.NODE_ENV !== "production" &&
+      console.log("*****************************");
+    process.env.NODE_ENV !== "production" && console.log("Project");
+    process.env.NODE_ENV !== "production" && console.log("Project");
+    process.env.NODE_ENV !== "production" && console.log("Project");
+    process.env.NODE_ENV !== "production" && console.log("Project");
     console.log("Project");
     console.log("Project");
     console.log("Project");
@@ -43,7 +44,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     let temp_arr: any[] = [];
     let total_usage = 0;
     let chatCompletion: any;
-
 
     return Promise.all(
       //NEED to delete .slice function

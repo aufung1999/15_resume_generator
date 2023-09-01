@@ -24,6 +24,8 @@ import {
   editProjectDescription,
   cleanUp_Project_redux,
   switch_display_in_Resume,
+  editLink,
+  editGithubLink,
 } from "@/slices/projectsSlice";
 
 import DatePicker from "react-date-picker";
@@ -290,6 +292,22 @@ const InputComp = ({ index, data }: Props) => {
           onChange={(e) =>
             dispatch(
               editTechniques({ index: index, Techniques: e.target.value })
+            )
+          }
+        />
+        Link:{" "}
+        <InputGroup
+          value={target_project ? target_project?.Link : ""}
+          onChange={(e) =>
+            dispatch(editLink({ index: index, Link: e.target.value }))
+          }
+        />
+        Github Link:{" "}
+        <InputGroup
+          value={target_project ? target_project?.GithubLink : ""}
+          onChange={(e) =>
+            dispatch(
+              editGithubLink({ index: index, GithubLink: e.target.value })
             )
           }
         />

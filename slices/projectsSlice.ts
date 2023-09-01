@@ -8,6 +8,8 @@ export interface ProjectState {
   ProjectName: string;
   Techniques?: string;
   ProjectDescription: { rowIndex: string; Row?: string; HTML?: string }[];
+  Link?: string;
+  GithubLink?: string;
   display_in_Resume?: boolean;
 }
 
@@ -25,8 +27,14 @@ const projectsSlice = createSlice({
   reducers: {
     cleanUp_Project_redux: () => initialState,
     initialize_ProjectData: (state, action: PayloadAction<ProjectState>) => {
-      const { index, ProjectName, Techniques, ProjectDescription } =
-        action.payload;
+      const {
+        index,
+        ProjectName,
+        Techniques,
+        ProjectDescription,
+        Link,
+        GithubLink,
+      } = action.payload;
       //if the "stage_3" data exists
       let stage_3_exist = false;
       //get the index from "stage_3"
@@ -64,6 +72,8 @@ const projectsSlice = createSlice({
             ProjectName: ProjectName,
             Techniques: Techniques,
             ProjectDescription: ProjectDescription,
+            Link: Link,
+            GithubLink: GithubLink,
             display_in_Resume: false,
           };
           //-------------------------------------------------------------------------------
@@ -99,6 +109,8 @@ const projectsSlice = createSlice({
             ProjectName: ProjectName,
             Techniques: Techniques,
             ProjectDescription: ProjectDescription,
+            Link: Link,
+            GithubLink: GithubLink,
             display_in_Resume: false,
           };
 
@@ -132,6 +144,20 @@ const projectsSlice = createSlice({
       let Project = state.find((each) => each.index === index);
       if (Project) {
         Project.Techniques = Techniques;
+      }
+    },
+    editLink: (state, action) => {
+      const { index, Link } = action.payload;
+      let Project = state.find((each) => each.index === index);
+      if (Project) {
+        Project.Link = Link;
+      }
+    },
+    editGithubLink: (state, action) => {
+      const { index, GithubLink } = action.payload;
+      let Project = state.find((each) => each.index === index);
+      if (Project) {
+        Project.GithubLink = GithubLink;
       }
     },
     addrow: (state, action) => {
@@ -203,6 +229,8 @@ export const {
   deleteProject,
   editProjectName,
   editTechniques,
+  editLink,
+  editGithubLink,
   addrow,
   deleterow,
   editProjectDescription,

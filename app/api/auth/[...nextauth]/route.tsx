@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
           user.password
         );
 
-        console.log(passwordMatch);
+        process.env.NODE_ENV !== "production" && console.log(passwordMatch);
         // if password does not match
         if (!passwordMatch) {
           throw new Error("Incorrect password");
