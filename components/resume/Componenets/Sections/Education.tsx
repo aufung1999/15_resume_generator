@@ -19,10 +19,10 @@ export default function EducationSection({
             <u>
               <SectionTitle label={item.SchoolName} />
             </u>
-            <div className="flex justify-between border">
+            <div className="flex justify-between ">
               <SectionSubtitle label={item.Subject} />
 
-              <div className="text-sm border">
+              <div className="text-sm ">
                 {timeConverter(Date.parse(item.StartDate))} -
                 {item.current
                   ? "present"
