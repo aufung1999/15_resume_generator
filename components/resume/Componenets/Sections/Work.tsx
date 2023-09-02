@@ -51,7 +51,7 @@ export const WorkSection = ({ experience }: WorkExpState[] | any) => {
                         <div
                           className="text-[12px] myClass"
                           dangerouslySetInnerHTML={{
-                            __html: each?.Row,
+                            __html: each?.HTML,
                           }}
                         />
                       </div>
