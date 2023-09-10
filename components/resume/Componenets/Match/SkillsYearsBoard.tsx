@@ -1,3 +1,4 @@
+import { FORCE_to_UPDATE } from "@/slices/resumeSlice";
 import { SkillsState, addYears, subtractYears } from "@/slices/skillsSlice";
 import { RootState } from "@/store/store";
 import { Button } from "@blueprintjs/core";
@@ -27,15 +28,16 @@ export default function SkillsYearsBoard({
             {each?.Skill_list.map((skill: any, ind: number) => (
               <div className="flex justify-between border " key={ind}>
                 <Button
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       addYears({
                         index: each.index,
                         skillIndex: skill.skillIndex,
                         years: Number(skill.years) + 1,
                       })
-                    )
-                  }
+                    ),
+                      dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+                  }}
                 >
                   +
                 </Button>
@@ -46,15 +48,16 @@ export default function SkillsYearsBoard({
                   <div className=" col-span-2">{skill.years}</div>
                 </div>
                 <Button
-                  onClick={() =>
+                  onClick={() => {
                     dispatch(
                       subtractYears({
                         index: each.index,
                         skillIndex: skill.skillIndex,
                         years: Number(skill.years) - 1,
                       })
-                    )
-                  }
+                    ),
+                      dispatch(FORCE_to_UPDATE(JSON.stringify(Date())));
+                  }}
                 >
                   -
                 </Button>

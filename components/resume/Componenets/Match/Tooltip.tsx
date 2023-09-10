@@ -86,9 +86,10 @@ export default function CustomedTooltip({
               // each.match_index_1st === index_1st &&
               // each.match_index_2nd === index_2nd &&
               //or only text
-              each.technique === description &&
-              //To avoid duplication
-              temp_array.includes(each.match_sentence) === false
+              each.technique === description
+              // &&
+              // //To avoid duplication
+              // temp_array.includes(each.match_sentence) === false
                 ? (setOn(true),
                   setOutline(true),
                   temp_array.push(each.match_sentence))
@@ -258,7 +259,7 @@ export default function CustomedTooltip({
       setOutline(false);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description, text]);
+  }, [description, text, skill_years_redux]);
 
   //-------------------------------------
   //-------------------------------------
