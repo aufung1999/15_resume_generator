@@ -251,6 +251,15 @@ const InputComp = ({ index, data }: Props) => {
       router.refresh();
     });
   };
+
+  //---------------Expand-------------------
+  const [expanding, setExpand] = useState<boolean>(false);
+
+  const expandHandler = () => {
+    setExpand(!expanding);
+    console.log(expanding);
+  };
+
   return (
     <div
       style={{ color: "black" }}
@@ -258,7 +267,7 @@ const InputComp = ({ index, data }: Props) => {
       ${pathname.split("/").includes("user") ? " px-5 " : ""}
       ${remind ? " bg-red-300 " : " bg-green-200 "}`}
     >
-      <div className="flex-row">
+      <div className=" flex flex-row">
         {/* hide the index */}
         {/* <h3>Project {index}</h3> */}
         {pathname.split("/").includes("resume") && (
@@ -274,95 +283,112 @@ const InputComp = ({ index, data }: Props) => {
             }
           />
         )}
+        {/* Expand === false */}
+        {pathname.split("/").includes("resume") && (
+          <button onClick={expandHandler}>
+            {expanding ? (
+              <span>collapse</span>
+            ) : (
+              <div>
+                <div>expand</div>
+                <div className=" text-xs">
+                  {target_project ? target_project?.ProjectName : ""}
+                </div>
+              </div>
+            )}
+          </button>
+        )}
       </div>
 
-      <FormGroup labelFor="text-input" labelInfo="(required)">
-        Project Name:
-        <InputGroup
-          value={target_project ? target_project?.ProjectName : ""}
-          onChange={(e) =>
-            dispatch(
-              editProjectName({ index: index, ProjectName: e.target.value })
-            )
-          }
-        />
-        Techniques:{" "}
-        <InputGroup
-          value={target_project ? target_project?.Techniques : ""}
-          onChange={(e) =>
-            dispatch(
-              editTechniques({ index: index, Techniques: e.target.value })
-            )
-          }
-        />
-        Link:{" "}
-        <InputGroup
-          value={target_project ? target_project?.Link : ""}
-          onChange={(e) =>
-            dispatch(editLink({ index: index, Link: e.target.value }))
-          }
-        />
-        Github Link:{" "}
-        <InputGroup
-          value={target_project ? target_project?.GithubLink : ""}
-          onChange={(e) =>
-            dispatch(
-              editGithubLink({ index: index, GithubLink: e.target.value })
-            )
-          }
-        />
-        {/* ---------------------------Dynamic-------------------------- */}
-        Project Description:{" "}
-        <div className="w-full flex flex-col justify-between h-full">
-          {row?.map((each: any, i: number) => (
-            <div key={i} className="border-2 relative">
-              <Button
-                style={{
-                  backgroundColor: "rgba(255,0,0,0.6)",
-                  borderRadius: "25% 10%",
-                }}
-                className="absolute top-0 right-0 "
-                onClick={(e) => deleteRow(e, each.key)}
-                icon={
-                  <Icon
-                    icon="delete"
-                    className=""
-                    style={{ color: "white" }}
-                    size={10}
-                  />
-                }
-                small
-              />
-              {each}
-            </div>
-          ))}
-
-          <button
-            onClick={addRow}
-            className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
-          >
-            + Add Project Description
-          </button>
-          {remind && (
-            <>
-              {pathname.split("/").includes("user") && (
-                <Button className="" intent="warning" onClick={SubmitHandler}>
-                  Submit
-                </Button>
-              )}
-              {pathname.split("/").includes("resume") && (
+      {(expanding === true || pathname.split("/").includes("user")) && (
+        <FormGroup labelFor="text-input" labelInfo="(required)">
+          Project Name:
+          <InputGroup
+            value={target_project ? target_project?.ProjectName : ""}
+            onChange={(e) =>
+              dispatch(
+                editProjectName({ index: index, ProjectName: e.target.value })
+              )
+            }
+          />
+          Techniques:{" "}
+          <InputGroup
+            value={target_project ? target_project?.Techniques : ""}
+            onChange={(e) =>
+              dispatch(
+                editTechniques({ index: index, Techniques: e.target.value })
+              )
+            }
+          />
+          Link:{" "}
+          <InputGroup
+            value={target_project ? target_project?.Link : ""}
+            onChange={(e) =>
+              dispatch(editLink({ index: index, Link: e.target.value }))
+            }
+          />
+          Github Link:{" "}
+          <InputGroup
+            value={target_project ? target_project?.GithubLink : ""}
+            onChange={(e) =>
+              dispatch(
+                editGithubLink({ index: index, GithubLink: e.target.value })
+              )
+            }
+          />
+          {/* ---------------------------Dynamic-------------------------- */}
+          Project Description:{" "}
+          <div className="w-full flex flex-col justify-between h-full">
+            {row?.map((each: any, i: number) => (
+              <div key={i} className="border-2 relative">
                 <Button
-                  className=""
-                  intent="warning"
-                  onClick={SubmitHandler_Resume}
-                >
-                  Submit
-                </Button>
-              )}
-            </>
-          )}
-        </div>
-      </FormGroup>
+                  style={{
+                    backgroundColor: "rgba(255,0,0,0.6)",
+                    borderRadius: "25% 10%",
+                  }}
+                  className="absolute top-0 right-0 "
+                  onClick={(e) => deleteRow(e, each.key)}
+                  icon={
+                    <Icon
+                      icon="delete"
+                      className=""
+                      style={{ color: "white" }}
+                      size={10}
+                    />
+                  }
+                  small
+                />
+                {each}
+              </div>
+            ))}
+
+            <button
+              onClick={addRow}
+              className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+            >
+              + Add Project Description
+            </button>
+            {remind && (
+              <>
+                {pathname.split("/").includes("user") && (
+                  <Button className="" intent="warning" onClick={SubmitHandler}>
+                    Submit
+                  </Button>
+                )}
+                {pathname.split("/").includes("resume") && (
+                  <Button
+                    className=""
+                    intent="warning"
+                    onClick={SubmitHandler_Resume}
+                  >
+                    Submit
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        </FormGroup>
+      )}
     </div>
   );
 };
