@@ -266,6 +266,13 @@ const InputComp = ({ index, data }: Props) => {
     });
   };
 
+  //---------------Expand-------------------
+  const [expanding, setExpand] = useState<boolean>(false);
+
+  const expandHandler = () => {
+    setExpand(!expanding);
+  };
+
   return (
     <div
       style={{ color: "black" }}
@@ -273,138 +280,171 @@ const InputComp = ({ index, data }: Props) => {
     ${pathname.split("/").includes("user") ? "px-5" : ""}
     ${remind ? " bg-red-300" : " bg-green-200"}`}
     >
-      <div className="flex-row">
+      <div className="flex flex-row ">
         {/* hide the index */}
         {/* <h3>Company {index}</h3> */}
-        {pathname.split("/").includes("resume") && (
-          <Switch
-            checked={target_work?.display_in_Resume}
-            onChange={() =>
+        <div className="border-2 flex items-center justify-center">
+          {pathname.split("/").includes("resume") && (
+            <Switch
+              className=" m-0 p-0"
+              checked={target_work?.display_in_Resume}
+              onChange={() =>
+                dispatch(
+                  switch_display_in_Resume({
+                    index: index,
+                    display_in_Resume: !target_work?.display_in_Resume,
+                  })
+                )
+              }
+            />
+          )}
+        </div>
+
+        {/* Expand === false */}
+        <div className="border-2 flex items-center justify-center">
+          {pathname.split("/").includes("resume") && (
+            <button onClick={expandHandler} className=" ">
+              {expanding ? (
+                <span className=" text-red-500 font-bold ">collapse</span>
+              ) : (
+                <span className=" text-blue-500 font-bold ">expand</span>
+              )}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Display in xxx/resume, AND when 'expanding' === false */}
+      {expanding === false && pathname.split("/").includes("resume") && (
+        <div className=" text-xs">
+          {target_work ? (
+            <div className="flex flex-col">
+              <span>{target_work?.Position}</span>
+              <span>{target_work?.CompanyName}</span>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
+
+      {/* Display in xxx/user, OR when 'expanding' === true */}
+      {(expanding === true || pathname.split("/").includes("user")) && (
+        <FormGroup labelFor="text-input" labelInfo="(required)">
+          Company Name:
+          <InputGroup
+            value={target_work ? target_work?.CompanyName : ""}
+            onChange={(e) =>
               dispatch(
-                switch_display_in_Resume({
-                  index: index,
-                  display_in_Resume: !target_work?.display_in_Resume,
-                })
+                editCompanyName({ index: index, CompanyName: e.target.value })
               )
             }
           />
-        )}
-      </div>
-
-      <FormGroup labelFor="text-input" labelInfo="(required)">
-        Company Name:
-        <InputGroup
-          value={target_work ? target_work?.CompanyName : ""}
-          onChange={(e) =>
-            dispatch(
-              editCompanyName({ index: index, CompanyName: e.target.value })
-            )
-          }
-        />
-        Position:{" "}
-        <InputGroup
-          value={target_work ? target_work?.Position : ""}
-          onChange={(e) =>
-            dispatch(editPosition({ index: index, Position: e.target.value }))
-          }
-        />
-        {/* ---------------------------Time Related-------------------------- */}
-        <Switch
-          checked={target_work?.current}
-          onChange={() =>
-            target_work?.current
-              ? dispatch(
-                  currentWorking({
-                    index: index,
-                    current: !target_work.current,
-                  })
-                )
-              : dispatch(currentWorking({ index: index, current: true }))
-          }
-          label=" Currently Working"
-        />
-        <div
-          className={`flex ${
-            pathname.split("/").includes("resume") ? "" : " flex-col "
-          }`}
-        >
-          <div className=" text-black ">
-            Start Date:{" "}
-            <DatePicker
-              className={` ${datePickerOpen_1 ? "z-20" : ""}`}
-              onChange={(value) =>
-                dispatch(editStartDate({ index: index, StartDate: value }))
-              }
-              onCalendarOpen={() => set1Open(true)}
-              onCalendarClose={() => set1Open(false)}
-              value={target_work?.StartDate ? target_work.StartDate : null}
-            />
-          </div>
-          <div className=" text-black">
-            End Date:
-            <DatePicker
-              className={` ${datePickerOpen_2 ? "z-20" : ""}`}
-              onChange={(value) =>
-                dispatch(editEndDate({ index: index, EndDate: value }))
-              }
-              onCalendarOpen={() => set2Open(true)}
-              onCalendarClose={() => set2Open(false)}
-              value={target_work?.EndDate ? target_work.EndDate : null}
-              disabled={target_work?.current ? target_work.current : false}
-            />
-          </div>
-        </div>
-        {/* ---------------------------Dynamic-------------------------- */}
-        Job Description:{" "}
-        <div className="w-full flex flex-col justify-between h-full">
-          {row?.map((each: any, i: number) => (
-            <div key={i} className="border-2 relative">
-              <Button
-                style={{
-                  backgroundColor: "rgba(255,0,0,0.6)",
-                  borderRadius: "25% 10%",
-                }}
-                className="absolute top-0 right-0 z-10"
-                onClick={(e) => deleteRow(e, each.key)}
-                icon={
-                  <Icon
-                    icon="delete"
-                    className=""
-                    style={{ color: "white" }}
-                    size={10}
-                  />
-                }
-                small
-              />
-              {each}
-            </div>
-          ))}{" "}
-          <button
-            onClick={addRow}
-            className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+          Position:{" "}
+          <InputGroup
+            value={target_work ? target_work?.Position : ""}
+            onChange={(e) =>
+              dispatch(editPosition({ index: index, Position: e.target.value }))
+            }
+          />
+          {/* ---------------------------Time Related-------------------------- */}
+          <Switch
+            checked={target_work?.current}
+            onChange={() =>
+              target_work?.current
+                ? dispatch(
+                    currentWorking({
+                      index: index,
+                      current: !target_work.current,
+                    })
+                  )
+                : dispatch(currentWorking({ index: index, current: true }))
+            }
+            label=" Currently Working"
+          />
+          <div
+            className={`flex ${
+              pathname.split("/").includes("resume") ? "" : " flex-col "
+            }`}
           >
-            + Add Job Description
-          </button>
-          {remind && (
-            <>
-              {pathname.split("/").includes("user") && (
-                <Button className="" intent="warning" onClick={SubmitHandler}>
-                  Submit
-                </Button>
-              )}
-              {pathname.split("/").includes("resume") && (
+            <div className=" text-black ">
+              Start Date:{" "}
+              <DatePicker
+                className={` ${datePickerOpen_1 ? "z-20" : ""}`}
+                onChange={(value) =>
+                  dispatch(editStartDate({ index: index, StartDate: value }))
+                }
+                onCalendarOpen={() => set1Open(true)}
+                onCalendarClose={() => set1Open(false)}
+                value={target_work?.StartDate ? target_work.StartDate : null}
+              />
+            </div>
+            <div className=" text-black">
+              End Date:
+              <DatePicker
+                className={` ${datePickerOpen_2 ? "z-20" : ""}`}
+                onChange={(value) =>
+                  dispatch(editEndDate({ index: index, EndDate: value }))
+                }
+                onCalendarOpen={() => set2Open(true)}
+                onCalendarClose={() => set2Open(false)}
+                value={target_work?.EndDate ? target_work.EndDate : null}
+                disabled={target_work?.current ? target_work.current : false}
+              />
+            </div>
+          </div>
+          {/* ---------------------------Dynamic-------------------------- */}
+          Job Description:{" "}
+          <div className="w-full flex flex-col justify-between h-full">
+            {row?.map((each: any, i: number) => (
+              <div key={i} className="border-2 relative">
                 <Button
-                  className=""
-                  intent="warning"
-                  onClick={SubmitHandler_Resume}
-                >
-                  Submit
-                </Button>
-              )}
-            </>
-          )}
-        </div>
-      </FormGroup>
+                  style={{
+                    backgroundColor: "rgba(255,0,0,0.6)",
+                    borderRadius: "25% 10%",
+                  }}
+                  className="absolute top-0 right-0 z-10"
+                  onClick={(e) => deleteRow(e, each.key)}
+                  icon={
+                    <Icon
+                      icon="delete"
+                      className=""
+                      style={{ color: "white" }}
+                      size={10}
+                    />
+                  }
+                  small
+                />
+                {each}
+              </div>
+            ))}{" "}
+            <button
+              onClick={addRow}
+              className="bp3-button hover:bg-blue-500 hover:bg-opacity-50 hover:text-white w-full font-bold text-xs text-blue-500 "
+            >
+              + Add Job Description
+            </button>
+            {remind && (
+              <>
+                {pathname.split("/").includes("user") && (
+                  <Button className="" intent="warning" onClick={SubmitHandler}>
+                    Submit
+                  </Button>
+                )}
+                {pathname.split("/").includes("resume") && (
+                  <Button
+                    className=""
+                    intent="warning"
+                    onClick={SubmitHandler_Resume}
+                  >
+                    Submit
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        </FormGroup>
+      )}
     </div>
   );
 };

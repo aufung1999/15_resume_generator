@@ -257,7 +257,6 @@ const InputComp = ({ index, data }: Props) => {
 
   const expandHandler = () => {
     setExpand(!expanding);
-    console.log(expanding);
   };
 
   return (
@@ -270,36 +269,50 @@ const InputComp = ({ index, data }: Props) => {
       <div className=" flex flex-row">
         {/* hide the index */}
         {/* <h3>Project {index}</h3> */}
-        {pathname.split("/").includes("resume") && (
-          <Switch
-            checked={target_project?.display_in_Resume}
-            onChange={() =>
-              dispatch(
-                switch_display_in_Resume({
-                  index: index,
-                  display_in_Resume: !target_project?.display_in_Resume,
-                })
-              )
-            }
-          />
-        )}
+        <div className="border-2 flex items-center justify-center">
+          {pathname.split("/").includes("resume") && (
+            <Switch
+              className=" m-0 p-0"
+              checked={target_project?.display_in_Resume}
+              onChange={() =>
+                dispatch(
+                  switch_display_in_Resume({
+                    index: index,
+                    display_in_Resume: !target_project?.display_in_Resume,
+                  })
+                )
+              }
+            />
+          )}
+        </div>
         {/* Expand === false */}
-        {pathname.split("/").includes("resume") && (
-          <button onClick={expandHandler}>
-            {expanding ? (
-              <span>collapse</span>
-            ) : (
-              <div>
-                <div>expand</div>
-                <div className=" text-xs">
-                  {target_project ? target_project?.ProjectName : ""}
-                </div>
-              </div>
-            )}
-          </button>
-        )}
+        <div className="border-2 flex items-center justify-center">
+          {pathname.split("/").includes("resume") && (
+            <button onClick={expandHandler}>
+              {expanding ? (
+                <span className=" text-red-500 font-bold ">collapse</span>
+              ) : (
+                <span className=" text-blue-500 font-bold ">expand</span>
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
+      {/* Display in xxx/resume, AND when 'expanding' === false */}
+      {expanding === false && pathname.split("/").includes("resume") && (
+        <div className=" text-xs">
+          {target_project ? (
+            <div className="flex flex-col">
+              <span>{target_project?.ProjectName}</span>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
+
+      {/* Display in xxx/user, OR when 'expanding' === true */}
       {(expanding === true || pathname.split("/").includes("user")) && (
         <FormGroup labelFor="text-input" labelInfo="(required)">
           Project Name:

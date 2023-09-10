@@ -87,10 +87,10 @@ export default function CustomedTooltip({
               // each.match_index_2nd === index_2nd &&
               //or only text
               each.technique === description
-              // &&
-              // //To avoid duplication
-              // temp_array.includes(each.match_sentence) === false
-                ? (setOn(true),
+                ? //To avoid duplication
+                  // &&
+                  // temp_array.includes(each.match_sentence) === false
+                  (setOn(true),
                   setOutline(true),
                   temp_array.push(each.match_sentence))
                 : //This means that the row description is not included in the "stage_3" ----^
