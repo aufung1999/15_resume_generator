@@ -109,6 +109,13 @@ const InputComp = ({ index, data }: Props) => {
     });
   };
 
+  //---------------Expand-------------------
+  const [expanding, setExpand] = useState<boolean>(false);
+
+  const expandHandler = () => {
+    setExpand(!expanding);
+  };
+
   return (
     <div
       style={{ color: "black" }}
@@ -116,75 +123,107 @@ const InputComp = ({ index, data }: Props) => {
     ${pathname.split("/").includes("user") ? "px-5" : ""}
     ${remind ? " bg-red-300" : " bg-green-200"}`}
     >
-      {/* hide the index */}
-      {/* <h3>Education {index}</h3> */}
-
-      <FormGroup labelFor="text-input" labelInfo="(required)">
-        School Name:
-        <InputGroup
-          value={education ? education?.SchoolName : ""}
-          onChange={(e) =>
-            dispatch(
-              editSchoolName({ index: index, SchoolName: e.target.value })
-            )
-          }
-        />
-        Degree:{" "}
-        <InputGroup
-          value={education ? education?.Degree : ""}
-          onChange={(e) =>
-            dispatch(editDegree({ index: index, Degree: e.target.value }))
-          }
-        />
-        Subject:{" "}
-        <InputGroup
-          value={education ? education?.Subject : ""}
-          onChange={(e) =>
-            dispatch(editSubject({ index: index, Subject: e.target.value }))
-          }
-        />
-        {/* ---------------------------Time Related-------------------------- */}
-        <Switch
-          checked={education?.current}
-          onChange={(value) =>
-            education?.current
-              ? dispatch(
-                  currentStudying({
-                    index: index,
-                    current: !education.current,
-                  })
-                )
-              : dispatch(currentStudying({ index: index, current: true }))
-          }
-          label=" Currently Studying"
-        />
-        <div className=" flex-col">
-          Start Date:{" "}
-          <div className=" text-black">
-            <DatePicker
-              onChange={(value) =>
-                dispatch(editStartDate({ index: index, StartDate: value }))
-              }
-              value={education?.StartDate ? education.StartDate : null}
-            />
-          </div>
-          End Date:
-          <div className=" text-black">
-            <DatePicker
-              onChange={(value) =>
-                dispatch(editEndDate({ index: index, EndDate: value }))
-              }
-              value={education?.EndDate ? education.EndDate : null}
-              disabled={education?.current ? education.current : false}
-            />
-          </div>
+      <div className="flex flex-row ">
+        {/* Expand === false */}
+        <div className="border-2 flex items-center justify-center">
+          {pathname.split("/").includes("resume") && (
+            <button onClick={expandHandler} className=" ">
+              {expanding ? (
+                <span className=" text-red-500 font-bold ">collapse</span>
+              ) : (
+                <span className=" text-blue-500 font-bold ">expand</span>
+              )}
+            </button>
+          )}
         </div>
-        {/* ---------------------------Time Related-------------------------- */}
-      </FormGroup>
-      {remind && (
-        <Button className=" w-full" intent="warning" onClick={SubmitHandler}>
-          Submit
-        </Button>
+      </div>
+
+      {/* Display in xxx/resume, AND when 'expanding' === false */}
+      {expanding === false && pathname.split("/").includes("resume") && (
+        <div className=" text-xs">
+          {education ? (
+            <div className="flex flex-col">
+              <span>{education?.SchoolName}</span>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
+
+      {/* Display in xxx/user, OR when 'expanding' === true */}
+      {(expanding === true || pathname.split("/").includes("user")) && (
+        <FormGroup labelFor="text-input" labelInfo="(required)">
+          School Name:
+          <InputGroup
+            value={education ? education?.SchoolName : ""}
+            onChange={(e) =>
+              dispatch(
+                editSchoolName({ index: index, SchoolName: e.target.value })
+              )
+            }
+          />
+          Degree:{" "}
+          <InputGroup
+            value={education ? education?.Degree : ""}
+            onChange={(e) =>
+              dispatch(editDegree({ index: index, Degree: e.target.value }))
+            }
+          />
+          Subject:{" "}
+          <InputGroup
+            value={education ? education?.Subject : ""}
+            onChange={(e) =>
+              dispatch(editSubject({ index: index, Subject: e.target.value }))
+            }
+          />
+          {/* ---------------------------Time Related-------------------------- */}
+          <Switch
+            checked={education?.current}
+            onChange={(value) =>
+              education?.current
+                ? dispatch(
+                    currentStudying({
+                      index: index,
+                      current: !education.current,
+                    })
+                  )
+                : dispatch(currentStudying({ index: index, current: true }))
+            }
+            label=" Currently Studying"
+          />
+          <div className=" flex-col">
+            Start Date:{" "}
+            <div className=" text-black">
+              <DatePicker
+                onChange={(value) =>
+                  dispatch(editStartDate({ index: index, StartDate: value }))
+                }
+                value={education?.StartDate ? education.StartDate : null}
+              />
+            </div>
+            End Date:
+            <div className=" text-black">
+              <DatePicker
+                onChange={(value) =>
+                  dispatch(editEndDate({ index: index, EndDate: value }))
+                }
+                value={education?.EndDate ? education.EndDate : null}
+                disabled={education?.current ? education.current : false}
+              />
+            </div>
+          </div>
+          {/* ---------------------------Time Related-------------------------- */}
+          {remind && (
+            <Button
+              className=" w-full"
+              intent="warning"
+              onClick={SubmitHandler}
+            >
+              Submit
+            </Button>
+          )}
+        </FormGroup>
       )}
     </div>
   );
