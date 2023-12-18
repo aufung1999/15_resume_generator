@@ -233,7 +233,7 @@ const projectsSlice = createSlice({
       let Project_Index = state.findIndex((each) => each.index === index);
       const [reorderedItem] = state.splice(index, 1);
 
-      state.splice(Project_Index + 1, 0, reorderedItem);
+      state.splice(Project_Index - 1, 0, reorderedItem);
     },
   },
 });
