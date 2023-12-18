@@ -219,6 +219,22 @@ const projectsSlice = createSlice({
       const [reorderedItem] = state.splice(result.source.index, 1);
       state.splice(result.destination.index, 0, reorderedItem);
     },
+    move_up: (state, action) => {
+      const { index } = action.payload;
+
+      let Project_Index = state.findIndex((each) => each.index === index);
+      const [reorderedItem] = state.splice(index, 1);
+
+      state.splice(Project_Index + 1, 0, reorderedItem);
+    },
+    move_down: (state, action) => {
+      const { index } = action.payload;
+
+      let Project_Index = state.findIndex((each) => each.index === index);
+      const [reorderedItem] = state.splice(index, 1);
+
+      state.splice(Project_Index + 1, 0, reorderedItem);
+    },
   },
 });
 
@@ -236,5 +252,7 @@ export const {
   editProjectDescription,
   switch_display_in_Resume,
   drag_drop,
+  move_up,
+  move_down,
 } = projectsSlice.actions;
 export default projectsSlice.reducer;

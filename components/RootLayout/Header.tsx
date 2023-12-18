@@ -23,8 +23,7 @@ export default function Header() {
   const { data: session, status } = useSession();
 
   const dispatch = useDispatch();
-
-  // const stage_3_ls: any = localStorage.getItem("stage_3");
+  // const stage_3_ls: any = localStorage.getItem("sta-e_3");
 
   return (
     <div className="flex justify-between border-2 border-[#102C57] no-wrap">

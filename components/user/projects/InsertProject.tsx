@@ -26,6 +26,8 @@ import {
   switch_display_in_Resume,
   editLink,
   editGithubLink,
+  move_up,
+  move_down,
 } from "@/slices/projectsSlice";
 
 import DatePicker from "react-date-picker";
@@ -259,6 +261,14 @@ const InputComp = ({ index, data }: Props) => {
     setExpand(!expanding);
   };
 
+  //-----------------Move Up-------------------------
+  const moveUpHandler = () => {
+    dispatch(move_up({ index: index }));
+  };
+  //-----------------Move Down-------------------------
+  const moveDownHandler = () => {
+    dispatch(move_down({ index: index }));
+  };
   return (
     <div
       style={{ color: "black" }}
@@ -286,16 +296,28 @@ const InputComp = ({ index, data }: Props) => {
           )}
         </div>
         {/* Expand === false */}
-        <div className="border-2 flex items-center justify-center">
-          {pathname.split("/").includes("resume") && (
-            <button onClick={expandHandler}>
-              {expanding ? (
-                <span className=" text-red-500 font-bold ">collapse</span>
-              ) : (
-                <span className=" text-blue-500 font-bold ">expand</span>
-              )}
-            </button>
-          )}
+        <div className="border-2 flex items-center justify-between w-1/2">
+          <div>
+            {pathname.split("/").includes("resume") && (
+              <button onClick={expandHandler}>
+                {expanding ? (
+                  <span className=" text-red-500 font-bold ">collapse</span>
+                ) : (
+                  <span className=" text-blue-500 font-bold ">expand</span>
+                )}
+              </button>
+            )}
+          </div>
+          <div>
+            {pathname.split("/").includes("resume") && (
+              <button onClick={moveUpHandler}>↑</button>
+            )}
+          </div>
+          <div>
+            {pathname.split("/").includes("resume") && (
+              <button onClick={moveDownHandler}>↓</button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -477,6 +499,7 @@ export default function InsertProject({ data }: any) {
       .catch(() => toast.error("Cannot Delete!"));
   };
   //***/
+
   return (
     <div className=" w-full">
       <Toaster />
@@ -495,6 +518,7 @@ export default function InsertProject({ data }: any) {
         {projects_csr?.map((each: any, i: number) => (
           <div key={i} className="w-full border-2 relative ">
             {each}
+
             <Button
               className="absolute top-0 right-0 "
               style={{
