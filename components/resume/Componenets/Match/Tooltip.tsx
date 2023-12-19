@@ -344,7 +344,7 @@ export default function CustomedTooltip({
           : ""
       } ${
         whichSection === "skill" && outline
-          ? " border-b-2 border-slate-300"
+          ? " border-b-0 border-slate-300"
           : ""
       } ${whichSection === "skill" && bold ? " font-bold" : ""} ${
         target?.includes(hover_des_redux) ? " bg-green-300" : ""

@@ -221,19 +221,47 @@ const projectsSlice = createSlice({
     },
     move_up: (state, action) => {
       const { index } = action.payload;
+      // compute todo index
+      let _Index = state.findIndex((each) => each.index === index);
+      // if todo index is found and not first element,
+      // and todos array has length 2 or more
+      if (_Index > 0 && state.length > 1) {
+        // shallow copy state
+        const newState = [...state];
 
-      let Project_Index = state.findIndex((each) => each.index === index);
-      const [reorderedItem] = state.splice(index, 1);
+        // swap values at found _Index and _Index - 1
+        [newState[_Index], newState[_Index - 1]] = [
+          newState[_Index - 1],
+          newState[_Index],
+        ];
 
-      state.splice(Project_Index + 1, 0, reorderedItem);
+        return newState;
+      } else {
+        // not swappable, return current state
+        return state;
+      }
     },
     move_down: (state, action) => {
       const { index } = action.payload;
+      // compute todo index
+      let _Index = state.findIndex((each) => each.index === index);
+      // if todo index is found and not first element,
+      // and todos array has length 2 or more
+      if (_Index < state.length - 1 && state.length > 1) {
+        // shallow copy state
+        const newState = [...state];
 
-      let Project_Index = state.findIndex((each) => each.index === index);
-      const [reorderedItem] = state.splice(index, 1);
+        // swap values at found _Index and _Index - 1
+        [newState[_Index], newState[_Index + 1]] = [
+          newState[_Index + 1],
+          newState[_Index],
+        ];
 
-      state.splice(Project_Index - 1, 0, reorderedItem);
+        return newState;
+      } else {
+        // not swappable, return current state
+        return state;
+      }
     },
   },
 });
